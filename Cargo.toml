@@ -13,7 +13,7 @@ description = "Bindings for the ANSI X12 EDI definitions"
 serde = { version = "1.0", features = ["derive"] }
 
 [dev-dependencies]
-serde_x12 = { version = "*" }
+serde_x12 = { version = "0.1" }
 
 [features]
 default = ["v004010"]
