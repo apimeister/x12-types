@@ -20,9 +20,21 @@ use serde::{Serialize,Deserialize};
 /// 13 | 761 | Equipment Number Check Digit | 1 | O | N0 | 1/1
 #[derive(Serialize,Deserialize)]
 pub struct B4 {
+    /// 152 - Special Handling Code
+    /// 
+    /// Code specifying special transportation handling instructions
+    /// - TYPE=ID
+    /// - MIN=2
+    /// - MAX=3
     pub _01: Option<String>,
     pub _02: Option<String>,
     pub _03: Option<String>,
+    /// 373 - Date
+    /// 
+    /// Date expressed as CCYYMMDD where CC represents the first two digits of the calendar year
+    /// - TYPE=DT
+    /// - MIN=8
+    /// - MAX=8
     pub _04: Option<String>,
     pub _05: Option<String>,
     pub _06: Option<String>,
@@ -38,29 +50,43 @@ pub struct B4 {
 
 /// DTM - Date/Time Reference
 /// To specify pertinent dates and times
-/// REF	ID	NAME	REPEAT	REQ	TYPE	MIN/MAX
-/// 01	374	Date/Time Qualifier	1	M	ID	3/3
-/// 02	373	Date	1	X	DT	8/8
-/// 03	337	Time	1	X	TM	4/8
-/// 04	623	Time Code	1	O	ID	2/2
-/// 05	1250	Date Time Period Format Qualifier	1	X	ID	2/3
-/// 06	1251	Date Time Period	1	X	AN	1/35
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 374 | Date/Time Qualifier | 1 | M | ID | 3/3
+/// 02 | 373 | Date | 1 | X | DT | 8/8
+/// 03 | 337 | Time | 1 | X | TM | 4/8
+/// 04 | 623 | Time Code | 1 | O | ID | 2/2
+/// 05 | 1250 | Date Time Period Format Qualifier | 1 | X | ID | 2/3
+/// 06 | 1251 | Date Time Period | 1 | X | AN | 1/35
 #[derive(Serialize,Deserialize)]
 pub struct DTM {
-    pub _374: String,
-    pub _373: String,
-    pub _337: Option<String>,
-    pub _623: Option<String>,
-    pub _1250: Option<String>,
-    pub _1251: Option<String>,
+    pub _01: String,
+    /// 373 - Date
+    /// 
+    /// Date expressed as CCYYMMDD where CC represents the first two digits of the calendar year
+    /// - TYPE=DT
+    /// - MIN=8
+    /// - MAX=8
+    pub _02: String,
+    /// 337 - Time
+    /// 
+    /// Time expressed in 24-hour clock time as follows: HHMM, or HHMMSS, or HHMMSSD, or HHMMSSDD, where H = hours (00-23), M = minutes (00-59), S = integer seconds (00-59) and DD = decimal seconds; decimal seconds are expressed as follows: D = tenths (0-9) and DD = hundredths (00-99)
+    /// - TYPE=TM
+    /// - MIN=4
+    /// - MAX=8
+    pub _03: Option<String>,
+    pub _04: Option<String>,
+    pub _05: Option<String>,
+    pub _06: Option<String>,
 }
 
 
 /// GE - Functional Group Trailer
 /// To indicate the end of a functional group and to provide control information
-/// REF	ID	NAME	REPEAT	REQ	TYPE	MIN/MAX
-/// 01	97	Number of Transaction Sets Included	1	M	N0	1/6
-/// 02	28	Group Control Number	1	M/Z	N0	1/9
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 97 | Number of Transaction Sets Included | 1 | M | N0 | 1/6
+/// 02 | 28 | Group Control Number | 1 | M/Z | N0 | 1/9
 #[derive(Serialize,Deserialize)]
 pub struct GE {
     pub _01: String,
@@ -69,21 +95,34 @@ pub struct GE {
 
 /// GS - Functional Group Header
 /// To indicate the beginning of a functional group and to provide control information
-/// REF	ID	NAME	REPEAT	REQ	TYPE	MIN/MAX
-/// 01	479	Functional Identifier Code	1	M	ID	2/2
-/// 02	142	Application Sender's Code	1	M	AN	2/15
-/// 03	124	Application Receiver's Code	1	M	AN	2/15
-/// 04	373	Date	1	M/Z	DT	8/8
-/// 05	337	Time	1	M/Z	TM	4/8
-/// 06	28	Group Control Number	1	M/Z	N0	1/9
-/// 07	455	Responsible Agency Code	1	M	ID	1/2
-/// 08	480	Version / Release / Industry Identifier Code	1	M	AN	1/12
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 479 | Functional Identifier Code | 1 | M | ID | 2/2
+/// 02 | 142 | Application Sender's Code | 1 | M | AN | 2/15
+/// 03 | 124 | Application Receiver's Code | 1 | M | AN | 2/15
+/// 04 | 373 | Date | 1 | M/Z | DT | 8/8
+/// 05 | 337 | Time | 1 | M/Z | TM | 4/8
+/// 06 | 28 | Group Control Number | 1 | M/Z | N0 | 1/9
+/// 07 | 455 | Responsible Agency Code | 1 | M | ID | 1/2
+/// 08 | 480 | Version / Release / Industry Identifier Code | 1 | M | AN | 1/12
 #[derive(Serialize,Deserialize)]
 pub struct GS {
     pub _01: String,
     pub _02: String,
     pub _03: String,
+    /// 373 - Date
+    /// 
+    /// Date expressed as CCYYMMDD where CC represents the first two digits of the calendar year
+    /// - TYPE=DT
+    /// - MIN=8
+    /// - MAX=8
     pub _04: String,
+    /// 337 - Time
+    /// 
+    /// Time expressed in 24-hour clock time as follows: HHMM, or HHMMSS, or HHMMSSD, or HHMMSSDD, where H = hours (00-23), M = minutes (00-59), S = integer seconds (00-59) and DD = decimal seconds; decimal seconds are expressed as follows: D = tenths (0-9) and DD = hundredths (00-99)
+    /// - TYPE=TM
+    /// - MIN=4
+    /// - MAX=8
     pub _05: String,
     pub _06: String,
     pub _07: String,
@@ -157,20 +196,33 @@ pub struct ISA {
 
 /// N9 - Reference Identification
 /// To transmit identifying information as specified by the Reference Identification Qualifier
-/// REF	ID	NAME	REPEAT	REQ	TYPE	MIN/MAX
-/// 01	128	Reference Identification Qualifier	1	M	ID	2/3
-/// 02	127	Reference Identification	1	X	AN	1/30
-/// 03	369	Free-form Description	1	X	AN	1/45
-/// 04	373	Date	1	O	DT	8/8
-/// 05	337	Time	1	X	TM	4/8
-/// 06	623	Time Code	1	O/Z	ID	2/2
-/// 07	C040	Reference Identifier	1	O/Z	
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 128 | Reference Identification Qualifier | 1 | M | ID | 2/3
+/// 02 | 127 | Reference Identification | 1 | X | AN | 1/30
+/// 03 | 369 | Free-form Description | 1 | X | AN | 1/45
+/// 04 | 373 | Date | 1 | O | DT | 8/8
+/// 05 | 337 | Time | 1 | X | TM | 4/8
+/// 06 | 623 | Time Code | 1 | O/Z | ID | 2/2
+/// 07 | C040 | Reference Identifier | 1 | O/Z	
 #[derive(Serialize,Deserialize)]
 pub struct N9 {
     pub _01: String,
     pub _02: String,
     pub _03: Option<String>,
+    /// 373 - Date
+    /// 
+    /// Date expressed as CCYYMMDD where CC represents the first two digits of the calendar year
+    /// - TYPE=DT
+    /// - MIN=8
+    /// - MAX=8
     pub _04: Option<String>,
+    /// 337 - Time
+    /// 
+    /// Time expressed in 24-hour clock time as follows: HHMM, or HHMMSS, or HHMMSSD, or HHMMSSDD, where H = hours (00-23), M = minutes (00-59), S = integer seconds (00-59) and DD = decimal seconds; decimal seconds are expressed as follows: D = tenths (0-9) and DD = hundredths (00-99)
+    /// - TYPE=TM
+    /// - MIN=4
+    /// - MAX=8
     pub _05: Option<String>,
     pub _06: Option<String>,
     pub _07: Option<String>,
@@ -200,8 +252,26 @@ pub struct N9 {
 pub struct Q2 {
     pub _01: String,
     pub _02: Option<String>,
+    /// 373 - Date
+    /// 
+    /// Date expressed as CCYYMMDD where CC represents the first two digits of the calendar year
+    /// - TYPE=DT
+    /// - MIN=8
+    /// - MAX=8
     pub _03: Option<String>,
+    /// 373 - Date
+    /// 
+    /// Date expressed as CCYYMMDD where CC represents the first two digits of the calendar year
+    /// - TYPE=DT
+    /// - MIN=8
+    /// - MAX=8
     pub _04: Option<String>,
+    /// 373 - Date
+    /// 
+    /// Date expressed as CCYYMMDD where CC represents the first two digits of the calendar year
+    /// - TYPE=DT
+    /// - MIN=8
+    /// - MAX=8
     pub _05: Option<String>,
     pub _06: Option<String>,
     pub _07: Option<String>,
@@ -218,15 +288,16 @@ pub struct Q2 {
 
 /// R4 - Port or Terminal
 /// Contractual or operational port or point relevant to the movement of the cargo
-/// REF	ID	NAME	REPEAT	REQ	TYPE	MIN/MAX
-/// 01	115	Port or Terminal Function Code	1	M	ID	1/1
-/// 02	309	Location Qualifier	1	X	ID	1/2
-/// 03	310	Location Identifier	1	X	AN	1/30
-/// 04	114	Port Name	1	O	AN	2/24
-/// 05	26	Country Code	1	O	ID	2/3
-/// 06	174	Terminal Name	1	O	AN	2/30
-/// 07	113	Pier Number	1	O	AN	1/4
-/// 08	156	State or Province Code	1	O	ID	2/2
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 115 | Port or Terminal Function Code | 1 | M | ID | 1/1
+/// 02 | 309 | Location Qualifier | 1 | X | ID | 1/2
+/// 03 | 310 | Location Identifier | 1 | X | AN | 1/30
+/// 04 | 114 | Port Name | 1 | O | AN | 2/24
+/// 05 | 26 | Country Code | 1 | O | ID | 2/3
+/// 06 | 174 | Terminal Name | 1 | O | AN | 2/30
+/// 07 | 113 | Pier Number | 1 | O | AN | 1/4
+/// 08 | 156 | State or Province Code | 1 | O | ID | 2/2
 #[derive(Serialize,Deserialize)]
 pub struct R4 {
     pub _01: String,
@@ -268,7 +339,19 @@ pub struct SG {
     pub _01: String,
     pub _02: String,
     pub _03: String,
+    /// 373 - Date
+    /// 
+    /// Date expressed as CCYYMMDD where CC represents the first two digits of the calendar year
+    /// - TYPE=DT
+    /// - MIN=8
+    /// - MAX=8
     pub _04: Option<String>,
+    /// 337 - Time
+    /// 
+    /// Time expressed in 24-hour clock time as follows: HHMM, or HHMMSS, or HHMMSSD, or HHMMSSDD, where H = hours (00-23), M = minutes (00-59), S = integer seconds (00-59) and DD = decimal seconds; decimal seconds are expressed as follows: D = tenths (0-9) and DD = hundredths (00-99)
+    /// - TYPE=TM
+    /// - MIN=4
+    /// - MAX=8
     pub _05: String,
     pub _06: Option<String>,
 }
@@ -315,7 +398,19 @@ pub struct ST {
 pub struct V9 {
     pub _01: String,
     pub _02: Option<String>,
+    /// 373 - Date
+    /// 
+    /// Date expressed as CCYYMMDD where CC represents the first two digits of the calendar year
+    /// - TYPE=DT
+    /// - MIN=8
+    /// - MAX=8
     pub _03: Option<String>,
+    /// 337 - Time
+    /// 
+    /// Time expressed in 24-hour clock time as follows: HHMM, or HHMMSS, or HHMMSSD, or HHMMSSDD, where H = hours (00-23), M = minutes (00-59), S = integer seconds (00-59) and DD = decimal seconds; decimal seconds are expressed as follows: D = tenths (0-9) and DD = hundredths (00-99)
+    /// - TYPE=TM
+    /// - MIN=4
+    /// - MAX=8
     pub _04: Option<String>,
     pub _05: Option<String>,
     pub _06: Option<String>,
