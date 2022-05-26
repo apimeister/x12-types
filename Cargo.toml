@@ -1,0 +1,20 @@
+[package]
+name = "x12-types"
+version = "0.1.0"
+edition = "2021"
+authors = ["Jens Walter <jens@apimeister.com>"]
+license = "MIT OR Apache-2.0"
+keywords = ["edi","x12"]
+repository = "https://github.com/apimeister/x12-types/"
+documentation = "https://docs.rs/x12-types/"
+description = "Bindings for the ANSI X12 EDI definitions"
+
+[dependencies]
+serde = { version = "1.0", features = ["derive"] }
+
+[dev-dependencies]
+serde_x12 = { version = "*" }
+
+[features]
+default = ["v004010"]
+v004010 = []
