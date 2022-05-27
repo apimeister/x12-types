@@ -7,12 +7,17 @@ This library provides bindings for the ANSI X12 standard.
 
 The types should be used inconjuction with a X12 serializer.
 
-We do recommend the `serde_x12` crate, since we also using this serializer as testing dependency.
+We do recommend the `serde_x12` crate, since we are using this serializer for testing.
+
+So far, there is also no validation attached to the structs.
 
 ## Supported Bindings
 
 * 004010
   * 315 - Status Details (Ocean)
+  * 404 - Rail Carrier Shipment Information
+  * 997 - Functional Acknowledgment
+  * 998 - Set Cancellation
 
 Something missing? Please open an issue.
 
