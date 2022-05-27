@@ -1587,7 +1587,9 @@ pub struct PS {
 }
 
 /// Q2 - Status Details (Ocean)
+/// 
 /// To transmit identifying information relative to identification of vessel, transportation dates, lading quantity, weight, and cube
+/// 
 /// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
 /// ----|----|-------|--------|----|------|-------
 /// 01 | 597 | Vessel Code | 1 | O | ID | 1/8
