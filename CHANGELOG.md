@@ -3,6 +3,7 @@
 * make loops into struct instead of seuqences
 * added
   * 004010/322
+  * 004010/204
 
 # 0.2.0 2022-05-27
 

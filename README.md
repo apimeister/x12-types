@@ -14,6 +14,7 @@ So far, there is also no validation attached to the structs.
 ## Supported Bindings
 
 * 004010
+  * 204 - Motor Carrier Load Tender
   * 315 - Status Details (Ocean)
   * 322 - Terminal Operations and Intermodal Ramp Activity
   * 404 - Rail Carrier Shipment Information
