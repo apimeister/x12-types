@@ -1,6 +1,52 @@
 use serde_x12::to_string;
+use validator::Validate;
 use crate::v004010::*;
 
+#[test]
+fn valid_isa() {
+    let isa = ISA {
+        _01: "00".to_string(),
+        _02: "          ".to_string(),
+        _03: "00".to_string(),
+        _04: "          ".to_string(),
+        _05: "ZZ".to_string(),
+        _06: "SOURCE         ".to_string(),
+        _07: "ZZ".to_string(),
+        _08: "TARGET         ".to_string(),
+        _09: "220524".to_string(),
+        _10: "1120".to_string(),
+        _11: "U".to_string(),
+        _12: "00401".to_string(),
+        _13: "000002176".to_string(),
+        _14: "0".to_string(),
+        _15: "P".to_string(),
+        _16: ">".to_string(),
+    };
+    isa.validate().unwrap();
+}
+#[test]
+#[should_panic]
+fn invalid_isa() {
+    let isa = ISA {
+        _01: "00".to_string(),
+        _02: "         ".to_string(),
+        _03: "00".to_string(),
+        _04: "          ".to_string(),
+        _05: "ZZ".to_string(),
+        _06: "SOURCE         ".to_string(),
+        _07: "ZZ".to_string(),
+        _08: "TARGET         ".to_string(),
+        _09: "220524".to_string(),
+        _10: "1120".to_string(),
+        _11: "U".to_string(),
+        _12: "00401".to_string(),
+        _13: "000002176".to_string(),
+        _14: "0".to_string(),
+        _15: "P".to_string(),
+        _16: ">".to_string(),
+    };
+    isa.validate().unwrap();
+}
 #[test]
 fn test_isa() {
     let s = "ISA*00*          *00*          *ZZ*SOURCE         *ZZ*TARGET         *220524*1120*U*00401*000002176*0*P*>~";

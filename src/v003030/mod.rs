@@ -1,1 +1,1 @@
-//! v003030 repesents all entitties von the 003030 specification.
+//! v003030 repesents all entities of the 003030 specification.

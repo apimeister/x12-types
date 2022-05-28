@@ -1,4 +1,4 @@
-//! v004010 repesents all entities von the 004010 specification.
+//! v004010 repesents all entities of the 004010 specification.
 
 use serde::{Deserialize, Serialize};
 use std::fmt::Debug;

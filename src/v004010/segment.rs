@@ -1,4 +1,5 @@
 use serde::{Deserialize, Serialize};
+use validator::Validate;
 
 /// AK1 - Functional Group Response Header
 /// 
@@ -831,19 +832,95 @@ pub struct IEA {
 /// 14 | I13 | Acknowledgment Requested | 1 | M | ID | 1/1
 /// 15 | I14 | Usage Indicator | 1 | M | ID | 1/1
 /// 16 | I15 | Component Element Separator | 1 | M |  | 1/1
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, Validate)]
 pub struct ISA {
+    /// I01 - Authorization Information Qualifier
+    /// 
+    /// Code to identify the type of information in the Authorization Information
+    /// - TYPE=ID
+    /// - MIN=2
+    /// - MAX=2
+    #[validate(length(equal = 2))]
     pub _01: String,
+    /// I02 - Authorization Information
+    /// 
+    /// Information used for additional identification or authorization of the interchange sender or the data in the interchange; the type of information is set by the Authorization Information Qualifier (I01)
+    /// - TYPE=AN
+    /// - MIN=10
+    /// - MAX=10
+    #[validate(length(equal = 10, message="I04 must be 10 characters long"))]
     pub _02: String,
+    /// I03 - Security Information Qualifier
+    /// 
+    /// Code to identify the type of information in the Security Information
+    /// - TYPE=ID
+    /// - MIN=2
+    /// - MAX=2
+    #[validate(length(equal = 2))]
     pub _03: String,
+    /// I04 - Security Information
+    /// 
+    /// This is used for identifying the security information about the interchange sender or the data in the interchange; the type of information is set by the Security Information Qualifier (I03)
+    /// - TYPE=AN
+    /// - MIN=10
+    /// - MAX=10
+    #[validate(length(equal = 10, message="I04 must be 10 characters long"))]
     pub _04: String,
+    /// I05 - Interchange ID Qualifier
+    /// 
+    /// Qualifier to designate the system/method of code structure used to designate the sender or receiver ID element being qualified
+    /// - TYPE=ID
+    /// - MIN=2
+    /// - MAX=2
     pub _05: String,
+    /// I06 - Interchange Sender ID
+    /// 
+    /// Identification code published by the sender for other parties to use as the receiver ID to route data to them; the sender always codes this value in the sender ID element
+    /// - TYPE=AN
+    /// - MIN=15
+    /// - MAX=15
     pub _06: String,
+    /// I05 - Interchange ID Qualifier
+    /// 
+    /// Qualifier to designate the system/method of code structure used to designate the sender or receiver ID element being qualified
+    /// - TYPE=ID
+    /// - MIN=2
+    /// - MAX=2
     pub _07: String,
+    /// I07 - Interchange Receiver ID
+    /// 
+    /// Identification code published by the receiver of the data; When sending, it is used by the sender as their sending ID, thus other parties sending to them will use this as a receiving ID to route data to them
+    /// - TYPE=AN
+    /// - MIN=15
+    /// - MAX=15
     pub _08: String,
+    /// I08 - Interchange Date
+    /// 
+    /// Date of the interchange
+    /// - TYPE=DT
+    /// - MIN=6
+    /// - MAX=6
     pub _09: String,
+    /// I09 - Interchange Time
+    /// 
+    /// Time of the interchange
+    /// - TYPE=TM
+    /// - MIN=4
+    /// - MAX=4
     pub _10: String,
+    /// I10 - Interchange Control Standards Identifier
+    /// 
+    /// Code to identify the agency responsible for the control standard used by the message that is enclosed by the interchange header and trailer
+    /// - TYPE=ID
+    /// - MIN=1
+    /// - MAX=1
     pub _11: String,
+    /// I11 - Interchange Control Version Number
+    /// 
+    /// This version number covers the interchange control segments
+    /// - TYPE=ID
+    /// - MIN=5
+    /// - MAX=5
     pub _12: String,
     /// I12 - Interchange Control Number
     ///
@@ -852,8 +929,26 @@ pub struct ISA {
     /// - MIN=9
     /// - MAX=9
     pub _13: String,
+    /// I13 - Acknowledgment Requested
+    /// 
+    /// Code sent by the sender to request an interchange acknowledgment (TA1)
+    /// - TYPE=ID
+    /// - MIN=1
+    /// - MAX=1
     pub _14: String,
+    /// I14 - Usage Indicator
+    /// 
+    /// Code to indicate whether data enclosed by this interchange envelope is test, production or information
+    /// - TYPE=ID
+    /// - MIN=1
+    /// - MAX=1
     pub _15: String,
+    /// I15 - Component Element Separator
+    ///
+    /// Type is not applicable; the component element separator is a delimiter and not a data element; this field provides the delimiter used to separate component data elements within a composite data structure; this value must be different than the data element separator and the segment terminator
+    /// - TYPE=
+    /// - MIN=1
+    /// - MAX=1
     pub _16: String,
 }
 
