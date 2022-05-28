@@ -109,6 +109,42 @@ pub struct AT5 {
     pub _03: Option<String>,
 }
 
+/// AT7 - Shipment Status Details
+/// 
+/// To specify the status of a shipment, the reason for that status, the date and time of the status and the date and time of any appointments scheduled.
+/// 
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|------|--------|----|------|-------
+/// 01 | 1650 | Shipment Status Code | 1 | X/Z | ID | 2/2
+/// 02 | 1651 | Shipment Status or Appointment Reason Code | 1 | X | ID | 2/2
+/// 03 | 1652 | Shipment Appointment Status Code | 1 | X | ID | 2/2
+/// 04 | 1651 | Shipment Status or Appointment Reason Code | 1 | X | ID | 2/2
+/// 05 | 373 | Date | 1 | X | DT | 8/8
+/// 06 | 337 | Time | 1 | X | TM | 4/8
+/// 07 | 623 | Time Code | 1 | O/Z | ID | 2/2
+#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+pub struct AT7 {
+    pub _01: Option<String>,
+    pub _02: Option<String>,
+    pub _03: Option<String>,
+    pub _04: Option<String>,
+    /// 373 - Date
+    ///
+    /// Date expressed as CCYYMMDD where CC represents the first two digits of the calendar year
+    /// - TYPE=DT
+    /// - MIN=8
+    /// - MAX=8
+    pub _05: Option<String>,
+    pub _06: Option<String>,
+    /// 623 - Time Code
+    /// 
+    /// Code identifying the time. In accordance with International Standards Organization standard 8601, time can be specified by a + or - and an indication in hours in relation to Universal Time Coordinate (UTC) time; since + is a restricted character, + and - are substituted by P and M in the codes that follow
+    /// - TYPE=ID
+    /// - MIN=2
+    /// - MAX=2
+    pub _07: Option<String>,
+}
+
 /// AT8 - Shipment Weight, Packaging and Quantity Data
 /// 
 /// To specify shipment details in terms of weight, and quantity of handling units
@@ -215,6 +251,30 @@ pub struct B4 {
     pub _13: Option<String>,
 }
 
+/// B10 - Beginning Segment for Transportation Carrier Shipment Status Message
+/// 
+/// To transmit identifying numbers and other basic data relating to the transaction set
+/// 
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|------|--------|----|------|-------
+/// 01 | 127 | Reference Identification | 1 | X/Z | AN | 1/30
+/// 02 | 145 | Shipment Identification Number | 1 | O | AN | 1/30
+/// 03 | 140 | Standard Carrier Alpha Code | 1 | M | ID | 2/4
+/// 04 | 71 | Inquiry Request Number | 1 | O | N0 | 1/3
+/// 05 | 128 | Reference Identification Qualifier | 1 | X | ID | 2/3
+/// 06 | 127 | Reference Identification | 1 | X | AN | 1/30
+/// 07 | 1073 | Yes/No Condition or Response Code NEW | 1 | O/Z | ID | 1/1
+#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+pub struct B10 {
+    pub _01: Option<String>,
+    pub _02: Option<String>,
+    pub _03: String,
+    pub _04: Option<String>,
+    pub _05: Option<String>,
+    pub _06: Option<String>,
+    pub _07: Option<String>,
+}
+
 /// B2A - Set Purpose
 /// 
 /// To allow for positive identification of transaction set purpose
@@ -227,6 +287,20 @@ pub struct B4 {
 pub struct B2A {
     pub _01: String,
     pub _02: Option<String>,
+}
+
+/// BIN - Binary Data
+/// 
+/// To transfer binary data in a single data segment and allow identification of the end of the data segment through a count; there is no identification of the internal structure of the binary data in this segment
+/// 
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|------|--------|----|------|-------
+/// 01 | 784 | Length of Binary Data | 1 | M | N0 | 1/15
+/// 02 | 785 | Binary Data | 1 | M | B | 1/9999999999999999
+#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+pub struct BIN {
+    pub _01: String,
+    pub _02: String,
 }
 
 /// BL - Billing Information
@@ -258,12 +332,36 @@ pub struct BL {
     pub _02: Option<String>,
     pub _03: Option<String>,
     pub _04: Option<String>,
+    /// 19 - City Name
+    /// 
+    /// Free-form text for city name
+    /// - TYPE=AN
+    /// - MIN=2
+    /// - MAX=30
     pub _05: Option<String>,
     pub _06: Option<String>,
+    /// 26 - Country Code
+    /// 
+    /// Code identifying the country
+    /// - TYPE=ID
+    /// - MIN=2
+    /// - MAX=3
     pub _07: Option<String>,
     pub _08: Option<String>,
+    /// 19 - City Name
+    /// 
+    /// Free-form text for city name
+    /// - TYPE=AN
+    /// - MIN=2
+    /// - MAX=30
     pub _09: Option<String>,
     pub _10: Option<String>,
+    /// 26 - Country Code
+    /// 
+    /// Code identifying the country
+    /// - TYPE=ID
+    /// - MIN=2
+    /// - MAX=3
     pub _11: Option<String>,
     pub _12: Option<String>,
     pub _13: Option<String>,
@@ -329,6 +427,50 @@ pub struct BX {
     pub _14: Option<String>,
 }
 
+/// CD3 - Carton (Package) Detail
+/// 
+/// To transmit identifying codes, weights, and other related information related to an individual carton (package)
+/// 
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|------|--------|----|------|-------
+/// 01 | 187 | Weight Qualifier | 1 | X | ID | 1/2
+/// 02 | 81 | Weight | 1 | X | R | 1/10
+/// 03 | 619 | Zone | 1 | O | AN | 2/3
+/// 04 | 34 | Service Standard | 1 | O | N1 | 1/4
+/// 05 | 284 | Service Level Code | 1 | X | ID | 2/2
+/// 06 | 108 | Pick-up or Delivery Code | 1 | O | ID | 1/2
+/// 07 | 122 | Rate/Value Qualifier | 1 | X | ID | 2/2
+/// 08 | 58 | Charge | 1 | X/Z | N2 | 1/12
+/// 09 | 122 | Rate/Value Qualifier | 1 | X | ID | 2/2
+/// 10 | 58 | Charge | 1 | X/Z | N2 | 1/12
+/// 11 | 284 | Service Level Code | 1 | X | ID | 2/2
+/// 12 | 284 | Service Level Code | 1 | O | ID | 2/2
+/// 13 | 591 | Payment Method Code | 1 | O | ID | 3/3
+/// 14 | 26 | Country Code | 1 | O/Z | ID | 2/3
+#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+pub struct CD3 {
+    pub _01: Option<String>,
+    pub _02: Option<String>,
+    pub _03: Option<String>,
+    pub _04: Option<String>,
+    pub _05: Option<String>,
+    pub _06: Option<String>,
+    pub _07: Option<String>,
+    pub _08: Option<String>,
+    pub _09: Option<String>,
+    pub _10: Option<String>,
+    pub _11: Option<String>,
+    pub _12: Option<String>,
+    pub _13: Option<String>,
+    /// 26 - Country Code
+    /// 
+    /// Code identifying the country
+    /// - TYPE=ID
+    /// - MIN=2
+    /// - MAX=3
+    pub _14: Option<String>,
+}
+
 /// CM - Cargo Manifest
 /// 
 /// To identify specific flight or voyage information for multimodal shipments
@@ -357,16 +499,34 @@ pub struct CM {
     pub _01: Option<String>,
     pub _02: Option<String>,
     pub _03: Option<String>,
+    /// 373 - Date
+    ///
+    /// Date expressed as CCYYMMDD where CC represents the first two digits of the calendar year
+    /// - TYPE=DT
+    /// - MIN=8
+    /// - MAX=8
     pub _04: Option<String>,
     pub _05: Option<String>,
     pub _06: Option<String>,
     pub _07: Option<String>,
+    /// 373 - Date
+    ///
+    /// Date expressed as CCYYMMDD where CC represents the first two digits of the calendar year
+    /// - TYPE=DT
+    /// - MIN=8
+    /// - MAX=8
     pub _08: Option<String>,
     pub _09: Option<String>,
     pub _10: Option<String>,
     pub _11: Option<String>,
     pub _12: Option<String>,
     pub _13: Option<String>,
+    /// 26 - Country Code
+    /// 
+    /// Code identifying the country
+    /// - TYPE=ID
+    /// - MIN=2
+    /// - MAX=3
     pub _14: Option<String>,
     pub _15: Option<String>,
     pub _16: Option<String>,
@@ -394,16 +554,40 @@ pub struct CM {
 #[derive(Serialize, Deserialize, Clone, Default, Debug)]
 pub struct D9 {
     pub _01: Option<String>,
+    /// 19 - City Name
+    /// 
+    /// Free-form text for city name
+    /// - TYPE=AN
+    /// - MIN=2
+    /// - MAX=30
     pub _02: Option<String>,
     pub _03: String,
+    /// 26 - Country Code
+    /// 
+    /// Code identifying the country
+    /// - TYPE=ID
+    /// - MIN=2
+    /// - MAX=3
     pub _04: Option<String>,
     pub _05: Option<String>,
+    /// 19 - City Name
+    /// 
+    /// Free-form text for city name
+    /// - TYPE=AN
+    /// - MIN=2
+    /// - MAX=30
     pub _06: Option<String>,
     pub _07: Option<String>,
     pub _08: Option<String>,
     pub _09: Option<String>,
     pub _10: Option<String>,
     pub _11: Option<String>,
+    /// 26 - Country Code
+    /// 
+    /// Code identifying the country
+    /// - TYPE=ID
+    /// - MIN=2
+    /// - MAX=3
     pub _12: Option<String>,
 }
 
@@ -420,6 +604,12 @@ pub struct D9 {
 /// 06 | 1251 | Date Time Period | 1 | X | AN | 1/35
 #[derive(Serialize, Deserialize, Clone, Default, Debug)]
 pub struct DTM {
+    /// 374 - Date/Time Qualifier
+    /// 
+    /// Code specifying type of date or time, or both date and time
+    /// - TYPE=ID
+    /// - MIN=3
+    /// - MAX=3
     pub _01: String,
     /// 373 - Date
     ///
@@ -435,6 +625,12 @@ pub struct DTM {
     /// - MIN=4
     /// - MAX=8
     pub _03: Option<String>,
+    /// 623 - Time Code
+    /// 
+    /// Code identifying the time. In accordance with International Standards Organization standard 8601, time can be specified by a + or - and an indication in hours in relation to Universal Time Coordinate (UTC) time; since + is a restricted character, + and - are substituted by P and M in the codes that follow
+    /// - TYPE=ID
+    /// - MIN=2
+    /// - MAX=2
     pub _04: Option<String>,
     pub _05: Option<String>,
     pub _06: Option<String>,
@@ -468,9 +664,21 @@ pub struct E1 {
 /// 04 | 26 | Country Code | 1 | O | ID | 2/3
 #[derive(Serialize, Deserialize, Clone, Default, Debug)]
 pub struct E4 {
+    /// 19 - City Name
+    /// 
+    /// Free-form text for city name
+    /// - TYPE=AN
+    /// - MIN=2
+    /// - MAX=30
     pub _01: String,
     pub _02: String,
     pub _03: Option<String>,
+    /// 26 - Country Code
+    /// 
+    /// Code identifying the country
+    /// - TYPE=ID
+    /// - MIN=2
+    /// - MAX=3
     pub _04: Option<String>,
 }
 
@@ -488,8 +696,56 @@ pub struct E4 {
 pub struct E5 {
     pub _01: String,
     pub _02: String,
+    /// 19 - City Name
+    /// 
+    /// Free-form text for city name
+    /// - TYPE=AN
+    /// - MIN=2
+    /// - MAX=30
     pub _03: Option<String>,
     pub _04: Option<String>,
+}
+
+/// EFI - Electronic Format Identification
+/// 
+/// To provide basic information about the electronic format of the interchange data
+/// 
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|------|--------|----|------|-------
+/// 01 | 786 | Security Level Code | 1 | M | ID | 2/2
+/// 02 | 933 | Free-Form Message Text | 1 | O | AN | 1/264
+/// 03 | 797 | Security Technique Code | 1 | O | ID | 2/2
+/// 04 | 799 | Version Identifier | 1 | X | AN | 1/30
+/// 05 | 802 | Program Identifier | 1 | O | AN | 1/30
+/// 06 | 799 | Version Identifier | 1 | X | AN | 1/30
+/// 07 | 801 | Interchange Format | 1 | O | AN | 1/30
+/// 08 | 799 | Version Identifier | 1 | X | AN | 1/30
+/// 09 | 800 | Compression Technique | 1 | O | AN | 1/30
+/// 10 | 789 | Drawing Sheet Size Code | 1 | O | AN | 2/2
+/// 11 | 803 | File Name | 1 | O | AN | 1/64
+/// 12 | 804 | Block Type | 1 | O | AN | 1/4
+/// 13 | 787 | Record Length | 1 | O | N | 1/15
+/// 14 | 788 | Block Length | 1 | O | N | 1/5
+/// 15 | 799 | Version Identifier | 1 | X | AN | 1/30
+/// 16 | 1570 | Filter ID Code | 1 | X | ID | 3/3
+#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+pub struct EFI {
+    pub _01: String,
+    pub _02: Option<String>,
+    pub _03: Option<String>,
+    pub _04: Option<String>,
+    pub _05: Option<String>,
+    pub _06: Option<String>,
+    pub _07: Option<String>,
+    pub _08: Option<String>,
+    pub _09: Option<String>,
+    pub _10: Option<String>,
+    pub _11: Option<String>,
+    pub _12: Option<String>,
+    pub _13: Option<String>,
+    pub _14: Option<String>,
+    pub _15: Option<String>,
+    pub _16: Option<String>,
 }
 
 /// EM - Equipment Characteristics
@@ -511,8 +767,20 @@ pub struct EM {
     pub _02: Option<String>,
     pub _03: Option<String>,
     pub _04: Option<String>,
+    /// 26 - Country Code
+    /// 
+    /// Code identifying the country
+    /// - TYPE=ID
+    /// - MIN=2
+    /// - MAX=3
     pub _05: Option<String>,
     pub _06: Option<String>,
+    /// 373 - Date
+    ///
+    /// Date expressed as CCYYMMDD where CC represents the first two digits of the calendar year
+    /// - TYPE=DT
+    /// - MIN=8
+    /// - MAX=8
     pub _07: Option<String>,
 }
 
@@ -537,16 +805,40 @@ pub struct EM {
 #[derive(Serialize, Deserialize, Clone, Default, Debug)]
 pub struct F9 {
     pub _01: Option<String>,
+    /// 19 - City Name
+    /// 
+    /// Free-form text for city name
+    /// - TYPE=AN
+    /// - MIN=2
+    /// - MAX=30
     pub _02: Option<String>,
     pub _03: String,
+    /// 26 - Country Code
+    /// 
+    /// Code identifying the country
+    /// - TYPE=ID
+    /// - MIN=2
+    /// - MAX=3
     pub _04: Option<String>,
     pub _05: Option<String>,
+    /// 19 - City Name
+    /// 
+    /// Free-form text for city name
+    /// - TYPE=AN
+    /// - MIN=2
+    /// - MAX=30
     pub _06: Option<String>,
     pub _07: Option<String>,
     pub _08: Option<String>,
     pub _09: Option<String>,
     pub _10: Option<String>,
     pub _11: Option<String>,
+    /// 26 - Country Code
+    /// 
+    /// Code identifying the country
+    /// - TYPE=ID
+    /// - MIN=2
+    /// - MAX=3
     pub _12: Option<String>,
 }
 
@@ -564,6 +856,12 @@ pub struct F9 {
 #[derive(Serialize, Deserialize, Clone, Default, Debug)]
 pub struct G61 {
     pub _01: String,
+    /// 93 - Name
+    /// 
+    /// Free-form name
+    /// - TYPE=AN
+    /// - MIN=1
+    /// - MAX=60
     pub _02: String,
     pub _03: Option<String>,
     pub _04: Option<String>,
@@ -584,9 +882,21 @@ pub struct G61 {
 #[derive(Serialize, Deserialize, Clone, Default, Debug)]
 pub struct G62 {
     pub _01: Option<String>,
+    /// 373 - Date
+    ///
+    /// Date expressed as CCYYMMDD where CC represents the first two digits of the calendar year
+    /// - TYPE=DT
+    /// - MIN=8
+    /// - MAX=8
     pub _02: Option<String>,
     pub _03: Option<String>,
     pub _04: Option<String>,
+    /// 623 - Time Code
+    /// 
+    /// Code identifying the time. In accordance with International Standards Organization standard 8601, time can be specified by a + or - and an indication in hours in relation to Universal Time Coordinate (UTC) time; since + is a restricted character, + and - are substituted by P and M in the codes that follow
+    /// - TYPE=ID
+    /// - MIN=2
+    /// - MAX=2
     pub _05: Option<String>,
 }
 
@@ -622,6 +932,12 @@ pub struct GA {
     pub _05: Option<String>,
     pub _06: Option<String>,
     pub _07: Option<String>,
+    /// 373 - Date
+    ///
+    /// Date expressed as CCYYMMDD where CC represents the first two digits of the calendar year
+    /// - TYPE=DT
+    /// - MIN=8
+    /// - MAX=8
     pub _08: Option<String>,
     pub _09: Option<String>,
     pub _10: Option<String>,
@@ -1360,6 +1676,12 @@ pub struct LH4 {
 /// 04 | 273 | Hazardous Certification Declaration | 1 | O | AN | 1/25
 #[derive(Serialize, Deserialize, Clone, Default, Debug)]
 pub struct LH6 {
+    /// 93 - Name
+    /// 
+    /// Free-form name
+    /// - TYPE=AN
+    /// - MIN=1
+    /// - MAX=60
     pub _01: Option<String>,
     pub _02: Option<String>,
     pub _03: Option<String>,
@@ -1379,6 +1701,12 @@ pub struct LH6 {
 pub struct LHR {
     pub _01: String,
     pub _02: String,
+    /// 373 - Date
+    ///
+    /// Date expressed as CCYYMMDD where CC represents the first two digits of the calendar year
+    /// - TYPE=DT
+    /// - MIN=8
+    /// - MAX=8
     pub _03: Option<String>,
 }
 
@@ -1442,6 +1770,12 @@ pub struct LX {
 /// 12 | 954 | Percent | 1 | X | R | 1/10
 #[derive(Serialize, Deserialize, Clone, Default, Debug)]
 pub struct M1 {
+    /// 26 - Country Code
+    /// 
+    /// Code identifying the country
+    /// - TYPE=ID
+    /// - MIN=2
+    /// - MAX=3
     pub _01: Option<String>,
     pub _02: Option<String>,
     pub _03: Option<String>,
@@ -1469,8 +1803,20 @@ pub struct M1 {
 #[derive(Serialize, Deserialize, Clone, Default, Debug)]
 pub struct M3 {
     pub _01: Option<String>,
+    /// 373 - Date
+    ///
+    /// Date expressed as CCYYMMDD where CC represents the first two digits of the calendar year
+    /// - TYPE=DT
+    /// - MIN=8
+    /// - MAX=8
     pub _02: Option<String>,
     pub _03: Option<String>,
+    /// 623 - Time Code
+    /// 
+    /// Code identifying the time. In accordance with International Standards Organization standard 8601, time can be specified by a + or - and an indication in hours in relation to Universal Time Coordinate (UTC) time; since + is a restricted character, + and - are substituted by P and M in the codes that follow
+    /// - TYPE=ID
+    /// - MIN=2
+    /// - MAX=2
     pub _04: Option<String>,
 }
 
@@ -1526,6 +1872,28 @@ pub struct M12 {
     pub _11: Option<String>,
 }
 
+/// MAN - Marks and Numbers
+/// 
+/// To indicate identifying marks and numbers for shipping containers
+/// 
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 88 | Marks and Numbers Qualifier | 1 | M/Z | ID | 1/2
+/// 02 | 87 | Marks and Numbers | 1 | M/Z | AN | 1/48
+/// 03 | 87 | Marks and Numbers | 1 | O | AN | 1/48
+/// 04 | 88 | Marks and Numbers Qualifier | 1 | X | ID | 1/2
+/// 05 | 87 | Marks and Numbers | 1 | X/Z | AN | 1/48
+/// 06 | 87 | Marks and Numbers | 1 | O | AN | 1/48
+#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+pub struct MAN {
+    pub _01: Option<String>,
+    pub _02: Option<String>,
+    pub _03: Option<String>,
+    pub _04: Option<String>,
+    pub _05: Option<String>,
+    pub _06: Option<String>,
+}
+
 /// MEA - Measurements
 /// 
 /// To specify physical measurements or counts, including dimensions, tolerances, variances, and weights (See Figures Appendix for example of use of C001)
@@ -1556,6 +1924,60 @@ pub struct MEA {
     pub _10: Option<String>,
 }
 
+/// MS1 - Equipment, Shipment, or Real Property Location
+/// 
+/// To specify the location of a piece of equipment, a shipment, or real property in terms of city and state or longitude and latitude
+/// 
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 19 | City Name | 1 | X | AN | 2/30
+/// 02 | 156 | State or Province Code | 1 | X | ID | 2/2
+/// 03 | 26 | Country Code | 1 | X | ID | 2/3
+/// 04 | 1654 | Longitude Code | 1 | X/Z | ID | 7/7
+/// 05 | 1655 | Latitude Code | 1 | X/Z | ID | 7/7
+/// 06 | 1280 | Direction Identifier Code NEW | 1 | O/Z | ID | 1/1
+/// 07 | 1280 | Direction Identifier Code NEW | 1 | O/Z | ID | 1/1
+#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+pub struct MS1 {
+    /// 19 - City Name
+    /// 
+    /// Free-form text for city name
+    /// - TYPE=AN
+    /// - MIN=2
+    /// - MAX=30
+    pub _01: Option<String>,
+    pub _02: Option<String>,
+    /// 26 - Country Code
+    /// 
+    /// Code identifying the country
+    /// - TYPE=ID
+    /// - MIN=2
+    /// - MAX=3
+    pub _03: Option<String>,
+    pub _04: Option<String>,
+    pub _05: Option<String>,
+    pub _06: Option<String>,
+    pub _07: Option<String>,
+}
+
+/// MS2 - Equipment or Container Owner and Type
+/// 
+/// To specify the owner, the identification number assigned by that owner, and the type of equipment
+/// 
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 140 | Standard Carrier Alpha Code | 1 | X | ID | 2/4
+/// 02 | 207 | Equipment Number | 1 | X | AN | 1/10
+/// 03 | 40 | Equipment Description Code | 1 | O | ID | 2/2
+/// 04 | 761 | Equipment Number Check Digit | 1 | O | N0 | 1/1
+#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+pub struct MS2 {
+    pub _01: Option<String>,
+    pub _02: Option<String>,
+    pub _03: Option<String>,
+    pub _04: Option<String>,
+}
+
 /// MS3 - Interline Information
 /// 
 /// To identify the interline carrier and relevant data
@@ -1571,6 +1993,12 @@ pub struct MEA {
 pub struct MS3 {
     pub _01: String,
     pub _02: String,
+    /// 19 - City Name
+    /// 
+    /// Free-form text for city name
+    /// - TYPE=AN
+    /// - MIN=2
+    /// - MAX=30
     pub _03: Option<String>,
     pub _04: Option<String>,
     pub _05: Option<String>,
@@ -1591,6 +2019,12 @@ pub struct MS3 {
 #[derive(Serialize, Deserialize, Clone, Default, Debug)]
 pub struct N1 {
     pub _01: String,
+    /// 93 - Name
+    /// 
+    /// Free-form name
+    /// - TYPE=AN
+    /// - MIN=1
+    /// - MAX=60
     pub _02: Option<String>,
     pub _03: Option<String>,
     pub _04: Option<String>,
@@ -1608,7 +2042,19 @@ pub struct N1 {
 /// 02 | 93 | Name | 1 | O | AN | 1/60
 #[derive(Serialize, Deserialize, Clone, Default, Debug)]
 pub struct N2 {
+    /// 93 - Name
+    /// 
+    /// Free-form name
+    /// - TYPE=AN
+    /// - MIN=1
+    /// - MAX=60
     pub _01: String,
+    /// 93 - Name
+    /// 
+    /// Free-form name
+    /// - TYPE=AN
+    /// - MIN=1
+    /// - MAX=60
     pub _02: Option<String>,
 }
 
@@ -1640,9 +2086,21 @@ pub struct N3 {
 /// 06 | 310 | Location Identifier | 1 | O | AN | 1/30
 #[derive(Serialize, Deserialize, Clone, Default, Debug)]
 pub struct N4 {
+    /// 19 - City Name
+    /// 
+    /// Free-form text for city name
+    /// - TYPE=AN
+    /// - MIN=2
+    /// - MAX=30
     pub _01: Option<String>,
     pub _02: Option<String>,
     pub _03: Option<String>,
+    /// 26 - Country Code
+    /// 
+    /// Code identifying the country
+    /// - TYPE=ID
+    /// - MIN=2
+    /// - MAX=3
     pub _04: Option<String>,
     pub _05: Option<String>,
     pub _06: Option<String>,
@@ -1765,6 +2223,12 @@ pub struct N9 {
     /// - MIN=4
     /// - MAX=8
     pub _05: Option<String>,
+    /// 623 - Time Code
+    /// 
+    /// Code identifying the time. In accordance with International Standards Organization standard 8601, time can be specified by a + or - and an indication in hours in relation to Universal Time Coordinate (UTC) time; since + is a restricted character, + and - are substituted by P and M in the codes that follow
+    /// - TYPE=ID
+    /// - MIN=2
+    /// - MAX=2
     pub _06: Option<String>,
     pub _07: Option<String>,
 }
@@ -1800,7 +2264,19 @@ pub struct N10 {
     pub _08: Option<String>,
     pub _09: Option<String>,
     pub _10: Option<String>,
+    /// 26 - Country Code
+    /// 
+    /// Code identifying the country
+    /// - TYPE=ID
+    /// - MIN=2
+    /// - MAX=3
     pub _11: Option<String>,
+    /// 26 - Country Code
+    /// 
+    /// Code identifying the country
+    /// - TYPE=ID
+    /// - MIN=2
+    /// - MAX=3
     pub _12: Option<String>,
     pub _13: Option<String>,
 }
@@ -1887,6 +2363,38 @@ pub struct NA {
     pub _11: Option<String>,
 }
 
+/// NM1 - Individual or Organizational Name
+/// 
+/// To supply the full name of an individual or organizational entity
+/// 
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 98 | Entity Identifier Code | 1 | M | ID | 2/3
+/// 02 | 1065 | Entity Type Qualifier | 1 | M/Z | ID | 1/1
+/// 03 | 1035 | Name Last or Organization Name | 1 | O | AN | 1/35
+/// 04 | 1036 | Name First | 1 | O | AN | 1/25
+/// 05 | 1037 | Name Middle | 1 | O | AN | 1/25
+/// 06 | 1038 | Name Prefix | 1 | O | AN | 1/10
+/// 07 | 1039 | Name Suffix | 1 | O | AN | 1/10
+/// 08 | 66 | Identification Code Qualifier | 1 | X | ID | 1/2
+/// 09 | 67 | Identification Code | 1 | X | AN | 2/80
+/// 10 | 706 | Entity Relationship Code | 1 | X | ID | 2/2
+/// 11 | 98 | Entity Identifier Code | 1 | O | ID | 2/3
+#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+pub struct NM1 {
+    pub _01: String,
+    pub _02: Option<String>,
+    pub _03: Option<String>,
+    pub _04: Option<String>,
+    pub _05: Option<String>,
+    pub _06: Option<String>,
+    pub _07: Option<String>,
+    pub _08: Option<String>,
+    pub _09: Option<String>,
+    pub _10: Option<String>,
+    pub _11: Option<String>,
+}
+
 /// NTE - Note/Special Instruction
 /// 
 /// To transmit information in a free-form format, if necessary, for comment or special instruction
@@ -1947,6 +2455,12 @@ pub struct OID {
 #[derive(Serialize, Deserialize, Clone, Default, Debug)]
 pub struct PER {
     pub _01: String,
+    /// 93 - Name
+    /// 
+    /// Free-form name
+    /// - TYPE=AN
+    /// - MIN=1
+    /// - MAX=60
     pub _02: Option<String>,
     pub _03: Option<String>,
     pub _04: Option<String>,
@@ -1991,7 +2505,19 @@ pub struct PI {
     pub _09: Option<String>,
     pub _10: Option<String>,
     pub _11: Option<String>,
+    /// 373 - Date
+    ///
+    /// Date expressed as CCYYMMDD where CC represents the first two digits of the calendar year
+    /// - TYPE=DT
+    /// - MIN=8
+    /// - MAX=8
     pub _12: Option<String>,
+    /// 373 - Date
+    ///
+    /// Date expressed as CCYYMMDD where CC represents the first two digits of the calendar year
+    /// - TYPE=DT
+    /// - MIN=8
+    /// - MAX=8
     pub _13: Option<String>,
     pub _14: Option<String>,
     pub _15: Option<String>,
@@ -2013,6 +2539,36 @@ pub struct PLD {
     pub _02: Option<String>,
     pub _03: Option<String>,
     pub _04: Option<String>,
+}
+
+/// PRF - Purchase Order Reference
+/// 
+/// To provide reference to a specific purchase order
+/// 
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 324 | Purchase Order Number | 1 | M | AN | 1/22
+/// 02 | 328 | Release Number | 1 | O | AN | 1/30
+/// 03 | 327 | Change Order Sequence Number | 1 | O | AN | 1/8
+/// 04 | 373 | Date | 1 | O/Z | DT | 8/8
+/// 05 | 350 | Assigned Identification | 1 | O | AN | 1/20
+/// 06 | 367 | Contract Number | 1 | O | AN | 1/30
+/// 07 | 92 | Purchase Order Type Code | 1 | O | ID | 2/2
+#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+pub struct PRF {
+    pub _01: String,
+    pub _02: Option<String>,
+    pub _03: Option<String>,
+    /// 373 - Date
+    ///
+    /// Date expressed as CCYYMMDD where CC represents the first two digits of the calendar year
+    /// - TYPE=DT
+    /// - MIN=8
+    /// - MAX=8
+    pub _04: Option<String>,
+    pub _05: Option<String>,
+    pub _06: Option<String>,
+    pub _07: Option<String>,
 }
 
 /// PS - Protective Service Instructions
@@ -2043,6 +2599,12 @@ pub struct PS {
     pub _04: Option<String>,
     pub _05: Option<String>,
     pub _06: Option<String>,
+    /// 19 - City Name
+    /// 
+    /// Free-form text for city name
+    /// - TYPE=AN
+    /// - MIN=2
+    /// - MAX=30
     pub _07: Option<String>,
     pub _08: Option<String>,
     pub _09: Option<String>,
@@ -2078,6 +2640,12 @@ pub struct PS {
 #[derive(Serialize, Deserialize, Clone, Default, Debug)]
 pub struct Q2 {
     pub _01: String,
+    /// 26 - Country Code
+    /// 
+    /// Code identifying the country
+    /// - TYPE=ID
+    /// - MIN=2
+    /// - MAX=3
     pub _02: Option<String>,
     /// 373 - Date
     ///
@@ -2140,12 +2708,36 @@ pub struct Q2 {
 #[derive(Serialize, Deserialize, Clone, Default, Debug)]
 pub struct Q5 {
     pub _01: Option<String>,
+    /// 373 - Date
+    ///
+    /// Date expressed as CCYYMMDD where CC represents the first two digits of the calendar year
+    /// - TYPE=DT
+    /// - MIN=8
+    /// - MAX=8
     pub _02: Option<String>,
     pub _03: Option<String>,
+    /// 623 - Time Code
+    /// 
+    /// Code identifying the time. In accordance with International Standards Organization standard 8601, time can be specified by a + or - and an indication in hours in relation to Universal Time Coordinate (UTC) time; since + is a restricted character, + and - are substituted by P and M in the codes that follow
+    /// - TYPE=ID
+    /// - MIN=2
+    /// - MAX=2
     pub _04: Option<String>,
     pub _05: Option<String>,
+    /// 19 - City Name
+    /// 
+    /// Free-form text for city name
+    /// - TYPE=AN
+    /// - MIN=2
+    /// - MAX=30
     pub _06: Option<String>,
     pub _07: Option<String>,
+    /// 26 - Country Code
+    /// 
+    /// Code identifying the country
+    /// - TYPE=ID
+    /// - MIN=2
+    /// - MAX=3
     pub _08: Option<String>,
     pub _09: Option<String>,
     pub _10: Option<String>,
@@ -2157,6 +2749,22 @@ pub struct Q5 {
     pub _16: Option<String>,
     pub _17: Option<String>,
     pub _18: Option<String>,
+}
+
+/// Q7 - Lading Exception Code
+/// 
+/// To specify the status of the shipment in terms of lading exception information
+/// 
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 33 | Lading Exception Code | 1 | M | ID | 1/1
+/// 02 | 211 | Packaging Form Code | 1 | O | ID | 3/3
+/// 03 | 80 | Lading Quantity | 1 | X | N0 | 1/7
+#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+pub struct Q7 {
+    pub _01: String,
+    pub _02: Option<String>,
+    pub _03: Option<String>,
 }
 
 /// R2 - Route Information
@@ -2182,6 +2790,12 @@ pub struct Q5 {
 pub struct R2 {
     pub _01: String,
     pub _02: String,
+    /// 19 - City Name
+    /// 
+    /// Free-form text for city name
+    /// - TYPE=AN
+    /// - MIN=2
+    /// - MAX=30
     pub _03: Option<String>,
     pub _04: Option<String>,
     pub _05: Option<String>,
@@ -2189,6 +2803,12 @@ pub struct R2 {
     pub _07: Option<String>,
     pub _08: Option<String>,
     pub _09: Option<String>,
+    /// 373 - Date
+    ///
+    /// Date expressed as CCYYMMDD where CC represents the first two digits of the calendar year
+    /// - TYPE=DT
+    /// - MIN=8
+    /// - MAX=8
     pub _10: Option<String>,
     pub _11: Option<String>,
     pub _12: Option<String>,
@@ -2216,6 +2836,12 @@ pub struct R4 {
     pub _02: Option<String>,
     pub _03: Option<String>,
     pub _04: Option<String>,
+    /// 26 - Country Code
+    /// 
+    /// Code identifying the country
+    /// - TYPE=ID
+    /// - MIN=2
+    /// - MAX=3
     pub _05: Option<String>,
     pub _06: Option<String>,
     pub _07: Option<String>,
@@ -2354,12 +2980,80 @@ pub struct S5 {
 pub struct S9 {
     pub _01: String,
     pub _02: Option<String>,
+    /// 19 - City Name
+    /// 
+    /// Free-form text for city name
+    /// - TYPE=AN
+    /// - MIN=2
+    /// - MAX=30
     pub _03: String,
     pub _04: String,
+    /// 26 - Country Code
+    /// 
+    /// Code identifying the country
+    /// - TYPE=ID
+    /// - MIN=2
+    /// - MAX=3
     pub _05: Option<String>,
     pub _06: String,
     pub _07: Option<String>,
     pub _08: Option<String>,
+}
+
+/// SDQ - Destination Quantity
+/// 
+/// To specify destination and quantity detail
+/// 
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 355 | Unit or Basis for Measurement Code | 1 | M | ID | 2/2
+/// 02 | 66 | Identification Code Qualifier | 1 | O | ID | 1/2
+/// 03 | 67 | Identification Code | 1 | M | AN | 2/80
+/// 04 | 380 | Quantity | 1 | M | R | 1/15
+/// 05 | 67 | Identification Code | 1 | X | AN | 2/80
+/// 06 | 380 | Quantity | 1 | X | R | 1/15
+/// 07 | 67 | Identification Code | 1 | X | AN | 2/80
+/// 08 | 380 | Quantity | 1 | X | R | 1/15
+/// 09 | 67 | Identification Code | 1 | X | AN | 2/80
+/// 10 | 380 | Quantity | 1 | X | R | 1/15
+/// 11 | 67 | Identification Code | 1 | X | AN | 2/80
+/// 12 | 380 | Quantity | 1 | X | R | 1/15
+/// 13 | 67 | Identification Code | 1 | X | AN | 2/80
+/// 14 | 380 | Quantity | 1 | X | R | 1/15
+/// 15 | 67 | Identification Code | 1 | X | AN | 2/80
+/// 16 | 380 | Quantity | 1 | X | R | 1/15
+/// 17 | 67 | Identification Code | 1 | X | AN | 2/80
+/// 18 | 380 | Quantity | 1 | X | R | 1/15
+/// 19 | 67 | Identification Code | 1 | X | AN | 2/80
+/// 20 | 380 | Quantity | 1 | X | R | 1/15
+/// 21 | 67 | Identification Code | 1 | X | AN | 2/80
+/// 22 | 380 | Quantity | 1 | X | R | 1/15
+/// 23 | 310 | Location Identifier | 1 | O/Z | AN | 1/30
+#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+pub struct SDQ {
+    pub _01: String,
+    pub _02: Option<String>,
+    pub _03: String,
+    pub _04: String,
+    pub _05: Option<String>,
+    pub _06: Option<String>,
+    pub _07: Option<String>,
+    pub _08: Option<String>,
+    pub _09: Option<String>,
+    pub _10: Option<String>,
+    pub _11: Option<String>,
+    pub _12: Option<String>,
+    pub _13: Option<String>,
+    pub _14: Option<String>,
+    pub _15: Option<String>,
+    pub _16: Option<String>,
+    pub _17: Option<String>,
+    pub _18: Option<String>,
+    pub _19: Option<String>,
+    pub _20: Option<String>,
+    pub _21: Option<String>,
+    pub _22: Option<String>,
+    pub _23: Option<String>,
 }
 
 /// SE - Transaction Set Trailer
@@ -2371,7 +3065,19 @@ pub struct S9 {
 /// 02 | 329 | Transaction Set Control Number | 1 | M | AN | 4/9
 #[derive(Serialize, Deserialize, Clone, Default, Debug)]
 pub struct SE {
+    /// 96 - Number of Included Segments
+    /// 
+    /// Total number of segments included in a transaction set including ST and SE segments
+    /// - TYPE=N0
+    /// - MIN=1
+    /// - MAX=10
     pub _01: String,
+    /// 329 - Transaction Set Control Number
+    /// 
+    /// Identifying control number that must be unique within the transaction set functional group assigned by the originator for a transaction set
+    /// - TYPE=AN
+    /// - MIN=4
+    /// - MAX=9
     pub _02: String,
 }
 
@@ -2405,7 +3111,39 @@ pub struct SG {
     /// - MIN=4
     /// - MAX=8
     pub _05: String,
+    /// 623 - Time Code
+    /// 
+    /// Code identifying the time. In accordance with International Standards Organization standard 8601, time can be specified by a + or - and an indication in hours in relation to Universal Time Coordinate (UTC) time; since + is a restricted character, + and - are substituted by P and M in the codes that follow
+    /// - TYPE=ID
+    /// - MIN=2
+    /// - MAX=2
     pub _06: Option<String>,
+}
+
+/// SPO - Shipment Purchase Order Detail
+/// 
+/// To specify the purchase order details for a shipment
+/// 
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 324 | Purchase Order Number | 1 | M | AN | 1/22
+/// 02 | 127 | Reference Identification | 1 | O/Z | AN | 1/30
+/// 03 | 355 | Unit or Basis for Measurement Code | 1 | X | ID | 2/2
+/// 04 | 380 | Quantity | 1 | X/Z | R | 1/15
+/// 05 | 188 | Weight Unit Code | 1 | X | ID | 1/1
+/// 06 | 81 | Weight | 1 | X/Z | R | 1/10
+/// 07 | 647 | Application Error Condition Code | 1 | O/Z | ID | 1/3
+/// 08 | 127 | Reference Identification | 1 | O/Z | AN | 1/30
+#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+pub struct SPO {
+    pub _01: String,
+    pub _02: Option<String>,
+    pub _03: Option<String>,
+    pub _04: Option<String>,
+    pub _05: Option<String>,
+    pub _06: Option<String>,
+    pub _07: Option<String>,
+    pub _08: Option<String>,
 }
 
 /// ST - Transaction Set Header
@@ -2440,8 +3178,20 @@ pub struct ST {
 pub struct T1 {
     pub _01: String,
     pub _02: Option<String>,
+    /// 373 - Date
+    ///
+    /// Date expressed as CCYYMMDD where CC represents the first two digits of the calendar year
+    /// - TYPE=DT
+    /// - MIN=8
+    /// - MAX=8
     pub _03: Option<String>,
     pub _04: Option<String>,
+    /// 19 - City Name
+    /// 
+    /// Free-form text for city name
+    /// - TYPE=AN
+    /// - MIN=2
+    /// - MAX=30
     pub _05: Option<String>,
     pub _06: Option<String>,
     pub _07: Option<String>,
@@ -2477,7 +3227,19 @@ pub struct T2 {
     pub _06: Option<String>,
     pub _07: Option<String>,
     pub _08: Option<String>,
+    /// 19 - City Name
+    /// 
+    /// Free-form text for city name
+    /// - TYPE=AN
+    /// - MIN=2
+    /// - MAX=30
     pub _09: Option<String>,
+    /// 19 - City Name
+    /// 
+    /// Free-form text for city name
+    /// - TYPE=AN
+    /// - MIN=2
+    /// - MAX=30
     pub _10: Option<String>,
     pub _11: Option<String>,
     pub _12: Option<String>,
@@ -2501,6 +3263,12 @@ pub struct T3 {
     pub _01: String,
     pub _02: String,
     pub _03: Option<String>,
+    /// 19 - City Name
+    /// 
+    /// Free-form text for city name
+    /// - TYPE=AN
+    /// - MIN=2
+    /// - MAX=30
     pub _04: Option<String>,
     pub _05: Option<String>,
     pub _06: Option<String>,
@@ -2525,9 +3293,21 @@ pub struct T6 {
     pub _01: String,
     pub _02: Option<String>,
     pub _03: Option<String>,
+    /// 19 - City Name
+    /// 
+    /// Free-form text for city name
+    /// - TYPE=AN
+    /// - MIN=2
+    /// - MAX=30
     pub _04: Option<String>,
     pub _05: Option<String>,
     pub _06: Option<String>,
+    /// 19 - City Name
+    /// 
+    /// Free-form text for city name
+    /// - TYPE=AN
+    /// - MIN=2
+    /// - MAX=30
     pub _07: Option<String>,
 }
 
@@ -2564,6 +3344,12 @@ pub struct T8 {
 pub struct V1 {
     pub _01: Option<String>,
     pub _02: Option<String>,
+    /// 26 - Country Code
+    /// 
+    /// Code identifying the country
+    /// - TYPE=ID
+    /// - MIN=2
+    /// - MAX=3
     pub _03: Option<String>,
     pub _04: Option<String>,
     pub _05: Option<String>,
@@ -2628,14 +3414,32 @@ pub struct V9 {
     /// - MIN=4
     /// - MAX=8
     pub _04: Option<String>,
+    /// 19 - City Name
+    /// 
+    /// Free-form text for city name
+    /// - TYPE=AN
+    /// - MIN=2
+    /// - MAX=30
     pub _05: Option<String>,
     pub _06: Option<String>,
+    /// 26 - Country Code
+    /// 
+    /// Code identifying the country
+    /// - TYPE=ID
+    /// - MIN=2
+    /// - MAX=3
     pub _07: Option<String>,
     pub _08: Option<String>,
     pub _09: Option<String>,
     pub _10: Option<String>,
     pub _11: Option<String>,
     pub _12: Option<String>,
+    /// 623 - Time Code
+    /// 
+    /// Code identifying the time. In accordance with International Standards Organization standard 8601, time can be specified by a + or - and an indication in hours in relation to Universal Time Coordinate (UTC) time; since + is a restricted character, + and - are substituted by P and M in the codes that follow
+    /// - TYPE=ID
+    /// - MIN=2
+    /// - MAX=2
     pub _13: Option<String>,
     pub _14: Option<String>,
     pub _15: Option<String>,
@@ -2710,6 +3514,12 @@ pub struct W2 {
     pub _06: Option<String>,
     pub _07: Option<String>,
     pub _08: Option<String>,
+    /// 373 - Date
+    ///
+    /// Date expressed as CCYYMMDD where CC represents the first two digits of the calendar year
+    /// - TYPE=DT
+    /// - MIN=8
+    /// - MAX=8
     pub _09: Option<String>,
     pub _10: Option<String>,
     pub _11: Option<String>,
@@ -2784,6 +3594,12 @@ pub struct X1 {
     pub _04: Option<String>,
     pub _05: String,
     pub _06: String,
+    /// 26 - Country Code
+    /// 
+    /// Code identifying the country
+    /// - TYPE=ID
+    /// - MIN=2
+    /// - MAX=3
     pub _07: Option<String>,
     pub _08: Option<String>,
     pub _09: Option<String>,
@@ -2851,6 +3667,12 @@ pub struct Y7 {
     pub _02: Option<String>,
     pub _03: Option<String>,
     pub _04: Option<String>,
+    /// 373 - Date
+    ///
+    /// Date expressed as CCYYMMDD where CC represents the first two digits of the calendar year
+    /// - TYPE=DT
+    /// - MIN=8
+    /// - MAX=8
     pub _05: Option<String>,
 }
 

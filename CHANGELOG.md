@@ -1,3 +1,8 @@
+# 0.4.0 2022-05-29
+
+* added
+  * 004010/214
+
 # 0.3.0 2022-05-28
 
 * make loops into struct instead of seuqences
