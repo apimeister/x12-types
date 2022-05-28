@@ -13,6 +13,8 @@ So far, there is also no validation attached to the structs.
 
 ## Supported Bindings
 
+* 003030
+  * 998 - Set Cancellation
 * 004010
   * 204 - Motor Carrier Load Tender
   * 214 - Transportation Carrier Shipment Status Message
