@@ -15,6 +15,7 @@ So far, there is also no validation attached to the structs.
 
 * 004010
   * 315 - Status Details (Ocean)
+  * 322 - Terminal Operations and Intermodal Ramp Activity
   * 404 - Rail Carrier Shipment Information
   * 997 - Functional Acknowledgment
   * 998 - Set Cancellation

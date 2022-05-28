@@ -92,6 +92,80 @@ pub struct AK9 {
     pub _09: Option<String>,
 }
 
+/// AT5 - Bill of Lading Handling Requirements
+/// 
+/// To identify Bill of Lading handling and service requirements
+/// 
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|------|--------|----|------|-------
+/// 01 | 152 | Special Handling Code | 1 | X | ID | 2/3
+/// 02 | 560 | Special Services Code | 1 | X | ID | 2/10
+/// 03 | 153 | Special Handling Description | 1 | X | AN | 2/30
+#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+pub struct AT5 {
+    pub _01: Option<String>,
+    pub _02: Option<String>,
+    pub _03: Option<String>,
+}
+
+/// AT8 - Shipment Weight, Packaging and Quantity Data
+/// 
+/// To specify shipment details in terms of weight, and quantity of handling units
+/// 
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|------|--------|----|------|-------
+/// 01 | 187 | Weight Qualifier | 1 | X | ID | 1/2
+/// 02 | 188 | Weight Unit Code | 1 | X | ID | 1/1
+/// 03 | 81 | Weight | 1 | X | R | 1/10
+/// 04 | 80 | Lading Quantity | 1 | O/Z | N0 | 1/7
+/// 05 | 80 | Lading Quantity | 1 | O/Z | N0 | 1/7
+/// 06 | 184 | Volume Unit Qualifier | 1 | X | ID | 1/1
+/// 07 | 183 | Volume | 1 | X | R | 1/8
+#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+pub struct AT8 {
+    pub _01: Option<String>,
+    pub _02: Option<String>,
+    pub _03: Option<String>,
+    pub _04: Option<String>,
+    pub _05: Option<String>,
+    pub _06: Option<String>,
+    pub _07: Option<String>,
+}
+
+/// B2 - Beginning Segment for Shipment Information Transaction
+/// 
+/// To transmit basic data relating to shipment information
+/// 
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|------|--------|----|------|-------
+/// 01 | 375 | Tariff Service Code | 1 | O | ID | 2/2
+/// 02 | 140 | Standard Carrier Alpha Code | 1 | O/Z | ID | 2/4
+/// 03 | 154 | Standard Point Location Code | 1 | O | ID | 6/9
+/// 04 | 145 | Shipment Identification Number | 1 | O | AN | 1/30
+/// 05 | 188 | Weight Unit Code | 1 | O | ID | 1/1
+/// 06 | 146 | Shipment Method of Payment | 1 | M | ID | 2/2
+/// 07 | 147 | Shipment Qualifier | 1 | O | ID | 1/1
+/// 08 | 86 | Total Equipment | 1 | O | N0 | 1/3
+/// 09 | 460 | Shipment Weight Code | 1 | O | ID | 1/1
+/// 10 | 501 | Customs Documentation Handling Code | 1 | O | ID | 2/2
+/// 11 | 335 | Transportation Terms Code | 1 | O/Z | ID | 3/3
+/// 12 | 591 | Payment Method Code | 1 | O | ID | 3/3
+#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+pub struct B2 {
+    pub _01: Option<String>,
+    pub _02: Option<String>,
+    pub _03: Option<String>,
+    pub _04: Option<String>,
+    pub _05: Option<String>,
+    pub _06: String,
+    pub _07: Option<String>,
+    pub _08: Option<String>,
+    pub _09: Option<String>,
+    pub _10: Option<String>,
+    pub _11: Option<String>,
+    pub _12: Option<String>,
+}
+
 /// B4 - Beginning Segment for Inquiry or Reply
 ///
 /// To transmit identifying numbers, dates, and other basic data relating to the transaction set
@@ -138,6 +212,20 @@ pub struct B4 {
     pub _11: Option<String>,
     pub _12: Option<String>,
     pub _13: Option<String>,
+}
+
+/// B2A - Set Purpose
+/// 
+/// To allow for positive identification of transaction set purpose
+/// 
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|------|--------|----|------|-------
+/// 01 | 353 | Transaction Set Purpose Code | 1 | M | ID | 2/2
+/// 02 | 346 | Application Type | 1 | O | ID | 2/2
+#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+pub struct B2A {
+    pub _01: String,
+    pub _02: Option<String>,
 }
 
 /// BL - Billing Information
@@ -461,6 +549,46 @@ pub struct F9 {
     pub _12: Option<String>,
 }
 
+/// G61 - Contact
+/// 
+/// To identify a person or office to whom communications should be directed
+/// 
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|------|--------|----|------|-------
+/// 01 | 366 | Contact Function Code | 1 | M | ID | 2/2
+/// 02 | 93 | Name | 1 | M | AN | 1/60
+/// 03 | 365 | Communication Number Qualifier | 1 | X | ID | 2/2
+/// 04 | 364 | Communication Number | 1 | X | AN | 1/80
+/// 05 | 443 | Contact Inquiry Reference | 1 | O | AN | 1/20
+#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+pub struct G61 {
+    pub _01: String,
+    pub _02: String,
+    pub _03: Option<String>,
+    pub _04: Option<String>,
+    pub _05: Option<String>,
+}
+
+/// G62 - Date/Time
+/// 
+/// To specify pertinent dates and times
+/// 
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|------|--------|----|------|-------
+/// 01 | 432 | Date Qualifier | 1 | X | ID | 2/2
+/// 02 | 373 | Date | 1 | X | DT | 8/8
+/// 03 | 176 | Time Qualifier | 1 | X | ID | 1/2
+/// 04 | 337 | Time | 1 | X | TM | 4/8
+/// 05 | 623 | Time Code | 1 | O | ID | 2/2
+#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+pub struct G62 {
+    pub _01: Option<String>,
+    pub _02: Option<String>,
+    pub _03: Option<String>,
+    pub _04: Option<String>,
+    pub _05: Option<String>,
+}
+
 /// GA - Canadian Grain Information
 /// 
 /// To transmit the transportation and distribution requirements of grain at Canadian ports
@@ -518,6 +646,26 @@ pub struct GE {
     pub _02: String,
 }
 
+/// GR5 - Loading Details
+/// 
+/// To provide loading details for equipment
+/// 
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|------|--------|----|------|-------
+/// 01 | 152 | Special Handling Code | 1 | M | ID | 2/3
+/// 02 | 752 | Surface/Layer/Position Code | 1 | X | ID | 2/2
+/// 03 | 739 | Measurement Value | 1 | X | R | 1/20
+/// 04 | 355 | Unit or Basis for Measurement Code | 1 | X | ID | 2/2
+/// 05 | 641 | Status Reason Code | 1 | O | ID | 3/3
+#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+pub struct GR5 {
+    pub _01: String,
+    pub _02: Option<String>,
+    pub _03: Option<String>,
+    pub _04: Option<String>,
+    pub _05: Option<String>,
+}
+
 /// GS - Functional Group Header
 ///
 /// To indicate the beginning of a functional group and to provide control information
@@ -553,6 +701,34 @@ pub struct GS {
     pub _06: String,
     pub _07: String,
     pub _08: String,
+}
+
+/// H1 - Hazardous Material
+/// 
+/// To specify information relative to hazardous material
+/// 
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|------|--------|----|------|-------
+/// 01 | 62 | Hazardous Material Code | 1 | M | AN | 4/10
+/// 02 | 209 | Hazardous Material Class Code | 1 | O | AN | 1/4
+/// 03 | 208 | Hazardous Material Code Qualifier | 1 | O | ID | 1/1
+/// 04 | 64 | Hazardous Material Description | 1 | O | AN | 2/30
+/// 05 | 63 | Hazardous Material Contact | 1 | O | AN | 1/24
+/// 06 | 200 | Hazardous Materials Page | 1 | O | AN | 1/6
+/// 07 | 77 | Flashpoint Temperature | 1 | X | N | 1/3
+/// 08 | 355 | Unit or Basis for Measurement Code | 1 | X | ID | 2/2
+/// 09 | 254 | Packing Group Code | 1 | O | ID | 1/3
+#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+pub struct H1 {
+    pub _01: String,
+    pub _02: Option<String>,
+    pub _03: Option<String>,
+    pub _04: Option<String>,
+    pub _05: Option<String>,
+    pub _06: Option<String>,
+    pub _07: Option<String>,
+    pub _08: Option<String>,
+    pub _09: Option<String>,
 }
 
 /// H3 - Special Handling Instructions
@@ -679,6 +855,20 @@ pub struct ISA {
     pub _14: String,
     pub _15: String,
     pub _16: String,
+}
+
+/// K1 - Remarks
+/// 
+/// To transmit information in a free-form format for comment or special instruction
+/// 
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 61 | Free-Form Message | 1 | M | AN | 1/30
+/// 02 | 61 | Free-Form Message | 1 | O | AN | 1/30
+#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+pub struct K1 {
+    pub _01: String,
+    pub _02: Option<String>,
 }
 
 /// L0 - Line Item - Quantity and Weight
@@ -840,6 +1030,58 @@ pub struct L5 {
     pub _08: Option<String>,
     pub _09: Option<String>,
     pub _10: Option<String>,
+}
+
+/// L11 - Business Instructions and Reference Number
+/// 
+/// To specify instructions in this business relationship or a reference number
+/// 
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 127 | Reference Identification | 1 | X | AN | 1/30
+/// 02 | 128 | Reference Identification Qualifier | 1 | X | ID | 2/3
+/// 03 | 352 | Description | 1 | X | AN | 1/80
+#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+pub struct L11 {
+    pub _01: Option<String>,
+    pub _02: Option<String>,
+    pub _03: Option<String>,
+}
+
+/// LAD - Lading Detail
+/// 
+/// To transmit detailed lading data pertinent to a pickup or delivery
+/// 
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 211 | Packaging Form Code | 1 | X | ID | 3/3
+/// 02 | 80 | Lading Quantity | 1 | X | N0 | 1/7
+/// 03 | 188 | Weight Unit Code | 1 | X | ID | 1/1
+/// 04 | 395 | Unit Weight | 1 | X | R | 1/8
+/// 05 | 188 | Weight Unit Code | 1 | X | ID | 1/1
+/// 06 | 81 | Weight | 1 | X | R | 1/10
+/// 07 | 235 | Product/Service ID Qualifier | 1 | X | ID | 2/2
+/// 08 | 234 | Product/Service ID | 1 | X | AN | 1/48
+/// 09 | 235 | Product/Service ID Qualifier | 1 | X | ID | 2/2
+/// 10 | 234 | Product/Service ID | 1 | X | AN | 1/48
+/// 11 | 235 | Product/Service ID Qualifier | 1 | X | ID | 2/2
+/// 12 | 234 | Product/Service ID | 1 | X | AN | 1/48
+/// 13 | 79 | Lading Description | 1 | O | AN | 1/50
+#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+pub struct LAD {
+    pub _01: Option<String>,
+    pub _02: Option<String>,
+    pub _03: Option<String>,
+    pub _04: Option<String>,
+    pub _05: Option<String>,
+    pub _06: Option<String>,
+    pub _07: Option<String>,
+    pub _08: Option<String>,
+    pub _09: Option<String>,
+    pub _10: Option<String>,
+    pub _11: Option<String>,
+    pub _12: Option<String>,
+    pub _13: Option<String>,
 }
 
 /// LE - Loop Trailer
@@ -1219,6 +1461,26 @@ pub struct MEA {
     pub _10: Option<String>,
 }
 
+/// MS3 - Interline Information
+/// 
+/// To identify the interline carrier and relevant data
+/// 
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 140 | Standard Carrier Alpha Code | 1 | M/Z | ID | 2/4
+/// 02 | 133 | Routing Sequence Code | 1 | M | ID | 1/2
+/// 03 | 19 | City Name | 1 | X/Z | AN | 2/30
+/// 04 | 91 | Transportation Method/Type Code | 1 | O | ID | 1/2
+/// 05 | 156 | State or Province Code NEW | 1 | O | ID | 2/2
+#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+pub struct MS3 {
+    pub _01: String,
+    pub _02: String,
+    pub _03: Option<String>,
+    pub _04: Option<String>,
+    pub _05: Option<String>,
+}
+
 /// N1 - Name
 /// 
 /// To identify a party by type of organization, name, and code
@@ -1448,6 +1710,56 @@ pub struct N10 {
     pub _13: Option<String>,
 }
 
+/// N7A - Accessorial Equipment Details
+/// 
+/// To identify the accessorial equipment required to load or unload product
+/// 
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 1042 | Load or Device Code | 1 | O | ID | 2/2
+/// 02 | 82 | Length | 1 | O/Z | R | 1/8
+/// 03 | 1043 | Diameter | 1 | O/Z | R | 1/2
+/// 04 | 1044 | Hose Type Code | 1 | O | ID | 3/3
+/// 05 | 1043 | Diameter | 1 | O/Z | R | 1/2
+/// 06 | 1043 | Diameter | 1 | O/Z | R | 1/2
+/// 07 | 1045 | Inlet or Outlet Material Type Code | 1 | O | ID | 2/2
+/// 08 | 1046 | Inlet or Outlet Fitting Type Code | 1 | O | ID | 2/2
+/// 09 | 1047 | Miscellaneous Equipment Code | 1 | O | ID | 2/2
+#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+pub struct N7A {
+    pub _01: Option<String>,
+    pub _02: Option<String>,
+    pub _03: Option<String>,
+    pub _04: Option<String>,
+    pub _05: Option<String>,
+    pub _06: Option<String>,
+    pub _07: Option<String>,
+    pub _08: Option<String>,
+    pub _09: Option<String>,
+}
+
+/// N7B - Additional Equipment Details
+/// 
+/// To identify additional equipment details
+/// 
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 1024 | Number of Tank Compartments | 1 | O | N0 | 1/2
+/// 02 | 1025 | Loading or Discharge Location Code | 1 | O | ID | 1/1
+/// 03 | 1026 | Vessel Material Code | 1 | O | ID | 3/3
+/// 04 | 1030 | Gasket Type Code | 1 | O | ID | 3/3
+/// 05 | 1031 | Trailer Lining Type Code | 1 | O | ID | 3/3
+/// 06 | 127 | Reference Identification | 1 | O/Z | AN | 1/30
+#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+pub struct N7B {
+    pub _01: Option<String>,
+    pub _02: Option<String>,
+    pub _03: Option<String>,
+    pub _04: Option<String>,
+    pub _05: Option<String>,
+    pub _06: Option<String>,
+}
+
 /// NA - Cross-Reference Equipment
 /// 
 /// To cross-reference additional equipment to a primary piece of equipment
@@ -1478,6 +1790,48 @@ pub struct NA {
     pub _09: Option<String>,
     pub _10: Option<String>,
     pub _11: Option<String>,
+}
+
+/// NTE - Note/Special Instruction
+/// 
+/// To transmit information in a free-form format, if necessary, for comment or special instruction
+/// 
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 363 | Note Reference Code | 1 | O | ID | 3/3
+/// 02 | 352 | Description | 1 | M | AN | 1/80
+#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+pub struct NTE {
+    pub _01: Option<String>,
+    pub _02: String,
+}
+
+/// OID - Order Identification Detail NEW
+/// 
+/// To specify order identification detail
+/// 
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 127 | Reference Identification | 1 | X/Z | AN | 1/30
+/// 02 | 324 | Purchase Order Number | 1 | X | AN | 1/22
+/// 03 | 127 | Reference Identification | 1 | O/Z | AN | 1/30
+/// 04 | 355 | Unit or Basis for Measurement Code | 1 | X | ID | 2/2
+/// 05 | 380 | Quantity | 1 | X | R | 1/15
+/// 06 | 188 | Weight Unit Code | 1 | X | ID | 1/1
+/// 07 | 81 | Weight | 1 | X | R | 1/10
+/// 08 | 184 | Volume Unit Qualifier | 1 | X | ID | 1/1
+/// 09 | 183 | Volume | 1 | X | R | 1/8
+#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+pub struct OID {
+    pub _01: Option<String>,
+    pub _02: Option<String>,
+    pub _03: Option<String>,
+    pub _04: Option<String>,
+    pub _05: Option<String>,
+    pub _06: Option<String>,
+    pub _07: Option<String>,
+    pub _08: Option<String>,
+    pub _09: Option<String>,
 }
 
 /// PER - Administrative Communications Contact
@@ -1546,6 +1900,24 @@ pub struct PI {
     pub _13: Option<String>,
     pub _14: Option<String>,
     pub _15: Option<String>,
+}
+
+/// PLD - Pallet Information NEW
+/// 
+/// To specify pallet information including quantity, exchange, and weight
+/// 
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 406 | Quantity of Pallets Shipped | 1 | M | N0 | 1/3
+/// 02 | 399 | Pallet Exchange Code | 1 | O | ID | 1/1
+/// 03 | 188 | Weight Unit Code | 1 | X | ID | 1/1
+/// 04 | 81 | Weight | 1 | X | R | 1/10
+#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+pub struct PLD {
+    pub _01: String,
+    pub _02: Option<String>,
+    pub _03: Option<String>,
+    pub _04: Option<String>,
 }
 
 /// PS - Protective Service Instructions
@@ -1646,6 +2018,52 @@ pub struct Q2 {
     pub _16: Option<String>,
 }
 
+/// Q5 - Status Details
+/// 
+/// To specify the status of the shipment in terms of dates, time, reference numbers, and location
+/// 
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 157 | Shipment Status Code | 1 | O | ID | 1/2
+/// 02 | 373 | Date | 1 | O/Z | DT | 8/8
+/// 03 | 337 | Time | 1 | X/Z | TM | 4/8
+/// 04 | 623 | Time Code | 1 | X | ID | 2/2
+/// 05 | 641 | Status Reason Code | 1 | O | ID | 3/3
+/// 06 | 19 | City Name | 1 | X | AN | 2/30
+/// 07 | 156 | State or Province Code | 1 | O | ID | 2/2
+/// 08 | 26 | Country Code | 1 | O | ID | 2/3
+/// 09 | 206 | Equipment Initial | 1 | O | AN | 1/4
+/// 10 | 207 | Equipment Number | 1 | O | AN | 1/10
+/// 11 | 128 | Reference Identification Qualifier | 1 | X | ID | 2/3
+/// 12 | 127 | Reference Identification | 1 | X | AN | 1/30
+/// 13 | 1280 | Direction Identifier Code | 1 | O/Z | ID | 1/1
+/// 14 | 128 | Reference Identification Qualifier | 1 | X | ID | 2/3
+/// 15 | 127 | Reference Identification | 1 | X | AN | 1/30
+/// 16 | 1280 | Direction Identifier Code | 1 | O/Z | ID | 1/1
+/// 17 | 954 | Percent | 1 | O/Z | R | 1/10
+/// 18 | 108 | Pick-up or Delivery Code | 1 | O | ID | 1/2
+#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+pub struct Q5 {
+    pub _01: Option<String>,
+    pub _02: Option<String>,
+    pub _03: Option<String>,
+    pub _04: Option<String>,
+    pub _05: Option<String>,
+    pub _06: Option<String>,
+    pub _07: Option<String>,
+    pub _08: Option<String>,
+    pub _09: Option<String>,
+    pub _10: Option<String>,
+    pub _11: Option<String>,
+    pub _12: Option<String>,
+    pub _13: Option<String>,
+    pub _14: Option<String>,
+    pub _15: Option<String>,
+    pub _16: Option<String>,
+    pub _17: Option<String>,
+    pub _18: Option<String>,
+}
+
 /// R2 - Route Information
 /// 
 /// To specify carrier and routing sequences and details
@@ -1744,7 +2162,7 @@ pub struct R9 {
 /// 01 | 128 | Reference Identification Qualifier | 1 | M | ID | 2/3
 /// 02 | 127 | Reference Identification | 1 | X | AN | 1/30
 /// 03 | 352 | Description | 1 | X | AN | 1/80
-/// 04 | C040 | Reference Identifier | 1 | O/Z	
+/// 04 | C040 | Reference Identifier | 1 | O/Z
 #[derive(Serialize, Deserialize, Clone, Default, Debug)]
 pub struct REF {
     pub _01: String,
@@ -1789,6 +2207,38 @@ pub struct S2 {
     pub _01: String,
     pub _02: String,
     pub _03: Option<String>,
+}
+
+/// S5 - Stop Off Details
+/// 
+/// To specify stop-off detail reference numbers and stop reason
+/// 
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 165 | Stop Sequence Number | 1 | M | N0 | 1/3
+/// 02 | 163 | Stop Reason Code | 1 | M | ID | 2/2
+/// 03 | 81 | Weight | 1 | X | R | 1/10
+/// 04 | 188 | Weight Unit Code | 1 | X | ID | 1/1
+/// 05 | 382 | Number of Units Shipped | 1 | X | R | 1/10
+/// 06 | 355 | Unit or Basis for Measurement Code | 1 | X | ID | 2/2
+/// 07 | 183 | Volume | 1 | X | R | 1/8
+/// 08 | 184 | Volume Unit Qualifier | 1 | X | ID | 1/1
+/// 09 | 352 | Description | 1 | O/Z | AN | 1/80
+/// 10 | 154 | Standard Point Location Code | 1 | O | ID | 6/9
+/// 11 | 190 | Accomplish Code | 1 | O | ID | 1/1
+#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+pub struct S5 {
+    pub _01: String,
+    pub _02: String,
+    pub _03: Option<String>,
+    pub _04: Option<String>,
+    pub _05: Option<String>,
+    pub _06: Option<String>,
+    pub _07: Option<String>,
+    pub _08: Option<String>,
+    pub _09: Option<String>,
+    pub _10: Option<String>,
+    pub _11: Option<String>,
 }
 
 /// S9 - Stop-off Station
@@ -2000,6 +2450,46 @@ pub struct T8 {
     pub _02: String,
 }
 
+/// V1 - Vessel Identification
+/// 
+/// To provide vessel details and voyage number
+/// 
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 597 | Vessel Code | 1 | X | ID | 1/8
+/// 02 | 182 | Vessel Name | 1 | X | AN | 2/28
+/// 03 | 26 | Country Code | 1 | O/Z | ID | 2/3
+/// 04 | 55 | Flight/Voyage Number | 1 | O | AN | 2/10
+/// 05 | 140 | Standard Carrier Alpha Code | 1 | O/Z | ID | 2/4
+/// 06 | 249 | Vessel Requirement Code | 1 | O | ID | 1/1
+/// 07 | 854 | Vessel Type Code | 1 | O | ID | 2/2
+/// 08 | 897 | Vessel Code Qualifier | 1 | O | ID | 1/1
+/// 09 | 91 | Transportation Method/Type Code | 1 | O | ID | 1/2
+#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+pub struct V1 {
+    pub _01: Option<String>,
+    pub _02: Option<String>,
+    pub _03: Option<String>,
+    pub _04: Option<String>,
+    pub _05: Option<String>,
+    pub _06: Option<String>,
+    pub _07: Option<String>,
+    pub _08: Option<String>,
+    pub _09: Option<String>,
+}
+
+/// V4 - Cargo Location Reference
+/// 
+/// To specify the cargo location on board the vessel
+/// 
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 877 | Vessel Stowage Location | 1 | M | AN | 1/12
+#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+pub struct V4 {
+    pub _01: String,
+}
+
 /// V9 - Event Detail
 ///
 /// To specify information about a specific event
@@ -2093,6 +2583,76 @@ pub struct VC {
     pub _11: Option<String>,
 }
 
+/// W2 - Equipment Identification
+/// 
+/// To identify equipment and the commodity being carried
+/// 
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 206 | Equipment Initial | 1 | M | AN | 1/4
+/// 02 | 207 | Equipment Number | 1 | M | AN | 1/10
+/// 03 | 22 | Commodity Code | 1 | O/Z | AN | 1/30
+/// 04 | 40 | Equipment Description Code | 1 | M | ID | 2/2
+/// 05 | 578 | Equipment Status Code | 1 | M | ID | 1/2
+/// 06 | 577 | Net Tons | 1 | O | N0 | 1/3
+/// 07 | 177 | Intermodal Service Code | 1 | O | ID | 1/2
+/// 08 | 240 | Car Service Order Code | 1 | O | ID | 3/5
+/// 09 | 373 | Date | 1 | X/Z | DT | 8/8
+/// 10 | 502 | Type of Locomotive Maintenance Code | 1 | X | AN | 2/2
+/// 11 | 206 | Equipment Initial | 1 | X | AN | 1/4
+/// 12 | 207 | Equipment Number | 1 | X/Z | AN | 1/10
+/// 13 | 761 | Equipment Number Check Digit | 1 | O | N0 | 1/1
+/// 14 | 219 | Position | 1 | O | AN | 1/3
+/// 15 | 301 | Car Type Code | 1 | O | ID | 1/4
+/// 16 | 1073 | Yes/No Condition or Response Code | 1 | O/Z | ID | 1/1
+#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+pub struct W2 {
+    pub _01: String,
+    pub _02: String,
+    pub _03: Option<String>,
+    pub _04: String,
+    pub _05: String,
+    pub _06: Option<String>,
+    pub _07: Option<String>,
+    pub _08: Option<String>,
+    pub _09: Option<String>,
+    pub _10: Option<String>,
+    pub _11: Option<String>,
+    pub _12: Option<String>,
+    pub _13: Option<String>,
+    pub _14: Option<String>,
+    pub _15: Option<String>,
+    pub _16: Option<String>,
+}
+
+/// W09 - Equipment and Temperature
+/// 
+/// To relate equipment type and required temperatures
+/// 
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 40 | Equipment Description Code | 1 | M | ID | 2/2
+/// 02 | 408 | Temperature | 1 | X/Z | R | 1/4
+/// 03 | 355 | Unit or Basis for Measurement Code | 1 | X | ID | 2/2
+/// 04 | 408 | Temperature | 1 | X/Z | R | 1/4
+/// 05 | 355 | Unit or Basis for Measurement Code | 1 | X | ID | 2/2
+/// 06 | 3 | Free Form Message | 1 | O/Z | AN | 1/60
+/// 07 | 1122 | Vent Setting Code | 1 | O | ID | 1/1
+/// 08 | 488 | Percent | 1 | O/Z | N0 | 1/3
+/// 09 | 380 | Quantity | 1 | O/Z | R | 1/15
+#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+pub struct W09 {
+    pub _01: String,
+    pub _02: Option<String>,
+    pub _03: Option<String>,
+    pub _04: Option<String>,
+    pub _05: Option<String>,
+    pub _06: Option<String>,
+    pub _07: Option<String>,
+    pub _08: Option<String>,
+    pub _09: Option<String>,
+}
+
 /// X1 - Export License
 /// 
 /// To transmit information contained on an export license
@@ -2177,6 +2737,26 @@ pub struct XH {
     pub _05: Option<String>,
     pub _06: Option<String>,
     pub _07: Option<String>,
+}
+
+/// Y7 - Priority
+/// 
+/// To assign a priority to a booking which would increase the possibility that this cargo would be booked on said voyage and not be shut out
+/// 
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 467 | Priority | 1 | O | N0 | 1/1
+/// 02 | 470 | Priority Code | 1 | X | N0 | 1/1
+/// 03 | 471 | Priority Code Qualifier | 1 | X | AN | 1/1
+/// 04 | 468 | Port Call File Number | 1 | O | N0 | 4/4
+/// 05 | 373 | Date | 1 | O/Z | DT | 8/8
+#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+pub struct Y7 {
+    pub _01: Option<String>,
+    pub _02: Option<String>,
+    pub _03: Option<String>,
+    pub _04: Option<String>,
+    pub _05: Option<String>,
 }
 
 /// ZC1 - Beginning Segment For Data Correction Or Change

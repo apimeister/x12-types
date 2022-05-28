@@ -1,4 +1,5 @@
 #![allow(dead_code)]
+#![allow(clippy::large_enum_variant)]
 
 #[cfg(feature = "v003030")]
 pub mod v003030;

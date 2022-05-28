@@ -125,8 +125,8 @@ fn test_315() {
                     _16: None,
                 }),
                 sg: vec![],
-                loop_r4: vec![(
-                    R4 {
+                loop_r4: vec![_315LoopR4{
+                    r4: R4 {
                         _01: "L".to_string(),
                         _02: Some("UN".to_string()),
                         _03: Some("USMEM".to_string()),
@@ -136,9 +136,9 @@ fn test_315() {
                         _07: Some("".to_string()),
                         _08: Some("US".to_string()),
                     },
-                    None,
-                ),(
-                    R4 {
+                    dtm: None,
+                },_315LoopR4{
+                    r4: R4 {
                         _01: "E".to_string(),
                         _02: Some("UN".to_string()),
                         _03: Some("USDAL".to_string()),
@@ -148,8 +148,8 @@ fn test_315() {
                         _07: Some("".to_string()),
                         _08: Some("US".to_string()),
                     },
-                    None,
-                )],
+                    dtm: None,
+                }],
                 v9: None,
                 se: SE {
                     _01: "9".to_string(),
@@ -259,8 +259,8 @@ fn test_315_defaults() {
                     ..Default::default()
                 }),
                 sg: vec![],
-                loop_r4: vec![(
-                    R4 {
+                loop_r4: vec![_315LoopR4{
+                    r4: R4 {
                         _01: "L".to_string(),
                         _02: Some("UN".to_string()),
                         _03: Some("USMEM".to_string()),
@@ -269,9 +269,9 @@ fn test_315_defaults() {
                         _08: Some("US".to_string()),
                         ..Default::default()
                     },
-                    None,
-                ),(
-                    R4 {
+                    dtm: None,
+                },_315LoopR4{
+                    r4: R4 {
                         _01: "E".to_string(),
                         _02: Some("UN".to_string()),
                         _03: Some("USDAL".to_string()),
@@ -280,8 +280,8 @@ fn test_315_defaults() {
                         _08: Some("US".to_string()),
                         ..Default::default()
                     },
-                    None,
-                )],
+                    dtm: None,
+                }],
                 v9: None,
                 se: SE {
                     _01: "9".to_string(),
