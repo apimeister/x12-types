@@ -1,5 +1,7 @@
 # 0.4.0 2022-05-29
 
+* some more documentation
+* add segments as generic types
 * added
   * 004010/214
   * 003030/998

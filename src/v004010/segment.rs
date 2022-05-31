@@ -953,13 +953,26 @@ pub struct GA {
 /// GE - Functional Group Trailer
 ///
 /// To indicate the end of a functional group and to provide control information
+/// 
 /// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
 /// ----|----|-------|--------|----|------|-------
 /// 01 | 97 | Number of Transaction Sets Included | 1 | M | N0 | 1/6
 /// 02 | 28 | Group Control Number | 1 | M/Z | N0 | 1/9
 #[derive(Serialize, Deserialize, Clone, Default, Debug)]
 pub struct GE {
+    /// 97 - Number of Transaction Sets Included
+    /// 
+    /// Total number of transaction sets included in the functional group or interchange (transmission) group terminated by the trailer containing this data element
+    /// - TYPE=N0
+    /// - MIN=1
+    /// - MAX=6
     pub _01: String,
+    /// 28 - Group Control Number
+    /// 
+    /// Assigned number originated and maintained by the sender
+    /// - TYPE=N0
+    /// - MIN=1
+    /// - MAX=9
     pub _02: String,
 }
 
@@ -1113,6 +1126,7 @@ pub struct IM {
 /// IEA - Interchange Control Trailer
 ///
 /// To define the end of an interchange of zero or more functional groups and interchange-related control segments
+/// 
 /// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
 /// ----|----|-------|--------|----|------|-------
 /// 01 | I16 | Number of Included Functional Groups | 1 | M | N0 | 1/5
@@ -1120,10 +1134,18 @@ pub struct IM {
 #[derive(Serialize, Deserialize, Clone, Default, Debug)]
 pub struct IEA {
     /// I16 - Number of Included Functional Groups
+    /// 
     /// A count of the number of functional groups included in an interchange
+    /// - TYPE=N0
+    /// - MIN=1
+    /// - MAX=5
     pub _01: String,
     /// I12 - Interchange Control Number
+    /// 
     /// A control number assigned by the interchange sender
+    /// - TYPE=N0
+    /// - MIN=9
+    /// - MAX=9
     pub _02: String,
 }
 

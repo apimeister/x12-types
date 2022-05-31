@@ -14,7 +14,8 @@ serde = { version = "1.0", features = ["derive"] }
 validator = { version = "0.15", features = ["derive"] }
 
 [dev-dependencies]
-serde_x12 = { version = "0.2" }
+# serde_x12 = { version = "0.2" }
+serde_x12 = { path = "../serde_x12", features = ["debug"] }
 
 [features]
 default = ["v003030","v004010","v004030","v005030"]

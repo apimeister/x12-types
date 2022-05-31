@@ -9,28 +9,17 @@ pub use segment::*;
 mod test;
 
 #[derive(Serialize, Deserialize, Clone, Default, Debug)]
-pub struct Transmission {
+pub struct Transmission<T> {
     pub isa: ISA,
-    pub functional_group: Vec<FunctionalGroup>,
+    pub functional_group: Vec<FunctionalGroup<T>>,
     pub iea: IEA,
 }
 
 #[derive(Serialize, Deserialize, Clone, Default, Debug)]
-pub struct FunctionalGroup {
+pub struct FunctionalGroup<T> {
     pub gs: GS,
-    pub segments: Vec<Segments>,
+    pub segments: Vec<T>,
     pub ge: GE,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug)]
-pub enum Segments {
-    _204(_204),
-    _214(_214),
-    _315(_315),
-    _322(_322),
-    _404(_404),
-    _997(_997),
-    _998(_998),
 }
 
 /// 204 - Motor Carrier Load Tender
