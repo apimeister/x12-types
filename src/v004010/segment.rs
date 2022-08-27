@@ -1,4 +1,6 @@
 use serde::{Deserialize, Serialize};
+use serde_x12::Reflect;
+use serde_x12::Path;
 use validator::Validate;
 
 /// AK1 - Functional Group Response Header
@@ -1288,6 +1290,20 @@ pub struct ISA {
     /// - MIN=1
     /// - MAX=1
     pub _16: String,
+}
+
+impl Reflect for ISA {
+    fn get_path(last_path: &Path, next_segment: &str) -> Path {
+        return last_path.clone();
+    }
+
+    fn get_type_name() -> String {
+        "ISA".to_string()
+    }
+
+    fn is_leaf() -> bool {
+        false
+    }
 }
 
 /// K1 - Remarks
