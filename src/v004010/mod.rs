@@ -446,9 +446,267 @@ pub struct _214Loop0200Loop0260 {
     pub bin: BIN,
 }
 
+/// 309 - U.S. Customs Manifest
+/// 
+/// This Draft Standard for Trial Use contains the format and establishes the data contents of the U.S. Customs Manifest Transaction Set (309) for use within the context of an Electronic Data Interchange (EDI) environment. The transaction set can be used by carriers, terminal operators, port authorities, or service centers to provide U.S. Customs with manifest data on cargo arriving in or departing from the U.S. on oceangoing vessels, railroad trains, or other types of conveyances. The transaction set can be also used by carriers to provide terminal operators, port authorities, or service centers with manifest data on cargo arriving at their facilities via the conveyances mentioned above.
+/// POS | ID | NAME | REQ | MAX | REPEAT
+/// ----|----|------|-----|-----|-------
+/// 0010 | ST | Transaction Set Header | M | 1
+/// 0020 | M10 | Manifest Identifying Information | M | 1
+/// LOOP ID - P4 | 20
+/// P4 -> 0040 | P4 | U.S. Port Information | M | 1
+/// P4 -> LOOP ID - LX | 9999 |  
+/// P4 -> LX -> 0060 | LX | Assigned Number | M | 1
+/// P4 -> LX -> 0070 | M13 | Manifest Amendment Details | O | 1
+/// P4 -> LX -> 0080 | M11 | Manifest Bill of Lading Details | O | 1
+/// P4 -> LX -> 0085 | N9 | Reference Identification | O | 999
+/// P4 -> LX -> LOOP ID - N1 | 5 |   |  
+/// P4 -> LX -> N1 -> 0100 | N1 | Name | O | 1
+/// P4 -> LX -> N1 -> 0110 | N3 | Address Information | O | 2
+/// P4 -> LX -> N1 -> 0120 | N4 | Geographic Location | O | 1
+/// P4 -> LX -> N1 -> 0123 | DTM | Date/Time Reference | O | 1
+/// P4 -> LX -> N1 -> 0125 | PER | Administrative Communications Contact | O | 1
+/// P4 -> LX -> LOOP ID - M12 | 1 |   |  
+/// P4 -> LX -> M12 -> 0130 | M12 | In-bond Identifying Information | O | 1
+/// P4 -> LX -> M12 -> 0135 | P5 | Port Information | O | 5
+/// P4 -> LX -> LOOP ID - VID | 999 |   |  
+/// P4 -> LX -> VID -> 0150 | VID | Conveyance Identification | O | 1
+/// P4 -> LX -> VID -> 0155 | VC | Motor Vehicle Control | O | 21
+/// P4 -> LX -> VID -> LOOP ID - N10 | 999 |   |   |  
+/// P4 -> LX -> VID -> N10 -> 0160 | N10 | Quantity and Description | O | 1
+/// P4 -> LX -> VID -> N10 -> LOOP ID - H1 | 10 |   |   |   |  
+/// P4 -> LX -> VID -> N10 -> H1 -> 0165 | H1 | Hazardous Material | O | 1
+/// P4 -> LX -> VID -> N10 -> H1 -> 0166 | H2 | Additional Hazardous Material Description | O | 99
+/// 0200 | SE | Transaction Set Trailer | M | 1
+#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+pub struct _309 {
+    pub st: ST,
+    pub m10: M10,
+    pub loop_p4: Vec<_309LoopP4>,
+    pub se: SE,
+}
+
+#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+pub struct _309LoopP4 {
+    pub p4: P4,
+    pub loop_lx: Vec<_309LoopLX>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+pub struct _309LoopLX {
+    pub lx: LX,
+}
+
+/// 310 - Freight Receipt and Invoice (Ocean) 
+/// 
+/// This Draft Standard for Trial Use contains the format and establishes the data contents of the Freight Receipt and Invoice (Ocean) Transaction Set (310) for use within the context of an Electronic Data Interchange (EDI) environment. The transaction set can be used to provide ocean bill of lading information. It is sent by ocean carriers to interested parties and can be used as the receipt for the shipment; to substitute for a paper bill of lading where the parties have agreed that a paper bill of lading is not necessary; to allow shipper or forwarder to verify bill of lading information before an original is printed and released; for information purposes, i.e., as a bill of lading copy; by the carrier to convey manifest information to a terminal operator; and as an invoice for freight. 
+/// 
+/// POS | ID | NAME | REQ | MAX | REPEAT
+/// ----|----|------|-----|-----|-------
+/// 010 | ST | Transaction Set Header | M | 1 | 	
+/// 020 | B3 | Beginning Segment for Carrier's Invoice | M | 1 | 	
+/// 030 | B2A | Set Purpose | O | 1 | 	
+/// 040 | Y6 | Authentication | O | 2 | 	
+/// 050 | G3 | Compensation Information | O | 1 | 	
+/// 060 | N9 | Reference Identification | O | 15 | 	
+/// 070 | V1 | Vessel Identification | M | 2 | 	
+/// 080 | M0 | Letter of Credit Reference | O | 1 | 	
+/// 090 | M1 | Insurance | O | 5 | 	
+/// 100 | C2 | Bank ID | O | 1 | 	
+/// 110 | C3 | Currency | O | 1 | 	
+/// 120 | Y2 | Container Details | O | 10 | 	
+/// LOOP ID - N1 | 10
+/// N1 -> 130 | N1 | Name | M | 1 |  | 		 
+/// N1 -> 140 | N2 | Additional Name Information | O | 1 | 	 
+/// N1 -> 150 | N3 | Address Information | O | 2 | 
+/// N1 -> 160 | N4 | Geographic Location | O | 1 
+/// 170 | G61 | Contact | O | 3 |
+/// LOOP ID - R4 | 20
+/// R4 -> 180 | R4 | Port or Terminal | M | 1 |  | 		 
+/// R4 -> 190 | DTM | Date/Time Reference | O | 15
+/// 199 | R2A | Route Information with Preference | O | 25 | 	
+/// 200 | R2 | Route Information | O | 13 | 	
+/// 210 | K1 | Remarks | O | 12 | 	
+/// 220 | H3 | Special Handling Instructions | O | 6 | 	
+/// 230 | L5 | Description, Marks and Numbers | O | 1 |
+/// LOOP ID - C8 | 20
+/// C8 -> 240 | C8 | Certifications and Clauses | O | 1 |  | 		 
+/// C8 -> 250 | C8C| Certifications Clauses Continuation | O | 5
+/// LOOP ID - LX | 999
+/// LX -> 010 | LX | Assigned Number | M | 1 | 
+/// LX -> LOOP ID - N7 | 999
+/// LX -> N7 -> 020 | N7 | Equipment Details | O | 1 | 
+/// LX -> N7 -> 025 | QTY | Quantity | O | 1 | 
+/// LX -> N7 -> 030 | V4 | Cargo Location Reference | O | 1 | 
+/// LX -> N7 -> 040 | N12 | Equipment Environment | O | 1 | 
+/// LX -> N7 -> 050 | M7 | Seal Numbers | O | 5 | 
+/// LX -> N7 -> 060 | W09 | Equipment and Temperature | O | 1 | 
+/// LX -> N7 -> LOOP ID - L1 | 20
+/// LX -> N7 -> L1 -> 070 | L1 | Rate and Charges | O | 1 | 
+/// LX -> N7 -> L1 -> 080 | C3 | Currency | O | 1 | 
+/// LX -> N7 -> 090 | L7 | Tariff Reference | O | 1 | 
+/// LX -> N7 -> 100 | X1 | Export License | O | 1 | 
+/// LX -> N7 -> 110 | X2 | Import License | O | 1 | 
+/// LX -> N7 -> 120 | N9 | Reference Identification | O | 3 | 
+/// LX -> N7 -> LOOP ID - H1 | 10
+/// LX -> N7 -> H1 -> 130 | H1 | Hazardous Material | O | 1 | 
+/// LX -> N7 -> H1 -> 140 | H2 | Additional Hazardous Material Description | O | 10 | 
+/// LX -> LOOP ID - L0 | 120
+/// LX -> L0 -> 150 | L0 | Line Item - Quantity and Weight | O | 1 | 
+/// LX -> L0 -> 160 | L5 | Description, Marks and Numbers | O | 999 | 
+/// LX -> L0 ->  |  | LOOP ID - L1 | 20
+/// LX -> L0 -> L1 -> 170 | L1 | Rate and Charges | O | 1 | 
+/// LX -> L0 -> L1 -> 180 | C3 | Currency | O | 1 | 
+/// LX -> L0 -> 190 | L7 | Tariff Reference | O | 1 | 
+/// LX -> L0 -> 200 | X1 | Export License | O | 1 | 
+/// LX -> L0 -> 210 | X2 | Import License | O | 1 | 
+/// LX -> L0 -> LOOP ID - C8 | 20
+/// LX -> L0 -> C8 -> 220 | C8 | Certifications and Clauses | O | 1 | 
+/// LX -> L0 -> C8C -> 221 | C8C | Certifications Clauses Continuation | O | 5 | 
+/// LX -> L0 -> LOOP ID - H1 | 10
+/// LX -> L0 -> H1 -> 230 | H1 | Hazardous Material | O | 1 | 
+/// LX -> L0 -> H1 -> 240 | H2 | Additional Hazardous Material Description | O | 10	
+/// 010 | L3 | Total Weight and Charges | M | 1  
+/// 020 | PWK | Paperwork | O | 25  
+/// LOOP ID - L1 | 20 
+/// L1 -> 030 | L1 | Rate and Charges | O | 1  
+/// L1 -> 040 | C3 | Currency | O | 1
+/// 050 | V9 | Event Detail | O | 10  
+/// 055 | C8 | Certifications and Clauses | O | 20  
+/// 060 | K1 | Remarks | O | 999  
+/// 070 | L11 | Business Instructions and Reference Number | O | 1  
+/// 080 | SE | Transaction Set Trailer | M | 1 | 
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
+pub struct _310 {
+    pub st: ST,
+    pub b3: B3,
+    pub b2a: Option<B2A>,
+    pub y6: Vec<Y6>,
+    pub g3: Option<G3>,
+    pub n9: Vec<N9>,
+    pub v1: Vec<V1>,
+    pub m0: Option<M0>,
+    pub m1: Vec<M1>,
+    pub c2: Option<C2>,
+    pub c3: Option<C3>,
+    pub y2: Vec<Y2>,
+    pub loop_n1: Vec<_310LoopN1>,
+    pub g61: Vec<G61>,
+    pub loop_r4: Vec<_310LoopR4>,
+    pub r2a: Vec<R2A>,
+    pub r2: Vec<R2>,
+    /// heading remarks
+    pub k1: Vec<K1>,
+    pub h3: Vec<H3>,
+    pub l5: Option<L5>,
+    pub loop_c8: Vec<_310LoopC8>,
+    pub loop_lx: Vec<_310LoopLX>,
+    pub l3: L3,
+    pub pwk: Vec<PWK>,
+    pub loop_l1: Vec<_310LoopL1>,
+    pub v9: Vec<V9>,
+    pub c8: Vec<C8>,
+    ///TODO summary remarks
+    pub k1_2: Vec<K1>,
+    pub l11: Option<L11>,
+    pub se: SE,
+}
+
+impl Reflect for _310 {
+    fn get_path(current_path: &Path, next_segment: &str, last_path: &Path) -> Path {
+        match next_segment {
+            "ST" => current_path.push("st".to_string(), None, true),
+            "B3" => current_path.push("b3".to_string(), None, true),
+            "B2A" => current_path.push("b2a".to_string(), None, true),
+            "Y6" => {
+                let counter = match last_path.elem.last().unwrap().vec_position {
+                    Some(count) => count + 1,
+                    None => 0,
+                };
+                current_path.push("y6".to_string(), Some(counter), true)
+            },
+            _ => {
+               Path::default()
+            }
+        }
+    }
+
+    fn get_type_name() -> String {
+        "_310".to_string()
+    }
+}
+
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
+pub struct _310LoopN1{
+    pub n1: N1,
+    pub n2: Option<N2>,
+    pub n3: Option<N3>,
+    pub n4: Option<N4>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
+pub struct _310LoopR4{
+    pub r4: R4,
+    pub dtm: Option<DTM>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
+pub struct _310LoopC8{
+    pub c8: Option<C8>,
+    pub c8c: Option<C8C>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
+pub struct _310LoopLX{
+    pub lx: LX,
+    pub loop_n7: Vec<_310LoopN7>,
+    pub loop_l0: Vec<_310LoopL0>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
+pub struct _310LoopN7{
+    pub n7: Option<N7>,
+    pub qty: Option<QTY>,
+    pub v4: Option<V4>,
+    pub n12: Option<N12>,
+    pub M7: Vec<M7>,
+    pub w09: Option<W09>,
+    pub loop_l1: Vec<_310LoopL1>,
+    pub l7: Option<L7>,
+    pub x1: Option<X1>,
+    pub x2: Option<X2>,
+    pub n9: Vec<N9>,
+    pub loop_h1: Vec<_310LoopH1>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
+pub struct _310LoopL0{
+    pub l0: Option<L0>,
+    pub l5: Option<L5>,
+    pub loop_l1: Vec<_310LoopL1>,
+    pub l7: Option<L7>,
+    pub x1: Option<X1>,
+    pub x2: Option<X2>,
+    pub loop_c8: Vec<_310LoopC8>,
+    pub loop_h1: Vec<_310LoopH1>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
+pub struct _310LoopL1{
+    pub l1: Option<L1>,
+    pub c3: Option<C3>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
+pub struct _310LoopH1{
+    pub h1: Option<H1>,
+    pub h2: Option<H2>,
+}
+
 /// 315 - Status Details (Ocean)
 ///
 /// This Draft Standard for Trial Use contains the format and establishes the data contents of the Status Details (Ocean) Transaction Set (315) for use within the context of an Electronic Data Interchange (EDI) environment. The transaction set can be used to provide all the information necessary to report status or event details for selected shipments or containers. It is intended to accommodate the details for one status or event associated with many shipments or containers, as well as more than one status or event for one shipment or container.
+/// 
 /// POS | ID | NAME | REQ | MAX | REPEAT
 /// ----|----|------|-----|-----|-------
 /// 0010 | ST | Transaction Set Header | M | 1

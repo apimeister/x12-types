@@ -11,7 +11,7 @@ use validator::Validate;
 /// ----|----|------|--------|----|------|-------
 /// 01 | 479 | Functional Identifier Code | 1 | M/Z | ID | 2/2
 /// 02 | 28 | Group Control Number | 1 | M/Z | N0 | 1/9
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct AK1 {
     pub _01: String,
     pub _02: String,
@@ -25,7 +25,7 @@ pub struct AK1 {
 /// ----|----|------|--------|----|------|-------
 /// 01 | 143 | Transaction Set Identifier Code | 1 | M/Z | ID | 3/3
 /// 02 | 329 | Transaction Set Control Number | 1 | M/Z | AN | 4/9
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct AK2 {
     pub _01: String,
     pub _02: String,
@@ -41,7 +41,7 @@ pub struct AK2 {
 /// 02 | 719 | Segment Position in Transaction Set | 1 | M | N0 | 1/6
 /// 03 | 447 | Loop Identifier Code | 1 | O | AN | 1/6
 /// 04 | 720 | Segment Syntax Error Code | 1 | O | ID | 1/3
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct AK3 {
     pub _01: String,
     pub _02: String,
@@ -59,7 +59,7 @@ pub struct AK3 {
 /// 02 | 725 | Data Element Reference Number | 1 | O | N0 | 1/4
 /// 03 | 723 | Data Element Syntax Error Code | 1 | M | ID | 1/3
 /// 04 | 724 | Copy of Bad Data Element | 1 | O/Z | AN | 1/99
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct AK4 {
     pub _01: String,
     pub _02: Option<String>,
@@ -82,7 +82,7 @@ pub struct AK4 {
 /// 07 | 716 | Functional Group Syntax Error Code | 1 | O | ID | 1/3
 /// 08 | 716 | Functional Group Syntax Error Code | 1 | O | ID | 1/3
 /// 09 | 716 | Functional Group Syntax Error Code | 1 | O | ID | 1/3
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct AK9 {
     pub _01: String,
     pub _02: String,
@@ -104,7 +104,7 @@ pub struct AK9 {
 /// 01 | 152 | Special Handling Code | 1 | X | ID | 2/3
 /// 02 | 560 | Special Services Code | 1 | X | ID | 2/10
 /// 03 | 153 | Special Handling Description | 1 | X | AN | 2/30
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct AT5 {
     pub _01: Option<String>,
     pub _02: Option<String>,
@@ -124,7 +124,7 @@ pub struct AT5 {
 /// 05 | 373 | Date | 1 | X | DT | 8/8
 /// 06 | 337 | Time | 1 | X | TM | 4/8
 /// 07 | 623 | Time Code | 1 | O/Z | ID | 2/2
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct AT7 {
     pub _01: Option<String>,
     pub _02: Option<String>,
@@ -160,7 +160,7 @@ pub struct AT7 {
 /// 05 | 80 | Lading Quantity | 1 | O/Z | N0 | 1/7
 /// 06 | 184 | Volume Unit Qualifier | 1 | X | ID | 1/1
 /// 07 | 183 | Volume | 1 | X | R | 1/8
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct AT8 {
     pub _01: Option<String>,
     pub _02: Option<String>,
@@ -189,7 +189,7 @@ pub struct AT8 {
 /// 10 | 501 | Customs Documentation Handling Code | 1 | O | ID | 2/2
 /// 11 | 335 | Transportation Terms Code | 1 | O/Z | ID | 3/3
 /// 12 | 591 | Payment Method Code | 1 | O | ID | 3/3
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct B2 {
     pub _01: Option<String>,
     pub _02: Option<String>,
@@ -203,6 +203,58 @@ pub struct B2 {
     pub _10: Option<String>,
     pub _11: Option<String>,
     pub _12: Option<String>,
+}
+
+/// B2A - Set Purpose
+/// 
+/// To allow for positive identification of transaction set purpose
+/// 
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|------|--------|----|------|-------
+/// 01 | 353 | Transaction Set Purpose Code | 1 | M | ID | 2/2
+/// 02 | 346 | Application Type | 1 | O | ID | 2/2
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
+pub struct B2A {
+    pub _01: String,
+    pub _02: Option<String>,
+}
+
+/// B3 - Beginning Segment for Carrier's Invoice
+/// 
+/// To transmit basic data relating to the carrier's invoice
+/// 
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|------|--------|----|------|-------
+/// 01 | 147 | Shipment Qualifier | O |  | ID 1/1
+/// 02 | 76 | Invoice Number | M |  | AN 1/22
+/// 03 | 145 | Shipment Identification Number | O |  | AN 1/30
+/// 04 | 146 | Shipment Method of Payment | M |  | ID 2/2
+/// 05 | 188 | Weight Unit Code | O |  | ID 1/1
+/// 06 | 373 | Date | M |  | DT 8/8
+/// 07 | 193 | Net Amount Due | M |  | N2 1/12
+/// 08 | 202 | Correction Indicator | O |  | ID 2/2
+/// 09 | 32 | Delivery Date | X |  | DT 8/8
+/// 10 | 374 | Date/Time Qualifier | X |  | ID 3/3
+/// 11 | 140 | Standard Carrier Alpha Code | M |  | ID 2/4
+/// 12 | 373 | Date | O |  | DT 8/8
+/// 13 | 375 | Tariff Service Code | O |  | ID 2/2
+/// 14 | 335 | Transportation Terms Code | O |  | ID 3/3
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
+pub struct B3 {
+    pub _01: Option<String>,
+    pub _02: String,
+    pub _03: Option<String>,
+    pub _04: String,
+    pub _05: Option<String>,
+    pub _06: String,
+    pub _07: String,
+    pub _08: Option<String>,
+    pub _09: Option<String>,
+    pub _10: Option<String>,
+    pub _11: String,
+    pub _12: Option<String>,
+    pub _13: Option<String>,
+    pub _14: Option<String>,
 }
 
 /// B4 - Beginning Segment for Inquiry or Reply
@@ -266,7 +318,7 @@ pub struct B4 {
 /// 05 | 128 | Reference Identification Qualifier | 1 | X | ID | 2/3
 /// 06 | 127 | Reference Identification | 1 | X | AN | 1/30
 /// 07 | 1073 | Yes/No Condition or Response Code NEW | 1 | O/Z | ID | 1/1
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct B10 {
     pub _01: Option<String>,
     pub _02: Option<String>,
@@ -277,20 +329,6 @@ pub struct B10 {
     pub _07: Option<String>,
 }
 
-/// B2A - Set Purpose
-/// 
-/// To allow for positive identification of transaction set purpose
-/// 
-/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
-/// ----|----|------|--------|----|------|-------
-/// 01 | 353 | Transaction Set Purpose Code | 1 | M | ID | 2/2
-/// 02 | 346 | Application Type | 1 | O | ID | 2/2
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
-pub struct B2A {
-    pub _01: String,
-    pub _02: Option<String>,
-}
-
 /// BIN - Binary Data
 /// 
 /// To transfer binary data in a single data segment and allow identification of the end of the data segment through a count; there is no identification of the internal structure of the binary data in this segment
@@ -299,7 +337,7 @@ pub struct B2A {
 /// ----|----|------|--------|----|------|-------
 /// 01 | 784 | Length of Binary Data | 1 | M | N0 | 1/15
 /// 02 | 785 | Binary Data | 1 | M | B | 1/9999999999999999
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct BIN {
     pub _01: String,
     pub _02: String,
@@ -328,7 +366,7 @@ pub struct BIN {
 /// 15 | 140 | Standard Carrier Alpha Code | 1 | O | ID | 2/4
 /// 16 | 140 | Standard Carrier Alpha Code | 1 | O | ID | 2/4
 /// 17 | 140 | Standard Carrier Alpha Code | 1 | O | ID | 2/4
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct BL {
     pub _01: String,
     pub _02: Option<String>,
@@ -383,7 +421,7 @@ pub struct BL {
 /// 02 | 129 | Referenced Pattern Identifier | 1 | O | AN | 1/13
 /// 03 | 11 | Billing Code | 1 | O | ID | 1/1
 /// 04 | 223 | Repetitive Pattern Number | 1 | O | N0 | 5/5
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct BNX {
     pub _01: Option<String>,
     pub _02: Option<String>,
@@ -411,7 +449,7 @@ pub struct BNX {
 /// 12 | 199 | Confidential Billing Request Code | 1 | O | ID | 1/1
 /// 13 | 714 | Goods and Services Tax Reason Code | 1 | O | ID | 1/1
 /// 14 | 346 | Application Type | 1 | O | ID | 2/2
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct BX {
     pub _01: String,
     pub _02: String,
@@ -427,6 +465,82 @@ pub struct BX {
     pub _12: Option<String>,
     pub _13: Option<String>,
     pub _14: Option<String>,
+}
+
+/// C2 - Bank ID
+/// 
+/// To specify data required for electronic payment
+/// 
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|------|--------|----|------|-------
+/// 01 | 8 | Bank Client Code | M |  | ID 1/1
+/// 02 | 66 | Identification Code Qualifier | M |  | ID 1/2
+/// 03 | 67 | Identification Code | M |  | AN 2/80
+/// 04 | 20 | Client Bank Number | O |  | AN 3/9
+/// 05 | 7 | Bank Account Number | O |  | AN 6/17
+/// 06 | 107 | Payment Method Code | O |  | ID 1/2
+/// 07 | 373 | Date | O |  | DT 8/8
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
+pub struct C2 {
+    pub _01: String,
+    pub _02: String,
+    pub _03: String,
+    pub _04: Option<String>,
+    pub _05: Option<String>,
+    pub _06: Option<String>,
+    pub _07: Option<String>,
+}
+
+/// C3 - Currency
+/// 
+/// To specify the currency being used in the transaction set
+/// 
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|------|--------|----|------|-------
+/// 01 | 100 | Currency Code | M |  | ID 3/3
+/// 02 | 280 | Exchange Rate | O |  | R 4/10
+/// 03 | 100 | Currency Code | O |  | ID 3/3
+/// 04 | 100 | Currency Code | O |  | ID 3/3
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
+pub struct C3 {
+    pub _01: String,
+    pub _02: Option<String>,
+    pub _03: Option<String>,
+    pub _04: Option<String>,
+}
+
+/// C8 - Certifications and Clauses
+/// 
+/// To specify applicable certifications and clauses
+/// 
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|------|--------|----|------|-------
+/// 01 | 213 | Lading Line Item Number | O |  | N0 1/3
+/// 02 | 246 | Certification/Clause Code | X |  | ID 2/4
+/// 03 | 247 | Certification/Clause Text | X |  | AN 2/60
+/// 04 | 1302 | Shipper's Export Declaration Requirements | O |  | AN 1/2
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
+pub struct C8 {
+    pub _01: Option<String>,
+    pub _02: Option<String>,
+    pub _03: Option<String>,
+    pub _04: Option<String>,
+}
+
+/// C8C - Certifications Clauses Continuation
+/// 
+/// To specify additional applicable certifications and clauses
+/// 
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|------|--------|----|------|-------
+/// 01 | 247 | Certification/Clause Text | M |  | AN 2/60
+/// 02 | 247 | Certification/Clause Text | O |  | AN 2/60
+/// 03 | 247 | Certification/Clause Text | O |  | AN 2/60
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
+pub struct C8C {
+    pub _01: String,
+    pub _02: Option<String>,
+    pub _03: Option<String>,
 }
 
 /// CD3 - Carton (Package) Detail
@@ -449,7 +563,7 @@ pub struct BX {
 /// 12 | 284 | Service Level Code | 1 | O | ID | 2/2
 /// 13 | 591 | Payment Method Code | 1 | O | ID | 3/3
 /// 14 | 26 | Country Code | 1 | O/Z | ID | 2/3
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct CD3 {
     pub _01: Option<String>,
     pub _02: Option<String>,
@@ -496,7 +610,7 @@ pub struct CD3 {
 /// 15 | 127 | Reference Identification | 1 | O/Z | AN | 1/30
 /// 16 | 202 | Correction Indicator NEW | 1 | O | ID | 2/2
 /// 17 | 91 | Transportation Method/Type Code NEW | 1 | O | ID | 1/2
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct CM {
     pub _01: Option<String>,
     pub _02: Option<String>,
@@ -553,7 +667,7 @@ pub struct CM {
 /// 10 | 154 | Standard Point Location Code NEW | 1 | O/Z | ID | 6/9
 /// 11 | 116 | Postal Code NEW | 1 | O/Z | ID | 3/15
 /// 12 | 26 | Country Code NEW | 1 | O/Z | ID | 2/3
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct D9 {
     pub _01: Option<String>,
     /// 19 - City Name
@@ -647,7 +761,7 @@ pub struct DTM {
 /// 01 | 459 | Name (30 Character Format) | 1 | M | AN | 2/30
 /// 02 | 66 | Identification Code Qualifier | 1 | X | ID | 1/2
 /// 03 | 67 | Identification Code | 1 | X | AN | 2/80
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct E1 {
     pub _01: String,
     pub _02: Option<String>,
@@ -664,7 +778,7 @@ pub struct E1 {
 /// 02 | 156 | State or Province Code | 1 | M | ID | 2/2
 /// 03 | 116 | Postal Code | 1 | O | ID | 3/15
 /// 04 | 26 | Country Code | 1 | O | ID | 2/3
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct E4 {
     /// 19 - City Name
     /// 
@@ -694,7 +808,7 @@ pub struct E4 {
 /// 02 | 133 | Routing Sequence Code | 1 | M | ID | 1/2
 /// 03 | 19 | City Name | 1 | O | AN | 2/30
 /// 04 | 154 | Standard Point Location Code | 1 | O | ID | 6/9
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct E5 {
     pub _01: String,
     pub _02: String,
@@ -730,7 +844,7 @@ pub struct E5 {
 /// 14 | 788 | Block Length | 1 | O | N | 1/5
 /// 15 | 799 | Version Identifier | 1 | X | AN | 1/30
 /// 16 | 1570 | Filter ID Code | 1 | X | ID | 3/3
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct EFI {
     pub _01: String,
     pub _02: Option<String>,
@@ -763,7 +877,7 @@ pub struct EFI {
 /// 05 | 26 | Country Code | 1 | O/Z | ID | 2/3
 /// 06 | 1429 | Construction Type | 1 | O | ID | 1/2
 /// 07 | 373 | Date | 1 | O/Z | DT | 8/8
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct EM {
     pub _01: Option<String>,
     pub _02: Option<String>,
@@ -804,7 +918,7 @@ pub struct EM {
 /// 10 | 154 | Standard Point Location Code NEW | 1 | O/Z | ID | 6/9
 /// 11 | 116 | Postal Code NEW | 1 | O/Z | ID | 3/15
 /// 12 | 26 | Country Code NEW | 1 | O/Z | ID | 2/3
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct F9 {
     pub _01: Option<String>,
     /// 19 - City Name
@@ -844,6 +958,29 @@ pub struct F9 {
     pub _12: Option<String>,
 }
 
+/// G3 - Compensation Information
+/// 
+/// To convey brokerage, freight forwarder compensation, and other compensation information related to shipments
+/// 
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|------|--------|----|------|-------
+/// 01 | 315 | Compensation Paid | O |  | R 2/5
+/// 02 | 317 | Total Compensation Amount | M |  | N0 3/10
+/// 03 | 93 | Name | O |  | AN 1/60
+/// 04 | 201 | Business Transaction Status | O |  | ID 1/3
+/// 05 | 782 | Monetary Amount | O |  | R 1/18
+/// 06 | 73 | Compensation Qualifier | O |  | ID 1/1
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
+pub struct G3 {
+    pub _01: Option<String>,
+    pub _02: String,
+    pub _03: Option<String>,
+    pub _04: Option<String>,
+    pub _05: Option<String>,
+    pub _06: Option<String>,
+}
+
+
 /// G61 - Contact
 /// 
 /// To identify a person or office to whom communications should be directed
@@ -855,7 +992,7 @@ pub struct F9 {
 /// 03 | 365 | Communication Number Qualifier | 1 | X | ID | 2/2
 /// 04 | 364 | Communication Number | 1 | X | AN | 1/80
 /// 05 | 443 | Contact Inquiry Reference | 1 | O | AN | 1/20
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct G61 {
     pub _01: String,
     /// 93 - Name
@@ -881,7 +1018,7 @@ pub struct G61 {
 /// 03 | 176 | Time Qualifier | 1 | X | ID | 1/2
 /// 04 | 337 | Time | 1 | X | TM | 4/8
 /// 05 | 623 | Time Code | 1 | O | ID | 2/2
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct G62 {
     pub _01: Option<String>,
     /// 373 - Date
@@ -925,7 +1062,7 @@ pub struct G62 {
 /// 15 | 156 | State or Province Code | 1 | X | ID | 2/2
 /// 16 | 1004 | Percent Qualifier | 1 | X | ID | 1/2
 /// 17 | 954 | Percent | 1 | X | R | 1/10
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct GA {
     pub _01: Option<String>,
     pub _02: Option<String>,
@@ -989,7 +1126,7 @@ pub struct GE {
 /// 03 | 739 | Measurement Value | 1 | X | R | 1/20
 /// 04 | 355 | Unit or Basis for Measurement Code | 1 | X | ID | 2/2
 /// 05 | 641 | Status Reason Code | 1 | O | ID | 3/3
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct GR5 {
     pub _01: String,
     pub _02: Option<String>,
@@ -1050,7 +1187,7 @@ pub struct GS {
 /// 07 | 77 | Flashpoint Temperature | 1 | X | N | 1/3
 /// 08 | 355 | Unit or Basis for Measurement Code | 1 | X | ID | 2/2
 /// 09 | 254 | Packing Group Code | 1 | O | ID | 1/3
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct H1 {
     pub _01: String,
     pub _02: Option<String>,
@@ -1061,6 +1198,20 @@ pub struct H1 {
     pub _07: Option<String>,
     pub _08: Option<String>,
     pub _09: Option<String>,
+}
+
+/// H2 - Additional Hazardous Material Description
+/// 
+/// To specify free-form hazardous material descriptive data in addition to the information provided in the H1 segment
+/// 
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|------|--------|----|------|-------
+/// 01 | 64 | Hazardous Material Description | M |  | AN 2/30
+/// 02 | 274 | Hazardous Material Classification | O |  | AN 1/30
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
+pub struct H2 {
+    pub _01: String,
+    pub _02: Option<String>,
 }
 
 /// H3 - Special Handling Instructions
@@ -1074,7 +1225,7 @@ pub struct H1 {
 /// 03 | 241 | Protective Service Code | 1 | O | ID | 1/4
 /// 04 | 242 | Vent Instruction Code | 1 | O | ID | 1/7
 /// 05 | 257 | Tariff Application Code | 1 | O | ID | 1/1
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct H3 {
     pub _01: Option<String>,
     pub _02: Option<String>,
@@ -1097,7 +1248,7 @@ pub struct H3 {
 /// 06 | 567 | Equipment Length | 1 | O | N0 | 4/5
 /// 07 | 140 | Standard Carrier Alpha Code | 1 | O/Z | ID | 2/4
 /// 08 | 845 | Chassis Type | 1 | O | ID | 2/2
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct IC {
     pub _01: String,
     pub _02: String,
@@ -1118,7 +1269,7 @@ pub struct IC {
 /// 01 | 533 | Water Movement Code | 1 | O | ID | 1/1
 /// 02 | 152 | Special Handling Code | 1 | O | ID | 2/3
 /// 03 | 534 | Inland Transportation Code | 1 | O/Z | ID | 2/2
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct IM {
     pub _01: Option<String>,
     pub _02: Option<String>,
@@ -1310,7 +1461,7 @@ impl Reflect for ISA {
 /// ----|----|-------|--------|----|------|-------
 /// 01 | 61 | Free-Form Message | 1 | M | AN | 1/30
 /// 02 | 61 | Free-Form Message | 1 | O | AN | 1/30
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct K1 {
     pub _01: String,
     pub _02: Option<String>,
@@ -1337,7 +1488,7 @@ pub struct K1 {
 /// 13 | 380 | Quantity | 1 | X/Z | R | 1/15
 /// 14 | 211 | Packaging Form Code | 1 | O | ID | 3/3
 /// 15 | 1073 | Yes/No Condition or Response Code | 1 | X/Z | ID | 1/1
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct L0 {
     pub _01: Option<String>,
     pub _02: Option<String>,
@@ -1383,7 +1534,7 @@ pub struct L0 {
 /// 19 | 954 | Percent | 1 | O/Z | R | 1/10
 /// 20 | 100 | Currency Code | 1 | O/Z | ID | 3/3
 /// 21 | 610 | Amount | 1 | O/Z | N2 | 1/15
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct L1 {
     pub _01: Option<String>,
     pub _02: Option<String>,
@@ -1428,7 +1579,7 @@ pub struct L1 {
 /// 13 | 171 | Tariff Number | 1 | O | AN | 1/7
 /// 14 | 74 | Declared Value | 1 | X | N2 | 2/12
 /// 15 | 122 | Rate/Value Qualifier | 1 | X | ID | 2/2
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct L3 {
     pub _01: Option<String>,
     pub _02: Option<String>,
@@ -1463,7 +1614,7 @@ pub struct L3 {
 /// 08 | 23 | Commodity Code Qualifier | 1 | X | ID | 1/1
 /// 09 | 22 | Commodity Code | 1 | X | AN | 1/30
 /// 10 | 595 | Compartment ID Code | 1 | O | ID | 1/1
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct L5 {
     pub _01: Option<String>,
     pub _02: Option<String>,
@@ -1477,6 +1628,48 @@ pub struct L5 {
     pub _10: Option<String>,
 }
 
+/// L7 - Tariff Reference
+/// 
+/// To reference details of the tariff used to arrive at applicable rates or charge
+/// 
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 213 | Lading Line Item Number | O |  | N0 1/3
+/// 02 | 168 | Tariff Agency Code | O |  | ID 1/4
+/// 03 | 171 | Tariff Number | O |  | AN 1/7
+/// 04 | 172 | Tariff Section | O |  | AN 1/2
+/// 05 | 169 | Tariff Item Number | O |  | AN 1/16
+/// 06 | 170 | Tariff Item Part | O |  | N0 1/2
+/// 07 | 59 | Freight Class Code | O |  | AN 2/5
+/// 08 | 173 | Tariff Supplement Identifier | O |  | AN 1/4
+/// 09 | 46 | Ex Parte | O |  | AN 4/4
+/// 10 | 373 | Date | O |  | DT 8/8
+/// 11 | 119 | Rate Basis Number | O |  | AN 1/6
+/// 12 | 227 | Tariff Column | O |  | AN 1/2
+/// 13 | 294 | Tariff Distance | O |  | N0 1/5
+/// 14 | 295 | Distance Qualifier | O |  | ID 1/1
+/// 15 | 19 | City Name | O |  | AN 2/30
+/// 16 | 156 | State or Province Code | O |  | ID 2/2
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
+pub struct L7 {
+    pub _01: Option<String>,
+    pub _02: Option<String>,
+    pub _03: Option<String>,
+    pub _04: Option<String>,
+    pub _05: Option<String>,
+    pub _06: Option<String>,
+    pub _07: Option<String>,
+    pub _08: Option<String>,
+    pub _09: Option<String>,
+    pub _10: Option<String>,
+    pub _11: Option<String>,
+    pub _12: Option<String>,
+    pub _13: Option<String>,
+    pub _14: Option<String>,
+    pub _15: Option<String>,
+    pub _16: Option<String>,
+}
+
 /// L11 - Business Instructions and Reference Number
 /// 
 /// To specify instructions in this business relationship or a reference number
@@ -1486,7 +1679,7 @@ pub struct L5 {
 /// 01 | 127 | Reference Identification | 1 | X | AN | 1/30
 /// 02 | 128 | Reference Identification Qualifier | 1 | X | ID | 2/3
 /// 03 | 352 | Description | 1 | X | AN | 1/80
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct L11 {
     pub _01: Option<String>,
     pub _02: Option<String>,
@@ -1512,7 +1705,7 @@ pub struct L11 {
 /// 11 | 235 | Product/Service ID Qualifier | 1 | X | ID | 2/2
 /// 12 | 234 | Product/Service ID | 1 | X | AN | 1/48
 /// 13 | 79 | Lading Description | 1 | O | AN | 1/50
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct LAD {
     pub _01: Option<String>,
     pub _02: Option<String>,
@@ -1536,7 +1729,7 @@ pub struct LAD {
 /// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
 /// ----|----|-------|--------|----|------|-------
 /// 01 | 447 | Loop Identifier Code | 1 | M | AN | 1/6
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct LE {
     pub _01: String,
 }
@@ -1550,7 +1743,7 @@ pub struct LE {
 /// 02 | 807 | Waste Characteristics Code | 1 | O | ID | 12/16
 /// 03 | 156 | State or Province Code NEW | 1 | X/Z | ID | 2/2
 /// 04 | 127 | Reference Identification NEW | 1 | X/Z | AN | 1/30
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct LEP {
     pub _01: Option<String>,
     pub _02: Option<String>,
@@ -1571,7 +1764,7 @@ pub struct LEP {
 /// 05 | 355 | Unit or Basis for Measurement Code NEW | 1 | X | ID | 2/2
 /// 06 | 380 | Quantity NEW | 1 | X/Z | R | 1/15
 /// 07 | 380 | Quantity NEW | 1 | O/Z | R | 1/15
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct LFH {
     pub _01: String,
     pub _02: String,
@@ -1599,7 +1792,7 @@ pub struct LFH {
 /// 09 | 665 | Residue Indicator Code | 1 | O | ID | 1/1
 /// 10 | 254 | Packing Group Code | 1 | O | ID | 1/3
 /// 11 | 1375 | Interim Hazardous Material Regulatory Number | 1 | O | AN | 1/5
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct LH1 {
     pub _01: String,
     pub _02: String,
@@ -1631,7 +1824,7 @@ pub struct LH1 {
 /// 09 | 408 | Temperature NEW | 1 | X | R | 1/4
 /// 10 | 355 | Unit or Basis for Measurement Code NEW | 1 | X/Z | ID | 2/2
 /// 11 | 408 | Temperature NEW | 1 | X | R | 1/4
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct LH2 {
     pub _01: Option<String>,
     pub _02: Option<String>,
@@ -1656,7 +1849,7 @@ pub struct LH2 {
 /// 02 | 984 | Hazardous Material Shipping Name Qualifier | 1 | X | ID | 1/1
 /// 03 | 985 | N.O.S. Indicator Code | 1 | O | ID | 3/3
 /// 04 | 1073 | Yes/No Condition or Response Code | 1 | O/Z | ID | 1/1
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct LH3 {
     pub _01: Option<String>,
     pub _02: Option<String>,
@@ -1708,7 +1901,7 @@ pub struct LH4 {
 /// 02 | 272 | Hazardous Certification Code | 1 | X | ID | 1/1
 /// 03 | 273 | Hazardous Certification Declaration | 1 | X | AN | 1/25
 /// 04 | 273 | Hazardous Certification Declaration | 1 | O | AN | 1/25
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct LH6 {
     /// 93 - Name
     /// 
@@ -1731,7 +1924,7 @@ pub struct LH6 {
 /// 01 | 128 | Reference Identification Qualifier | 1 | M | ID | 2/3
 /// 02 | 127 | Reference Identification | 1 | M | AN | 1/30
 /// 03 | 373 | Date NEW | 1 | O | DT | 8/8
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct LHR {
     pub _01: String,
     pub _02: String,
@@ -1753,7 +1946,7 @@ pub struct LHR {
 /// 01 | 215 | Hazardous Classification | 1 | O | ID | 1/30
 /// 02 | 218 | Hazardous Placard Notation | 1 | O | ID | 14/40
 /// 03 | 222 | Hazardous Endorsement | 1 | O | ID | 4/25
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct LHT {
     pub _01: Option<String>,
     pub _02: Option<String>,
@@ -1767,7 +1960,7 @@ pub struct LHT {
 /// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
 /// ----|----|-------|--------|----|------|-------
 /// 01 | 447 | Loop Identifier Code | 1 | M | AN | 1/6
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct LS {
     pub _01: String,
 }
@@ -1779,9 +1972,27 @@ pub struct LS {
 /// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
 /// ----|----|-------|--------|----|------|-------
 /// 01 | 554 | Assigned Number | 1 | M | N0 | 1/6
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct LX {
     pub _01: String,
+}
+
+/// M0 - Letter of Credit Reference
+/// 
+/// To transmit letter of credit details
+/// 
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 250 | Letter of Credit Number | M |  | AN 2/40
+/// 02 | 373 | Date | O |  | DT 8/8
+/// 03 | 373 | Date | O |  | DT 8/8
+/// 04 | 373 | Date | O |  | DT 8/8
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
+pub struct M0 {
+    pub _01: String,
+    pub _02: Option<String>,
+    pub _03: Option<String>,
+    pub _04: Option<String>,
 }
 
 /// M1 - Insurance
@@ -1802,7 +2013,7 @@ pub struct LX {
 /// 10 | 954 | Percent | 1 | X | R | 1/10
 /// 11 | 1004 | Percent Qualifier | 1 | X | ID | 1/2
 /// 12 | 954 | Percent | 1 | X | R | 1/10
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct M1 {
     /// 26 - Country Code
     /// 
@@ -1834,7 +2045,7 @@ pub struct M1 {
 /// 02 | 373 | Date | 1 | X | DT | 8/8
 /// 03 | 337 | Time | 1 | X | TM | 4/8
 /// 04 | 623 | Time Code | 1 | O/Z | ID | 2/2
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct M3 {
     pub _01: Option<String>,
     /// 373 - Date
@@ -1865,13 +2076,47 @@ pub struct M3 {
 /// 03 | 225 | Seal Number | 1 | O | AN | 2/15
 /// 04 | 225 | Seal Number | 1 | O | AN | 2/15
 /// 05 | 98 | Entity Identifier Code | 1 | O | ID | 2/3
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct M7 {
     pub _01: String,
     pub _02: Option<String>,
     pub _03: Option<String>,
     pub _04: Option<String>,
     pub _05: Option<String>,
+}
+
+/// M10 - Manifest Identifying Information
+/// 
+/// To transmit manifest identifying information
+/// 
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 140 | Standard Carrier Alpha Code | M | ID | 2/4
+/// 02 | 91  | Transportation Method/Type Code M ID 1/2
+/// 03 | 26 | Country Code M ID 2/3
+/// 04 | 597 | Vessel Code X ID 1/8
+/// 05 | 182 | Vessel Name X AN 2/28
+/// 06 | 55 | Flight/Voyage Number M AN 2/10
+/// 07 | 127 | Reference Identification O AN 1/30
+/// 08 | 380 | Quantity O R 1/15
+/// 09 | 256 | Manifest Type Code M ID 1/1
+/// 10 | 897 | Vessel Code Qualifier X ID 1/1
+/// 11 | 1073 | Yes/No Condition or Response Code O ID 1/1
+/// 12 | 127 | Reference Identification O AN 1/30
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
+pub struct M10 {
+    pub _01: String,
+    pub _02: Option<String>,
+    pub _03: Option<String>,
+    pub _04: Option<String>,
+    pub _05: Option<String>,
+    pub _06: Option<String>,
+    pub _07: Option<String>,
+    pub _08: Option<String>,
+    pub _09: Option<String>,
+    pub _10: Option<String>,
+    pub _11: Option<String>,
+    pub _12: Option<String>,
 }
 
 /// M12 - In-bond Identifying Information
@@ -1891,7 +2136,7 @@ pub struct M7 {
 /// 09 | 127 | Reference Identification | 1 | X | AN | 1/30
 /// 10 | 91 | Transportation Method/Type Code | 1 | X | ID | 1/2
 /// 11 | 182 | Vessel Name | 1 | X | AN | 2/28
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct M12 {
     pub _01: String,
     pub _02: Option<String>,
@@ -1918,7 +2163,7 @@ pub struct M12 {
 /// 04 | 88 | Marks and Numbers Qualifier | 1 | X | ID | 1/2
 /// 05 | 87 | Marks and Numbers | 1 | X/Z | AN | 1/48
 /// 06 | 87 | Marks and Numbers | 1 | O | AN | 1/48
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct MAN {
     pub _01: Option<String>,
     pub _02: Option<String>,
@@ -1944,7 +2189,7 @@ pub struct MAN {
 /// 08 | 936 | Measurement Attribute Code | 1 | X | ID | 2/2
 /// 09 | 752 | Surface/Layer/Position Code | 1 | O | ID | 2/2
 /// 10 | 1373 | Measurement Method or Device | 1 | O | ID | 2/4
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct MEA {
     pub _01: Option<String>,
     pub _02: Option<String>,
@@ -1971,7 +2216,7 @@ pub struct MEA {
 /// 05 | 1655 | Latitude Code | 1 | X/Z | ID | 7/7
 /// 06 | 1280 | Direction Identifier Code NEW | 1 | O/Z | ID | 1/1
 /// 07 | 1280 | Direction Identifier Code NEW | 1 | O/Z | ID | 1/1
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct MS1 {
     /// 19 - City Name
     /// 
@@ -2004,7 +2249,7 @@ pub struct MS1 {
 /// 02 | 207 | Equipment Number | 1 | X | AN | 1/10
 /// 03 | 40 | Equipment Description Code | 1 | O | ID | 2/2
 /// 04 | 761 | Equipment Number Check Digit | 1 | O | N0 | 1/1
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct MS2 {
     pub _01: Option<String>,
     pub _02: Option<String>,
@@ -2023,7 +2268,7 @@ pub struct MS2 {
 /// 03 | 19 | City Name | 1 | X/Z | AN | 2/30
 /// 04 | 91 | Transportation Method/Type Code | 1 | O | ID | 1/2
 /// 05 | 156 | State or Province Code NEW | 1 | O | ID | 2/2
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct MS3 {
     pub _01: String,
     pub _02: String,
@@ -2050,7 +2295,7 @@ pub struct MS3 {
 /// 04 | 67 | Identification Code | 1 | X | AN | 2/80
 /// 05 | 706 | Entity Relationship Code | 1 | O | ID | 2/2
 /// 06 | 98 | Entity Identifier Code | 1 | O | ID | 2/3
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct N1 {
     pub _01: String,
     /// 93 - Name
@@ -2074,7 +2319,7 @@ pub struct N1 {
 /// ----|----|-------|--------|----|------|-------
 /// 01 | 93 | Name | 1 | M | AN | 1/60
 /// 02 | 93 | Name | 1 | O | AN | 1/60
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct N2 {
     /// 93 - Name
     /// 
@@ -2100,7 +2345,7 @@ pub struct N2 {
 /// ----|----|-------|--------|----|------|-------
 /// 01 | 166 | Address Information | 1 | M | AN | 1/55
 /// 02 | 166 | Address Information | 1 | O | AN | 1/55
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct N3 {
     pub _01: String,
     pub _02: Option<String>,
@@ -2118,7 +2363,7 @@ pub struct N3 {
 /// 04 | 26 | Country Code | 1 | O | ID | 2/3
 /// 05 | 309 | Location Qualifier | 1 | X | ID | 1/2
 /// 06 | 310 | Location Identifier | 1 | O | AN | 1/30
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct N4 {
     /// 19 - City Name
     /// 
@@ -2155,7 +2400,7 @@ pub struct N4 {
 /// 07 | 643 | Lading Percentage | 1 | X | N2 | 2/4
 /// 08 | 644 | Lading Percent Qualifier | 1 | X | ID | 1/1
 /// 09 | 40 | Equipment Description Code | 1 | O | ID | 2/2
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct N5 {
     pub _01: Option<String>,
     pub _02: Option<String>,
@@ -2198,7 +2443,7 @@ pub struct N5 {
 /// 22 | 24 | Equipment Type | 1 | O | ID | 4/4
 /// 23 | 140 | Standard Carrier Alpha Code | 1 | O/Z | ID | 2/4
 /// 24 | 301 | Car Type Code | 1 | O | ID | 1/4
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct N7 {
     pub _01: Option<String>,
     pub _02: String,
@@ -2286,7 +2531,7 @@ pub struct N9 {
 /// 11 | 26 | Country Code NEW | 1 | O/Z | ID | 2/3
 /// 12 | 26 | Country Code NEW | 1 | O/Z | ID | 2/3
 /// 13 | 100 | Currency Code NEW | 1 | X/Z | ID | 3/3
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct N10 {
     pub _01: Option<String>,
     pub _02: Option<String>,
@@ -2315,6 +2560,21 @@ pub struct N10 {
     pub _13: Option<String>,
 }
 
+/// N12 - Equipment Environment
+/// 
+/// To describe the operating environment of the equipment
+/// 
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 829 | Fuel Type | M |  | ID 1/1
+/// 02 | C001 | Composite Unit of Measure | M		
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
+pub struct N12 {
+    pub _01: String,
+    pub _02: String,
+}
+
+
 /// N7A - Accessorial Equipment Details
 /// 
 /// To identify the accessorial equipment required to load or unload product
@@ -2330,7 +2590,7 @@ pub struct N10 {
 /// 07 | 1045 | Inlet or Outlet Material Type Code | 1 | O | ID | 2/2
 /// 08 | 1046 | Inlet or Outlet Fitting Type Code | 1 | O | ID | 2/2
 /// 09 | 1047 | Miscellaneous Equipment Code | 1 | O | ID | 2/2
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct N7A {
     pub _01: Option<String>,
     pub _02: Option<String>,
@@ -2355,7 +2615,7 @@ pub struct N7A {
 /// 04 | 1030 | Gasket Type Code | 1 | O | ID | 3/3
 /// 05 | 1031 | Trailer Lining Type Code | 1 | O | ID | 3/3
 /// 06 | 127 | Reference Identification | 1 | O/Z | AN | 1/30
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct N7B {
     pub _01: Option<String>,
     pub _02: Option<String>,
@@ -2382,7 +2642,7 @@ pub struct N7B {
 /// 09 | 140 | Standard Carrier Alpha Code | 1 | O | ID | 2/4
 /// 10 | 845 | Chassis Type | 1 | O | ID | 2/2
 /// 11 | 1073 | Yes/No Condition or Response Code | 1 | O/Z | ID | 1/1
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct NA {
     pub _01: Option<String>,
     pub _02: Option<String>,
@@ -2414,7 +2674,7 @@ pub struct NA {
 /// 09 | 67 | Identification Code | 1 | X | AN | 2/80
 /// 10 | 706 | Entity Relationship Code | 1 | X | ID | 2/2
 /// 11 | 98 | Entity Identifier Code | 1 | O | ID | 2/3
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct NM1 {
     pub _01: String,
     pub _02: Option<String>,
@@ -2437,7 +2697,7 @@ pub struct NM1 {
 /// ----|----|-------|--------|----|------|-------
 /// 01 | 363 | Note Reference Code | 1 | O | ID | 3/3
 /// 02 | 352 | Description | 1 | M | AN | 1/80
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct NTE {
     pub _01: Option<String>,
     pub _02: String,
@@ -2458,7 +2718,7 @@ pub struct NTE {
 /// 07 | 81 | Weight | 1 | X | R | 1/10
 /// 08 | 184 | Volume Unit Qualifier | 1 | X | ID | 1/1
 /// 09 | 183 | Volume | 1 | X | R | 1/8
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct OID {
     pub _01: Option<String>,
     pub _02: Option<String>,
@@ -2469,6 +2729,26 @@ pub struct OID {
     pub _07: Option<String>,
     pub _08: Option<String>,
     pub _09: Option<String>,
+}
+
+/// P4 - U.S. Port Information
+/// 
+/// To transmit identifying information for a U.S. port
+/// 
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|------|--------|-----|------|-------
+/// 01 | 310 | Location Identifier M AN 1/30
+/// 02 | 373 | Date M DT 8/8
+/// 03 | 380 | Quantity O R 1/15
+/// 04 | 310 | Location Identifier O AN 1/30
+/// 05 | 337 | Time O TM 4/8
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
+pub struct P4 {
+    pub _01: String,
+    pub _02: String,
+    pub _03: Option<String>,
+    pub _04: Option<String>,
+    pub _05: Option<String>,
 }
 
 /// PER - Administrative Communications Contact
@@ -2486,7 +2766,7 @@ pub struct OID {
 /// 07 | 365 | Communication Number Qualifier | 1 | X | ID | 2/2
 /// 08 | 364 | Communication Number | 1 | X | AN | 1/80
 /// 09 | 443 | Contact Inquiry Reference | 1 | O | AN | 1/20
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct PER {
     pub _01: String,
     /// 93 - Name
@@ -2526,7 +2806,7 @@ pub struct PER {
 /// 13 | 373 | Date | 1 | X/Z | DT | 8/8
 /// 14 | 629 | Alternation Precedence Code | 1 | O | ID | 1/1
 /// 15 | 629 | Alternation Precedence Code | 1 | O | ID | 1/1
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct PI {
     pub _01: String,
     pub _02: String,
@@ -2567,7 +2847,7 @@ pub struct PI {
 /// 02 | 399 | Pallet Exchange Code | 1 | O | ID | 1/1
 /// 03 | 188 | Weight Unit Code | 1 | X | ID | 1/1
 /// 04 | 81 | Weight | 1 | X | R | 1/10
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct PLD {
     pub _01: String,
     pub _02: Option<String>,
@@ -2588,7 +2868,7 @@ pub struct PLD {
 /// 05 | 350 | Assigned Identification | 1 | O | AN | 1/20
 /// 06 | 367 | Contract Number | 1 | O | AN | 1/30
 /// 07 | 92 | Purchase Order Type Code | 1 | O | ID | 2/2
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct PRF {
     pub _01: String,
     pub _02: Option<String>,
@@ -2625,7 +2905,7 @@ pub struct PRF {
 /// 12 | 1073 | Yes/No Condition or Response Code | 1 | O/Z | ID | 1/1
 /// 13 | 1073 | Yes/No Condition or Response Code | 1 | O/Z | ID | 1/1
 /// 14 | 408 | Temperature | 1 | X/Z | R | 1/4
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct PS {
     pub _01: String,
     pub _02: String,
@@ -2647,6 +2927,34 @@ pub struct PS {
     pub _12: Option<String>,
     pub _13: Option<String>,
     pub _14: Option<String>,
+}
+
+/// PWK - Paperwork
+/// 
+/// To identify the type or transmission or both of paperwork or supporting information
+/// 
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 755 | Report Type Code | M |  | ID 2/2
+/// 02 | 756 | Report Transmission Code | O |  | ID 1/2
+/// 03 | 757 | Report Copies Needed | O |  | N0 1/2
+/// 04 | 98 | Entity Identifier Code | O |  | ID 2/3
+/// 05 | 66 | Identification Code Qualifier | X |  | ID 1/2
+/// 06 | 67 | Identification Code | X |  | AN 2/80
+/// 07 | 352 | Description | O |  | AN 1/80
+/// 08 | C002 | Actions Indicated | O |  | 
+/// 09 | 1525 | Request Category Code | O |  | ID 1/2
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
+pub struct PWK {
+    pub _01: String,
+    pub _02: Option<String>,
+    pub _03: Option<String>,
+    pub _04: Option<String>,
+    pub _05: Option<String>,
+    pub _06: Option<String>,
+    pub _07: Option<String>,
+    pub _08: Option<String>,
+    pub _09: Option<String>,
 }
 
 /// Q2 - Status Details (Ocean)
@@ -2739,7 +3047,7 @@ pub struct Q2 {
 /// 16 | 1280 | Direction Identifier Code | 1 | O/Z | ID | 1/1
 /// 17 | 954 | Percent | 1 | O/Z | R | 1/10
 /// 18 | 108 | Pick-up or Delivery Code | 1 | O | ID | 1/2
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct Q5 {
     pub _01: Option<String>,
     /// 373 - Date
@@ -2794,11 +3102,29 @@ pub struct Q5 {
 /// 01 | 33 | Lading Exception Code | 1 | M | ID | 1/1
 /// 02 | 211 | Packaging Form Code | 1 | O | ID | 3/3
 /// 03 | 80 | Lading Quantity | 1 | X | N0 | 1/7
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct Q7 {
     pub _01: String,
     pub _02: Option<String>,
     pub _03: Option<String>,
+}
+
+/// QTY - Quantity
+/// 
+/// To specify quantity information
+/// 
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 673 | Quantity Qualifier | M |  | ID 2/2
+/// 02 | 380 | Quantity | X |  | R 1/15
+/// 03 | C001 | Composite Unit of Measure | O |  | 
+/// 04 | 61 | Free-Form Message | X |  | AN 1/30
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
+pub struct QTY {
+    pub _01: String,
+    pub _02: Option<String>,
+    pub _03: Option<String>,
+    pub _04: Option<String>,
 }
 
 /// R2 - Route Information
@@ -2820,7 +3146,7 @@ pub struct Q7 {
 /// 11 | 369 | Free-form Description | 1 | O | AN | 1/45
 /// 12 | 56 | Type of Service Code | 1 | O | ID | 2/2
 /// 13 | 742 | Route Description | 1 | O | AN | 1/35
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct R2 {
     pub _01: String,
     pub _02: String,
@@ -2849,6 +3175,36 @@ pub struct R2 {
     pub _13: Option<String>,
 }
 
+/// R2A - Route Information with Preference
+/// 
+/// To specify the responsibilities and carrier preference
+/// 
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 133 | Routing Sequence Code | M |  | ID 1/2
+/// 02 | 1431 | Preference | M |  | ID 1/1
+/// 03 | 91 | Transportation Method/Type Code | O |  | ID 1/2
+/// 04 | 140 | Standard Carrier Alpha Code | O |  | ID 2/4
+/// 05 | 309 | Location Qualifier | O |  | ID 1/2
+/// 06 | 310 | Location Identifier | X |  | AN 1/30
+/// 07 | 56 | Type of Service Code | O |  | ID 2/2
+/// 08 | 1 | Route Code | O |  | AN 1/13
+/// 09 | 742 | Route Description | O |  | AN 1/35
+/// 10 | 98 | Entity Identifier Code | O |  | ID 2/3
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
+pub struct R2A {
+    pub _01: String,
+    pub _02: String,
+    pub _03: Option<String>,
+    pub _04: Option<String>,
+    pub _05: Option<String>,
+    pub _06: Option<String>,
+    pub _07: Option<String>,
+    pub _08: Option<String>,
+    pub _09: Option<String>,
+    pub _10: Option<String>,
+
+}
 
 /// R4 - Port or Terminal
 /// 
@@ -2896,7 +3252,7 @@ pub struct R4 {
 /// 06 | 140 | Standard Carrier Alpha Code | 1 | O/Z | ID | 2/4
 /// 07 | 1073 | Yes/No Condition or Response Code | 1 | O/Z | ID | 1/1
 /// 08 | 1073 | Yes/No Condition or Response Code | 1 | O/Z | ID | 1/1
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct R9 {
     pub _01: String,
     pub _02: Option<String>,
@@ -2918,7 +3274,7 @@ pub struct R9 {
 /// 02 | 127 | Reference Identification | 1 | X | AN | 1/30
 /// 03 | 352 | Description | 1 | X | AN | 1/80
 /// 04 | C040 | Reference Identifier | 1 | O/Z
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct REF {
     pub _01: String,
     pub _02: Option<String>,
@@ -2938,7 +3294,7 @@ pub struct REF {
 /// 04 | 67 | Identification Code | 1 | X | AN | 2/80
 /// 05 | 140 | Standard Carrier Alpha Code | 1 | O/Z | ID | 2/4
 /// 06 | 190 | Accomplish Code | 1 | M | ID | 1/1
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct S1 {
     pub _01: String,
     pub _02: String,
@@ -2957,7 +3313,7 @@ pub struct S1 {
 /// 01 | 165 | Stop Sequence Number | 1 | M | N0 | 1/3
 /// 02 | 166 | Address Information | 1 | M | AN | 1/55
 /// 03 | 166 | Address Information | 1 | O | AN | 1/55
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct S2 {
     pub _01: String,
     pub _02: String,
@@ -2981,7 +3337,7 @@ pub struct S2 {
 /// 09 | 352 | Description | 1 | O/Z | AN | 1/80
 /// 10 | 154 | Standard Point Location Code | 1 | O | ID | 6/9
 /// 11 | 190 | Accomplish Code | 1 | O | ID | 1/1
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct S5 {
     pub _01: String,
     pub _02: String,
@@ -3010,7 +3366,7 @@ pub struct S5 {
 /// 06 | 163 | Stop Reason Code | 1 | M | ID | 2/2
 /// 07 | 309 | Location Qualifier | 1 | X | ID | 1/2
 /// 08 | 310 | Location Identifier | 1 | X | AN | 1/30
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct S9 {
     pub _01: String,
     pub _02: Option<String>,
@@ -3063,7 +3419,7 @@ pub struct S9 {
 /// 21 | 67 | Identification Code | 1 | X | AN | 2/80
 /// 22 | 380 | Quantity | 1 | X | R | 1/15
 /// 23 | 310 | Location Identifier | 1 | O/Z | AN | 1/30
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct SDQ {
     pub _01: String,
     pub _02: Option<String>,
@@ -3168,7 +3524,7 @@ pub struct SG {
 /// 06 | 81 | Weight | 1 | X/Z | R | 1/10
 /// 07 | 647 | Application Error Condition Code | 1 | O/Z | ID | 1/3
 /// 08 | 127 | Reference Identification | 1 | O/Z | AN | 1/30
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct SPO {
     pub _01: String,
     pub _02: Option<String>,
@@ -3208,7 +3564,7 @@ pub struct ST {
 /// 07 | 154 | Standard Point Location Code | 1 | O | ID | 6/9
 /// 08 | 229 | Transit Registration Number | 1 | O | AN | 1/6
 /// 09 | 461 | Transit Level Code | 1 | O | ID | 1/3
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct T1 {
     pub _01: String,
     pub _02: Option<String>,
@@ -3251,7 +3607,7 @@ pub struct T1 {
 /// 10 | 19 | City Name | 1 | O/Z | AN | 2/30
 /// 11 | 462 | Through Surcharge Percent | 1 | O | N2 | 2/4
 /// 12 | 463 | Paid-In Surcharge Percent | 1 | O | N2 | 2/4
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct T2 {
     pub _01: String,
     pub _02: Option<String>,
@@ -3292,7 +3648,7 @@ pub struct T2 {
 /// 05 | 154 | Standard Point Location Code | 1 | O | ID | 6/9
 /// 06 | 206 | Equipment Initial | 1 | X/Z | AN | 1/4
 /// 07 | 207 | Equipment Number | 1 | X/Z | AN | 1/10
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct T3 {
     pub _01: String,
     pub _02: String,
@@ -3322,7 +3678,7 @@ pub struct T3 {
 /// 05 | 60 | Freight Rate | 1 | X/Z | R | 1/9
 /// 06 | 122 | Rate/Value Qualifier | 1 | X | ID | 2/2
 /// 07 | 19 | City Name | 1 | O | AN | 2/30
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct T6 {
     pub _01: String,
     pub _02: Option<String>,
@@ -3353,7 +3709,7 @@ pub struct T6 {
 /// ----|----|-------|--------|----|------|-------
 /// 01 | 554 | Assigned Number | 1 | M | N0 | 1/6
 /// 02 | 299 | Free-form Transit Data | 1 | M | AN | 1/80
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct T8 {
     pub _01: String,
     pub _02: String,
@@ -3374,7 +3730,7 @@ pub struct T8 {
 /// 07 | 854 | Vessel Type Code | 1 | O | ID | 2/2
 /// 08 | 897 | Vessel Code Qualifier | 1 | O | ID | 1/1
 /// 09 | 91 | Transportation Method/Type Code | 1 | O | ID | 1/2
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct V1 {
     pub _01: Option<String>,
     pub _02: Option<String>,
@@ -3400,7 +3756,7 @@ pub struct V1 {
 /// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
 /// ----|----|-------|--------|----|------|-------
 /// 01 | 877 | Vessel Stowage Location | 1 | M | AN | 1/12
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct V4 {
     pub _01: String,
 }
@@ -3501,7 +3857,7 @@ pub struct V9 {
 /// 09 | 835 | Supplemental Inspection Code | 1 | O | ID | 1/1
 /// 10 | 583 | Factory Car Order Number | 1 | O | AN | 6/10
 /// 11 | 877 | Vessel Stowage Location | 1 | O | AN | 1/12
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct VC {
     pub _01: String,
     pub _02: Option<String>,
@@ -3538,7 +3894,7 @@ pub struct VC {
 /// 14 | 219 | Position | 1 | O | AN | 1/3
 /// 15 | 301 | Car Type Code | 1 | O | ID | 1/4
 /// 16 | 1073 | Yes/No Condition or Response Code | 1 | O/Z | ID | 1/1
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct W2 {
     pub _01: String,
     pub _02: String,
@@ -3579,7 +3935,7 @@ pub struct W2 {
 /// 07 | 1122 | Vent Setting Code | 1 | O | ID | 1/1
 /// 08 | 488 | Percent | 1 | O/Z | N0 | 1/3
 /// 09 | 380 | Quantity | 1 | O/Z | R | 1/15
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct W09 {
     pub _01: String,
     pub _02: Option<String>,
@@ -3614,7 +3970,7 @@ pub struct W09 {
 /// 14 | 212 | Unit Price | 1 | O | R | 1/17
 /// 15 | 1306 | U.S. Government License Type | 1 | O | AN | 1/1
 /// 16 | 67 | Identification Code NEW | 1 | O/Z | AN | 2/80
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct X1 {
     pub _01: String,
     pub _02: String,
@@ -3646,6 +4002,28 @@ pub struct X1 {
     pub _16: Option<String>,
 }
 
+/// X2 - Import License
+/// 
+/// To transmit import license number and effective dates
+/// 
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 70 | Import License Number | M |  | AN 6/30
+/// 02 | 373 | Date | O |  | DT 8/8
+/// 03 | 373 | Date | O |  | DT 8/8
+/// 04 | 70 | Import License Number | X |  | AN 6/30
+/// 05 | 373 | Date | O |  | DT 8/8
+/// 06 | 373 | Date | O |  | DT 8/8
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
+pub struct X2 {
+    pub _01: String,
+    pub _02: Option<String>,
+    pub _03: Option<String>,
+    pub _04: Option<String>,
+    pub _05: Option<String>,
+    pub _06: Option<String>,
+}
+
 /// X7 - Customs Information
 /// 
 /// To indicate customs information
@@ -3654,7 +4032,7 @@ pub struct X1 {
 /// ----|----|-------|--------|----|------|-------
 /// 01 | 61 | Free-Form Message | 1 | M | AN | 1/30
 /// 02 | 61 | Free-Form Message | 1 | O | AN | 1/30
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct X7 {
     pub _01: String,
     pub _02: Option<String>,
@@ -3673,7 +4051,7 @@ pub struct X7 {
 /// 05 | 503 | Block 20 Code | 1 | O | ID | 1/1
 /// 06 | 504 | Chemical Analysis Percentage | 1 | O/Z | N2 | 2/9
 /// 07 | 212 | Unit Price | 1 | O/Z | R | 1/17
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct XH {
     pub _01: String,
     pub _02: Option<String>,
@@ -3682,6 +4060,53 @@ pub struct XH {
     pub _05: Option<String>,
     pub _06: Option<String>,
     pub _07: Option<String>,
+}
+
+/// Y2 - Container Details
+/// 
+/// To specify container information and transportation service to be used
+/// 
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 95 | Number of Containers | M |  | N0 1/4
+/// 02 | 78 | Container Type Request Code | O |  | ID 1/1
+/// 03 | 56 | Type of Service Code | O |  | ID 2/2
+/// 04 | 24 | Equipment Type | M |  | ID 4/4
+/// 05 | 91 | Transportation Method/Type Code | O |  | ID 1/2
+/// 06 | 177 | Intermodal Service Code | O |  | ID 1/2
+/// 07 | 140 | Standard Carrier Alpha Code | O |  | ID 2/4
+/// 08 | 464 | Container Terms Code | O |  | ID 3/3
+/// 09 | 465 | Container Terms Code Qualifier | O |  | ID 1/1
+/// 10 | 466 | Total Stop-offs | O |  | N0 1/2
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
+pub struct Y2 {
+    pub _01: String,
+    pub _02: Option<String>,
+    pub _03: Option<String>,
+    pub _04: String,
+    pub _05: Option<String>,
+    pub _06: Option<String>,
+    pub _07: Option<String>,
+    pub _08: Option<String>,
+    pub _09: Option<String>,
+    pub _10: Option<String>,
+}
+
+
+/// Y6 - Authentication
+/// 
+/// To specify the authority for authorizing an action and the date authentication is made
+/// 
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 313 | Authority Identifier Code | O |  | ID 2/2
+/// 02 | 151 | Authority | M |  | AN | 1/20
+/// 03 | 275 | Authorization Date | M |  | DT 8/8
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
+pub struct Y6 {
+    pub _01: Option<String>,
+    pub _02: String,
+    pub _03: String,
 }
 
 /// Y7 - Priority
@@ -3695,7 +4120,7 @@ pub struct XH {
 /// 03 | 471 | Priority Code Qualifier | 1 | X | AN | 1/1
 /// 04 | 468 | Port Call File Number | 1 | O | N0 | 4/4
 /// 05 | 373 | Date | 1 | O/Z | DT | 8/8
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct Y7 {
     pub _01: Option<String>,
     pub _02: Option<String>,
@@ -3724,7 +4149,7 @@ pub struct Y7 {
 /// 06 | 202 | Correction Indicator | 1 | M | ID | 2/2
 /// 07 | 140 | Standard Carrier Alpha Code | 1 | M | ID | 2/4
 /// 08 | 91 | Transportation Method/Type Code | 1 | M/Z | ID | 1/2
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct ZC1 {
     pub _01: Option<String>,
     pub _02: Option<String>,
@@ -3756,7 +4181,7 @@ pub struct ZC1 {
 /// 06 | 243 | Transaction Reference Date | 1 | O | DT | 8/8
 /// 07 | 202 | Correction Indicator Code | 1 | M | ID | 2/2
 /// 08 | 140 | Standard Carrier Alpha Code | 1 | O | ID | 2/4
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct ZD {
     pub _01: String,
     pub _02: Option<String>,
