@@ -12,7 +12,7 @@ pub use segment::*;
 #[cfg(test)]
 mod test;
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct Transmission<T> {
     pub isa: ISA,
     pub functional_group: Vec<FunctionalGroup<T>>,
@@ -20,7 +20,7 @@ pub struct Transmission<T> {
 }
 
 impl<T: Reflect> Reflect for Transmission<T> {
-    fn get_path(last_path: &Path, next_segment: &str) -> Path {
+    fn get_path(current_path: &Path, next_segment: &str, last_path: &Path) -> Path {
         match next_segment {
             "ISA" => Path {
                 elem: vec![PathItem {
@@ -36,7 +36,7 @@ impl<T: Reflect> Reflect for Transmission<T> {
                 }],
                 ..Default::default()
             },
-            "GS" => last_path
+            "GS" => current_path
                 .push("functional_group".to_string(), Some(0), false)
                 .push("gs".to_string(), None, true)
                 .next_op(PathOperation::Push(PathItem {
@@ -44,23 +44,17 @@ impl<T: Reflect> Reflect for Transmission<T> {
                     vec_position: Some(0),
                     leaf: false,
                 })),
-            "GE" => last_path
-                .pop()
-                .push("ge".to_string(), None, true),
-            _ => T::get_path(last_path, next_segment),
+            "GE" => current_path.pop().push("ge".to_string(), None, true),
+            _ => T::get_path(current_path, next_segment, last_path),
         }
     }
 
     fn get_type_name() -> String {
         "Transmission".to_string()
     }
-
-    fn is_leaf() -> bool {
-        false
-    }
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct FunctionalGroup<T> {
     pub gs: GS,
     pub segments: Vec<T>,
@@ -467,7 +461,7 @@ pub struct _214Loop0200Loop0260 {
 /// R4 -> 0070 | DTM | Date/Time Reference | O | 15
 /// 0080 | V9 | Event Detail | O | 10
 /// 0090 | SE | Transaction Set Trailer | M | 1
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct _315 {
     pub st: ST,
     pub b4: B4,
@@ -483,33 +477,67 @@ pub struct _315 {
 }
 
 impl Reflect for _315 {
-    fn get_path(last_path: &Path, next_segment: &str) -> Path {
+    fn get_path(current_path: &Path, next_segment: &str, last_path: &Path) -> Path {
         match next_segment {
-            "ST" => last_path.push("st".to_string(), None, true),
-            "B4" => last_path.push("b4".to_string(), None, true),
-            "N9" => last_path.push("n9".to_string(), Some(0), true),
-            "Q2" => last_path.push("q2".to_string(), None, true),
-            "SG" => last_path.push("sg".to_string(), Some(0), true),
-            "R4" => last_path.push("r4".to_string(), None, true),
-            "V9" => last_path.push("v9".to_string(), None, true),
-            "SE" => last_path.push("se".to_string(), None, true),
-            _ => Path::default(),
+            "ST" => current_path.push("st".to_string(), None, true),
+            "B4" => current_path.push("b4".to_string(), None, true),
+            "N9" => {
+                // let last = last_path.elem.last();
+                // println!("N9: last: {:?}",last);
+                let counter = match last_path.elem.last().unwrap().vec_position {
+                    Some(count) => count + 1,
+                    None => 0,
+                };
+                println!("N9: {current_path} {last_path} {counter}");
+                current_path.push("n9".to_string(), Some(counter), true)
+            }
+            "Q2" => current_path.push("q2".to_string(), None, true),
+            "SG" => current_path.push("sg".to_string(), Some(0), true),
+            // "R4" => current_path.push("r4".to_string(), None, true),
+            "V9" => current_path.push("v9".to_string(), None, true),
+            "SE" => current_path.push("se".to_string(), None, true),
+            _ => {
+                //must be part of _315LoopR4 loop
+                let v = last_path.pop();
+                let last_elem = v.elem.last().unwrap();
+                let counter = if last_elem.name == "loop_r4" {
+                    match last_path.pop().elem.last().unwrap().vec_position {
+                        Some(count) => count + 1,
+                        None => 0,
+                    }
+                } else {
+                    0
+                };
+                println!("_315LoopR4: {current_path} {last_path} {counter}");
+                let new_path = current_path.push("loop_r4".to_string(), Some(counter), false);
+                let x = _315LoopR4::get_path(&new_path, next_segment, last_path);
+                x.next_op(PathOperation::Pop)
+            }
         }
     }
 
     fn get_type_name() -> String {
         "_315".to_string()
     }
-
-    fn is_leaf() -> bool {
-        true
-    }
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct _315LoopR4 {
     pub r4: R4,
     pub dtm: Option<DTM>,
+}
+
+impl Reflect for _315LoopR4 {
+    fn get_type_name() -> String {
+        "_315LoopR4".to_string()
+    }
+    fn get_path(current_path: &Path, next_segment: &str, last_path: &Path) -> Path {
+        match next_segment {
+            "R4" => current_path.push("r4".to_string(), None, true),
+            "DTM" => current_path.push("dtm".to_string(), None, true),
+            _ => Path::default(),
+        }
+    }
 }
 
 /// 322 - Terminal Operations and Intermodal Ramp Activity

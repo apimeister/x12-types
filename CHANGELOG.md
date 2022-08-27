@@ -1,10 +1,11 @@
-# 0.4.0 2022-05-29
+# 0.4.0 2022-08-27
 
 * some more documentation
 * add segments as generic types
 * added
   * 004010/214
   * 003030/998
+* add reflection for 004010/315
 
 # 0.3.0 2022-05-28
 

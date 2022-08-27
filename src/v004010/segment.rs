@@ -224,7 +224,7 @@ pub struct B2 {
 /// 11 | 310 | Location Identifier | 1 | X | AN | 1/30
 /// 12 | 309 | Location Qualifier | 1 | X | ID | 1/2
 /// 13 | 761 | Equipment Number Check Digit | 1 | O | N0 | 1/1
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct B4 {
     /// 152 - Special Handling Code
     ///
@@ -604,7 +604,7 @@ pub struct D9 {
 /// 04 | 623 | Time Code | 1 | O | ID | 2/2
 /// 05 | 1250 | Date Time Period Format Qualifier | 1 | X | ID | 2/3
 /// 06 | 1251 | Date Time Period | 1 | X | AN | 1/35
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct DTM {
     /// 374 - Date/Time Qualifier
     /// 
@@ -960,7 +960,7 @@ pub struct GA {
 /// ----|----|-------|--------|----|------|-------
 /// 01 | 97 | Number of Transaction Sets Included | 1 | M | N0 | 1/6
 /// 02 | 28 | Group Control Number | 1 | M/Z | N0 | 1/9
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct GE {
     /// 97 - Number of Transaction Sets Included
     /// 
@@ -1011,7 +1011,7 @@ pub struct GR5 {
 /// 06 | 28 | Group Control Number | 1 | M/Z | N0 | 1/9
 /// 07 | 455 | Responsible Agency Code | 1 | M | ID | 1/2
 /// 08 | 480 | Version / Release / Industry Identifier Code | 1 | M | AN | 1/12
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct GS {
     pub _01: String,
     pub _02: String,
@@ -1133,7 +1133,7 @@ pub struct IM {
 /// ----|----|-------|--------|----|------|-------
 /// 01 | I16 | Number of Included Functional Groups | 1 | M | N0 | 1/5
 /// 02 | I12 | Interchange Control Number | 1 | M | N0 | 9/9
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct IEA {
     /// I16 - Number of Included Functional Groups
     /// 
@@ -1172,7 +1172,7 @@ pub struct IEA {
 /// 14 | I13 | Acknowledgment Requested | 1 | M | ID | 1/1
 /// 15 | I14 | Usage Indicator | 1 | M | ID | 1/1
 /// 16 | I15 | Component Element Separator | 1 | M |  | 1/1
-#[derive(Serialize, Deserialize, Clone, Default, Debug, Validate)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, Validate, PartialEq)]
 pub struct ISA {
     /// I01 - Authorization Information Qualifier
     /// 
@@ -1293,16 +1293,12 @@ pub struct ISA {
 }
 
 impl Reflect for ISA {
-    fn get_path(last_path: &Path, next_segment: &str) -> Path {
-        return last_path.clone();
+    fn get_path(current_path: &Path, next_segment: &str, last_path: &Path) -> Path {
+        return current_path.clone();
     }
 
     fn get_type_name() -> String {
         "ISA".to_string()
-    }
-
-    fn is_leaf() -> bool {
-        false
     }
 }
 
@@ -2242,7 +2238,7 @@ pub struct N7 {
 /// 05 | 337 | Time | 1 | X | TM | 4/8
 /// 06 | 623 | Time Code | 1 | O/Z | ID | 2/2
 /// 07 | C040 | Reference Identifier | 1 | O/Z
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct N9 {
     pub _01: String,
     pub _02: String,
@@ -2675,7 +2671,7 @@ pub struct PS {
 /// 14 | 183 | Volume | 1 | X | R | 1/8
 /// 15 | 184 | Volume Unit Qualifier | 1 | X | ID | 1/1
 /// 16 | 188 | Weight Unit Code | 1 | X | ID | 1/1
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct Q2 {
     pub _01: String,
     /// 26 - Country Code
@@ -2868,7 +2864,7 @@ pub struct R2 {
 /// 06 | 174 | Terminal Name | 1 | O | AN | 2/30
 /// 07 | 113 | Pier Number | 1 | O | AN | 1/4
 /// 08 | 156 | State or Province Code | 1 | O | ID | 2/2
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct R4 {
     pub _01: String,
     pub _02: Option<String>,
@@ -3101,7 +3097,7 @@ pub struct SDQ {
 /// ----|----|-------|--------|----|------|-------
 /// 01 | 96 | Number of Included Segments | 1 | M | N0 | 1/10
 /// 02 | 329 | Transaction Set Control Number | 1 | M | AN | 4/9
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct SE {
     /// 96 - Number of Included Segments
     /// 
@@ -3130,7 +3126,7 @@ pub struct SE {
 /// 04 | 373 | Date | 1 | O | DT | 8/8
 /// 05 | 337 | Time | 1 | X | TM | 4/8
 /// 06 | 623 | Time Code | 1 | O | ID | 2/2
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct SG {
     pub _01: String,
     pub _02: String,
@@ -3191,7 +3187,7 @@ pub struct SPO {
 /// ----|----|------|--------|----|------|-------
 /// 01 | 143 | Transaction Set Identifier Code | 1 | M/Z | ID | 3/3
 /// 02 | 329 | Transaction Set Control Number | 1 | M | AN | 4/9
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct ST {
     pub _01: String,
     pub _02: String,
@@ -3434,7 +3430,7 @@ pub struct V4 {
 /// 18 | 86 | Total Equipment NEW | 1 | O/Z | N0 | 1/3
 /// 19 | 81 | Weight NEW | 1 | O/Z | R | 1/10
 /// 20 | 82 | Length NEW | 1 | O/Z | R | 1/8
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
 pub struct V9 {
     pub _01: String,
     pub _02: Option<String>,

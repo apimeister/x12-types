@@ -44,7 +44,6 @@ fn parse_315() {
                     _03: Some("VA".to_string()),
                     _04: Some("20220901".to_string()),
                     _05: Some("0807".to_string()),
-                    _06: Some("".to_string()),
                     _07: Some("GMCU".to_string()),
                     _08: Some("609413".to_string()),
                     _09: Some("E".to_string()),
@@ -123,6 +122,7 @@ fn parse_315() {
     let new_input = new_input.replace("\n", "");
     let obj: Transmission<_315> = serde_x12::from_str(&new_input).unwrap();
     println!("{:?}", obj);
+    assert_eq!(x, obj);
 }
 
 #[test]
