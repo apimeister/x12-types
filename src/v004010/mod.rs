@@ -824,7 +824,7 @@ impl Reflect for _315 {
 #[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
 pub struct _315LoopR4 {
     pub r4: R4,
-    pub dtm: Option<DTM>,
+    pub dtm: Vec<DTM>,
 }
 
 impl Reflect for _315LoopR4 {

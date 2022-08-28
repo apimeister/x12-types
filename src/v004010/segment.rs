@@ -733,7 +733,7 @@ pub struct DTM {
     /// - TYPE=DT
     /// - MIN=8
     /// - MAX=8
-    pub _02: String,
+    pub _02: Option<String>,
     /// 337 - Time
     ///
     /// Time expressed in 24-hour clock time as follows: HHMM, or HHMMSS, or HHMMSSD, or HHMMSSDD, where H = hours (00-23), M = minutes (00-59), S = integer seconds (00-59) and DD = decimal seconds; decimal seconds are expressed as follows: D = tenths (0-9) and DD = hundredths (00-99)
