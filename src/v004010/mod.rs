@@ -10,9 +10,11 @@ mod segment;
 pub use segment::*;
 
 #[cfg(test)]
-mod test;
+mod test_310;
+#[cfg(test)]
+mod test_315;
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
 pub struct Transmission<T> {
     pub isa: ISA,
     pub functional_group: Vec<FunctionalGroup<T>>,
@@ -54,7 +56,7 @@ impl<T: Reflect> Reflect for Transmission<T> {
     }
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
 pub struct FunctionalGroup<T> {
     pub gs: GS,
     pub segments: Vec<T>,
@@ -272,73 +274,73 @@ pub struct _204Loop380 {
 ///
 /// This Draft Standard for Trial Use contains the format and establishes the data contents of the Transportation Carrier Shipment Status Message Transaction Set (214) for use within the context of an Electronic Data Interchange (EDI) environment. This transaction set can be used by a transportation carrier to provide shippers, consignees, and their agents with the status of shipments in terms of dates, times, locations, route, identifying numbers, and conveyance.
 ///
-/// POS	ID	NAME	REQ	MAX	REPEAT
-/// 0010	ST	Transaction Set Header	M	1
-/// 0020	B10	Beginning Segment for Transportation Carrier Shipment Status Message	M	1
-/// 0030	L11	Business Instructions and Reference Number	O	300
-/// 0035	MAN	Marks and Numbers	O	9999
-/// 0040	K1	Remarks	O	10
-/// LOOP ID - 0100	10
-/// 0100 -> 0050	N1	Name	O	1
-/// 0100 -> 0060	N2	Additional Name Information	O	1
-/// 0100 -> 0070	N3	Address Information	O	2
-/// 0100 -> 0080	N4	Geographic Location	O	1
-/// 0100 -> 0090	G61	Contact	O	1
-/// 0100 -> 0100	G62	Date/Time	O	1
-/// 0100 -> 0110	L11	Business Instructions and Reference Number	O	10
-/// 0120	MS3	Interline Information	O	12
-/// LOOP ID - 0200	999999
-/// 0200 -> 0130	LX	Assigned Number	O	1
-/// 0200 -> LOOP ID - 0205	10
-/// 0200 -> 0205 -> 0140	AT7	Shipment Status Details	O	1
-/// 0200 -> 0205 -> 0143	MS1	Equipment, Shipment, or Real Property Location	O	1
-/// 0200 -> 0205 -> 0146	MS2	Equipment or Container Owner and Type	O	1
-/// 0200 -> 0150	L11	Business Instructions and Reference Number	O	10
-/// 0200 -> 0155	MAN	Marks and Numbers	O	9999
-/// 0200 -> 0160	Q7	Lading Exception Code	O	10
-/// 0200 -> 0170	K1	Remarks	O	10
-/// 0200 -> 0180	AT5	Bill of Lading Handling Requirements	O	10
-/// 0200 -> 0200	AT8	Shipment Weight, Packaging and Quantity Data	O	10
-/// 0200 -> LOOP ID - 0210	999999
-/// 0200 -> 0210 -> 0210	CD3	Carton (Package) Detail	O	1
-/// 0200 -> 0210 -> 0220	L11	Business Instructions and Reference Number	O	20
-/// 0200 -> 0210 -> LOOP ID - 0215	10
-/// 0200 -> 0210 -> 0215 -> 0230	AT7	Shipment Status Details	O	1
-/// 0200 -> 0210 -> 0215 -> 0233	MS1	Equipment, Shipment, or Real Property Location	O	1
-/// 0200 -> 0210 -> 0215 -> 0236	MS2	Equipment or Container Owner and Type	O	1
-/// 0200 -> 0210 -> 0240	NM1	Individual or Organizational Name	O	1
-/// 0200 -> 0210 -> 0250	Q7	Lading Exception Code	O	10
-/// 0200 -> 0210 -> 0260	AT8	Shipment Weight, Packaging and Quantity Data	O	1
-/// 0200 -> 0210 -> 0265	MAN	Marks and Numbers	O	9999
-/// 0200 -> 0210 -> LOOP ID - 0220	999999
-/// 0200 -> 0210 -> 0220 -> 0270	N1	Name	O	1
-/// 0200 -> 0210 -> 0220 -> 0280	N2	Additional Name Information	O	1
-/// 0200 -> 0210 -> 0220 -> 0290	N3	Address Information	O	3
-/// 0200 -> 0210 -> 0220 -> 0300	N4	Geographic Location	O	1
-/// 0200 -> 0210 -> 0220 -> 0310	L11	Business Instructions and Reference Number	O	10
-/// 0200 -> LOOP ID - 0230	999999
-/// 0200 -> 0230 -> 0320	PRF	Purchase Order Reference	O	1
-/// 0200 -> 0230 -> LOOP ID - 0231	999999
-/// 0200 -> 0230 -> 0231 -> 0330	N1	Name	O	1
-/// 0200 -> 0230 -> 0231 -> 0340	N2	Additional Name Information	O	1
-/// 0200 -> 0230 -> 0231 -> 0350	N3	Address Information	O	2
-/// 0200 -> 0230 -> 0231 -> 0360	N4	Geographic Location	O	1
-/// 0200 -> 0230 -> 0231 -> 0370	L11	Business Instructions and Reference Number	O	10
-/// 0200 -> 0230 -> LOOP ID - 0233	999999
-/// 0200 -> 0230 -> 0233 -> 0380	CD3	Carton (Package) Detail	O	1
-/// 0200 -> 0230 -> 0233 -> 0390	L11	Business Instructions and Reference Number	O	20
-/// 0200 -> 0230 -> 0233 -> LOOP ID - 0240	10
-/// 0200 -> 0230 -> 0233 -> 0240 -> 0400	AT7	Shipment Status Details	O	1
-/// 0200 -> 0230 -> 0233 -> 0240 -> 0402	MS1	Equipment, Shipment, or Real Property Location	O	1
-/// 0200 -> 0230 -> 0233 -> 0240 -> 0404	MS2	Equipment or Container Owner and Type	O	1
-/// 0200 -> 0230 -> 0233 -> 0405	MAN	Marks and Numbers	O	9999
-/// 0200 -> LOOP ID - 0250	999999
-/// 0200 -> 0250 -> 0410	SPO	Shipment Purchase Order Detail	O	1
-/// 0200 -> 0250 -> 0420	SDQ	Destination Quantity	O	10
-/// 0200 -> LOOP ID - 0260	>1
-/// 0200 -> 0260 -> 0423	EFI	Electronic Format Identification	O	1
-/// 0200 -> 0260 -> 0426	BIN	Binary Data	M	1
-/// 0610	SE	Transaction Set Trailer	M	1
+/// POS | ID | NAME | REQ | MAX | REPEAT
+/// 0010 | ST | Transaction Set Header | M | 1
+/// 0020 | B10 | Beginning Segment for Transportation Carrier Shipment Status Message | M | 1
+/// 0030 | L11 | Business Instructions and Reference Number | O | 300
+/// 0035 | MAN | Marks and Numbers | O | 9999
+/// 0040 | K1 | Remarks | O | 10
+/// LOOP ID - 0100 | 10
+/// 0100 -> 0050 | N1 | Name | O | 1
+/// 0100 -> 0060 | N2 | Additional Name Information | O | 1
+/// 0100 -> 0070 | N3 | Address Information | O | 2
+/// 0100 -> 0080 | N4 | Geographic Location | O | 1
+/// 0100 -> 0090 | G61 | Contact | O | 1
+/// 0100 -> 0100 | G62 | Date/Time | O | 1
+/// 0100 -> 0110 | L11 | Business Instructions and Reference Number | O | 10
+/// 0120 | MS3 | Interline Information | O | 12
+/// LOOP ID - 0200 | 999999
+/// 0200 -> 0130 | LX | Assigned Number | O | 1
+/// 0200 -> LOOP ID - 0205 | 10
+/// 0200 -> 0205 -> 0140 | AT7 | Shipment Status Details | O | 1
+/// 0200 -> 0205 -> 0143 | MS1 | Equipment, Shipment, or Real Property Location | O | 1
+/// 0200 -> 0205 -> 0146 | MS2 | Equipment or Container Owner and Type | O | 1
+/// 0200 -> 0150 | L11 | Business Instructions and Reference Number | O | 10
+/// 0200 -> 0155 | MAN | Marks and Numbers | O | 9999
+/// 0200 -> 0160 | Q7 | Lading Exception Code | O | 10
+/// 0200 -> 0170 | K1 | Remarks | O | 10
+/// 0200 -> 0180 | AT5 | Bill of Lading Handling Requirements | O | 10
+/// 0200 -> 0200 | AT8 | Shipment Weight, Packaging and Quantity Data | O | 10
+/// 0200 -> LOOP ID - 0210 | 999999
+/// 0200 -> 0210 -> 0210 | CD3 | Carton (Package) Detail | O | 1
+/// 0200 -> 0210 -> 0220 | L11 | Business Instructions and Reference Number | O | 20
+/// 0200 -> 0210 -> LOOP ID - 0215 | 10
+/// 0200 -> 0210 -> 0215 -> 0230 | AT7 | Shipment Status Details | O | 1
+/// 0200 -> 0210 -> 0215 -> 0233 | MS1 | Equipment, Shipment, or Real Property Location | O | 1
+/// 0200 -> 0210 -> 0215 -> 0236 | MS2 | Equipment or Container Owner and Type | O | 1
+/// 0200 -> 0210 -> 0240 | NM1 | Individual or Organizational Name | O | 1
+/// 0200 -> 0210 -> 0250 | Q7 | Lading Exception Code | O | 10
+/// 0200 -> 0210 -> 0260 | AT8 | Shipment Weight, Packaging and Quantity Data | O | 1
+/// 0200 -> 0210 -> 0265 | MAN | Marks and Numbers | O | 9999
+/// 0200 -> 0210 -> LOOP ID - 0220 | 999999
+/// 0200 -> 0210 -> 0220 -> 0270 | N1 | Name | O | 1
+/// 0200 -> 0210 -> 0220 -> 0280 | N2 | Additional Name Information | O | 1
+/// 0200 -> 0210 -> 0220 -> 0290 | N3 | Address Information | O | 3
+/// 0200 -> 0210 -> 0220 -> 0300 | N4 | Geographic Location | O | 1
+/// 0200 -> 0210 -> 0220 -> 0310 | L11 | Business Instructions and Reference Number | O | 10
+/// 0200 -> LOOP ID - 0230 | 999999
+/// 0200 -> 0230 -> 0320 | PRF | Purchase Order Reference | O | 1
+/// 0200 -> 0230 -> LOOP ID - 0231 | 999999
+/// 0200 -> 0230 -> 0231 -> 0330 | N1 | Name | O | 1
+/// 0200 -> 0230 -> 0231 -> 0340 | N2 | Additional Name Information | O | 1
+/// 0200 -> 0230 -> 0231 -> 0350 | N3 | Address Information | O | 2
+/// 0200 -> 0230 -> 0231 -> 0360 | N4 | Geographic Location | O | 1
+/// 0200 -> 0230 -> 0231 -> 0370 | L11 | Business Instructions and Reference Number | O | 10
+/// 0200 -> 0230 -> LOOP ID - 0233 | 999999
+/// 0200 -> 0230 -> 0233 -> 0380 | CD3 | Carton (Package) Detail | O | 1
+/// 0200 -> 0230 -> 0233 -> 0390 | L11 | Business Instructions and Reference Number | O | 20
+/// 0200 -> 0230 -> 0233 -> LOOP ID - 0240 | 10
+/// 0200 -> 0230 -> 0233 -> 0240 -> 0400 | AT7 | Shipment Status Details | O | 1
+/// 0200 -> 0230 -> 0233 -> 0240 -> 0402 | MS1 | Equipment, Shipment, or Real Property Location | O | 1
+/// 0200 -> 0230 -> 0233 -> 0240 -> 0404 | MS2 | Equipment or Container Owner and Type | O | 1
+/// 0200 -> 0230 -> 0233 -> 0405 | MAN | Marks and Numbers | O | 9999
+/// 0200 -> LOOP ID - 0250 | 999999
+/// 0200 -> 0250 -> 0410 | SPO | Shipment Purchase Order Detail | O | 1
+/// 0200 -> 0250 -> 0420 | SDQ | Destination Quantity | O | 10
+/// 0200 -> LOOP ID - 0260 | >1
+/// 0200 -> 0260 -> 0423 | EFI | Electronic Format Identification | O | 1
+/// 0200 -> 0260 -> 0426 | BIN | Binary Data | M | 1
+/// 0610 | SE | Transaction Set Trailer | M | 1
 #[derive(Debug, Default, Clone, Serialize, Deserialize)]
 pub struct _214 {
     pub st: ST,
@@ -495,6 +497,46 @@ pub struct _309LoopP4 {
 #[derive(Serialize, Deserialize, Clone, Default, Debug)]
 pub struct _309LoopLX {
     pub lx: LX,
+    pub m13: M13,
+    pub m11: M11,
+    pub n9: Vec<N9>,
+    pub loop_n1: Vec<_309LoopN1>,
+    pub loop_m12: Vec<_309LoopM12>,
+    pub loop_vid: Vec<_309LoopVID>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+pub struct _309LoopN1 {
+    pub n1: Option<N1>,
+    pub n3: Option<N3>,
+    pub n4: Option<N4>,
+    pub dtm: Option<DTM>,
+    pub per: Option<PER>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+pub struct _309LoopM12 {
+    pub m12: Option<M12>,
+    pub p5: Vec<P5>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+pub struct _309LoopVID {
+    pub vid: Option<VID>,
+    pub vc: Vec<VC>,
+    pub loop_n10: Vec<_309LoopN10>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+pub struct _309LoopN10 {
+    pub n10: Option<N10>,
+    pub loop_h1: Vec<_309LoopH1>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+pub struct _309LoopH1 {
+    pub h1: Option<H1>,
+    pub h2: Vec<H2>,
 }
 
 /// 310 - Freight Receipt and Invoice (Ocean) 
@@ -503,34 +545,34 @@ pub struct _309LoopLX {
 /// 
 /// POS | ID | NAME | REQ | MAX | REPEAT
 /// ----|----|------|-----|-----|-------
-/// 010 | ST | Transaction Set Header | M | 1 | 	
-/// 020 | B3 | Beginning Segment for Carrier's Invoice | M | 1 | 	
-/// 030 | B2A | Set Purpose | O | 1 | 	
-/// 040 | Y6 | Authentication | O | 2 | 	
-/// 050 | G3 | Compensation Information | O | 1 | 	
-/// 060 | N9 | Reference Identification | O | 15 | 	
-/// 070 | V1 | Vessel Identification | M | 2 | 	
-/// 080 | M0 | Letter of Credit Reference | O | 1 | 	
-/// 090 | M1 | Insurance | O | 5 | 	
-/// 100 | C2 | Bank ID | O | 1 | 	
-/// 110 | C3 | Currency | O | 1 | 	
-/// 120 | Y2 | Container Details | O | 10 | 	
+/// 010 | ST | Transaction Set Header | M | 1
+/// 020 | B3 | Beginning Segment for Carrier's Invoice | M | 1
+/// 030 | B2A | Set Purpose | O | 1
+/// 040 | Y6 | Authentication | O | 2
+/// 050 | G3 | Compensation Information | O | 1
+/// 060 | N9 | Reference Identification | O | 15
+/// 070 | V1 | Vessel Identification | M | 2
+/// 080 | M0 | Letter of Credit Reference | O | 1
+/// 090 | M1 | Insurance | O | 5
+/// 100 | C2 | Bank ID | O | 1
+/// 110 | C3 | Currency | O | 1
+/// 120 | Y2 | Container Details | O | 10
 /// LOOP ID - N1 | 10
-/// N1 -> 130 | N1 | Name | M | 1 |  | 		 
-/// N1 -> 140 | N2 | Additional Name Information | O | 1 | 	 
-/// N1 -> 150 | N3 | Address Information | O | 2 | 
+/// N1 -> 130 | N1 | Name | M | 1
+/// N1 -> 140 | N2 | Additional Name Information | O | 1
+/// N1 -> 150 | N3 | Address Information | O | 2
 /// N1 -> 160 | N4 | Geographic Location | O | 1 
-/// 170 | G61 | Contact | O | 3 |
+/// 170 | G61 | Contact | O | 3
 /// LOOP ID - R4 | 20
-/// R4 -> 180 | R4 | Port or Terminal | M | 1 |  | 		 
+/// R4 -> 180 | R4 | Port or Terminal | M | 1
 /// R4 -> 190 | DTM | Date/Time Reference | O | 15
-/// 199 | R2A | Route Information with Preference | O | 25 | 	
-/// 200 | R2 | Route Information | O | 13 | 	
-/// 210 | K1 | Remarks | O | 12 | 	
-/// 220 | H3 | Special Handling Instructions | O | 6 | 	
+/// 199 | R2A | Route Information with Preference | O | 25
+/// 200 | R2 | Route Information | O | 13
+/// 210 | K1 | Remarks | O | 12
+/// 220 | H3 | Special Handling Instructions | O | 6 
 /// 230 | L5 | Description, Marks and Numbers | O | 1 |
 /// LOOP ID - C8 | 20
-/// C8 -> 240 | C8 | Certifications and Clauses | O | 1 |  | 		 
+/// C8 -> 240 | C8 | Certifications and Clauses | O | 1 
 /// C8 -> 250 | C8C| Certifications Clauses Continuation | O | 5
 /// LOOP ID - LX | 999
 /// LX -> 010 | LX | Assigned Number | M | 1 | 
@@ -565,7 +607,7 @@ pub struct _309LoopLX {
 /// LX -> L0 -> C8C -> 221 | C8C | Certifications Clauses Continuation | O | 5 | 
 /// LX -> L0 -> LOOP ID - H1 | 10
 /// LX -> L0 -> H1 -> 230 | H1 | Hazardous Material | O | 1 | 
-/// LX -> L0 -> H1 -> 240 | H2 | Additional Hazardous Material Description | O | 10	
+/// LX -> L0 -> H1 -> 240 | H2 | Additional Hazardous Material Description | O | 10
 /// 010 | L3 | Total Weight and Charges | M | 1  
 /// 020 | PWK | Paperwork | O | 25  
 /// LOOP ID - L1 | 20 
@@ -576,7 +618,7 @@ pub struct _309LoopLX {
 /// 060 | K1 | Remarks | O | 999  
 /// 070 | L11 | Business Instructions and Reference Number | O | 1  
 /// 080 | SE | Transaction Set Trailer | M | 1 | 
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
 pub struct _310 {
     pub st: ST,
     pub b3: B3,
@@ -636,7 +678,7 @@ impl Reflect for _310 {
     }
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
 pub struct _310LoopN1{
     pub n1: N1,
     pub n2: Option<N2>,
@@ -644,32 +686,32 @@ pub struct _310LoopN1{
     pub n4: Option<N4>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
 pub struct _310LoopR4{
     pub r4: R4,
     pub dtm: Option<DTM>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
 pub struct _310LoopC8{
     pub c8: Option<C8>,
     pub c8c: Option<C8C>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
 pub struct _310LoopLX{
     pub lx: LX,
     pub loop_n7: Vec<_310LoopN7>,
     pub loop_l0: Vec<_310LoopL0>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
 pub struct _310LoopN7{
     pub n7: Option<N7>,
     pub qty: Option<QTY>,
     pub v4: Option<V4>,
     pub n12: Option<N12>,
-    pub M7: Vec<M7>,
+    pub m7: Vec<M7>,
     pub w09: Option<W09>,
     pub loop_l1: Vec<_310LoopL1>,
     pub l7: Option<L7>,
@@ -679,7 +721,7 @@ pub struct _310LoopN7{
     pub loop_h1: Vec<_310LoopH1>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
 pub struct _310LoopL0{
     pub l0: Option<L0>,
     pub l5: Option<L5>,
@@ -691,13 +733,13 @@ pub struct _310LoopL0{
     pub loop_h1: Vec<_310LoopH1>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
 pub struct _310LoopL1{
     pub l1: Option<L1>,
     pub c3: Option<C3>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
 pub struct _310LoopH1{
     pub h1: Option<H1>,
     pub h2: Option<H2>,
@@ -719,7 +761,7 @@ pub struct _310LoopH1{
 /// R4 -> 0070 | DTM | Date/Time Reference | O | 15
 /// 0080 | V9 | Event Detail | O | 10
 /// 0090 | SE | Transaction Set Trailer | M | 1
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
 pub struct _315 {
     pub st: ST,
     pub b4: B4,
@@ -779,7 +821,7 @@ impl Reflect for _315 {
     }
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
 pub struct _315LoopR4 {
     pub r4: R4,
     pub dtm: Option<DTM>,
@@ -789,7 +831,7 @@ impl Reflect for _315LoopR4 {
     fn get_type_name() -> String {
         "_315LoopR4".to_string()
     }
-    fn get_path(current_path: &Path, next_segment: &str, last_path: &Path) -> Path {
+    fn get_path(current_path: &Path, next_segment: &str, _last_path: &Path) -> Path {
         match next_segment {
             "R4" => current_path.push("r4".to_string(), None, true),
             "DTM" => current_path.push("dtm".to_string(), None, true),
