@@ -12,9 +12,8 @@ description = "Bindings for the ANSI X12 EDI definitions"
 [dependencies]
 serde = { version = "1.0", features = ["derive"] }
 validator = { version = "0.16", features = ["derive"] }
-serde_x12 = { version = "0.3" }
-# serde_x12 = { path = "../serde_x12", features = ["debug"] }
-
+# serde_x12 = { version = "0.3" }
+serde_x12 = { path = "../serde_x12", features = ["debug"] }
 
 [features]
 default = ["v003030","v004010","v004030","v005030"]

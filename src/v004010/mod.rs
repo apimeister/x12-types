@@ -824,6 +824,7 @@ impl Reflect for _315 {
 #[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
 pub struct _315LoopR4 {
     pub r4: R4,
+    #[serde(default)]
     pub dtm: Vec<DTM>,
 }
 
@@ -909,6 +910,7 @@ pub struct _322LoopN7 {
 #[derive(Serialize, Deserialize, Clone, Default, Debug)]
 pub struct _322LoopR4 {
     r4: R4,
+    #[serde(default)]
     dtm: Vec<DTM>,
 }
 #[derive(Serialize, Deserialize, Clone, Default, Debug)]

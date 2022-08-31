@@ -85,7 +85,7 @@ fn parse_315() {
                         _08: Some("US".to_string()),
                         ..Default::default()
                     },
-                    dtm: None,
+                    dtm: vec![],
                 },_315LoopR4{
                     r4: R4 {
                         _01: "E".to_string(),
@@ -96,7 +96,7 @@ fn parse_315() {
                         _08: Some("US".to_string()),
                         ..Default::default()
                     },
-                    dtm: None,
+                    dtm: vec![],
                 }],
                 v9: None,
                 se: SE {
@@ -234,7 +234,7 @@ fn test_315() {
                         _07: Some("".to_string()),
                         _08: Some("US".to_string()),
                     },
-                    dtm: None,
+                    dtm: vec![],
                 },_315LoopR4{
                     r4: R4 {
                         _01: "E".to_string(),
@@ -246,7 +246,7 @@ fn test_315() {
                         _07: Some("".to_string()),
                         _08: Some("US".to_string()),
                     },
-                    dtm: None,
+                    dtm: vec![],
                 }],
                 v9: None,
                 se: SE {
@@ -368,7 +368,7 @@ fn test_315_defaults() {
                         _08: Some("US".to_string()),
                         ..Default::default()
                     },
-                    dtm: None,
+                    dtm: vec![],
                 },_315LoopR4{
                     r4: R4 {
                         _01: "E".to_string(),
@@ -379,7 +379,7 @@ fn test_315_defaults() {
                         _08: Some("US".to_string()),
                         ..Default::default()
                     },
-                    dtm: None,
+                    dtm: vec![],
                 }],
                 v9: None,
                 se: SE {
