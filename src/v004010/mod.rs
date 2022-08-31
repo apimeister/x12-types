@@ -623,28 +623,44 @@ pub struct _310 {
     pub st: ST,
     pub b3: B3,
     pub b2a: Option<B2A>,
+    #[serde(default)]
     pub y6: Vec<Y6>,
     pub g3: Option<G3>,
+    #[serde(default)]
     pub n9: Vec<N9>,
+    #[serde(default)]
     pub v1: Vec<V1>,
     pub m0: Option<M0>,
+    #[serde(default)]
     pub m1: Vec<M1>,
     pub c2: Option<C2>,
     pub c3: Option<C3>,
+    #[serde(default)]
     pub y2: Vec<Y2>,
+    #[serde(default)]
     pub loop_n1: Vec<_310LoopN1>,
+    #[serde(default)]
     pub g61: Vec<G61>,
+    #[serde(default)]
     pub loop_r4: Vec<_310LoopR4>,
+    #[serde(default)]
     pub r2a: Vec<R2A>,
+    #[serde(default)]
     pub r2: Vec<R2>,
     /// heading remarks
+    #[serde(default)]
     pub k1: Vec<K1>,
+    #[serde(default)]
     pub h3: Vec<H3>,
     pub l5: Option<L5>,
+    #[serde(default)]
     pub loop_c8: Vec<_310LoopC8>,
+    #[serde(default)]
     pub loop_lx: Vec<_310LoopLX>,
     pub l3: L3,
+    #[serde(default)]
     pub pwk: Vec<PWK>,
+    #[serde(default)]
     pub loop_l1: Vec<_310LoopL1>,
     pub v9: Vec<V9>,
     pub c8: Vec<C8>,
