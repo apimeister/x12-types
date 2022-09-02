@@ -1138,6 +1138,7 @@ pub struct GR5 {
 /// GS - Functional Group Header
 ///
 /// To indicate the beginning of a functional group and to provide control information
+/// 
 /// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
 /// ----|----|-------|--------|----|------|-------
 /// 01 | 479 | Functional Identifier Code | 1 | M | ID | 2/2
@@ -1305,6 +1306,7 @@ pub struct IEA {
 /// ISA - Interchange Control Header
 ///
 /// To start and identify an interchange of zero or more functional groups and interchange-related control segments
+/// 
 /// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
 /// ----|----|-------|--------|----|------|-------
 /// 01 | I01 | Authorization Information Qualifier | 1 | M | ID | 2/2
@@ -1562,6 +1564,7 @@ pub struct L1 {
 /// L3 - Total Weight and Charges
 /// 
 /// To specify the total shipment in terms of weight, volume, rates, charges, advances, and prepaid amounts applicable to one or more line items
+/// 
 /// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
 /// ----|----|-------|--------|----|------|-------
 /// 01 | 81 | Weight | 1 | X | R | 1/10
@@ -1737,6 +1740,7 @@ pub struct LE {
 /// LEP - EPA Required Data
 /// 
 /// To specify the Environmental Protection Agency (EPA) information relating to shipments of hazardous material
+/// 
 /// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
 /// ----|----|-------|--------|----|------|-------
 /// 01 | 806 | EPA Waste Stream Number Code | 1 | O | ID | 4/6
@@ -2554,6 +2558,7 @@ pub struct N7 {
 
 /// N9 - Reference Identification
 /// To transmit identifying information as specified by the Reference Identification Qualifier
+/// 
 /// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
 /// ----|----|-------|--------|----|------|-------
 /// 01 | 128 | Reference Identification Qualifier | 1 | M | ID | 2/3
@@ -3545,6 +3550,7 @@ pub struct SDQ {
 /// SE - Transaction Set Trailer
 ///
 /// To indicate the end of the transaction set and provide the count of the transmitted segments (including the beginning (ST) and ending (SE) segments)
+/// 
 /// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
 /// ----|----|-------|--------|----|------|-------
 /// 01 | 96 | Number of Included Segments | 1 | M | N0 | 1/10
@@ -3570,6 +3576,7 @@ pub struct SE {
 /// SG - Shipment Status
 ///
 /// To convey the status of a shipment
+/// 
 /// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
 /// ----|----|-------|--------|----|------|-------
 /// 01 | 157 | Shipment Status Code | 1 | X | ID | 1/2
@@ -3635,6 +3642,7 @@ pub struct SPO {
 /// ST - Transaction Set Header
 ///
 /// To indicate the start of a transaction set and to assign a control number
+/// 
 /// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
 /// ----|----|------|--------|----|------|-------
 /// 01 | 143 | Transaction Set Identifier Code | 1 | M/Z | ID | 3/3
@@ -3860,6 +3868,7 @@ pub struct V4 {
 /// V9 - Event Detail
 ///
 /// To specify information about a specific event
+/// 
 /// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
 /// ----|----|-------|--------|----|------|-------
 /// 01 | 304 | Event Code | 1 | M | ID | 3/3

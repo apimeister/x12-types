@@ -449,7 +449,7 @@ pub struct _214Loop0200Loop0260 {
 }
 
 /// 309 - U.S. Customs Manifest
-/// 
+///
 /// This Draft Standard for Trial Use contains the format and establishes the data contents of the U.S. Customs Manifest Transaction Set (309) for use within the context of an Electronic Data Interchange (EDI) environment. The transaction set can be used by carriers, terminal operators, port authorities, or service centers to provide U.S. Customs with manifest data on cargo arriving in or departing from the U.S. on oceangoing vessels, railroad trains, or other types of conveyances. The transaction set can be also used by carriers to provide terminal operators, port authorities, or service centers with manifest data on cargo arriving at their facilities via the conveyances mentioned above.
 /// POS | ID | NAME | REQ | MAX | REPEAT
 /// ----|----|------|-----|-----|-------
@@ -539,10 +539,10 @@ pub struct _309LoopH1 {
     pub h2: Vec<H2>,
 }
 
-/// 310 - Freight Receipt and Invoice (Ocean) 
-/// 
-/// This Draft Standard for Trial Use contains the format and establishes the data contents of the Freight Receipt and Invoice (Ocean) Transaction Set (310) for use within the context of an Electronic Data Interchange (EDI) environment. The transaction set can be used to provide ocean bill of lading information. It is sent by ocean carriers to interested parties and can be used as the receipt for the shipment; to substitute for a paper bill of lading where the parties have agreed that a paper bill of lading is not necessary; to allow shipper or forwarder to verify bill of lading information before an original is printed and released; for information purposes, i.e., as a bill of lading copy; by the carrier to convey manifest information to a terminal operator; and as an invoice for freight. 
-/// 
+/// 310 - Freight Receipt and Invoice (Ocean)
+///
+/// This Draft Standard for Trial Use contains the format and establishes the data contents of the Freight Receipt and Invoice (Ocean) Transaction Set (310) for use within the context of an Electronic Data Interchange (EDI) environment. The transaction set can be used to provide ocean bill of lading information. It is sent by ocean carriers to interested parties and can be used as the receipt for the shipment; to substitute for a paper bill of lading where the parties have agreed that a paper bill of lading is not necessary; to allow shipper or forwarder to verify bill of lading information before an original is printed and released; for information purposes, i.e., as a bill of lading copy; by the carrier to convey manifest information to a terminal operator; and as an invoice for freight.
+///
 /// POS | ID | NAME | REQ | MAX | REPEAT
 /// ----|----|------|-----|-----|-------
 /// 010 | ST | Transaction Set Header | M | 1
@@ -561,7 +561,7 @@ pub struct _309LoopH1 {
 /// N1 -> 130 | N1 | Name | M | 1
 /// N1 -> 140 | N2 | Additional Name Information | O | 1
 /// N1 -> 150 | N3 | Address Information | O | 2
-/// N1 -> 160 | N4 | Geographic Location | O | 1 
+/// N1 -> 160 | N4 | Geographic Location | O | 1
 /// 170 | G61 | Contact | O | 3
 /// LOOP ID - R4 | 20
 /// R4 -> 180 | R4 | Port or Terminal | M | 1
@@ -569,55 +569,55 @@ pub struct _309LoopH1 {
 /// 199 | R2A | Route Information with Preference | O | 25
 /// 200 | R2 | Route Information | O | 13
 /// 210 | K1 | Remarks | O | 12
-/// 220 | H3 | Special Handling Instructions | O | 6 
+/// 220 | H3 | Special Handling Instructions | O | 6
 /// 230 | L5 | Description, Marks and Numbers | O | 1 |
 /// LOOP ID - C8 | 20
-/// C8 -> 240 | C8 | Certifications and Clauses | O | 1 
+/// C8 -> 240 | C8 | Certifications and Clauses | O | 1
 /// C8 -> 250 | C8C| Certifications Clauses Continuation | O | 5
 /// LOOP ID - LX | 999
-/// LX -> 010 | LX | Assigned Number | M | 1 | 
+/// LX -> 010 | LX | Assigned Number | M | 1 |
 /// LX -> LOOP ID - N7 | 999
-/// LX -> N7 -> 020 | N7 | Equipment Details | O | 1 | 
-/// LX -> N7 -> 025 | QTY | Quantity | O | 1 | 
-/// LX -> N7 -> 030 | V4 | Cargo Location Reference | O | 1 | 
-/// LX -> N7 -> 040 | N12 | Equipment Environment | O | 1 | 
-/// LX -> N7 -> 050 | M7 | Seal Numbers | O | 5 | 
-/// LX -> N7 -> 060 | W09 | Equipment and Temperature | O | 1 | 
+/// LX -> N7 -> 020 | N7 | Equipment Details | O | 1 |
+/// LX -> N7 -> 025 | QTY | Quantity | O | 1 |
+/// LX -> N7 -> 030 | V4 | Cargo Location Reference | O | 1 |
+/// LX -> N7 -> 040 | N12 | Equipment Environment | O | 1 |
+/// LX -> N7 -> 050 | M7 | Seal Numbers | O | 5 |
+/// LX -> N7 -> 060 | W09 | Equipment and Temperature | O | 1 |
 /// LX -> N7 -> LOOP ID - L1 | 20
-/// LX -> N7 -> L1 -> 070 | L1 | Rate and Charges | O | 1 | 
-/// LX -> N7 -> L1 -> 080 | C3 | Currency | O | 1 | 
-/// LX -> N7 -> 090 | L7 | Tariff Reference | O | 1 | 
-/// LX -> N7 -> 100 | X1 | Export License | O | 1 | 
-/// LX -> N7 -> 110 | X2 | Import License | O | 1 | 
-/// LX -> N7 -> 120 | N9 | Reference Identification | O | 3 | 
+/// LX -> N7 -> L1 -> 070 | L1 | Rate and Charges | O | 1 |
+/// LX -> N7 -> L1 -> 080 | C3 | Currency | O | 1 |
+/// LX -> N7 -> 090 | L7 | Tariff Reference | O | 1 |
+/// LX -> N7 -> 100 | X1 | Export License | O | 1 |
+/// LX -> N7 -> 110 | X2 | Import License | O | 1 |
+/// LX -> N7 -> 120 | N9 | Reference Identification | O | 3 |
 /// LX -> N7 -> LOOP ID - H1 | 10
-/// LX -> N7 -> H1 -> 130 | H1 | Hazardous Material | O | 1 | 
-/// LX -> N7 -> H1 -> 140 | H2 | Additional Hazardous Material Description | O | 10 | 
+/// LX -> N7 -> H1 -> 130 | H1 | Hazardous Material | O | 1 |
+/// LX -> N7 -> H1 -> 140 | H2 | Additional Hazardous Material Description | O | 10 |
 /// LX -> LOOP ID - L0 | 120
-/// LX -> L0 -> 150 | L0 | Line Item - Quantity and Weight | O | 1 | 
-/// LX -> L0 -> 160 | L5 | Description, Marks and Numbers | O | 999 | 
+/// LX -> L0 -> 150 | L0 | Line Item - Quantity and Weight | O | 1 |
+/// LX -> L0 -> 160 | L5 | Description, Marks and Numbers | O | 999 |
 /// LX -> L0 ->  |  | LOOP ID - L1 | 20
-/// LX -> L0 -> L1 -> 170 | L1 | Rate and Charges | O | 1 | 
-/// LX -> L0 -> L1 -> 180 | C3 | Currency | O | 1 | 
-/// LX -> L0 -> 190 | L7 | Tariff Reference | O | 1 | 
-/// LX -> L0 -> 200 | X1 | Export License | O | 1 | 
-/// LX -> L0 -> 210 | X2 | Import License | O | 1 | 
+/// LX -> L0 -> L1 -> 170 | L1 | Rate and Charges | O | 1 |
+/// LX -> L0 -> L1 -> 180 | C3 | Currency | O | 1 |
+/// LX -> L0 -> 190 | L7 | Tariff Reference | O | 1 |
+/// LX -> L0 -> 200 | X1 | Export License | O | 1 |
+/// LX -> L0 -> 210 | X2 | Import License | O | 1 |
 /// LX -> L0 -> LOOP ID - C8 | 20
-/// LX -> L0 -> C8 -> 220 | C8 | Certifications and Clauses | O | 1 | 
-/// LX -> L0 -> C8C -> 221 | C8C | Certifications Clauses Continuation | O | 5 | 
+/// LX -> L0 -> C8 -> 220 | C8 | Certifications and Clauses | O | 1 |
+/// LX -> L0 -> C8C -> 221 | C8C | Certifications Clauses Continuation | O | 5 |
 /// LX -> L0 -> LOOP ID - H1 | 10
-/// LX -> L0 -> H1 -> 230 | H1 | Hazardous Material | O | 1 | 
+/// LX -> L0 -> H1 -> 230 | H1 | Hazardous Material | O | 1 |
 /// LX -> L0 -> H1 -> 240 | H2 | Additional Hazardous Material Description | O | 10
 /// 010 | L3 | Total Weight and Charges | M | 1  
 /// 020 | PWK | Paperwork | O | 25  
-/// LOOP ID - L1 | 20 
+/// LOOP ID - L1 | 20
 /// L1 -> 030 | L1 | Rate and Charges | O | 1  
 /// L1 -> 040 | C3 | Currency | O | 1
 /// 050 | V9 | Event Detail | O | 10  
 /// 055 | C8 | Certifications and Clauses | O | 20  
 /// 060 | K1 | Remarks | O | 999  
 /// 070 | L11 | Business Instructions and Reference Number | O | 1  
-/// 080 | SE | Transaction Set Trailer | M | 1 | 
+/// 080 | SE | Transaction Set Trailer | M | 1 |
 #[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
 pub struct _310 {
     pub st: ST,
@@ -682,10 +682,8 @@ impl Reflect for _310 {
                     None => 0,
                 };
                 current_path.push("y6".to_string(), Some(counter), true)
-            },
-            _ => {
-               Path::default()
             }
+            _ => Path::default(),
         }
     }
 
@@ -695,7 +693,7 @@ impl Reflect for _310 {
 }
 
 #[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
-pub struct _310LoopN1{
+pub struct _310LoopN1 {
     pub n1: N1,
     pub n2: Option<N2>,
     pub n3: Option<N3>,
@@ -703,26 +701,26 @@ pub struct _310LoopN1{
 }
 
 #[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
-pub struct _310LoopR4{
+pub struct _310LoopR4 {
     pub r4: R4,
     pub dtm: Option<DTM>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
-pub struct _310LoopC8{
+pub struct _310LoopC8 {
     pub c8: Option<C8>,
     pub c8c: Option<C8C>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
-pub struct _310LoopLX{
+pub struct _310LoopLX {
     pub lx: LX,
     pub loop_n7: Vec<_310LoopN7>,
     pub loop_l0: Vec<_310LoopL0>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
-pub struct _310LoopN7{
+pub struct _310LoopN7 {
     pub n7: Option<N7>,
     pub qty: Option<QTY>,
     pub v4: Option<V4>,
@@ -738,7 +736,7 @@ pub struct _310LoopN7{
 }
 
 #[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
-pub struct _310LoopL0{
+pub struct _310LoopL0 {
     pub l0: Option<L0>,
     pub l5: Option<L5>,
     pub loop_l1: Vec<_310LoopL1>,
@@ -750,13 +748,13 @@ pub struct _310LoopL0{
 }
 
 #[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
-pub struct _310LoopL1{
+pub struct _310LoopL1 {
     pub l1: Option<L1>,
     pub c3: Option<C3>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
-pub struct _310LoopH1{
+pub struct _310LoopH1 {
     pub h1: Option<H1>,
     pub h2: Option<H2>,
 }
@@ -764,7 +762,7 @@ pub struct _310LoopH1{
 /// 315 - Status Details (Ocean)
 ///
 /// This Draft Standard for Trial Use contains the format and establishes the data contents of the Status Details (Ocean) Transaction Set (315) for use within the context of an Electronic Data Interchange (EDI) environment. The transaction set can be used to provide all the information necessary to report status or event details for selected shipments or containers. It is intended to accommodate the details for one status or event associated with many shipments or containers, as well as more than one status or event for one shipment or container.
-/// 
+///
 /// POS | ID | NAME | REQ | MAX | REPEAT
 /// ----|----|------|-----|-----|-------
 /// 0010 | ST | Transaction Set Header | M | 1
@@ -798,8 +796,6 @@ impl Reflect for _315 {
             "ST" => current_path.push("st".to_string(), None, true),
             "B4" => current_path.push("b4".to_string(), None, true),
             "N9" => {
-                // let last = last_path.elem.last();
-                // println!("N9: last: {:?}",last);
                 let counter = match last_path.elem.last().unwrap().vec_position {
                     Some(count) => count + 1,
                     None => 0,
@@ -814,19 +810,23 @@ impl Reflect for _315 {
             _ => {
                 //must be part of _315LoopR4 loop
                 let v = last_path.pop();
-                let last_elem = v.elem.last().unwrap();
-                let counter = if last_elem.name == "loop_r4" {
-                    match last_path.pop().elem.last().unwrap().vec_position {
-                        Some(count) => count + 1,
-                        None => 0,
-                    }
+                if v.elem.len() > 0 {
+                    let last_elem = v.elem.last().unwrap();
+                    let counter = if last_elem.name == "loop_r4" {
+                        match last_path.pop().elem.last().unwrap().vec_position {
+                            Some(count) => count + 1,
+                            None => 0,
+                        }
+                    } else {
+                        0
+                    };
+                    println!("_315LoopR4: {current_path} {last_path} {counter}");
+                    let new_path = current_path.push("loop_r4".to_string(), Some(counter), false);
+                    let x = _315LoopR4::get_path(&new_path, next_segment, last_path);
+                    x.next_op(PathOperation::Pop)
                 } else {
-                    0
-                };
-                println!("_315LoopR4: {current_path} {last_path} {counter}");
-                let new_path = current_path.push("loop_r4".to_string(), Some(counter), false);
-                let x = _315LoopR4::get_path(&new_path, next_segment, last_path);
-                x.next_op(PathOperation::Pop)
+                    last_path.clone()
+                }
             }
         }
     }
@@ -847,10 +847,10 @@ impl Reflect for _315LoopR4 {
     fn get_type_name() -> String {
         "_315LoopR4".to_string()
     }
-    fn get_path(current_path: &Path, next_segment: &str, _last_path: &Path) -> Path {
+    fn get_path(current_path: &Path, next_segment: &str, last_path: &Path) -> Path {
         match next_segment {
             "R4" => current_path.push("r4".to_string(), None, true),
-            "DTM" => current_path.push("dtm".to_string(), None, true),
+            "DTM" => last_path.pop().push("dtm".to_string(), Some(0), true),
             _ => Path::default(),
         }
     }
