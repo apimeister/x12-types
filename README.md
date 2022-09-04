@@ -1,7 +1,7 @@
 # X12-types
 [![Latest Version](https://img.shields.io/crates/v/x12-types.svg)](https://crates.io/crates/x12-types)
 
-This library provides bindings for the ANSI X12 standard.
+This library provides bindings for the ASC X12 standard.
 
 ## Usage
 
