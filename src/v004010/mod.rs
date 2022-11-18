@@ -800,7 +800,6 @@ impl Reflect for _315 {
                     Some(count) => count + 1,
                     None => 0,
                 };
-                println!("N9: {current_path} {last_path} {counter}");
                 current_path.push("n9".to_string(), Some(counter), true)
             }
             "Q2" => current_path.push("q2".to_string(), None, true),
@@ -820,7 +819,6 @@ impl Reflect for _315 {
                     } else {
                         0
                     };
-                    println!("_315LoopR4: {current_path} {last_path} {counter}");
                     let new_path = current_path.push("loop_r4".to_string(), Some(counter), false);
                     let x = _315LoopR4::get_path(&new_path, next_segment, last_path);
                     x.next_op(PathOperation::Pop)
