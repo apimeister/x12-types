@@ -25,9 +25,9 @@ pub enum Segments {
 }
 
 /// 998 - Set Cancellation NEW
-/// 
+///
 /// This Draft Standard for Trial Use contains the format and establishes the data contents of the Set Cancellation Transaction Set (998) for use within the context of an Electronic Data Interchange (EDI) environment. The transaction set can be used to request the deletion of a previously transmitted transaction set and will indicate the reason for this action, such as diversion or cancelled bill.
-/// 
+///
 /// POS | ID | NAME | REQ | MAX | REPEAT
 /// ----|----|------|-----|-----|-------
 /// 0010 | ST | Transaction Set Header | M | 1

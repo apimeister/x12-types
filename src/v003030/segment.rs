@@ -1,23 +1,25 @@
 use serde::{Deserialize, Serialize};
 
 /// IEA - Interchange Control Trailer NEW
-/// 
+///
 /// To define the end of an interchange of one or more functional groups and interchange-related control segments
-/// 
+///
 /// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
 /// ----|----|------|--------|----|------|-------
 /// 01 | I16 | Number of Included Functional Groups | 1 | M | N0 | 1/5
 /// 02 | I12 | Interchange Control Number | 1 | M | N0 | 9/9
 #[derive(Serialize, Deserialize, Clone, Default, Debug)]
 pub struct IEA {
+    #[serde(rename = "01")]
     pub _01: String,
+    #[serde(rename = "02")]
     pub _02: String,
 }
 
 /// ISA - Interchange Control Header NEW
-/// 
+///
 /// To start and identify an interchange of one or more functional groups and interchange-related control segments
-/// 
+///
 /// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
 /// ----|----|------|--------|-----|------|-------
 /// 01 | I01 | Authorization Information Qualifier | 1 | M | ID | 2/2
@@ -38,42 +40,60 @@ pub struct IEA {
 /// 16 | I15 | Subelement Separator | 1 | M | AN | 1/1
 #[derive(Serialize, Deserialize, Clone, Default, Debug)]
 pub struct ISA {
+    #[serde(rename = "01")]
     pub _01: String,
+    #[serde(rename = "02")]
     pub _02: String,
+    #[serde(rename = "03")]
     pub _03: String,
+    #[serde(rename = "04")]
     pub _04: String,
+    #[serde(rename = "05")]
     pub _05: String,
+    #[serde(rename = "06")]
     pub _06: String,
+    #[serde(rename = "07")]
     pub _07: String,
+    #[serde(rename = "08")]
     pub _08: String,
+    #[serde(rename = "09")]
     pub _09: String,
+    #[serde(rename = "10")]
     pub _10: String,
+    #[serde(rename = "11")]
     pub _11: String,
+    #[serde(rename = "12")]
     pub _12: String,
+    #[serde(rename = "13")]
     pub _13: String,
+    #[serde(rename = "14")]
     pub _14: String,
+    #[serde(rename = "15")]
     pub _15: String,
+    #[serde(rename = "16")]
     pub _16: String,
 }
 
 /// GE - Functional Group Trailer
-/// 
+///
 /// To indicate the end of a functional group and to provide control information
-/// 
+///
 /// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
 /// ----|----|------|--------|----|------|-------
 /// 01 | 97 | Number of Transaction Sets Included | 1 | M | N0 | 1/6
 /// 02 | 28 | Group Control Number | 1 | M/Z | N0 | 1/9
 #[derive(Serialize, Deserialize, Clone, Default, Debug)]
 pub struct GE {
+    #[serde(rename = "01")]
     pub _01: String,
+    #[serde(rename = "02")]
     pub _02: String,
 }
 
 /// GS - Functional Group Header
-/// 
+///
 /// To indicate the beginning of a functional group and to provide control information
-/// 
+///
 /// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
 /// ----|----|------|--------|----|------|-------
 /// 01 | 479 | Functional Identifier Code | 1 | M | ID | 2/2
@@ -86,48 +106,60 @@ pub struct GE {
 /// 08 | 480 | Version / Release / Industry Identifier Code | 1 | M | AN | 1/12
 #[derive(Serialize, Deserialize, Clone, Default, Debug)]
 pub struct GS {
+    #[serde(rename = "01")]
     pub _01: String,
+    #[serde(rename = "02")]
     pub _02: String,
+    #[serde(rename = "03")]
     pub _03: String,
+    #[serde(rename = "04")]
     pub _04: Option<String>,
+    #[serde(rename = "05")]
     pub _05: Option<String>,
+    #[serde(rename = "06")]
     pub _06: Option<String>,
+    #[serde(rename = "07")]
     pub _07: String,
+    #[serde(rename = "08")]
     pub _08: String,
 }
 
 /// SE - Transaction Set Trailer
-/// 
+///
 /// To indicate the end of the transaction set and provide the count of the transmitted segments (including the beginning (ST) and ending (SE) segments).
-/// 
+///
 /// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
 /// ----|----|------|--------|-----|------|-------
 /// 01 | 96 | Number of Included Segments | 1 | M | N0 | 1/10
 /// 02 | 329 | Transaction Set Control Number | 1 | M | AN | 4/9
 #[derive(Serialize, Deserialize, Clone, Default, Debug)]
 pub struct SE {
+    #[serde(rename = "01")]
     pub _01: String,
+    #[serde(rename = "02")]
     pub _02: String,
 }
 
 /// ST - Transaction Set Header
-/// 
+///
 /// To indicate the start of a transaction set and to assign a control number
-/// 
+///
 /// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
 /// ----|----|------|--------|----|------|-------
 /// 01 | 143 | Transaction Set Identifier Code | 1 | M/Z | ID | 3/3
 /// 02 | 329 | Transaction Set Control Number | 1 | M | AN | 4/9
 #[derive(Serialize, Deserialize, Clone, Default, Debug)]
 pub struct ST {
+    #[serde(rename = "01")]
     pub _01: String,
+    #[serde(rename = "02")]
     pub _02: String,
 }
 
 /// ZD - Transaction Set Deletion - ID, Reason, and Source
-/// 
+///
 /// This segment is used to specify the transaction set to be canceled
-/// 
+///
 /// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
 /// ----|----|------|--------|----|------|-------
 /// 01 | 143 | Transaction Set Identifier Code | 1 | M | ID | 3/3
@@ -140,12 +172,20 @@ pub struct ST {
 /// 08 | 140 | Standard Carrier Alpha Code | 1 | O | ID | 2/4
 #[derive(Serialize, Deserialize, Clone, Default, Debug)]
 pub struct ZD {
+    #[serde(rename = "01")]
     pub _01: String,
+    #[serde(rename = "02")]
     pub _02: Option<String>,
+    #[serde(rename = "03")]
     pub _03: String,
+    #[serde(rename = "04")]
     pub _04: String,
+    #[serde(rename = "05")]
     pub _05: Option<String>,
+    #[serde(rename = "06")]
     pub _06: Option<String>,
+    #[serde(rename = "07")]
     pub _07: String,
+    #[serde(rename = "08")]
     pub _08: Option<String>,
 }

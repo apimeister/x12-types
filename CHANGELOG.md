@@ -1,3 +1,8 @@
+# 0.6.0 2022-11-18
+
+* some clippy changes
+* serde rename '_'-fields
+
 # 0.5.0 2022-11-18
 
 * added

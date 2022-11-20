@@ -703,12 +703,15 @@ pub struct _310LoopN1 {
 #[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
 pub struct _310LoopR4 {
     pub r4: R4,
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub dtm: Option<DTM>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
 pub struct _310LoopC8 {
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub c8: Option<C8>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub c8c: Option<C8C>,
 }
 
@@ -780,12 +783,17 @@ pub struct _315 {
     pub st: ST,
     pub b4: B4,
     #[serde(default)]
+    #[serde(skip_serializing_if = "Vec::is_empty")]
     pub n9: Vec<N9>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub q2: Option<Q2>,
     #[serde(default)]
+    #[serde(skip_serializing_if = "Vec::is_empty")]
     pub sg: Vec<SG>,
     #[serde(default)]
+    #[serde(skip_serializing_if = "Vec::is_empty")]
     pub loop_r4: Vec<_315LoopR4>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub v9: Option<V9>,
     pub se: SE,
 }
@@ -809,7 +817,7 @@ impl Reflect for _315 {
             _ => {
                 //must be part of _315LoopR4 loop
                 let v = last_path.pop();
-                if v.elem.len() > 0 {
+                if !v.elem.is_empty() {
                     let last_elem = v.elem.last().unwrap();
                     let counter = if last_elem.name == "loop_r4" {
                         match last_path.pop().elem.last().unwrap().vec_position {
@@ -838,6 +846,7 @@ impl Reflect for _315 {
 pub struct _315LoopR4 {
     pub r4: R4,
     #[serde(default)]
+    #[serde(skip_serializing_if = "Vec::is_empty")]
     pub dtm: Vec<DTM>,
 }
 

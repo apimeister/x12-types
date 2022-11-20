@@ -75,29 +75,32 @@ fn parse_315() {
                     ..Default::default()
                 }),
                 sg: vec![],
-                loop_r4: vec![_315LoopR4{
-                    r4: R4 {
-                        _01: "L".to_string(),
-                        _02: Some("UN".to_string()),
-                        _03: Some("USMEM".to_string()),
-                        _04: Some("BNSF MEMPHIS RAMP".to_string()),
-                        _05: Some("US".to_string()),
-                        _08: Some("US".to_string()),
-                        ..Default::default()
+                loop_r4: vec![
+                    _315LoopR4 {
+                        r4: R4 {
+                            _01: "L".to_string(),
+                            _02: Some("UN".to_string()),
+                            _03: Some("USMEM".to_string()),
+                            _04: Some("BNSF MEMPHIS RAMP".to_string()),
+                            _05: Some("US".to_string()),
+                            _08: Some("US".to_string()),
+                            ..Default::default()
+                        },
+                        dtm: vec![],
                     },
-                    dtm: vec![],
-                },_315LoopR4{
-                    r4: R4 {
-                        _01: "E".to_string(),
-                        _02: Some("UN".to_string()),
-                        _03: Some("USDAL".to_string()),
-                        _04: Some("BNSF ALLIANCE RAMP".to_string()),
-                        _05: Some("US".to_string()),
-                        _08: Some("US".to_string()),
-                        ..Default::default()
+                    _315LoopR4 {
+                        r4: R4 {
+                            _01: "E".to_string(),
+                            _02: Some("UN".to_string()),
+                            _03: Some("USDAL".to_string()),
+                            _04: Some("BNSF ALLIANCE RAMP".to_string()),
+                            _05: Some("US".to_string()),
+                            _08: Some("US".to_string()),
+                            ..Default::default()
+                        },
+                        dtm: vec![],
                     },
-                    dtm: vec![],
-                }],
+                ],
                 v9: None,
                 se: SE {
                     _01: "9".to_string(),
@@ -223,31 +226,34 @@ fn test_315() {
                     _16: None,
                 }),
                 sg: vec![],
-                loop_r4: vec![_315LoopR4{
-                    r4: R4 {
-                        _01: "L".to_string(),
-                        _02: Some("UN".to_string()),
-                        _03: Some("USMEM".to_string()),
-                        _04: Some("BNSF MEMPHIS RAMP".to_string()),
-                        _05: Some("US".to_string()),
-                        _06: Some("".to_string()),
-                        _07: Some("".to_string()),
-                        _08: Some("US".to_string()),
+                loop_r4: vec![
+                    _315LoopR4 {
+                        r4: R4 {
+                            _01: "L".to_string(),
+                            _02: Some("UN".to_string()),
+                            _03: Some("USMEM".to_string()),
+                            _04: Some("BNSF MEMPHIS RAMP".to_string()),
+                            _05: Some("US".to_string()),
+                            _06: Some("".to_string()),
+                            _07: Some("".to_string()),
+                            _08: Some("US".to_string()),
+                        },
+                        dtm: vec![],
                     },
-                    dtm: vec![],
-                },_315LoopR4{
-                    r4: R4 {
-                        _01: "E".to_string(),
-                        _02: Some("UN".to_string()),
-                        _03: Some("USDAL".to_string()),
-                        _04: Some("BNSF ALLIANCE RAMP".to_string()),
-                        _05: Some("US".to_string()),
-                        _06: Some("".to_string()),
-                        _07: Some("".to_string()),
-                        _08: Some("US".to_string()),
+                    _315LoopR4 {
+                        r4: R4 {
+                            _01: "E".to_string(),
+                            _02: Some("UN".to_string()),
+                            _03: Some("USDAL".to_string()),
+                            _04: Some("BNSF ALLIANCE RAMP".to_string()),
+                            _05: Some("US".to_string()),
+                            _06: Some("".to_string()),
+                            _07: Some("".to_string()),
+                            _08: Some("US".to_string()),
+                        },
+                        dtm: vec![],
                     },
-                    dtm: vec![],
-                }],
+                ],
                 v9: None,
                 se: SE {
                     _01: "9".to_string(),
@@ -358,29 +364,32 @@ fn test_315_defaults() {
                     ..Default::default()
                 }),
                 sg: vec![],
-                loop_r4: vec![_315LoopR4{
-                    r4: R4 {
-                        _01: "L".to_string(),
-                        _02: Some("UN".to_string()),
-                        _03: Some("USMEM".to_string()),
-                        _04: Some("BNSF MEMPHIS RAMP".to_string()),
-                        _05: Some("US".to_string()),
-                        _08: Some("US".to_string()),
-                        ..Default::default()
+                loop_r4: vec![
+                    _315LoopR4 {
+                        r4: R4 {
+                            _01: "L".to_string(),
+                            _02: Some("UN".to_string()),
+                            _03: Some("USMEM".to_string()),
+                            _04: Some("BNSF MEMPHIS RAMP".to_string()),
+                            _05: Some("US".to_string()),
+                            _08: Some("US".to_string()),
+                            ..Default::default()
+                        },
+                        dtm: vec![],
                     },
-                    dtm: vec![],
-                },_315LoopR4{
-                    r4: R4 {
-                        _01: "E".to_string(),
-                        _02: Some("UN".to_string()),
-                        _03: Some("USDAL".to_string()),
-                        _04: Some("BNSF ALLIANCE RAMP".to_string()),
-                        _05: Some("US".to_string()),
-                        _08: Some("US".to_string()),
-                        ..Default::default()
+                    _315LoopR4 {
+                        r4: R4 {
+                            _01: "E".to_string(),
+                            _02: Some("UN".to_string()),
+                            _03: Some("USDAL".to_string()),
+                            _04: Some("BNSF ALLIANCE RAMP".to_string()),
+                            _05: Some("US".to_string()),
+                            _08: Some("US".to_string()),
+                            ..Default::default()
+                        },
+                        dtm: vec![],
                     },
-                    dtm: vec![],
-                }],
+                ],
                 v9: None,
                 se: SE {
                     _01: "9".to_string(),
