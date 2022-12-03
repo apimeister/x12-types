@@ -1,0 +1,56 @@
+name: build
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches:
+    - main
+jobs:
+  build:
+    permissions: write-all
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        submodules: 'true'
+    - uses: actions/cache@v3
+      with:
+        path: |
+          ~/.cargo/bin/
+          ~/.cargo/registry/index/
+          ~/.cargo/registry/cache/
+          ~/.cargo/git/db/
+          ~/.rustup
+          /usr/local/cargo
+          target/
+        key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+    - name: Install rust
+      uses: actions-rs/toolchain@v1
+      with:
+        toolchain: stable
+        components: clippy
+    - name: Run rustfmt
+      uses: actions-rs/cargo@v1
+      with:
+        command: fmt
+        args: --all -- --check
+    - name: Run clippy
+      uses: actions-rs/clippy@master
+      with:
+        args: --all -- -D warnings
+    - name: Cargo Test
+      uses: actions-rs/cargo@v1
+      with:
+        command: test
+        args: -q
+    - name: Build release artifact
+      uses: actions-rs/cargo@v1
+      with:
+        command: build
+        args: --release
+    - name: merge
+      if: github.event_name == 'pull_request'
+      run: |
+        gh pr merge --merge $GITHUB_HEAD_REF
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
