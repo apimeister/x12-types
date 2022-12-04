@@ -1,3 +1,7 @@
+# 0.7.0 2022-12-04
+
+* update serde
+
 # 0.6.0 2022-11-18
 
 * some clippy changes

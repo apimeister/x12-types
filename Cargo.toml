@@ -1,6 +1,6 @@
 [package]
 name = "x12-types"
-version = "0.6.0"
+version = "0.7.0"
 edition = "2021"
 authors = ["Jens Walter <jens@apimeister.com>"]
 license = "MIT OR Apache-2.0"
@@ -12,8 +12,8 @@ description = "Bindings for the ASC X12 EDI definitions"
 [dependencies]
 serde = { version = "1.0", features = ["derive"] }
 validator = { version = "0.16", features = ["derive"] }
-serde_x12 = { version = "0.5" }
-# serde_x12 = { path = "../serde_x12" }
+serde_x12 = { version = "0.6" }
+# serde_x12 = { path = "../serde_x12", features = ["debug"] }
 chrono = "0.4"
 
 [features]
