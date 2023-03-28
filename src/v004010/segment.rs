@@ -209,6 +209,21 @@ pub struct AT8 {
     pub _07: Option<String>,
 }
 
+/// B1 - Beginning Segment for Booking or Pick-up/Delivery
+/// 
+/// To transmit identifying number, data, and other basic data relating to the transaction set
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+pub struct B1 {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: String,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: String,
+}
+
 /// B2 - Beginning Segment for Shipment Information Transaction
 ///
 /// To transmit basic data relating to shipment information
@@ -1021,6 +1036,19 @@ pub struct E5 {
     pub _03: Option<String>,
     #[serde(rename = "04")]
     pub _04: Option<String>,
+}
+
+/// EA - Equipment Attributes
+///
+/// To specify attributes required for a piece of equipment
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+pub struct EA {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
 }
 
 /// EFI - Electronic Format Identification
@@ -1980,6 +2008,31 @@ pub struct L3 {
     pub _14: Option<String>,
     #[serde(rename = "15")]
     pub _15: Option<String>,
+}
+
+/// L4 - Measurement
+///
+/// To describe physical ddimensions and quantities
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+pub struct L4 {
+    /// 82 - Length
+    #[serde(rename = "01")]
+    pub _01: String,
+    /// 189 - Width
+    #[serde(rename = "02")]
+    pub _02: String,
+    /// 65 - Height
+    #[serde(rename = "03")]
+    pub _03: String,
+    /// 90 - Measurement Unit Qualifier
+    #[serde(rename = "04")]
+    pub _04: String,
+    /// 380 - Quantity
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    /// 271 - Industry Code
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
 }
 
 /// L5 - Description, Marks and Numbers
@@ -4301,8 +4354,10 @@ pub struct SPO {
 /// 02 | 329 | Transaction Set Control Number | 1 | M | AN | 4/9
 #[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
 pub struct ST {
+    /// 143 - Transaction Set Identifier Code 3/3
     #[serde(rename = "01")]
     pub _01: String,
+    /// 329 - Transaction Set Control Number 4/9
     #[serde(rename = "02")]
     pub _02: String,
 }
@@ -5024,6 +5079,62 @@ pub struct XH {
 pub struct Y2 {
     #[serde(rename = "01")]
     pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: String,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+    #[serde(rename = "10")]
+    pub _10: Option<String>,
+}
+
+/// Y3 - Space Confirmation
+///
+/// To specify confirmation information for space booking including number, dates and load time
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+pub struct Y3 {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: String,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+    #[serde(rename = "10")]
+    pub _10: Option<String>,
+    #[serde(rename = "11")]
+    pub _11: Option<String>,
+}
+
+/// Y4 - Container Release
+///
+/// To transmit information relative to containers available for release
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+pub struct Y4 {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
     #[serde(rename = "02")]
     pub _02: Option<String>,
     #[serde(rename = "03")]

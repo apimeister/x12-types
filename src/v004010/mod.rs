@@ -10,6 +10,10 @@ mod segment;
 pub use segment::*;
 
 #[cfg(test)]
+mod test_204;
+#[cfg(test)]
+mod test_301;
+#[cfg(test)]
 mod test_310;
 #[cfg(test)]
 mod test_315;
@@ -154,18 +158,58 @@ pub struct _204 {
     pub st: ST,
     pub b2: B2,
     pub b2a: B2A,
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub l11: Option<L11>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub g62: Option<G62>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub ms3: Option<MS3>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub at5: Option<AT5>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub pld: Option<PLD>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub lh6: Option<LH6>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub nte: Option<NTE>,
+    #[serde(default)]
+    #[serde(skip_serializing_if = "Vec::is_empty")]
     pub loop_100: Vec<_204Loop100>,
+    #[serde(default)]
+    #[serde(skip_serializing_if = "Vec::is_empty")]
     pub loop_200: Vec<_204Loop200>,
+    #[serde(default)]
+    #[serde(skip_serializing_if = "Vec::is_empty")]
     pub loop_300: Vec<_204Loop300>,
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub l3: Option<L3>,
     pub se: SE,
+}
+
+impl Reflect for _204 {
+    fn get_type_name() -> String {
+        "_204".to_string()
+    }
+
+    fn get_path(current_path: &Path, next_segment: &str, last_path: &Path) -> Path {
+        match next_segment {
+            "ST" => current_path.push("st".to_string(), None, true),
+            "B2" => current_path.push("b2".to_string(), None, true),
+            "B2A" => current_path.push("b2a".to_string(), None, true),
+            "L11" => current_path.push("l11".to_string(), None, true),
+            "G62" => current_path.push("g62".to_string(), None, true),
+            "MS3" => current_path.push("ms3".to_string(), None, true),
+            "AT5" => current_path.push("at5".to_string(), None, true),
+            "PLD" => current_path.push("pld".to_string(), None, true),
+            "LH6" => current_path.push("lh6".to_string(), None, true),
+            "NTE" => current_path.push("nte".to_string(), None, true),
+            "L3" => current_path.push("l3".to_string(), None, true),
+            "SE" => current_path.push("se".to_string(), None, true),
+            _ => {
+                last_path.clone()
+            }
+        }
+    }
 }
 
 #[derive(Debug, Default, Clone, Serialize, Deserialize)]
@@ -446,6 +490,132 @@ pub struct _214Loop0200Loop0250 {
 pub struct _214Loop0200Loop0260 {
     pub efi: Option<EFI>,
     pub bin: BIN,
+}
+
+/// 301 Confirmation (Ocean)
+#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+pub struct _301 {
+    pub st: ST,
+    pub b1: B1,
+    pub y3: Y3,
+    pub loop_y4: Vec<_301LoopY4>,
+    pub n9: Vec<N9>,
+    pub r2a: Vec<R2A>,
+    pub loop_n1: Vec<_301LoopN1>,
+    pub loop_r4: Vec<_301LoopR4>,
+    pub w09: Option<W09>,
+    pub h3: Option<H3>,
+    pub ea: Vec<EA>,
+    pub loop_lx: Vec<_301LoopLx>,
+    pub v1: Vec<V1>,
+    pub v9: Vec<V9>,
+    pub se: SE,
+}
+
+impl Reflect for _301 {
+    fn get_path(current_path: &Path, next_segment: &str, last_path: &Path) -> Path {
+        match next_segment {
+            "ST" => current_path.push("st".to_string(), None, true),
+            "B1" => current_path.push("b1".to_string(), None, true),
+            "Y3" => current_path.push("y3".to_string(), None, true),
+            "Y4" => {
+                let counter = match last_path.elem.last().unwrap().vec_position {
+                    Some(count) => count + 1,
+                    None => 0,
+                };
+                current_path.push("y4".to_string(), Some(counter), true)
+            }
+            "N1" => {
+                let counter = match last_path.elem.last().unwrap().vec_position {
+                    Some(count) => count + 1,
+                    None => 0,
+                };
+                current_path.push("N1".to_string(), Some(counter), true)
+            }
+            "H3" => current_path.push("h3".to_string(), None, true),
+            "SE" => current_path.push("se".to_string(), None, true),
+            _ => {
+                //must be part of _301LoopR4 loop
+                let v = last_path.pop();
+                if !v.elem.is_empty() {
+                    let last_elem = v.elem.last().unwrap();
+                    let counter = if last_elem.name == "loop_r4" {
+                        match last_path.pop().elem.last().unwrap().vec_position {
+                            Some(count) => count + 1,
+                            None => 0,
+                        }
+                    } else {
+                        0
+                    };
+                    let new_path = current_path.push("loop_r4".to_string(), Some(counter), false);
+                    let x = _301LoopR4::get_path(&new_path, next_segment, last_path);
+                    x.next_op(PathOperation::Pop)
+                } else {
+                    last_path.clone()
+                }
+            }
+        }
+    }
+
+    fn get_type_name() -> String {
+        "_301".to_string()
+    }
+}
+
+#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+pub struct _301LoopLx {
+    pub lx: LX,
+    pub n7: Option<N7>,
+    pub w09: Option<W09>,
+    pub k1: Vec<K1>,
+    pub l0: Option<L0>,
+    pub l5: Option<L5>,
+    pub l4: Option<L4>,
+    pub l1: Option<L1>,
+    pub loop_h1: Vec<_301LoopLxLoopH1>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+pub struct _301LoopY4 {
+    pub y4: Option<Y4>,
+    pub w09: Option<W09>,
+}
+
+
+#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+pub struct _301LoopN1 {
+    pub n1: Option<N1>,
+    pub n2: Option<N2>,
+    pub n3: Option<N3>,
+    pub n4: Option<N4>,
+    pub g61: Option<G61>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+pub struct _301LoopLxLoopH1 {
+    pub h1: Option<H1>,
+    pub h2: Vec<H2>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+pub struct _301LoopR4 {
+    pub r4: R4,
+    #[serde(default)]
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    pub dtm: Vec<DTM>,
+}
+
+impl Reflect for _301LoopR4 {
+    fn get_type_name() -> String {
+        "_301LoopR4".to_string()
+    }
+    fn get_path(current_path: &Path, next_segment: &str, last_path: &Path) -> Path {
+        match next_segment {
+            "R4" => current_path.push("r4".to_string(), None, true),
+            "DTM" => last_path.pop().push("dtm".to_string(), Some(0), true),
+            _ => Path::default(),
+        }
+    }
 }
 
 /// 309 - U.S. Customs Manifest
