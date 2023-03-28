@@ -205,9 +205,7 @@ impl Reflect for _204 {
             "NTE" => current_path.push("nte".to_string(), None, true),
             "L3" => current_path.push("l3".to_string(), None, true),
             "SE" => current_path.push("se".to_string(), None, true),
-            _ => {
-                last_path.clone()
-            }
+            _ => last_path.clone(),
         }
     }
 }
@@ -580,7 +578,6 @@ pub struct _301LoopY4 {
     pub y4: Option<Y4>,
     pub w09: Option<W09>,
 }
-
 
 #[derive(Serialize, Deserialize, Clone, Default, Debug)]
 pub struct _301LoopN1 {

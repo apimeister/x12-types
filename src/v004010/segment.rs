@@ -210,7 +210,7 @@ pub struct AT8 {
 }
 
 /// B1 - Beginning Segment for Booking or Pick-up/Delivery
-/// 
+///
 /// To transmit identifying number, data, and other basic data relating to the transaction set
 #[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
 pub struct B1 {
