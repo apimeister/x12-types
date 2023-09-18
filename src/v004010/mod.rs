@@ -1,5 +1,8 @@
 //! v004010 repesents all entities of the 004010 specification.
 
+use nom::character::complete::newline;
+use nom::combinator::opt;
+use nom::IResult;
 use serde::{Deserialize, Serialize};
 use serde_x12::Path;
 use serde_x12::PathItem;
@@ -510,6 +513,84 @@ pub struct _301 {
     pub se: SE,
 }
 
+pub fn parse_301(input: &str) -> IResult<&str, _301> {
+    let mut output = _301::default();
+    let (input, obj) = parse_st(input)?;
+    output.st = obj;
+    let (input, _) = opt(newline)(input)?;
+    let (input, obj) = parse_b1(input)?;
+    output.b1 = obj;
+    let (input, _) = opt(newline)(input)?;
+    let (input, obj) = parse_y3(input)?;
+    let (input, _) = opt(newline)(input)?;
+    output.y3 = obj;
+    let (input, obj) = parse_y4(input)?;
+    output.loop_y4.push(_301LoopY4 {
+        y4: Some(obj),
+        w09: None,
+    });
+    let (input, _) = opt(newline)(input)?;
+    let (input, obj) = parse_n9(input)?;
+    output.n9.push(obj);
+    let (input, _) = opt(newline)(input)?;
+    let (input, obj_n1) = parse_n1(input)?;
+    let (input, _) = opt(newline)(input)?;
+    let (input, obj_n3) = parse_n3(input)?;
+    let (input, _) = opt(newline)(input)?;
+    let (input, obj_n4) = parse_n4(input)?;
+    let (input, _) = opt(newline)(input)?;
+    output.loop_n1.push(_301LoopN1 {
+        n1: Some(obj_n1),
+        n2: None,
+        n3: Some(obj_n3),
+        n4: Some(obj_n4),
+        g61: None,
+    });
+    let (input, obj) = parse_r4(input)?;
+    output.loop_r4.push(_301LoopR4 {
+        r4: obj,
+        ..Default::default()
+    });
+    let (input, _) = opt(newline)(input)?;
+    let (input, obj_r4) = parse_r4(input)?;
+    let (input, _) = opt(newline)(input)?;
+    let (input, dtm_obj) = parse_dtm(input)?;
+    let (input, _) = opt(newline)(input)?;
+    output.loop_r4.push(_301LoopR4 {
+        r4: obj_r4,
+        dtm: vec![dtm_obj],
+    });
+    let (input, obj_r4) = parse_r4(input)?;
+    output.loop_r4.push(_301LoopR4 {
+        r4: obj_r4,
+        dtm: vec![],
+    });
+    let (input, _) = opt(newline)(input)?;
+    let (input, obj_lx) = parse_lx(input)?;
+    let (input, _) = opt(newline)(input)?;
+    let (input, obj_l0) = parse_l0(input)?;
+    let (input, _) = opt(newline)(input)?;
+    let (input, obj_l5) = parse_l5(input)?;
+    let (input, _) = opt(newline)(input)?;
+    output.loop_lx.push(_301LoopLx {
+        lx: obj_lx,
+        n7: None,
+        w09: None,
+        k1: vec![],
+        l0: Some(obj_l0),
+        l5: Some(obj_l5),
+        l4: None,
+        l1: None,
+        loop_h1: vec![],
+    });
+    let (input, obj) = parse_v1(input)?;
+    output.v1 = vec![obj];
+    let (input, _) = opt(newline)(input)?;
+    let (input, obj) = parse_se(input)?;
+    output.se = obj;
+    Ok((input, output))
+}
+
 impl Reflect for _301 {
     fn get_path(current_path: &Path, next_segment: &str, last_path: &Path) -> Path {
         match next_segment {
@@ -517,11 +598,26 @@ impl Reflect for _301 {
             "B1" => current_path.push("b1".to_string(), None, true),
             "Y3" => current_path.push("y3".to_string(), None, true),
             "Y4" => {
+                println!("get_path: Y4: current_path: {current_path}, next_segment: {next_segment}, last_path: {last_path}");
+                //must be part of _301LoopY4 loop
+                let new_path = current_path.push("loop_y4".to_string(), Some(0), false);
+                let x = _301LoopR4::get_path(&new_path, next_segment, last_path);
+                x.next_op(PathOperation::Pop)
+
+                // let counter = match last_path.elem.last().unwrap().vec_position {
+                //     Some(count) => count + 1,
+                //     None => 0,
+                // };
+                // let new_path = current_path.push("loop_y4".to_string(), Some(counter), false);
+                // let x = _301LoopY4::get_path(&new_path, next_segment, last_path);
+                // x.next_op(PathOperation::Pop)
+            }
+            "N9" => {
                 let counter = match last_path.elem.last().unwrap().vec_position {
                     Some(count) => count + 1,
                     None => 0,
                 };
-                current_path.push("y4".to_string(), Some(counter), true)
+                current_path.push("N9".to_string(), Some(counter), true)
             }
             "N1" => {
                 let counter = match last_path.elem.last().unwrap().vec_position {
@@ -577,6 +673,19 @@ pub struct _301LoopLx {
 pub struct _301LoopY4 {
     pub y4: Option<Y4>,
     pub w09: Option<W09>,
+}
+
+impl Reflect for _301LoopY4 {
+    fn get_type_name() -> String {
+        "_301LoopY4".to_string()
+    }
+    fn get_path(current_path: &Path, next_segment: &str, last_path: &Path) -> Path {
+        match next_segment {
+            "Y4" => current_path.push("y4".to_string(), None, true),
+            "W09" => last_path.pop().push("w09".to_string(), Some(0), true),
+            _ => Path::default(),
+        }
+    }
 }
 
 #[derive(Serialize, Deserialize, Clone, Default, Debug)]

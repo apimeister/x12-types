@@ -1,3 +1,7 @@
+use nom::bytes::complete::tag;
+use nom::bytes::complete::take_until;
+use nom::sequence::delimited;
+use nom::IResult;
 use serde::{Deserialize, Serialize};
 use serde_x12::Path;
 use serde_x12::Reflect;
@@ -222,6 +226,17 @@ pub struct B1 {
     pub _03: Option<String>,
     #[serde(rename = "04")]
     pub _04: String,
+}
+
+pub fn parse_b1(input: &str) -> IResult<&str, B1> {
+    let (rest, object_str) = delimited(tag("B1*"), take_until("~"), tag("~"))(input)?;
+    let mut obj = B1::default();
+    let vars: Vec<&str> = object_str.split('*').collect();
+    obj._01 = vars.first().map(|x| x.to_string());
+    obj._02 = vars.get(1).unwrap().to_string();
+    obj._03 = vars.get(2).map(|x| x.to_string());
+    obj._04 = vars.get(3).unwrap().to_string();
+    Ok((rest, obj))
 }
 
 /// B2 - Beginning Segment for Shipment Information Transaction
@@ -955,6 +970,19 @@ pub struct DTM {
     pub _05: Option<String>,
     #[serde(rename = "06")]
     pub _06: Option<String>,
+}
+
+pub fn parse_dtm(input: &str) -> IResult<&str, DTM> {
+    let (rest, object_str) = delimited(tag("DTM*"), take_until("~"), tag("~"))(input)?;
+    let mut obj = DTM::default();
+    let vars: Vec<&str> = object_str.split('*').collect();
+    obj._01 = vars.first().unwrap().to_string();
+    obj._02 = vars.get(1).map(|x| x.to_string());
+    obj._03 = vars.get(2).map(|x| x.to_string());
+    obj._04 = vars.get(3).map(|x| x.to_string());
+    obj._05 = vars.get(4).map(|x| x.to_string());
+    obj._06 = vars.get(5).map(|x| x.to_string());
+    Ok((rest, obj))
 }
 
 /// E1 - Empty Car Disposition - Pended Destination Consignee
@@ -1882,6 +1910,28 @@ pub struct L0 {
     pub _15: Option<String>,
 }
 
+pub fn parse_l0(input: &str) -> IResult<&str, L0> {
+    let (rest, object_str) = delimited(tag("L0*"), take_until("~"), tag("~"))(input)?;
+    let mut obj = L0::default();
+    let vars: Vec<&str> = object_str.split('*').collect();
+    obj._01 = vars.first().map(|x| x.to_string());
+    obj._02 = vars.get(1).map(|x| x.to_string());
+    obj._03 = vars.get(2).map(|x| x.to_string());
+    obj._04 = vars.get(3).map(|x| x.to_string());
+    obj._05 = vars.get(4).map(|x| x.to_string());
+    obj._06 = vars.get(5).map(|x| x.to_string());
+    obj._07 = vars.get(6).map(|x| x.to_string());
+    obj._08 = vars.get(7).map(|x| x.to_string());
+    obj._09 = vars.get(8).map(|x| x.to_string());
+    obj._10 = vars.get(9).map(|x| x.to_string());
+    obj._11 = vars.get(10).map(|x| x.to_string());
+    obj._12 = vars.get(11).map(|x| x.to_string());
+    obj._13 = vars.get(12).map(|x| x.to_string());
+    obj._14 = vars.get(13).map(|x| x.to_string());
+    obj._15 = vars.get(14).map(|x| x.to_string());
+    Ok((rest, obj))
+}
+
 /// L1 - Rate and Charges
 ///
 /// To specify rate and charges detail relative to a line item including freight charges, advances, special charges, and entitlements
@@ -2073,6 +2123,23 @@ pub struct L5 {
     pub _09: Option<String>,
     #[serde(rename = "10")]
     pub _10: Option<String>,
+}
+
+pub fn parse_l5(input: &str) -> IResult<&str, L5> {
+    let (rest, object_str) = delimited(tag("L5*"), take_until("~"), tag("~"))(input)?;
+    let mut obj = L5::default();
+    let vars: Vec<&str> = object_str.split('*').collect();
+    obj._01 = vars.first().map(|x| x.to_string());
+    obj._02 = vars.get(1).map(|x| x.to_string());
+    obj._03 = vars.get(2).map(|x| x.to_string());
+    obj._04 = vars.get(3).map(|x| x.to_string());
+    obj._05 = vars.get(4).map(|x| x.to_string());
+    obj._06 = vars.get(5).map(|x| x.to_string());
+    obj._07 = vars.get(6).map(|x| x.to_string());
+    obj._08 = vars.get(7).map(|x| x.to_string());
+    obj._09 = vars.get(8).map(|x| x.to_string());
+    obj._10 = vars.get(9).map(|x| x.to_string());
+    Ok((rest, obj))
 }
 
 /// L7 - Tariff Reference
@@ -2517,6 +2584,14 @@ pub struct LS {
 pub struct LX {
     #[serde(rename = "01")]
     pub _01: String,
+}
+
+pub fn parse_lx(input: &str) -> IResult<&str, LX> {
+    let (rest, vars) = delimited(tag("LX*"), take_until("~"), tag("~"))(input)?;
+    let obj = LX {
+        _01: vars.to_string(),
+    };
+    Ok((rest, obj))
 }
 
 /// M0 - Letter of Credit Reference
@@ -2997,6 +3072,19 @@ pub struct N1 {
     pub _06: Option<String>,
 }
 
+pub fn parse_n1(input: &str) -> IResult<&str, N1> {
+    let (rest, object_str) = delimited(tag("N1*"), take_until("~"), tag("~"))(input)?;
+    let mut obj = N1::default();
+    let vars: Vec<&str> = object_str.split('*').collect();
+    obj._01 = vars.first().unwrap().to_string();
+    obj._02 = vars.get(1).map(|x| x.to_string());
+    obj._03 = vars.get(2).map(|x| x.to_string());
+    obj._04 = vars.get(3).map(|x| x.to_string());
+    obj._05 = vars.get(4).map(|x| x.to_string());
+    obj._06 = vars.get(5).map(|x| x.to_string());
+    Ok((rest, obj))
+}
+
 /// N2 - Additional Name Information
 ///
 /// To specify additional names or those longer than 35 characters in length
@@ -3041,6 +3129,15 @@ pub struct N3 {
     pub _02: Option<String>,
 }
 
+pub fn parse_n3(input: &str) -> IResult<&str, N3> {
+    let (rest, object_str) = delimited(tag("N3*"), take_until("~"), tag("~"))(input)?;
+    let mut obj = N3::default();
+    let vars: Vec<&str> = object_str.split('*').collect();
+    obj._01 = vars.first().unwrap().to_string();
+    obj._02 = vars.get(1).map(|x| x.to_string());
+    Ok((rest, obj))
+}
+
 /// N4 - Geographic Location
 ///
 /// To specify the geographic place of the named party
@@ -3073,6 +3170,19 @@ pub struct N4 {
     pub _04: Option<String>,
     pub _05: Option<String>,
     pub _06: Option<String>,
+}
+
+pub fn parse_n4(input: &str) -> IResult<&str, N4> {
+    let (rest, object_str) = delimited(tag("N4*"), take_until("~"), tag("~"))(input)?;
+    let mut obj = N4::default();
+    let vars: Vec<&str> = object_str.split('*').collect();
+    obj._01 = vars.first().map(|x| x.to_string());
+    obj._02 = vars.get(1).map(|x| x.to_string());
+    obj._03 = vars.get(2).map(|x| x.to_string());
+    obj._04 = vars.get(3).map(|x| x.to_string());
+    obj._05 = vars.get(4).map(|x| x.to_string());
+    obj._06 = vars.get(5).map(|x| x.to_string());
+    Ok((rest, obj))
 }
 
 /// N5 - Equipment Ordered
@@ -3212,6 +3322,20 @@ pub struct N9 {
     #[serde(rename = "07")]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub _07: Option<String>,
+}
+
+pub fn parse_n9(input: &str) -> IResult<&str, N9> {
+    let (rest, object_str) = delimited(tag("N9*"), take_until("~"), tag("~"))(input)?;
+    let mut obj = N9::default();
+    let vars: Vec<&str> = object_str.split('*').collect();
+    obj._01 = vars.first().unwrap().to_string();
+    obj._02 = vars.get(1).unwrap().to_string();
+    obj._03 = vars.get(2).map(|x| x.to_string());
+    obj._04 = vars.get(3).map(|x| x.to_string());
+    obj._05 = vars.get(4).map(|x| x.to_string());
+    obj._06 = vars.get(5).map(|x| x.to_string());
+    obj._07 = vars.get(5).map(|x| x.to_string());
+    Ok((rest, obj))
 }
 
 /// N10 - Quantity and Description
@@ -4015,6 +4139,21 @@ pub struct R4 {
     pub _08: Option<String>,
 }
 
+pub fn parse_r4(input: &str) -> IResult<&str, R4> {
+    let (rest, object_str) = delimited(tag("R4*"), take_until("~"), tag("~"))(input)?;
+    let mut obj = R4::default();
+    let vars: Vec<&str> = object_str.split('*').collect();
+    obj._01 = vars.first().unwrap().to_string();
+    obj._02 = vars.get(1).map(|x| x.to_string());
+    obj._03 = vars.get(2).map(|x| x.to_string());
+    obj._04 = vars.get(3).map(|x| x.to_string());
+    obj._05 = vars.get(4).map(|x| x.to_string());
+    obj._06 = vars.get(5).map(|x| x.to_string());
+    obj._07 = vars.get(6).map(|x| x.to_string());
+    obj._08 = vars.get(7).map(|x| x.to_string());
+    Ok((rest, obj))
+}
+
 /// R9 - Route Code
 ///
 /// To specify the route using a single code
@@ -4264,6 +4403,15 @@ pub struct SE {
     pub _02: String,
 }
 
+pub fn parse_se(input: &str) -> IResult<&str, SE> {
+    let (rest, object_str) = delimited(tag("SE*"), take_until("~"), tag("~"))(input)?;
+    let mut obj = SE::default();
+    let vars: Vec<&str> = object_str.split('*').collect();
+    obj._01 = vars.first().unwrap().to_string();
+    obj._02 = vars.get(1).unwrap().to_string();
+    Ok((rest, obj))
+}
+
 /// SG - Shipment Status
 ///
 /// To convey the status of a shipment
@@ -4360,6 +4508,15 @@ pub struct ST {
     /// 329 - Transaction Set Control Number 4/9
     #[serde(rename = "02")]
     pub _02: String,
+}
+
+pub fn parse_st(input: &str) -> IResult<&str, ST> {
+    let (rest, object_str) = delimited(tag("ST*"), take_until("~"), tag("~"))(input)?;
+    let mut obj = ST::default();
+    let vars: Vec<&str> = object_str.split('*').collect();
+    obj._01 = vars.first().unwrap().to_string();
+    obj._02 = vars.get(1).unwrap().to_string();
+    Ok((rest, obj))
 }
 
 /// T1 - Transit Inbound Origin
@@ -4606,6 +4763,22 @@ pub struct V1 {
     pub _08: Option<String>,
     #[serde(rename = "09")]
     pub _09: Option<String>,
+}
+
+pub fn parse_v1(input: &str) -> IResult<&str, V1> {
+    let (rest, object_str) = delimited(tag("V1*"), take_until("~"), tag("~"))(input)?;
+    let mut obj = V1::default();
+    let vars: Vec<&str> = object_str.split('*').collect();
+    obj._01 = vars.first().map(|x| x.to_string());
+    obj._02 = vars.get(1).map(|x| x.to_string());
+    obj._03 = vars.get(2).map(|x| x.to_string());
+    obj._04 = vars.get(3).map(|x| x.to_string());
+    obj._05 = vars.get(4).map(|x| x.to_string());
+    obj._06 = vars.get(5).map(|x| x.to_string());
+    obj._07 = vars.get(6).map(|x| x.to_string());
+    obj._08 = vars.get(7).map(|x| x.to_string());
+    obj._09 = vars.get(8).map(|x| x.to_string());
+    Ok((rest, obj))
 }
 
 /// V4 - Cargo Location Reference
@@ -5128,6 +5301,24 @@ pub struct Y3 {
     pub _11: Option<String>,
 }
 
+pub fn parse_y3(input: &str) -> IResult<&str, Y3> {
+    let (rest, object_str) = delimited(tag("Y3*"), take_until("~"), tag("~"))(input)?;
+    let mut obj = Y3::default();
+    let vars: Vec<&str> = object_str.split('*').collect();
+    obj._01 = vars.first().unwrap().to_string();
+    obj._02 = vars.get(1).map(|x| x.to_string());
+    obj._03 = vars.get(2).map(|x| x.to_string());
+    obj._04 = vars.get(3).unwrap().to_string();
+    obj._05 = vars.get(3).map(|x| x.to_string());
+    obj._06 = vars.get(3).map(|x| x.to_string());
+    obj._07 = vars.get(3).map(|x| x.to_string());
+    obj._08 = vars.get(3).map(|x| x.to_string());
+    obj._09 = vars.get(3).map(|x| x.to_string());
+    obj._10 = vars.get(3).map(|x| x.to_string());
+    obj._11 = vars.get(3).map(|x| x.to_string());
+    Ok((rest, obj))
+}
+
 /// Y4 - Container Release
 ///
 /// To transmit information relative to containers available for release
@@ -5153,6 +5344,23 @@ pub struct Y4 {
     pub _09: Option<String>,
     #[serde(rename = "10")]
     pub _10: Option<String>,
+}
+
+pub fn parse_y4(input: &str) -> IResult<&str, Y4> {
+    let (rest, object_str) = delimited(tag("Y4*"), take_until("~"), tag("~"))(input)?;
+    let mut obj = Y4::default();
+    let vars: Vec<&str> = object_str.split('*').collect();
+    obj._01 = vars.get(1).map(|x| x.to_string());
+    obj._02 = vars.get(1).map(|x| x.to_string());
+    obj._03 = vars.get(2).map(|x| x.to_string());
+    obj._04 = vars.get(3).unwrap().to_string();
+    obj._05 = vars.get(3).map(|x| x.to_string());
+    obj._06 = vars.get(3).map(|x| x.to_string());
+    obj._07 = vars.get(3).map(|x| x.to_string());
+    obj._08 = vars.get(3).map(|x| x.to_string());
+    obj._09 = vars.get(3).map(|x| x.to_string());
+    obj._10 = vars.get(3).map(|x| x.to_string());
+    Ok((rest, obj))
 }
 
 /// Y6 - Authentication
