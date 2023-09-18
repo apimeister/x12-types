@@ -189,6 +189,35 @@ pub struct _204 {
     pub se: SE,
 }
 
+pub fn parse_204(input: &str) -> IResult<&str, _204> {
+    let mut output = _204::default();
+    let (input, obj) = parse_st(input)?;
+    output.st = obj;
+    let (input, obj) = parse_b2(input)?;
+    output.b2 = obj;
+    let (input, obj) = parse_b2a(input)?;
+    output.b2a = obj;
+    let (input, obj) = opt(parse_l11)(input)?;
+    output.l11 = obj;
+    let (input, obj) = opt(parse_g62)(input)?;
+    output.g62 = obj;
+    let (input, obj) = opt(parse_ms3)(input)?;
+    output.ms3 = obj;
+    let (input, obj) = opt(parse_at5)(input)?;
+    output.at5 = obj;
+    let (input, obj) = opt(parse_pld)(input)?;
+    output.pld = obj;
+    let (input, obj) = opt(parse_lh6)(input)?;
+    output.lh6 = obj;
+    let (input, obj) = opt(parse_nte)(input)?;
+    output.nte = obj;
+    let (input, obj) = opt(parse_l3)(input)?;
+    output.l3 = obj;
+    let (input, obj) = parse_se(input)?;
+    output.se = obj;
+    Ok((input, output))
+}
+
 impl Reflect for _204 {
     fn get_type_name() -> String {
         "_204".to_string()
