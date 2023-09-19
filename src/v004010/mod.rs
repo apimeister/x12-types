@@ -10,6 +10,7 @@ use serde_x12::PathOperation;
 use serde_x12::Reflect;
 use std::fmt::Debug;
 mod segment;
+use nom::Parser;
 pub use segment::*;
 
 #[cfg(test)]
@@ -28,10 +29,13 @@ pub struct Transmission<T> {
     pub iea: IEA,
 }
 
-pub fn parse_transmission<T: Default>(input: &str) -> IResult<&str, Transmission<T>> {
+pub fn parse_transmission<T: Default, Parser>(input: &str) -> IResult<&str, Transmission<T>> {
     let mut output = Transmission::default();
     let (input, obj) = parse_isa(input)?;
     output.isa = obj;
+    let o = T::default();
+    
+    let t_obj = opt(o.parse)(input)?;
     // let (input, obj) = parse_functional_group(input)?;
     // output.b2 = obj;
     let (input, obj) = parse_iea(input)?;
