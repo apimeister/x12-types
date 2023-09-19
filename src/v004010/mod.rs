@@ -28,6 +28,17 @@ pub struct Transmission<T> {
     pub iea: IEA,
 }
 
+pub fn parse_transmission<T: Default>(input: &str) -> IResult<&str, Transmission<T>> {
+    let mut output = Transmission::default();
+    let (input, obj) = parse_isa(input)?;
+    output.isa = obj;
+    // let (input, obj) = parse_functional_group(input)?;
+    // output.b2 = obj;
+    let (input, obj) = parse_iea(input)?;
+    output.iea = obj;
+    Ok((input, output))
+}
+
 impl<T: Reflect> Reflect for Transmission<T> {
     fn get_path(current_path: &Path, next_segment: &str, last_path: &Path) -> Path {
         match next_segment {

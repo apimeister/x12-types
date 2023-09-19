@@ -1721,6 +1721,16 @@ pub struct IEA {
     pub _02: String,
 }
 
+
+pub fn parse_iea(input: &str) -> IResult<&str, IEA> {
+    let (rest, object_str) = delimited(tag("IEA*"), take_until("~"), tag("~"))(input)?;
+    let mut obj = IEA::default();
+    let vars: Vec<&str> = object_str.split('*').collect();
+    obj._01 = vars.first().unwrap().to_string();
+    obj._02 = vars.get(1).unwrap().to_string();
+    Ok((rest, obj))
+}
+
 /// ISA - Interchange Control Header
 ///
 /// To start and identify an interchange of zero or more functional groups and interchange-related control segments
@@ -1877,6 +1887,29 @@ pub struct ISA {
     /// - MAX=1
     #[serde(rename = "16")]
     pub _16: String,
+}
+
+pub fn parse_isa(input: &str) -> IResult<&str, ISA> {
+    let (rest, object_str) = delimited(tag("ISA*"), take_until("~"), tag("~"))(input)?;
+    let mut obj = ISA::default();
+    let vars: Vec<&str> = object_str.split('*').collect();
+    obj._01 = vars.first().unwrap().to_string();
+    obj._02 = vars.get(1).unwrap().to_string();
+    obj._03 = vars.get(2).unwrap().to_string();
+    obj._04 = vars.get(3).unwrap().to_string();
+    obj._05 = vars.get(4).unwrap().to_string();
+    obj._06 = vars.get(5).unwrap().to_string();
+    obj._07 = vars.get(6).unwrap().to_string();
+    obj._08 = vars.get(7).unwrap().to_string();
+    obj._09 = vars.get(8).unwrap().to_string();
+    obj._10 = vars.get(9).unwrap().to_string();
+    obj._11 = vars.get(10).unwrap().to_string();
+    obj._12 = vars.get(11).unwrap().to_string();
+    obj._13 = vars.get(12).unwrap().to_string();
+    obj._14 = vars.get(13).unwrap().to_string();
+    obj._15 = vars.get(14).unwrap().to_string();
+    obj._16 = vars.get(15).unwrap().to_string();
+    Ok((rest, obj))
 }
 
 impl Reflect for ISA {
