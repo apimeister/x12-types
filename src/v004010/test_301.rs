@@ -139,24 +139,31 @@ fn test_301() {
 }
 
 #[test]
-fn parse_301() {
+fn test_parse_301_nom() {
     let str = r#"ST*301*33233~
-    B1*SNDR*ERXX412223*20221121*A~
-    Y3*ERXX412223*SNDR*20230104****20221229***HP~
-    Y4*ERXX412223**20221216**1*45G1~
-    N9*BN*ERXX412223~
-    N1*SH*ABC GMBH*25*312343123~
-    N3*TEST STR. 56*XA 124324 4~
-    N4*MUNICH*BY*80348*DE~
-    R4*R*UN*DEWKD*WACKERSDORF*DE***BY~
-    R4*L*UN*DEHAM*HAMBURG*DE***HH~
-    DTM*649*20230102~
-    R4*D*K*35180*ITAPOA*BR***SC~
-    LX*2~
-    L0*1***14000*G***1*CNT**K*HP~
-    L5*1*VEHICLES:PARTS~
-    V1*3465322*CAP SAN ANTONIO*DK*456S****L~
-    SE*17*33233~"#;
-    let obj: _301 = serde_x12::from_str(str).unwrap();
+B1*SNDR*ERXX412223*20221121*A~
+Y3*ERXX412223*SNDR*20230104*20230105***20221229***HP~
+Y4*ERXX412223**20221216**1*45G1~
+N9*BN*ERXX412223~
+N1*SH*ABC GMBH*25*312343123~
+N3*TEST STR. 56*XA 124324 4~
+N4*MUNICH*BY*80348*DE~
+R4*R*UN*DEWKD*WACKERSDORF*DE***BY~
+R4*L*UN*DEHAM*HAMBURG*DE***HH~
+DTM*649*20230102~
+R4*D*K*35180*ITAPOA*BR***SC~
+LX*2~
+L0*1***14000*G***1*CNT**K*HP~
+L5*1*VEHICLES:PARTS~
+V1*3465322*CAP SAN ANTONIO*DK*456S****L~
+SE*17*33233~"#;
+    // let str = str.replace("\n", "");
+    let obj = parse_301(&str).unwrap();
     println!("{:?}", obj);
+    assert!(obj.0.is_empty());
+    let obj = obj.1;
+    assert_eq!(obj.st._01, "301");
+    assert_eq!(obj.st._02, "33233");
+    assert_eq!(obj.se._01, "17");
+    assert_eq!(obj.se._02, "33233");
 }

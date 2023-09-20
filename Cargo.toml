@@ -15,6 +15,7 @@ validator = { version = "0.16", features = ["derive"] }
 serde_x12 = { version = "0.6" }
 # serde_x12 = { path = "../serde_x12", features = ["debug"] }
 chrono = "0.4"
+nom = "7"
 
 [features]
 default = ["v003030","v004010","v004030","v005030"]

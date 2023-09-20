@@ -1,3 +1,12 @@
+use nom::bytes::complete::tag;
+use nom::bytes::complete::take_until;
+use nom::bytes::complete::take_while;
+use nom::character::complete::newline;
+use nom::combinator::opt;
+use nom::multi::separated_list0;
+use nom::sequence::delimited;
+use nom::IResult;
+use nom::Parser;
 use serde::{Deserialize, Serialize};
 use serde_x12::Path;
 use serde_x12::Reflect;
@@ -135,6 +144,16 @@ pub struct AT5 {
     pub _03: Option<String>,
 }
 
+pub fn parse_at5(input: &str) -> IResult<&str, AT5> {
+    let (rest, object_str) = delimited(tag("AT5*"), take_until("~"), tag("~"))(input)?;
+    let mut obj = AT5::default();
+    let vars: Vec<&str> = object_str.split('*').collect();
+    obj._01 = vars.first().map(|x| x.to_string());
+    obj._02 = vars.get(1).map(|x| x.to_string());
+    obj._03 = vars.get(2).map(|x| x.to_string());
+    Ok((rest, obj))
+}
+
 /// AT7 - Shipment Status Details
 ///
 /// To specify the status of a shipment, the reason for that status, the date and time of the status and the date and time of any appointments scheduled.
@@ -224,6 +243,17 @@ pub struct B1 {
     pub _04: String,
 }
 
+pub fn parse_b1(input: &str) -> IResult<&str, B1> {
+    let (rest, object_str) = delimited(tag("B1*"), take_until("~"), tag("~"))(input)?;
+    let mut obj = B1::default();
+    let vars: Vec<&str> = object_str.split('*').collect();
+    obj._01 = vars.first().map(|x| x.to_string());
+    obj._02 = vars.get(1).unwrap().to_string();
+    obj._03 = vars.get(2).map(|x| x.to_string());
+    obj._04 = vars.get(3).unwrap().to_string();
+    Ok((rest, obj))
+}
+
 /// B2 - Beginning Segment for Shipment Information Transaction
 ///
 /// To transmit basic data relating to shipment information
@@ -270,6 +300,25 @@ pub struct B2 {
     pub _12: Option<String>,
 }
 
+pub fn parse_b2(input: &str) -> IResult<&str, B2> {
+    let (rest, object_str) = delimited(tag("B2*"), take_until("~"), tag("~"))(input)?;
+    let mut obj = B2::default();
+    let vars: Vec<&str> = object_str.split('*').collect();
+    obj._01 = vars.first().map(|x| x.to_string());
+    obj._02 = vars.get(1).map(|x| x.to_string());
+    obj._03 = vars.get(2).map(|x| x.to_string());
+    obj._04 = vars.get(3).map(|x| x.to_string());
+    obj._05 = vars.get(4).map(|x| x.to_string());
+    obj._06 = vars.get(5).unwrap().to_string();
+    obj._07 = vars.get(6).map(|x| x.to_string());
+    obj._08 = vars.get(7).map(|x| x.to_string());
+    obj._09 = vars.get(8).map(|x| x.to_string());
+    obj._10 = vars.get(9).map(|x| x.to_string());
+    obj._11 = vars.get(10).map(|x| x.to_string());
+    obj._12 = vars.get(11).map(|x| x.to_string());
+    Ok((rest, obj))
+}
+
 /// B2A - Set Purpose
 ///
 /// To allow for positive identification of transaction set purpose
@@ -284,6 +333,15 @@ pub struct B2A {
     pub _01: String,
     #[serde(rename = "02")]
     pub _02: Option<String>,
+}
+
+pub fn parse_b2a(input: &str) -> IResult<&str, B2A> {
+    let (rest, object_str) = delimited(tag("B2A*"), take_until("~"), tag("~"))(input)?;
+    let mut obj = B2A::default();
+    let vars: Vec<&str> = object_str.split('*').collect();
+    obj._01 = vars.first().unwrap().to_string();
+    obj._02 = vars.get(1).map(|x| x.to_string());
+    Ok((rest, obj))
 }
 
 /// B3 - Beginning Segment for Carrier's Invoice
@@ -957,6 +1015,19 @@ pub struct DTM {
     pub _06: Option<String>,
 }
 
+pub fn parse_dtm(input: &str) -> IResult<&str, DTM> {
+    let (rest, object_str) = delimited(tag("DTM*"), take_until("~"), tag("~"))(input)?;
+    let mut obj = DTM::default();
+    let vars: Vec<&str> = object_str.split('*').collect();
+    obj._01 = vars.first().unwrap().to_string();
+    obj._02 = vars.get(1).map(|x| x.to_string());
+    obj._03 = vars.get(2).map(|x| x.to_string());
+    obj._04 = vars.get(3).map(|x| x.to_string());
+    obj._05 = vars.get(4).map(|x| x.to_string());
+    obj._06 = vars.get(5).map(|x| x.to_string());
+    Ok((rest, obj))
+}
+
 /// E1 - Empty Car Disposition - Pended Destination Consignee
 ///
 /// To identify the party receiving the empty car
@@ -1318,6 +1389,18 @@ pub struct G62 {
     pub _05: Option<String>,
 }
 
+pub fn parse_g62(input: &str) -> IResult<&str, G62> {
+    let (rest, object_str) = delimited(tag("G62*"), take_until("~"), tag("~"))(input)?;
+    let mut obj = G62::default();
+    let vars: Vec<&str> = object_str.split('*').collect();
+    obj._01 = vars.first().map(|x| x.to_string());
+    obj._02 = vars.get(1).map(|x| x.to_string());
+    obj._03 = vars.get(2).map(|x| x.to_string());
+    obj._04 = vars.get(3).map(|x| x.to_string());
+    obj._05 = vars.get(4).map(|x| x.to_string());
+    Ok((rest, obj))
+}
+
 /// GA - Canadian Grain Information
 ///
 /// To transmit the transportation and distribution requirements of grain at Canadian ports
@@ -1643,6 +1726,15 @@ pub struct IEA {
     pub _02: String,
 }
 
+pub fn parse_iea(input: &str) -> IResult<&str, IEA> {
+    let (rest, object_str) = delimited(tag("IEA*"), take_until("~"), tag("~"))(input)?;
+    let mut obj = IEA::default();
+    let vars: Vec<&str> = object_str.split('*').collect();
+    obj._01 = vars.first().unwrap().to_string();
+    obj._02 = vars.get(1).unwrap().to_string();
+    Ok((rest, obj))
+}
+
 /// ISA - Interchange Control Header
 ///
 /// To start and identify an interchange of zero or more functional groups and interchange-related control segments
@@ -1801,6 +1893,54 @@ pub struct ISA {
     pub _16: String,
 }
 
+impl<'a> Parser<&'a str, ISA, nom::error::Error<&'a str>> for ISA {
+    fn parse(&mut self, input: &'a str) -> IResult<&'a str, ISA> {
+        let (rest, object_str) = delimited(tag("ISA*"), take_until("~"), tag("~"))(input)?;
+        let mut obj = ISA::default();
+        let vars: Vec<&str> = object_str.split('*').collect();
+        obj._01 = vars.first().unwrap().to_string();
+        obj._02 = vars.get(1).unwrap().to_string();
+        obj._03 = vars.get(2).unwrap().to_string();
+        obj._04 = vars.get(3).unwrap().to_string();
+        obj._05 = vars.get(4).unwrap().to_string();
+        obj._06 = vars.get(5).unwrap().to_string();
+        obj._07 = vars.get(6).unwrap().to_string();
+        obj._08 = vars.get(7).unwrap().to_string();
+        obj._09 = vars.get(8).unwrap().to_string();
+        obj._10 = vars.get(9).unwrap().to_string();
+        obj._11 = vars.get(10).unwrap().to_string();
+        obj._12 = vars.get(11).unwrap().to_string();
+        obj._13 = vars.get(12).unwrap().to_string();
+        obj._14 = vars.get(13).unwrap().to_string();
+        obj._15 = vars.get(14).unwrap().to_string();
+        obj._16 = vars.get(15).unwrap().to_string();
+        Ok((rest, obj))
+    }
+}
+
+pub fn parse_isa(input: &str) -> IResult<&str, ISA> {
+    let (rest, object_str) = delimited(tag("ISA*"), take_until("~"), tag("~"))(input)?;
+    let mut obj = ISA::default();
+    let vars: Vec<&str> = object_str.split('*').collect();
+    obj._01 = vars.first().unwrap().to_string();
+    obj._02 = vars.get(1).unwrap().to_string();
+    obj._03 = vars.get(2).unwrap().to_string();
+    obj._04 = vars.get(3).unwrap().to_string();
+    obj._05 = vars.get(4).unwrap().to_string();
+    obj._06 = vars.get(5).unwrap().to_string();
+    obj._07 = vars.get(6).unwrap().to_string();
+    obj._08 = vars.get(7).unwrap().to_string();
+    obj._09 = vars.get(8).unwrap().to_string();
+    obj._10 = vars.get(9).unwrap().to_string();
+    obj._11 = vars.get(10).unwrap().to_string();
+    obj._12 = vars.get(11).unwrap().to_string();
+    obj._13 = vars.get(12).unwrap().to_string();
+    obj._14 = vars.get(13).unwrap().to_string();
+    obj._15 = vars.get(14).unwrap().to_string();
+    obj._16 = vars.get(15).unwrap().to_string();
+    Ok((rest, obj))
+}
+
 impl Reflect for ISA {
     fn get_path(current_path: &Path, _next_segment: &str, _last_path: &Path) -> Path {
         current_path.clone()
@@ -1880,6 +2020,28 @@ pub struct L0 {
     pub _14: Option<String>,
     #[serde(rename = "15")]
     pub _15: Option<String>,
+}
+
+pub fn parse_l0(input: &str) -> IResult<&str, L0> {
+    let (rest, object_str) = delimited(tag("L0*"), take_until("~"), tag("~"))(input)?;
+    let mut obj = L0::default();
+    let vars: Vec<&str> = object_str.split('*').collect();
+    obj._01 = vars.first().map(|x| x.to_string());
+    obj._02 = vars.get(1).map(|x| x.to_string());
+    obj._03 = vars.get(2).map(|x| x.to_string());
+    obj._04 = vars.get(3).map(|x| x.to_string());
+    obj._05 = vars.get(4).map(|x| x.to_string());
+    obj._06 = vars.get(5).map(|x| x.to_string());
+    obj._07 = vars.get(6).map(|x| x.to_string());
+    obj._08 = vars.get(7).map(|x| x.to_string());
+    obj._09 = vars.get(8).map(|x| x.to_string());
+    obj._10 = vars.get(9).map(|x| x.to_string());
+    obj._11 = vars.get(10).map(|x| x.to_string());
+    obj._12 = vars.get(11).map(|x| x.to_string());
+    obj._13 = vars.get(12).map(|x| x.to_string());
+    obj._14 = vars.get(13).map(|x| x.to_string());
+    obj._15 = vars.get(14).map(|x| x.to_string());
+    Ok((rest, obj))
 }
 
 /// L1 - Rate and Charges
@@ -2010,6 +2172,28 @@ pub struct L3 {
     pub _15: Option<String>,
 }
 
+pub fn parse_l3(input: &str) -> IResult<&str, L3> {
+    let (rest, object_str) = delimited(tag("L3*"), take_until("~"), tag("~"))(input)?;
+    let mut obj = L3::default();
+    let vars: Vec<&str> = object_str.split('*').collect();
+    obj._01 = vars.first().map(|x| x.to_string());
+    obj._02 = vars.get(1).map(|x| x.to_string());
+    obj._03 = vars.get(2).map(|x| x.to_string());
+    obj._04 = vars.get(3).map(|x| x.to_string());
+    obj._05 = vars.get(4).map(|x| x.to_string());
+    obj._06 = vars.get(5).map(|x| x.to_string());
+    obj._07 = vars.get(6).map(|x| x.to_string());
+    obj._08 = vars.get(7).map(|x| x.to_string());
+    obj._09 = vars.get(8).map(|x| x.to_string());
+    obj._10 = vars.get(9).map(|x| x.to_string());
+    obj._11 = vars.get(10).map(|x| x.to_string());
+    obj._12 = vars.get(11).map(|x| x.to_string());
+    obj._13 = vars.get(12).map(|x| x.to_string());
+    obj._14 = vars.get(13).map(|x| x.to_string());
+    obj._15 = vars.get(14).map(|x| x.to_string());
+    Ok((rest, obj))
+}
+
 /// L4 - Measurement
 ///
 /// To describe physical ddimensions and quantities
@@ -2073,6 +2257,23 @@ pub struct L5 {
     pub _09: Option<String>,
     #[serde(rename = "10")]
     pub _10: Option<String>,
+}
+
+pub fn parse_l5(input: &str) -> IResult<&str, L5> {
+    let (rest, object_str) = delimited(tag("L5*"), take_until("~"), tag("~"))(input)?;
+    let mut obj = L5::default();
+    let vars: Vec<&str> = object_str.split('*').collect();
+    obj._01 = vars.first().map(|x| x.to_string());
+    obj._02 = vars.get(1).map(|x| x.to_string());
+    obj._03 = vars.get(2).map(|x| x.to_string());
+    obj._04 = vars.get(3).map(|x| x.to_string());
+    obj._05 = vars.get(4).map(|x| x.to_string());
+    obj._06 = vars.get(5).map(|x| x.to_string());
+    obj._07 = vars.get(6).map(|x| x.to_string());
+    obj._08 = vars.get(7).map(|x| x.to_string());
+    obj._09 = vars.get(8).map(|x| x.to_string());
+    obj._10 = vars.get(9).map(|x| x.to_string());
+    Ok((rest, obj))
 }
 
 /// L7 - Tariff Reference
@@ -2150,6 +2351,16 @@ pub struct L11 {
     pub _02: Option<String>,
     #[serde(rename = "03")]
     pub _03: Option<String>,
+}
+
+pub fn parse_l11(input: &str) -> IResult<&str, L11> {
+    let (rest, object_str) = delimited(tag("L11*"), take_until("~"), tag("~"))(input)?;
+    let mut obj = L11::default();
+    let vars: Vec<&str> = object_str.split('*').collect();
+    obj._01 = vars.first().map(|x| x.to_string());
+    obj._02 = vars.get(1).map(|x| x.to_string());
+    obj._02 = vars.get(2).map(|x| x.to_string());
+    Ok((rest, obj))
 }
 
 /// LAD - Lading Detail
@@ -2449,6 +2660,17 @@ pub struct LH6 {
     pub _04: Option<String>,
 }
 
+pub fn parse_lh6(input: &str) -> IResult<&str, LH6> {
+    let (rest, object_str) = delimited(tag("LH6*"), take_until("~"), tag("~"))(input)?;
+    let mut obj = LH6::default();
+    let vars: Vec<&str> = object_str.split('*').collect();
+    obj._01 = vars.first().map(|x| x.to_string());
+    obj._02 = vars.get(1).map(|x| x.to_string());
+    obj._03 = vars.get(2).map(|x| x.to_string());
+    obj._04 = vars.get(3).map(|x| x.to_string());
+    Ok((rest, obj))
+}
+
 /// LHR - Hazardous Material Identifying Reference Numbers
 ///
 /// To transmit specific hazardous material reference numbers
@@ -2517,6 +2739,14 @@ pub struct LS {
 pub struct LX {
     #[serde(rename = "01")]
     pub _01: String,
+}
+
+pub fn parse_lx(input: &str) -> IResult<&str, LX> {
+    let (rest, vars) = delimited(tag("LX*"), take_until("~"), tag("~"))(input)?;
+    let obj = LX {
+        _01: vars.to_string(),
+    };
+    Ok((rest, obj))
 }
 
 /// M0 - Letter of Credit Reference
@@ -2963,6 +3193,18 @@ pub struct MS3 {
     pub _05: Option<String>,
 }
 
+pub fn parse_ms3(input: &str) -> IResult<&str, MS3> {
+    let (rest, object_str) = delimited(tag("MS3*"), take_until("~"), tag("~"))(input)?;
+    let mut obj = MS3::default();
+    let vars: Vec<&str> = object_str.split('*').collect();
+    obj._01 = vars.first().unwrap().to_string();
+    obj._02 = vars.get(1).unwrap().to_string();
+    obj._03 = vars.get(2).map(|x| x.to_string());
+    obj._04 = vars.get(3).map(|x| x.to_string());
+    obj._05 = vars.get(4).map(|x| x.to_string());
+    Ok((rest, obj))
+}
+
 /// N1 - Name
 ///
 /// To identify a party by type of organization, name, and code
@@ -2995,6 +3237,19 @@ pub struct N1 {
     pub _05: Option<String>,
     #[serde(rename = "06")]
     pub _06: Option<String>,
+}
+
+pub fn parse_n1(input: &str) -> IResult<&str, N1> {
+    let (rest, object_str) = delimited(tag("N1*"), take_until("~"), tag("~"))(input)?;
+    let mut obj = N1::default();
+    let vars: Vec<&str> = object_str.split('*').collect();
+    obj._01 = vars.first().unwrap().to_string();
+    obj._02 = vars.get(1).map(|x| x.to_string());
+    obj._03 = vars.get(2).map(|x| x.to_string());
+    obj._04 = vars.get(3).map(|x| x.to_string());
+    obj._05 = vars.get(4).map(|x| x.to_string());
+    obj._06 = vars.get(5).map(|x| x.to_string());
+    Ok((rest, obj))
 }
 
 /// N2 - Additional Name Information
@@ -3041,6 +3296,15 @@ pub struct N3 {
     pub _02: Option<String>,
 }
 
+pub fn parse_n3(input: &str) -> IResult<&str, N3> {
+    let (rest, object_str) = delimited(tag("N3*"), take_until("~"), tag("~"))(input)?;
+    let mut obj = N3::default();
+    let vars: Vec<&str> = object_str.split('*').collect();
+    obj._01 = vars.first().unwrap().to_string();
+    obj._02 = vars.get(1).map(|x| x.to_string());
+    Ok((rest, obj))
+}
+
 /// N4 - Geographic Location
 ///
 /// To specify the geographic place of the named party
@@ -3073,6 +3337,19 @@ pub struct N4 {
     pub _04: Option<String>,
     pub _05: Option<String>,
     pub _06: Option<String>,
+}
+
+pub fn parse_n4(input: &str) -> IResult<&str, N4> {
+    let (rest, object_str) = delimited(tag("N4*"), take_until("~"), tag("~"))(input)?;
+    let mut obj = N4::default();
+    let vars: Vec<&str> = object_str.split('*').collect();
+    obj._01 = vars.first().map(|x| x.to_string());
+    obj._02 = vars.get(1).map(|x| x.to_string());
+    obj._03 = vars.get(2).map(|x| x.to_string());
+    obj._04 = vars.get(3).map(|x| x.to_string());
+    obj._05 = vars.get(4).map(|x| x.to_string());
+    obj._06 = vars.get(5).map(|x| x.to_string());
+    Ok((rest, obj))
 }
 
 /// N5 - Equipment Ordered
@@ -3212,6 +3489,20 @@ pub struct N9 {
     #[serde(rename = "07")]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub _07: Option<String>,
+}
+
+pub fn parse_n9(input: &str) -> IResult<&str, N9> {
+    let (rest, object_str) = delimited(tag("N9*"), take_until("~"), tag("~"))(input)?;
+    let mut obj = N9::default();
+    let vars: Vec<&str> = object_str.split('*').collect();
+    obj._01 = vars.first().unwrap().to_string();
+    obj._02 = vars.get(1).unwrap().to_string();
+    obj._03 = vars.get(2).map(|x| x.to_string());
+    obj._04 = vars.get(3).map(|x| x.to_string());
+    obj._05 = vars.get(4).map(|x| x.to_string());
+    obj._06 = vars.get(5).map(|x| x.to_string());
+    obj._07 = vars.get(5).map(|x| x.to_string());
+    Ok((rest, obj))
 }
 
 /// N10 - Quantity and Description
@@ -3408,6 +3699,15 @@ pub struct NTE {
     pub _02: String,
 }
 
+pub fn parse_nte(input: &str) -> IResult<&str, NTE> {
+    let (rest, object_str) = delimited(tag("NTE*"), take_until("~"), tag("~"))(input)?;
+    let mut obj = NTE::default();
+    let vars: Vec<&str> = object_str.split('*').collect();
+    obj._01 = vars.first().map(|x| x.to_string());
+    obj._02 = vars.get(1).unwrap().to_string();
+    Ok((rest, obj))
+}
+
 /// OID - Order Identification Detail NEW
 ///
 /// To specify order identification detail
@@ -3581,6 +3881,17 @@ pub struct PLD {
     pub _03: Option<String>,
     #[serde(rename = "04")]
     pub _04: Option<String>,
+}
+
+pub fn parse_pld(input: &str) -> IResult<&str, PLD> {
+    let (rest, object_str) = delimited(tag("PLD*"), take_until("~"), tag("~"))(input)?;
+    let mut obj = PLD::default();
+    let vars: Vec<&str> = object_str.split('*').collect();
+    obj._01 = vars.first().unwrap().to_string();
+    obj._02 = vars.get(1).map(|x| x.to_string());
+    obj._03 = vars.get(2).map(|x| x.to_string());
+    obj._04 = vars.get(3).map(|x| x.to_string());
+    Ok((rest, obj))
 }
 
 /// PRF - Purchase Order Reference
@@ -4015,6 +4326,21 @@ pub struct R4 {
     pub _08: Option<String>,
 }
 
+pub fn parse_r4(input: &str) -> IResult<&str, R4> {
+    let (rest, object_str) = delimited(tag("R4*"), take_until("~"), tag("~"))(input)?;
+    let mut obj = R4::default();
+    let vars: Vec<&str> = object_str.split('*').collect();
+    obj._01 = vars.first().unwrap().to_string();
+    obj._02 = vars.get(1).map(|x| x.to_string());
+    obj._03 = vars.get(2).map(|x| x.to_string());
+    obj._04 = vars.get(3).map(|x| x.to_string());
+    obj._05 = vars.get(4).map(|x| x.to_string());
+    obj._06 = vars.get(5).map(|x| x.to_string());
+    obj._07 = vars.get(6).map(|x| x.to_string());
+    obj._08 = vars.get(7).map(|x| x.to_string());
+    Ok((rest, obj))
+}
+
 /// R9 - Route Code
 ///
 /// To specify the route using a single code
@@ -4264,6 +4590,15 @@ pub struct SE {
     pub _02: String,
 }
 
+pub fn parse_se(input: &str) -> IResult<&str, SE> {
+    let (rest, object_str) = delimited(tag("SE*"), take_until("~"), tag("~"))(input)?;
+    let mut obj = SE::default();
+    let vars: Vec<&str> = object_str.split('*').collect();
+    obj._01 = vars.first().unwrap().to_string();
+    obj._02 = vars.get(1).unwrap().to_string();
+    Ok((rest, obj))
+}
+
 /// SG - Shipment Status
 ///
 /// To convey the status of a shipment
@@ -4360,6 +4695,20 @@ pub struct ST {
     /// 329 - Transaction Set Control Number 4/9
     #[serde(rename = "02")]
     pub _02: String,
+}
+
+impl<'a> Parser<&'a str, ST, nom::error::Error<&'a str>> for ST {
+    fn parse(&mut self, input: &'a str) -> IResult<&'a str, ST> {
+        let (rest, vars) = delimited(tag("ST*"), take_until("~"), tag("~"))(input)?;
+        let (_, vars) = separated_list0(tag("*"), take_while(char::is_alphanumeric))(vars)?;
+        let obj = ST {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).unwrap().to_string(),
+        };
+        // look for trailing newline
+        let (rest, _) = opt(newline)(rest)?;
+        Ok((rest, obj))
+    }
 }
 
 /// T1 - Transit Inbound Origin
@@ -4606,6 +4955,22 @@ pub struct V1 {
     pub _08: Option<String>,
     #[serde(rename = "09")]
     pub _09: Option<String>,
+}
+
+pub fn parse_v1(input: &str) -> IResult<&str, V1> {
+    let (rest, object_str) = delimited(tag("V1*"), take_until("~"), tag("~"))(input)?;
+    let mut obj = V1::default();
+    let vars: Vec<&str> = object_str.split('*').collect();
+    obj._01 = vars.first().map(|x| x.to_string());
+    obj._02 = vars.get(1).map(|x| x.to_string());
+    obj._03 = vars.get(2).map(|x| x.to_string());
+    obj._04 = vars.get(3).map(|x| x.to_string());
+    obj._05 = vars.get(4).map(|x| x.to_string());
+    obj._06 = vars.get(5).map(|x| x.to_string());
+    obj._07 = vars.get(6).map(|x| x.to_string());
+    obj._08 = vars.get(7).map(|x| x.to_string());
+    obj._09 = vars.get(8).map(|x| x.to_string());
+    Ok((rest, obj))
 }
 
 /// V4 - Cargo Location Reference
@@ -5128,6 +5493,29 @@ pub struct Y3 {
     pub _11: Option<String>,
 }
 
+impl<'a> Parser<&'a str, Y3, nom::error::Error<&'a str>> for Y3 {
+    fn parse(&mut self, input: &'a str) -> IResult<&'a str, Y3> {
+        let (rest, vars) = delimited(tag("Y3*"), take_until("~"), tag("~"))(input)?;
+        let (_, vars) = separated_list0(tag("*"), take_while(char::is_alphanumeric))(vars)?;
+        let obj = Y3 {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).unwrap().to_string(),
+            _05: vars.get(4).map(|x| x.to_string()),
+            _06: vars.get(5).map(|x| x.to_string()),
+            _07: vars.get(6).map(|x| x.to_string()),
+            _08: vars.get(7).map(|x| x.to_string()),
+            _09: vars.get(8).map(|x| x.to_string()),
+            _10: vars.get(9).map(|x| x.to_string()),
+            _11: vars.get(10).map(|x| x.to_string()),
+        };
+        // look for trailing newline
+        let (rest, _) = opt(newline)(rest)?;
+        Ok((rest, obj))
+    }
+}
+
 /// Y4 - Container Release
 ///
 /// To transmit information relative to containers available for release
@@ -5153,6 +5541,23 @@ pub struct Y4 {
     pub _09: Option<String>,
     #[serde(rename = "10")]
     pub _10: Option<String>,
+}
+
+pub fn parse_y4(input: &str) -> IResult<&str, Y4> {
+    let (rest, object_str) = delimited(tag("Y4*"), take_until("~"), tag("~"))(input)?;
+    let mut obj = Y4::default();
+    let vars: Vec<&str> = object_str.split('*').collect();
+    obj._01 = vars.get(1).map(|x| x.to_string());
+    obj._02 = vars.get(1).map(|x| x.to_string());
+    obj._03 = vars.get(2).map(|x| x.to_string());
+    obj._04 = vars.get(3).unwrap().to_string();
+    obj._05 = vars.get(3).map(|x| x.to_string());
+    obj._06 = vars.get(3).map(|x| x.to_string());
+    obj._07 = vars.get(3).map(|x| x.to_string());
+    obj._08 = vars.get(3).map(|x| x.to_string());
+    obj._09 = vars.get(3).map(|x| x.to_string());
+    obj._10 = vars.get(3).map(|x| x.to_string());
+    Ok((rest, obj))
 }
 
 /// Y6 - Authentication
