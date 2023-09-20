@@ -1,7 +1,12 @@
 use nom::bytes::complete::tag;
 use nom::bytes::complete::take_until;
+use nom::bytes::complete::take_while;
+use nom::character::complete::newline;
+use nom::combinator::opt;
+use nom::multi::separated_list0;
 use nom::sequence::delimited;
 use nom::IResult;
+use nom::Parser;
 use serde::{Deserialize, Serialize};
 use serde_x12::Path;
 use serde_x12::Reflect;
@@ -299,7 +304,7 @@ pub fn parse_b2(input: &str) -> IResult<&str, B2> {
     let (rest, object_str) = delimited(tag("B2*"), take_until("~"), tag("~"))(input)?;
     let mut obj = B2::default();
     let vars: Vec<&str> = object_str.split('*').collect();
-    obj._01 = vars.get(0).map(|x| x.to_string());
+    obj._01 = vars.first().map(|x| x.to_string());
     obj._02 = vars.get(1).map(|x| x.to_string());
     obj._03 = vars.get(2).map(|x| x.to_string());
     obj._04 = vars.get(3).map(|x| x.to_string());
@@ -1721,7 +1726,6 @@ pub struct IEA {
     pub _02: String,
 }
 
-
 pub fn parse_iea(input: &str) -> IResult<&str, IEA> {
     let (rest, object_str) = delimited(tag("IEA*"), take_until("~"), tag("~"))(input)?;
     let mut obj = IEA::default();
@@ -1887,6 +1891,31 @@ pub struct ISA {
     /// - MAX=1
     #[serde(rename = "16")]
     pub _16: String,
+}
+
+impl<'a> Parser<&'a str, ISA, nom::error::Error<&'a str>> for ISA {
+    fn parse(&mut self, input: &'a str) -> IResult<&'a str, ISA> {
+        let (rest, object_str) = delimited(tag("ISA*"), take_until("~"), tag("~"))(input)?;
+        let mut obj = ISA::default();
+        let vars: Vec<&str> = object_str.split('*').collect();
+        obj._01 = vars.first().unwrap().to_string();
+        obj._02 = vars.get(1).unwrap().to_string();
+        obj._03 = vars.get(2).unwrap().to_string();
+        obj._04 = vars.get(3).unwrap().to_string();
+        obj._05 = vars.get(4).unwrap().to_string();
+        obj._06 = vars.get(5).unwrap().to_string();
+        obj._07 = vars.get(6).unwrap().to_string();
+        obj._08 = vars.get(7).unwrap().to_string();
+        obj._09 = vars.get(8).unwrap().to_string();
+        obj._10 = vars.get(9).unwrap().to_string();
+        obj._11 = vars.get(10).unwrap().to_string();
+        obj._12 = vars.get(11).unwrap().to_string();
+        obj._13 = vars.get(12).unwrap().to_string();
+        obj._14 = vars.get(13).unwrap().to_string();
+        obj._15 = vars.get(14).unwrap().to_string();
+        obj._16 = vars.get(15).unwrap().to_string();
+        Ok((rest, obj))
+    }
 }
 
 pub fn parse_isa(input: &str) -> IResult<&str, ISA> {
@@ -4668,13 +4697,18 @@ pub struct ST {
     pub _02: String,
 }
 
-pub fn parse_st(input: &str) -> IResult<&str, ST> {
-    let (rest, object_str) = delimited(tag("ST*"), take_until("~"), tag("~"))(input)?;
-    let mut obj = ST::default();
-    let vars: Vec<&str> = object_str.split('*').collect();
-    obj._01 = vars.first().unwrap().to_string();
-    obj._02 = vars.get(1).unwrap().to_string();
-    Ok((rest, obj))
+impl<'a> Parser<&'a str, ST, nom::error::Error<&'a str>> for ST {
+    fn parse(&mut self, input: &'a str) -> IResult<&'a str, ST> {
+        let (rest, vars) = delimited(tag("ST*"), take_until("~"), tag("~"))(input)?;
+        let (_, vars) = separated_list0(tag("*"), take_while(char::is_alphanumeric))(vars)?;
+        let obj = ST {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).unwrap().to_string(),
+        };
+        // look for trailing newline
+        let (rest, _) = opt(newline)(rest)?;
+        Ok((rest, obj))
+    }
 }
 
 /// T1 - Transit Inbound Origin
@@ -5459,22 +5493,27 @@ pub struct Y3 {
     pub _11: Option<String>,
 }
 
-pub fn parse_y3(input: &str) -> IResult<&str, Y3> {
-    let (rest, object_str) = delimited(tag("Y3*"), take_until("~"), tag("~"))(input)?;
-    let mut obj = Y3::default();
-    let vars: Vec<&str> = object_str.split('*').collect();
-    obj._01 = vars.first().unwrap().to_string();
-    obj._02 = vars.get(1).map(|x| x.to_string());
-    obj._03 = vars.get(2).map(|x| x.to_string());
-    obj._04 = vars.get(3).unwrap().to_string();
-    obj._05 = vars.get(3).map(|x| x.to_string());
-    obj._06 = vars.get(3).map(|x| x.to_string());
-    obj._07 = vars.get(3).map(|x| x.to_string());
-    obj._08 = vars.get(3).map(|x| x.to_string());
-    obj._09 = vars.get(3).map(|x| x.to_string());
-    obj._10 = vars.get(3).map(|x| x.to_string());
-    obj._11 = vars.get(3).map(|x| x.to_string());
-    Ok((rest, obj))
+impl<'a> Parser<&'a str, Y3, nom::error::Error<&'a str>> for Y3 {
+    fn parse(&mut self, input: &'a str) -> IResult<&'a str, Y3> {
+        let (rest, vars) = delimited(tag("Y3*"), take_until("~"), tag("~"))(input)?;
+        let (_, vars) = separated_list0(tag("*"), take_while(char::is_alphanumeric))(vars)?;
+        let obj = Y3 {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).unwrap().to_string(),
+            _05: vars.get(4).map(|x| x.to_string()),
+            _06: vars.get(5).map(|x| x.to_string()),
+            _07: vars.get(6).map(|x| x.to_string()),
+            _08: vars.get(7).map(|x| x.to_string()),
+            _09: vars.get(8).map(|x| x.to_string()),
+            _10: vars.get(9).map(|x| x.to_string()),
+            _11: vars.get(10).map(|x| x.to_string()),
+        };
+        // look for trailing newline
+        let (rest, _) = opt(newline)(rest)?;
+        Ok((rest, obj))
+    }
 }
 
 /// Y4 - Container Release

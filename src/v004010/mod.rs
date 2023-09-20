@@ -3,6 +3,7 @@
 use nom::character::complete::newline;
 use nom::combinator::opt;
 use nom::IResult;
+use nom::Parser;
 use serde::{Deserialize, Serialize};
 use serde_x12::Path;
 use serde_x12::PathItem;
@@ -10,7 +11,6 @@ use serde_x12::PathOperation;
 use serde_x12::Reflect;
 use std::fmt::Debug;
 mod segment;
-use nom::Parser;
 pub use segment::*;
 
 #[cfg(test)]
@@ -21,6 +21,9 @@ mod test_301;
 mod test_310;
 #[cfg(test)]
 mod test_315;
+#[cfg(test)]
+mod test_segments;
+
 
 #[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
 pub struct Transmission<T> {
@@ -29,18 +32,19 @@ pub struct Transmission<T> {
     pub iea: IEA,
 }
 
-pub fn parse_transmission<T: Default, Parser>(input: &str) -> IResult<&str, Transmission<T>> {
-    let mut output = Transmission::default();
-    let (input, obj) = parse_isa(input)?;
-    output.isa = obj;
-    let o = T::default();
-    
-    let t_obj = opt(o.parse)(input)?;
-    // let (input, obj) = parse_functional_group(input)?;
-    // output.b2 = obj;
-    let (input, obj) = parse_iea(input)?;
-    output.iea = obj;
-    Ok((input, output))
+impl<'a, T: Default + Parser<&'a str, Transmission<T>, nom::error::Error<&'a str>>>
+    Parser<&'a str, Transmission<T>, nom::error::Error<&'a str>> for Transmission<T>
+{
+    fn parse(&mut self, input: &'a str) -> IResult<&'a str, Transmission<T>> {
+        let mut output = Transmission::default();
+        let (input, obj) = parse_isa(input)?;
+        output.isa = obj;
+        let mut o = T::default();
+        let _x = o.parse(input);
+        let (input, obj) = parse_iea(input)?;
+        output.iea = obj;
+        Ok((input, output))
+    }
 }
 
 impl<T: Reflect> Reflect for Transmission<T> {
@@ -206,7 +210,8 @@ pub struct _204 {
 
 pub fn parse_204(input: &str) -> IResult<&str, _204> {
     let mut output = _204::default();
-    let (input, obj) = parse_st(input)?;
+    let mut x = ST::default();
+    let (input, obj) = x.parse(input)?;
     output.st = obj;
     let (input, obj) = parse_b2(input)?;
     output.b2 = obj;
@@ -559,13 +564,15 @@ pub struct _301 {
 
 pub fn parse_301(input: &str) -> IResult<&str, _301> {
     let mut output = _301::default();
-    let (input, obj) = parse_st(input)?;
+    let mut x = ST::default();
+    let (input, obj) = x.parse(input)?;
     output.st = obj;
     let (input, _) = opt(newline)(input)?;
     let (input, obj) = parse_b1(input)?;
     output.b1 = obj;
     let (input, _) = opt(newline)(input)?;
-    let (input, obj) = parse_y3(input)?;
+    let mut x = Y3::default();
+    let (input, obj) = x.parse(input)?;
     let (input, _) = opt(newline)(input)?;
     output.y3 = obj;
     let (input, obj) = parse_y4(input)?;
