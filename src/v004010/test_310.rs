@@ -11,11 +11,11 @@ fn test_310_transmission() {
 
 #[test]
 fn test_chars() {
-    let str="L5*1*NET WEIGHT . MOULDINGS OF MEDIUM DENSITY FIBERBO~\n";
+    let str = "L5*1*NET WEIGHT . MOULDINGS OF MEDIUM DENSITY FIBERBO~\n";
     for x in str.chars() {
         if x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation()) {
             println!("{x} match");
-        }else{
+        } else {
             println!("{x} not a char - filtered");
         }
     }

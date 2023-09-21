@@ -770,7 +770,9 @@ impl<'a> Parser<&'a str, C2, nom::error::Error<&'a str>> for C2 {
         let (rest, vars) = delimited(tag("C2*"), take_until("~"), tag("~"))(input)?;
         let (_, vars) = separated_list0(
             tag("*"),
-            take_while(|x: char| x!='*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())),
+            take_while(|x: char| {
+                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
+            }),
         )(vars)?;
         let obj = C2 {
             _01: vars.first().unwrap().to_string(),
@@ -857,7 +859,9 @@ impl<'a> Parser<&'a str, C8, nom::error::Error<&'a str>> for C8 {
         let (rest, vars) = delimited(tag("C8*"), take_until("~"), tag("~"))(input)?;
         let (_, vars) = separated_list0(
             tag("*"),
-            take_while(|x: char| x!='*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())),
+            take_while(|x: char| {
+                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
+            }),
         )(vars)?;
         let obj = C8 {
             _01: vars.first().map(|x| x.to_string()),
@@ -895,7 +899,9 @@ impl<'a> Parser<&'a str, C8C, nom::error::Error<&'a str>> for C8C {
         let (rest, vars) = delimited(tag("C8C*"), take_until("~"), tag("~"))(input)?;
         let (_, vars) = separated_list0(
             tag("*"),
-            take_while(|x: char| x!='*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())),
+            take_while(|x: char| {
+                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
+            }),
         )(vars)?;
         let obj = C8C {
             _01: vars.first().unwrap().to_string(),
@@ -1541,7 +1547,9 @@ impl<'a> Parser<&'a str, G61, nom::error::Error<&'a str>> for G61 {
         let (rest, vars) = delimited(tag("G61*"), take_until("~"), tag("~"))(input)?;
         let (_, vars) = separated_list0(
             tag("*"),
-            take_while(|x: char| x!='*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())),
+            take_while(|x: char| {
+                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
+            }),
         )(vars)?;
         let obj = G61 {
             _01: vars.first().unwrap().to_string(),
@@ -1715,7 +1723,9 @@ impl<'a> Parser<&'a str, GE, nom::error::Error<&'a str>> for GE {
         let (rest, vars) = delimited(tag("GE*"), take_until("~"), tag("~"))(input)?;
         let (_, vars) = separated_list0(
             tag("*"),
-            take_while(|x: char| x!='*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())),
+            take_while(|x: char| {
+                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
+            }),
         )(vars)?;
         let obj = GE {
             _01: vars.first().unwrap().to_string(),
@@ -1803,7 +1813,9 @@ impl<'a> Parser<&'a str, GS, nom::error::Error<&'a str>> for GS {
         let (rest, vars) = delimited(tag("GS*"), take_until("~"), tag("~"))(input)?;
         let (_, vars) = separated_list0(
             tag("*"),
-            take_while(|x: char| x!='*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())),
+            take_while(|x: char| {
+                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
+            }),
         )(vars)?;
         let obj = GS {
             _01: vars.first().unwrap().to_string(),
@@ -1904,7 +1916,9 @@ impl<'a> Parser<&'a str, H3, nom::error::Error<&'a str>> for H3 {
         let (rest, vars) = delimited(tag("H3*"), take_until("~"), tag("~"))(input)?;
         let (_, vars) = separated_list0(
             tag("*"),
-            take_while(|x: char| x!='*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())),
+            take_while(|x: char| {
+                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
+            }),
         )(vars)?;
         let obj = H3 {
             _01: vars.first().map(|x| x.to_string()),
@@ -2225,7 +2239,9 @@ impl<'a> Parser<&'a str, K1, nom::error::Error<&'a str>> for K1 {
         let (rest, vars) = delimited(tag("K1*"), take_until("~"), tag("~"))(input)?;
         let (_, vars) = separated_list0(
             tag("*"),
-            take_while(|x: char| x!='*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())),
+            take_while(|x: char| {
+                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
+            }),
         )(vars)?;
         let obj = K1 {
             _01: vars.first().unwrap().to_string(),
@@ -4910,7 +4926,9 @@ impl<'a> Parser<&'a str, R2A, nom::error::Error<&'a str>> for R2A {
         let (rest, vars) = delimited(tag("R2A*"), take_until("~"), tag("~"))(input)?;
         let (_, vars) = separated_list0(
             tag("*"),
-            take_while(|x: char| x!='*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())),
+            take_while(|x: char| {
+                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
+            }),
         )(vars)?;
         let obj = R2A {
             _01: vars.first().unwrap().to_string(),
@@ -5795,7 +5813,9 @@ impl<'a> Parser<&'a str, V9, nom::error::Error<&'a str>> for V9 {
         let (rest, vars) = delimited(tag("V9*"), take_until("~"), tag("~"))(input)?;
         let (_, vars) = separated_list0(
             tag("*"),
-            take_while(|x: char| x!='*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())),
+            take_while(|x: char| {
+                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
+            }),
         )(vars)?;
         let obj = V9 {
             _01: vars.first().unwrap().to_string(),
@@ -6208,7 +6228,9 @@ impl<'a> Parser<&'a str, Y2, nom::error::Error<&'a str>> for Y2 {
         let (rest, vars) = delimited(tag("Y2*"), take_until("~"), tag("~"))(input)?;
         let (_, vars) = separated_list0(
             tag("*"),
-            take_while(|x: char| x!='*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())),
+            take_while(|x: char| {
+                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
+            }),
         )(vars)?;
         let obj = Y2 {
             _01: vars.first().unwrap().to_string(),

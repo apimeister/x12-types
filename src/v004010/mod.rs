@@ -43,7 +43,7 @@ impl<'a, T: Default + Parser<&'a str, T, nom::error::Error<&'a str>>>
         let (input, gs) = GS::parse(input)?;
         let (input, t_obj) = T::parse(input)?;
         let (input, ge) = GE::parse(input)?;
-        let fg = FunctionalGroup{
+        let fg = FunctionalGroup {
             gs,
             segments: vec![t_obj],
             ge,
@@ -1058,7 +1058,7 @@ impl<'a> Parser<&'a str, _310, nom::error::Error<&'a str>> for _310 {
                     qty: None,
                     v4: None,
                     n12: None,
-                    m7: m7,
+                    m7,
                     w09: None,
                     loop_l1: vec![],
                     l7: None,

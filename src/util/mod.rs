@@ -16,6 +16,6 @@ pub fn is_equal_payload<T: PartialEq>(src: &Transmission<T>, target: &Transmissi
     true
 }
 
-pub trait Parser<I,O,E>{
+pub trait Parser<I, O, E> {
     fn parse(str: I) -> IResult<I, O>;
 }

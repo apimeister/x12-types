@@ -27,7 +27,7 @@ fn test_b1() {
     let str = serde_x12::to_string(&obj).unwrap();
     let result = B1::parse(&str).unwrap();
     assert!(result.0.is_empty());
-    assert_eq!(result.1._04,"A");
+    assert_eq!(result.1._04, "A");
 }
 
 #[test]
