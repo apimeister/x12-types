@@ -1,3 +1,4 @@
+use crate::util::Parser;
 use nom::bytes::complete::tag;
 use nom::bytes::complete::take_until;
 use nom::bytes::complete::take_while;
@@ -6,7 +7,6 @@ use nom::combinator::opt;
 use nom::multi::separated_list0;
 use nom::sequence::delimited;
 use nom::IResult;
-use nom::Parser;
 use serde::{Deserialize, Serialize};
 use serde_x12::Path;
 use serde_x12::Reflect;
@@ -144,14 +144,24 @@ pub struct AT5 {
     pub _03: Option<String>,
 }
 
-pub fn parse_at5(input: &str) -> IResult<&str, AT5> {
-    let (rest, object_str) = delimited(tag("AT5*"), take_until("~"), tag("~"))(input)?;
-    let mut obj = AT5::default();
-    let vars: Vec<&str> = object_str.split('*').collect();
-    obj._01 = vars.first().map(|x| x.to_string());
-    obj._02 = vars.get(1).map(|x| x.to_string());
-    obj._03 = vars.get(2).map(|x| x.to_string());
-    Ok((rest, obj))
+impl<'a> Parser<&'a str, AT5, nom::error::Error<&'a str>> for AT5 {
+    fn parse(input: &'a str) -> IResult<&'a str, AT5> {
+        let (rest, vars) = delimited(tag("AT5*"), take_until("~"), tag("~"))(input)?;
+        let (_, vars) = separated_list0(
+            tag("*"),
+            take_while(|x: char| {
+                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
+            }),
+        )(vars)?;
+        let obj = AT5 {
+            _01: vars.first().map(|x| x.to_string()),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).map(|x| x.to_string()),
+        };
+        // look for trailing newline
+        let (rest, _) = opt(newline)(rest)?;
+        Ok((rest, obj))
+    }
 }
 
 /// AT7 - Shipment Status Details
@@ -243,15 +253,25 @@ pub struct B1 {
     pub _04: String,
 }
 
-pub fn parse_b1(input: &str) -> IResult<&str, B1> {
-    let (rest, object_str) = delimited(tag("B1*"), take_until("~"), tag("~"))(input)?;
-    let mut obj = B1::default();
-    let vars: Vec<&str> = object_str.split('*').collect();
-    obj._01 = vars.first().map(|x| x.to_string());
-    obj._02 = vars.get(1).unwrap().to_string();
-    obj._03 = vars.get(2).map(|x| x.to_string());
-    obj._04 = vars.get(3).unwrap().to_string();
-    Ok((rest, obj))
+impl<'a> Parser<&'a str, B1, nom::error::Error<&'a str>> for B1 {
+    fn parse(input: &'a str) -> IResult<&'a str, B1> {
+        let (rest, vars) = delimited(tag("B1*"), take_until("~"), tag("~"))(input)?;
+        let (_, vars) = separated_list0(
+            tag("*"),
+            take_while(|x: char| {
+                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
+            }),
+        )(vars)?;
+        let obj = B1 {
+            _01: vars.first().map(|x| x.to_string()),
+            _02: vars.get(1).unwrap().to_string(),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).unwrap().to_string(),
+        };
+        // look for trailing newline
+        let (rest, _) = opt(newline)(rest)?;
+        Ok((rest, obj))
+    }
 }
 
 /// B2 - Beginning Segment for Shipment Information Transaction
@@ -300,23 +320,33 @@ pub struct B2 {
     pub _12: Option<String>,
 }
 
-pub fn parse_b2(input: &str) -> IResult<&str, B2> {
-    let (rest, object_str) = delimited(tag("B2*"), take_until("~"), tag("~"))(input)?;
-    let mut obj = B2::default();
-    let vars: Vec<&str> = object_str.split('*').collect();
-    obj._01 = vars.first().map(|x| x.to_string());
-    obj._02 = vars.get(1).map(|x| x.to_string());
-    obj._03 = vars.get(2).map(|x| x.to_string());
-    obj._04 = vars.get(3).map(|x| x.to_string());
-    obj._05 = vars.get(4).map(|x| x.to_string());
-    obj._06 = vars.get(5).unwrap().to_string();
-    obj._07 = vars.get(6).map(|x| x.to_string());
-    obj._08 = vars.get(7).map(|x| x.to_string());
-    obj._09 = vars.get(8).map(|x| x.to_string());
-    obj._10 = vars.get(9).map(|x| x.to_string());
-    obj._11 = vars.get(10).map(|x| x.to_string());
-    obj._12 = vars.get(11).map(|x| x.to_string());
-    Ok((rest, obj))
+impl<'a> Parser<&'a str, B2, nom::error::Error<&'a str>> for B2 {
+    fn parse(input: &'a str) -> IResult<&'a str, B2> {
+        let (rest, vars) = delimited(tag("B2*"), take_until("~"), tag("~"))(input)?;
+        let (_, vars) = separated_list0(
+            tag("*"),
+            take_while(|x: char| {
+                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
+            }),
+        )(vars)?;
+        let obj = B2 {
+            _01: vars.first().map(|x| x.to_string()),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).map(|x| x.to_string()),
+            _05: vars.get(4).map(|x| x.to_string()),
+            _06: vars.get(5).unwrap().to_string(),
+            _07: vars.get(6).map(|x| x.to_string()),
+            _08: vars.get(7).map(|x| x.to_string()),
+            _09: vars.get(8).map(|x| x.to_string()),
+            _10: vars.get(9).map(|x| x.to_string()),
+            _11: vars.get(10).map(|x| x.to_string()),
+            _12: vars.get(11).map(|x| x.to_string()),
+        };
+        // look for trailing newline
+        let (rest, _) = opt(newline)(rest)?;
+        Ok((rest, obj))
+    }
 }
 
 /// B2A - Set Purpose
@@ -335,13 +365,23 @@ pub struct B2A {
     pub _02: Option<String>,
 }
 
-pub fn parse_b2a(input: &str) -> IResult<&str, B2A> {
-    let (rest, object_str) = delimited(tag("B2A*"), take_until("~"), tag("~"))(input)?;
-    let mut obj = B2A::default();
-    let vars: Vec<&str> = object_str.split('*').collect();
-    obj._01 = vars.first().unwrap().to_string();
-    obj._02 = vars.get(1).map(|x| x.to_string());
-    Ok((rest, obj))
+impl<'a> Parser<&'a str, B2A, nom::error::Error<&'a str>> for B2A {
+    fn parse(input: &'a str) -> IResult<&'a str, B2A> {
+        let (rest, vars) = delimited(tag("B2A*"), take_until("~"), tag("~"))(input)?;
+        let (_, vars) = separated_list0(
+            tag("*"),
+            take_while(|x: char| {
+                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
+            }),
+        )(vars)?;
+        let obj = B2A {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).map(|x| x.to_string()),
+        };
+        // look for trailing newline
+        let (rest, _) = opt(newline)(rest)?;
+        Ok((rest, obj))
+    }
 }
 
 /// B3 - Beginning Segment for Carrier's Invoice
@@ -394,6 +434,37 @@ pub struct B3 {
     pub _13: Option<String>,
     #[serde(rename = "14")]
     pub _14: Option<String>,
+}
+
+impl<'a> Parser<&'a str, B3, nom::error::Error<&'a str>> for B3 {
+    fn parse(input: &'a str) -> IResult<&'a str, B3> {
+        let (rest, vars) = delimited(tag("B3*"), take_until("~"), tag("~"))(input)?;
+        let (_, vars) = separated_list0(
+            tag("*"),
+            take_while(|x: char| {
+                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
+            }),
+        )(vars)?;
+        let obj = B3 {
+            _01: vars.first().map(|x| x.to_string()),
+            _02: vars.get(1).unwrap().to_string(),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).unwrap().to_string(),
+            _05: vars.get(4).map(|x| x.to_string()),
+            _06: vars.get(5).unwrap().to_string(),
+            _07: vars.get(6).unwrap().to_string(),
+            _08: vars.get(7).map(|x| x.to_string()),
+            _09: vars.get(8).map(|x| x.to_string()),
+            _10: vars.get(9).map(|x| x.to_string()),
+            _11: vars.get(10).unwrap().to_string(),
+            _12: vars.get(11).map(|x| x.to_string()),
+            _13: vars.get(12).map(|x| x.to_string()),
+            _14: vars.get(13).map(|x| x.to_string()),
+        };
+        // look for trailing newline
+        let (rest, _) = opt(newline)(rest)?;
+        Ok((rest, obj))
+    }
 }
 
 /// B4 - Beginning Segment for Inquiry or Reply
@@ -694,6 +765,28 @@ pub struct C2 {
     pub _07: Option<String>,
 }
 
+impl<'a> Parser<&'a str, C2, nom::error::Error<&'a str>> for C2 {
+    fn parse(input: &'a str) -> IResult<&'a str, C2> {
+        let (rest, vars) = delimited(tag("C2*"), take_until("~"), tag("~"))(input)?;
+        let (_, vars) = separated_list0(
+            tag("*"),
+            take_while(|x: char| x!='*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())),
+        )(vars)?;
+        let obj = C2 {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).unwrap().to_string(),
+            _03: vars.get(2).unwrap().to_string(),
+            _04: vars.get(3).map(|x| x.to_string()),
+            _05: vars.get(4).map(|x| x.to_string()),
+            _06: vars.get(5).map(|x| x.to_string()),
+            _07: vars.get(6).map(|x| x.to_string()),
+        };
+        // look for trailing newline
+        let (rest, _) = opt(newline)(rest)?;
+        Ok((rest, obj))
+    }
+}
+
 /// C3 - Currency
 ///
 /// To specify the currency being used in the transaction set
@@ -714,6 +807,27 @@ pub struct C3 {
     pub _03: Option<String>,
     #[serde(rename = "04")]
     pub _04: Option<String>,
+}
+
+impl<'a> Parser<&'a str, C3, nom::error::Error<&'a str>> for C3 {
+    fn parse(input: &'a str) -> IResult<&'a str, C3> {
+        let (rest, vars) = delimited(tag("C3*"), take_until("~"), tag("~"))(input)?;
+        let (_, vars) = separated_list0(
+            tag("*"),
+            take_while(|x: char| {
+                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
+            }),
+        )(vars)?;
+        let obj = C3 {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).map(|x| x.to_string()),
+        };
+        // look for trailing newline
+        let (rest, _) = opt(newline)(rest)?;
+        Ok((rest, obj))
+    }
 }
 
 /// C8 - Certifications and Clauses
@@ -738,6 +852,25 @@ pub struct C8 {
     pub _04: Option<String>,
 }
 
+impl<'a> Parser<&'a str, C8, nom::error::Error<&'a str>> for C8 {
+    fn parse(input: &'a str) -> IResult<&'a str, C8> {
+        let (rest, vars) = delimited(tag("C8*"), take_until("~"), tag("~"))(input)?;
+        let (_, vars) = separated_list0(
+            tag("*"),
+            take_while(|x: char| x!='*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())),
+        )(vars)?;
+        let obj = C8 {
+            _01: vars.first().map(|x| x.to_string()),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).map(|x| x.to_string()),
+        };
+        // look for trailing newline
+        let (rest, _) = opt(newline)(rest)?;
+        Ok((rest, obj))
+    }
+}
+
 /// C8C - Certifications Clauses Continuation
 ///
 /// To specify additional applicable certifications and clauses
@@ -755,6 +888,24 @@ pub struct C8C {
     pub _02: Option<String>,
     #[serde(rename = "03")]
     pub _03: Option<String>,
+}
+
+impl<'a> Parser<&'a str, C8C, nom::error::Error<&'a str>> for C8C {
+    fn parse(input: &'a str) -> IResult<&'a str, C8C> {
+        let (rest, vars) = delimited(tag("C8C*"), take_until("~"), tag("~"))(input)?;
+        let (_, vars) = separated_list0(
+            tag("*"),
+            take_while(|x: char| x!='*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())),
+        )(vars)?;
+        let obj = C8C {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).map(|x| x.to_string()),
+        };
+        // look for trailing newline
+        let (rest, _) = opt(newline)(rest)?;
+        Ok((rest, obj))
+    }
 }
 
 /// CD3 - Carton (Package) Detail
@@ -1015,17 +1166,27 @@ pub struct DTM {
     pub _06: Option<String>,
 }
 
-pub fn parse_dtm(input: &str) -> IResult<&str, DTM> {
-    let (rest, object_str) = delimited(tag("DTM*"), take_until("~"), tag("~"))(input)?;
-    let mut obj = DTM::default();
-    let vars: Vec<&str> = object_str.split('*').collect();
-    obj._01 = vars.first().unwrap().to_string();
-    obj._02 = vars.get(1).map(|x| x.to_string());
-    obj._03 = vars.get(2).map(|x| x.to_string());
-    obj._04 = vars.get(3).map(|x| x.to_string());
-    obj._05 = vars.get(4).map(|x| x.to_string());
-    obj._06 = vars.get(5).map(|x| x.to_string());
-    Ok((rest, obj))
+impl<'a> Parser<&'a str, DTM, nom::error::Error<&'a str>> for DTM {
+    fn parse(input: &'a str) -> IResult<&'a str, DTM> {
+        let (rest, vars) = delimited(tag("DTM*"), take_until("~"), tag("~"))(input)?;
+        let (_, vars) = separated_list0(
+            tag("*"),
+            take_while(|x: char| {
+                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
+            }),
+        )(vars)?;
+        let obj = DTM {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).map(|x| x.to_string()),
+            _05: vars.get(4).map(|x| x.to_string()),
+            _06: vars.get(5).map(|x| x.to_string()),
+        };
+        // look for trailing newline
+        let (rest, _) = opt(newline)(rest)?;
+        Ok((rest, obj))
+    }
 }
 
 /// E1 - Empty Car Disposition - Pended Destination Consignee
@@ -1321,6 +1482,29 @@ pub struct G3 {
     pub _06: Option<String>,
 }
 
+impl<'a> Parser<&'a str, G3, nom::error::Error<&'a str>> for G3 {
+    fn parse(input: &'a str) -> IResult<&'a str, G3> {
+        let (rest, vars) = delimited(tag("G3*"), take_until("~"), tag("~"))(input)?;
+        let (_, vars) = separated_list0(
+            tag("*"),
+            take_while(|x: char| {
+                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
+            }),
+        )(vars)?;
+        let obj = G3 {
+            _01: vars.first().map(|x| x.to_string()),
+            _02: vars.get(1).unwrap().to_string(),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).map(|x| x.to_string()),
+            _05: vars.get(4).map(|x| x.to_string()),
+            _06: vars.get(5).map(|x| x.to_string()),
+        };
+        // look for trailing newline
+        let (rest, _) = opt(newline)(rest)?;
+        Ok((rest, obj))
+    }
+}
+
 /// G61 - Contact
 ///
 /// To identify a person or office to whom communications should be directed
@@ -1350,6 +1534,26 @@ pub struct G61 {
     pub _04: Option<String>,
     #[serde(rename = "05")]
     pub _05: Option<String>,
+}
+
+impl<'a> Parser<&'a str, G61, nom::error::Error<&'a str>> for G61 {
+    fn parse(input: &'a str) -> IResult<&'a str, G61> {
+        let (rest, vars) = delimited(tag("G61*"), take_until("~"), tag("~"))(input)?;
+        let (_, vars) = separated_list0(
+            tag("*"),
+            take_while(|x: char| x!='*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())),
+        )(vars)?;
+        let obj = G61 {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).unwrap().to_string(),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).map(|x| x.to_string()),
+            _05: vars.get(4).map(|x| x.to_string()),
+        };
+        // look for trailing newline
+        let (rest, _) = opt(newline)(rest)?;
+        Ok((rest, obj))
+    }
 }
 
 /// G62 - Date/Time
@@ -1389,16 +1593,26 @@ pub struct G62 {
     pub _05: Option<String>,
 }
 
-pub fn parse_g62(input: &str) -> IResult<&str, G62> {
-    let (rest, object_str) = delimited(tag("G62*"), take_until("~"), tag("~"))(input)?;
-    let mut obj = G62::default();
-    let vars: Vec<&str> = object_str.split('*').collect();
-    obj._01 = vars.first().map(|x| x.to_string());
-    obj._02 = vars.get(1).map(|x| x.to_string());
-    obj._03 = vars.get(2).map(|x| x.to_string());
-    obj._04 = vars.get(3).map(|x| x.to_string());
-    obj._05 = vars.get(4).map(|x| x.to_string());
-    Ok((rest, obj))
+impl<'a> Parser<&'a str, G62, nom::error::Error<&'a str>> for G62 {
+    fn parse(input: &'a str) -> IResult<&'a str, G62> {
+        let (rest, vars) = delimited(tag("G62*"), take_until("~"), tag("~"))(input)?;
+        let (_, vars) = separated_list0(
+            tag("*"),
+            take_while(|x: char| {
+                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
+            }),
+        )(vars)?;
+        let obj = G62 {
+            _01: vars.first().map(|x| x.to_string()),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).map(|x| x.to_string()),
+            _05: vars.get(4).map(|x| x.to_string()),
+        };
+        // look for trailing newline
+        let (rest, _) = opt(newline)(rest)?;
+        Ok((rest, obj))
+    }
 }
 
 /// GA - Canadian Grain Information
@@ -1496,6 +1710,23 @@ pub struct GE {
     pub _02: String,
 }
 
+impl<'a> Parser<&'a str, GE, nom::error::Error<&'a str>> for GE {
+    fn parse(input: &'a str) -> IResult<&'a str, GE> {
+        let (rest, vars) = delimited(tag("GE*"), take_until("~"), tag("~"))(input)?;
+        let (_, vars) = separated_list0(
+            tag("*"),
+            take_while(|x: char| x!='*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())),
+        )(vars)?;
+        let obj = GE {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).unwrap().to_string(),
+        };
+        // look for trailing newline
+        let (rest, _) = opt(newline)(rest)?;
+        Ok((rest, obj))
+    }
+}
+
 /// GR5 - Loading Details
 ///
 /// To provide loading details for equipment
@@ -1565,6 +1796,29 @@ pub struct GS {
     pub _07: String,
     #[serde(rename = "08")]
     pub _08: String,
+}
+
+impl<'a> Parser<&'a str, GS, nom::error::Error<&'a str>> for GS {
+    fn parse(input: &'a str) -> IResult<&'a str, GS> {
+        let (rest, vars) = delimited(tag("GS*"), take_until("~"), tag("~"))(input)?;
+        let (_, vars) = separated_list0(
+            tag("*"),
+            take_while(|x: char| x!='*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())),
+        )(vars)?;
+        let obj = GS {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).unwrap().to_string(),
+            _03: vars.get(2).unwrap().to_string(),
+            _04: vars.get(3).unwrap().to_string(),
+            _05: vars.get(4).unwrap().to_string(),
+            _06: vars.get(4).unwrap().to_string(),
+            _07: vars.get(4).unwrap().to_string(),
+            _08: vars.get(4).unwrap().to_string(),
+        };
+        // look for trailing newline
+        let (rest, _) = opt(newline)(rest)?;
+        Ok((rest, obj))
+    }
 }
 
 /// H1 - Hazardous Material
@@ -1643,6 +1897,26 @@ pub struct H3 {
     pub _04: Option<String>,
     #[serde(rename = "05")]
     pub _05: Option<String>,
+}
+
+impl<'a> Parser<&'a str, H3, nom::error::Error<&'a str>> for H3 {
+    fn parse(input: &'a str) -> IResult<&'a str, H3> {
+        let (rest, vars) = delimited(tag("H3*"), take_until("~"), tag("~"))(input)?;
+        let (_, vars) = separated_list0(
+            tag("*"),
+            take_while(|x: char| x!='*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())),
+        )(vars)?;
+        let obj = H3 {
+            _01: vars.first().map(|x| x.to_string()),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).map(|x| x.to_string()),
+            _05: vars.get(4).map(|x| x.to_string()),
+        };
+        // look for trailing newline
+        let (rest, _) = opt(newline)(rest)?;
+        Ok((rest, obj))
+    }
 }
 
 /// IC - Intermodal Chassis Equipment
@@ -1726,13 +2000,15 @@ pub struct IEA {
     pub _02: String,
 }
 
-pub fn parse_iea(input: &str) -> IResult<&str, IEA> {
-    let (rest, object_str) = delimited(tag("IEA*"), take_until("~"), tag("~"))(input)?;
-    let mut obj = IEA::default();
-    let vars: Vec<&str> = object_str.split('*').collect();
-    obj._01 = vars.first().unwrap().to_string();
-    obj._02 = vars.get(1).unwrap().to_string();
-    Ok((rest, obj))
+impl<'a> Parser<&'a str, IEA, nom::error::Error<&'a str>> for IEA {
+    fn parse(input: &'a str) -> IResult<&'a str, IEA> {
+        let (rest, object_str) = delimited(tag("IEA*"), take_until("~"), tag("~"))(input)?;
+        let mut obj = IEA::default();
+        let vars: Vec<&str> = object_str.split('*').collect();
+        obj._01 = vars.first().unwrap().to_string();
+        obj._02 = vars.get(1).unwrap().to_string();
+        Ok((rest, obj))
+    }
 }
 
 /// ISA - Interchange Control Header
@@ -1894,7 +2170,7 @@ pub struct ISA {
 }
 
 impl<'a> Parser<&'a str, ISA, nom::error::Error<&'a str>> for ISA {
-    fn parse(&mut self, input: &'a str) -> IResult<&'a str, ISA> {
+    fn parse(input: &'a str) -> IResult<&'a str, ISA> {
         let (rest, object_str) = delimited(tag("ISA*"), take_until("~"), tag("~"))(input)?;
         let mut obj = ISA::default();
         let vars: Vec<&str> = object_str.split('*').collect();
@@ -1916,29 +2192,6 @@ impl<'a> Parser<&'a str, ISA, nom::error::Error<&'a str>> for ISA {
         obj._16 = vars.get(15).unwrap().to_string();
         Ok((rest, obj))
     }
-}
-
-pub fn parse_isa(input: &str) -> IResult<&str, ISA> {
-    let (rest, object_str) = delimited(tag("ISA*"), take_until("~"), tag("~"))(input)?;
-    let mut obj = ISA::default();
-    let vars: Vec<&str> = object_str.split('*').collect();
-    obj._01 = vars.first().unwrap().to_string();
-    obj._02 = vars.get(1).unwrap().to_string();
-    obj._03 = vars.get(2).unwrap().to_string();
-    obj._04 = vars.get(3).unwrap().to_string();
-    obj._05 = vars.get(4).unwrap().to_string();
-    obj._06 = vars.get(5).unwrap().to_string();
-    obj._07 = vars.get(6).unwrap().to_string();
-    obj._08 = vars.get(7).unwrap().to_string();
-    obj._09 = vars.get(8).unwrap().to_string();
-    obj._10 = vars.get(9).unwrap().to_string();
-    obj._11 = vars.get(10).unwrap().to_string();
-    obj._12 = vars.get(11).unwrap().to_string();
-    obj._13 = vars.get(12).unwrap().to_string();
-    obj._14 = vars.get(13).unwrap().to_string();
-    obj._15 = vars.get(14).unwrap().to_string();
-    obj._16 = vars.get(15).unwrap().to_string();
-    Ok((rest, obj))
 }
 
 impl Reflect for ISA {
@@ -1965,6 +2218,23 @@ pub struct K1 {
     pub _01: String,
     #[serde(rename = "02")]
     pub _02: Option<String>,
+}
+
+impl<'a> Parser<&'a str, K1, nom::error::Error<&'a str>> for K1 {
+    fn parse(input: &'a str) -> IResult<&'a str, K1> {
+        let (rest, vars) = delimited(tag("K1*"), take_until("~"), tag("~"))(input)?;
+        let (_, vars) = separated_list0(
+            tag("*"),
+            take_while(|x: char| x!='*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())),
+        )(vars)?;
+        let obj = K1 {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).map(|x| x.to_string()),
+        };
+        // look for trailing newline
+        let (rest, _) = opt(newline)(rest)?;
+        Ok((rest, obj))
+    }
 }
 
 /// L0 - Line Item - Quantity and Weight
@@ -2022,26 +2292,36 @@ pub struct L0 {
     pub _15: Option<String>,
 }
 
-pub fn parse_l0(input: &str) -> IResult<&str, L0> {
-    let (rest, object_str) = delimited(tag("L0*"), take_until("~"), tag("~"))(input)?;
-    let mut obj = L0::default();
-    let vars: Vec<&str> = object_str.split('*').collect();
-    obj._01 = vars.first().map(|x| x.to_string());
-    obj._02 = vars.get(1).map(|x| x.to_string());
-    obj._03 = vars.get(2).map(|x| x.to_string());
-    obj._04 = vars.get(3).map(|x| x.to_string());
-    obj._05 = vars.get(4).map(|x| x.to_string());
-    obj._06 = vars.get(5).map(|x| x.to_string());
-    obj._07 = vars.get(6).map(|x| x.to_string());
-    obj._08 = vars.get(7).map(|x| x.to_string());
-    obj._09 = vars.get(8).map(|x| x.to_string());
-    obj._10 = vars.get(9).map(|x| x.to_string());
-    obj._11 = vars.get(10).map(|x| x.to_string());
-    obj._12 = vars.get(11).map(|x| x.to_string());
-    obj._13 = vars.get(12).map(|x| x.to_string());
-    obj._14 = vars.get(13).map(|x| x.to_string());
-    obj._15 = vars.get(14).map(|x| x.to_string());
-    Ok((rest, obj))
+impl<'a> Parser<&'a str, L0, nom::error::Error<&'a str>> for L0 {
+    fn parse(input: &'a str) -> IResult<&'a str, L0> {
+        let (rest, vars) = delimited(tag("L0*"), take_until("~"), tag("~"))(input)?;
+        let (_, vars) = separated_list0(
+            tag("*"),
+            take_while(|x: char| {
+                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
+            }),
+        )(vars)?;
+        let obj = L0 {
+            _01: vars.first().map(|x| x.to_string()),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).map(|x| x.to_string()),
+            _05: vars.get(4).map(|x| x.to_string()),
+            _06: vars.get(5).map(|x| x.to_string()),
+            _07: vars.get(6).map(|x| x.to_string()),
+            _08: vars.get(7).map(|x| x.to_string()),
+            _09: vars.get(8).map(|x| x.to_string()),
+            _10: vars.get(9).map(|x| x.to_string()),
+            _11: vars.get(10).map(|x| x.to_string()),
+            _12: vars.get(11).map(|x| x.to_string()),
+            _13: vars.get(12).map(|x| x.to_string()),
+            _14: vars.get(13).map(|x| x.to_string()),
+            _15: vars.get(14).map(|x| x.to_string()),
+        };
+        // look for trailing newline
+        let (rest, _) = opt(newline)(rest)?;
+        Ok((rest, obj))
+    }
 }
 
 /// L1 - Rate and Charges
@@ -2117,6 +2397,44 @@ pub struct L1 {
     pub _21: Option<String>,
 }
 
+impl<'a> Parser<&'a str, L1, nom::error::Error<&'a str>> for L1 {
+    fn parse(input: &'a str) -> IResult<&'a str, L1> {
+        let (rest, vars) = delimited(tag("L1*"), take_until("~"), tag("~"))(input)?;
+        let (_, vars) = separated_list0(
+            tag("*"),
+            take_while(|x: char| {
+                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
+            }),
+        )(vars)?;
+        let obj = L1 {
+            _01: vars.first().map(|x| x.to_string()),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).map(|x| x.to_string()),
+            _05: vars.get(4).map(|x| x.to_string()),
+            _06: vars.get(5).map(|x| x.to_string()),
+            _07: vars.get(6).map(|x| x.to_string()),
+            _08: vars.get(7).map(|x| x.to_string()),
+            _09: vars.get(8).map(|x| x.to_string()),
+            _10: vars.get(9).map(|x| x.to_string()),
+            _11: vars.get(10).map(|x| x.to_string()),
+            _12: vars.get(11).map(|x| x.to_string()),
+            _13: vars.get(12).map(|x| x.to_string()),
+            _14: vars.get(13).map(|x| x.to_string()),
+            _15: vars.get(14).map(|x| x.to_string()),
+            _16: vars.get(15).map(|x| x.to_string()),
+            _17: vars.get(16).map(|x| x.to_string()),
+            _18: vars.get(17).map(|x| x.to_string()),
+            _19: vars.get(18).map(|x| x.to_string()),
+            _20: vars.get(19).map(|x| x.to_string()),
+            _21: vars.get(20).map(|x| x.to_string()),
+        };
+        // look for trailing newline
+        let (rest, _) = opt(newline)(rest)?;
+        Ok((rest, obj))
+    }
+}
+
 /// L3 - Total Weight and Charges
 ///
 /// To specify the total shipment in terms of weight, volume, rates, charges, advances, and prepaid amounts applicable to one or more line items
@@ -2172,26 +2490,36 @@ pub struct L3 {
     pub _15: Option<String>,
 }
 
-pub fn parse_l3(input: &str) -> IResult<&str, L3> {
-    let (rest, object_str) = delimited(tag("L3*"), take_until("~"), tag("~"))(input)?;
-    let mut obj = L3::default();
-    let vars: Vec<&str> = object_str.split('*').collect();
-    obj._01 = vars.first().map(|x| x.to_string());
-    obj._02 = vars.get(1).map(|x| x.to_string());
-    obj._03 = vars.get(2).map(|x| x.to_string());
-    obj._04 = vars.get(3).map(|x| x.to_string());
-    obj._05 = vars.get(4).map(|x| x.to_string());
-    obj._06 = vars.get(5).map(|x| x.to_string());
-    obj._07 = vars.get(6).map(|x| x.to_string());
-    obj._08 = vars.get(7).map(|x| x.to_string());
-    obj._09 = vars.get(8).map(|x| x.to_string());
-    obj._10 = vars.get(9).map(|x| x.to_string());
-    obj._11 = vars.get(10).map(|x| x.to_string());
-    obj._12 = vars.get(11).map(|x| x.to_string());
-    obj._13 = vars.get(12).map(|x| x.to_string());
-    obj._14 = vars.get(13).map(|x| x.to_string());
-    obj._15 = vars.get(14).map(|x| x.to_string());
-    Ok((rest, obj))
+impl<'a> Parser<&'a str, L3, nom::error::Error<&'a str>> for L3 {
+    fn parse(input: &'a str) -> IResult<&'a str, L3> {
+        let (rest, vars) = delimited(tag("L3*"), take_until("~"), tag("~"))(input)?;
+        let (_, vars) = separated_list0(
+            tag("*"),
+            take_while(|x: char| {
+                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
+            }),
+        )(vars)?;
+        let obj = L3 {
+            _01: vars.first().map(|x| x.to_string()),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).map(|x| x.to_string()),
+            _05: vars.get(4).map(|x| x.to_string()),
+            _06: vars.get(5).map(|x| x.to_string()),
+            _07: vars.get(6).map(|x| x.to_string()),
+            _08: vars.get(7).map(|x| x.to_string()),
+            _09: vars.get(8).map(|x| x.to_string()),
+            _10: vars.get(9).map(|x| x.to_string()),
+            _11: vars.get(10).map(|x| x.to_string()),
+            _12: vars.get(11).map(|x| x.to_string()),
+            _13: vars.get(12).map(|x| x.to_string()),
+            _14: vars.get(13).map(|x| x.to_string()),
+            _15: vars.get(14).map(|x| x.to_string()),
+        };
+        // look for trailing newline
+        let (rest, _) = opt(newline)(rest)?;
+        Ok((rest, obj))
+    }
 }
 
 /// L4 - Measurement
@@ -2259,21 +2587,31 @@ pub struct L5 {
     pub _10: Option<String>,
 }
 
-pub fn parse_l5(input: &str) -> IResult<&str, L5> {
-    let (rest, object_str) = delimited(tag("L5*"), take_until("~"), tag("~"))(input)?;
-    let mut obj = L5::default();
-    let vars: Vec<&str> = object_str.split('*').collect();
-    obj._01 = vars.first().map(|x| x.to_string());
-    obj._02 = vars.get(1).map(|x| x.to_string());
-    obj._03 = vars.get(2).map(|x| x.to_string());
-    obj._04 = vars.get(3).map(|x| x.to_string());
-    obj._05 = vars.get(4).map(|x| x.to_string());
-    obj._06 = vars.get(5).map(|x| x.to_string());
-    obj._07 = vars.get(6).map(|x| x.to_string());
-    obj._08 = vars.get(7).map(|x| x.to_string());
-    obj._09 = vars.get(8).map(|x| x.to_string());
-    obj._10 = vars.get(9).map(|x| x.to_string());
-    Ok((rest, obj))
+impl<'a> Parser<&'a str, L5, nom::error::Error<&'a str>> for L5 {
+    fn parse(input: &'a str) -> IResult<&'a str, L5> {
+        let (rest, vars) = delimited(tag("L5*"), take_until("~"), tag("~"))(input)?;
+        let (_, vars) = separated_list0(
+            tag("*"),
+            take_while(|x: char| {
+                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
+            }),
+        )(vars)?;
+        let obj = L5 {
+            _01: vars.first().map(|x| x.to_string()),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).map(|x| x.to_string()),
+            _05: vars.get(4).map(|x| x.to_string()),
+            _06: vars.get(5).map(|x| x.to_string()),
+            _07: vars.get(6).map(|x| x.to_string()),
+            _08: vars.get(7).map(|x| x.to_string()),
+            _09: vars.get(8).map(|x| x.to_string()),
+            _10: vars.get(9).map(|x| x.to_string()),
+        };
+        // look for trailing newline
+        let (rest, _) = opt(newline)(rest)?;
+        Ok((rest, obj))
+    }
 }
 
 /// L7 - Tariff Reference
@@ -2353,14 +2691,24 @@ pub struct L11 {
     pub _03: Option<String>,
 }
 
-pub fn parse_l11(input: &str) -> IResult<&str, L11> {
-    let (rest, object_str) = delimited(tag("L11*"), take_until("~"), tag("~"))(input)?;
-    let mut obj = L11::default();
-    let vars: Vec<&str> = object_str.split('*').collect();
-    obj._01 = vars.first().map(|x| x.to_string());
-    obj._02 = vars.get(1).map(|x| x.to_string());
-    obj._02 = vars.get(2).map(|x| x.to_string());
-    Ok((rest, obj))
+impl<'a> Parser<&'a str, L11, nom::error::Error<&'a str>> for L11 {
+    fn parse(input: &'a str) -> IResult<&'a str, L11> {
+        let (rest, vars) = delimited(tag("L11*"), take_until("~"), tag("~"))(input)?;
+        let (_, vars) = separated_list0(
+            tag("*"),
+            take_while(|x: char| {
+                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
+            }),
+        )(vars)?;
+        let obj = L11 {
+            _01: vars.first().map(|x| x.to_string()),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).map(|x| x.to_string()),
+        };
+        // look for trailing newline
+        let (rest, _) = opt(newline)(rest)?;
+        Ok((rest, obj))
+    }
 }
 
 /// LAD - Lading Detail
@@ -2660,15 +3008,25 @@ pub struct LH6 {
     pub _04: Option<String>,
 }
 
-pub fn parse_lh6(input: &str) -> IResult<&str, LH6> {
-    let (rest, object_str) = delimited(tag("LH6*"), take_until("~"), tag("~"))(input)?;
-    let mut obj = LH6::default();
-    let vars: Vec<&str> = object_str.split('*').collect();
-    obj._01 = vars.first().map(|x| x.to_string());
-    obj._02 = vars.get(1).map(|x| x.to_string());
-    obj._03 = vars.get(2).map(|x| x.to_string());
-    obj._04 = vars.get(3).map(|x| x.to_string());
-    Ok((rest, obj))
+impl<'a> Parser<&'a str, LH6, nom::error::Error<&'a str>> for LH6 {
+    fn parse(input: &'a str) -> IResult<&'a str, LH6> {
+        let (rest, vars) = delimited(tag("LH6*"), take_until("~"), tag("~"))(input)?;
+        let (_, vars) = separated_list0(
+            tag("*"),
+            take_while(|x: char| {
+                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
+            }),
+        )(vars)?;
+        let obj = LH6 {
+            _01: vars.first().map(|x| x.to_string()),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).map(|x| x.to_string()),
+        };
+        // look for trailing newline
+        let (rest, _) = opt(newline)(rest)?;
+        Ok((rest, obj))
+    }
 }
 
 /// LHR - Hazardous Material Identifying Reference Numbers
@@ -2741,12 +3099,22 @@ pub struct LX {
     pub _01: String,
 }
 
-pub fn parse_lx(input: &str) -> IResult<&str, LX> {
-    let (rest, vars) = delimited(tag("LX*"), take_until("~"), tag("~"))(input)?;
-    let obj = LX {
-        _01: vars.to_string(),
-    };
-    Ok((rest, obj))
+impl<'a> Parser<&'a str, LX, nom::error::Error<&'a str>> for LX {
+    fn parse(input: &'a str) -> IResult<&'a str, LX> {
+        let (rest, vars) = delimited(tag("LX*"), take_until("~"), tag("~"))(input)?;
+        let (_, vars) = separated_list0(
+            tag("*"),
+            take_while(|x: char| {
+                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
+            }),
+        )(vars)?;
+        let obj = LX {
+            _01: vars.first().unwrap().to_string(),
+        };
+        // look for trailing newline
+        let (rest, _) = opt(newline)(rest)?;
+        Ok((rest, obj))
+    }
 }
 
 /// M0 - Letter of Credit Reference
@@ -2769,6 +3137,27 @@ pub struct M0 {
     pub _03: Option<String>,
     #[serde(rename = "04")]
     pub _04: Option<String>,
+}
+
+impl<'a> Parser<&'a str, M0, nom::error::Error<&'a str>> for M0 {
+    fn parse(input: &'a str) -> IResult<&'a str, M0> {
+        let (rest, vars) = delimited(tag("M0*"), take_until("~"), tag("~"))(input)?;
+        let (_, vars) = separated_list0(
+            tag("*"),
+            take_while(|x: char| {
+                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
+            }),
+        )(vars)?;
+        let obj = M0 {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).map(|x| x.to_string()),
+        };
+        // look for trailing newline
+        let (rest, _) = opt(newline)(rest)?;
+        Ok((rest, obj))
+    }
 }
 
 /// M1 - Insurance
@@ -2821,6 +3210,35 @@ pub struct M1 {
     pub _11: Option<String>,
     #[serde(rename = "12")]
     pub _12: Option<String>,
+}
+
+impl<'a> Parser<&'a str, M1, nom::error::Error<&'a str>> for M1 {
+    fn parse(input: &'a str) -> IResult<&'a str, M1> {
+        let (rest, vars) = delimited(tag("M1*"), take_until("~"), tag("~"))(input)?;
+        let (_, vars) = separated_list0(
+            tag("*"),
+            take_while(|x: char| {
+                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
+            }),
+        )(vars)?;
+        let obj = M1 {
+            _01: vars.first().map(|x| x.to_string()),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).map(|x| x.to_string()),
+            _05: vars.get(4).map(|x| x.to_string()),
+            _06: vars.get(5).map(|x| x.to_string()),
+            _07: vars.get(6).map(|x| x.to_string()),
+            _08: vars.get(7).map(|x| x.to_string()),
+            _09: vars.get(8).map(|x| x.to_string()),
+            _10: vars.get(9).map(|x| x.to_string()),
+            _11: vars.get(10).map(|x| x.to_string()),
+            _12: vars.get(11).map(|x| x.to_string()),
+        };
+        // look for trailing newline
+        let (rest, _) = opt(newline)(rest)?;
+        Ok((rest, obj))
+    }
 }
 
 /// M3 - Release
@@ -2880,6 +3298,28 @@ pub struct M7 {
     pub _04: Option<String>,
     #[serde(rename = "05")]
     pub _05: Option<String>,
+}
+
+impl<'a> Parser<&'a str, M7, nom::error::Error<&'a str>> for M7 {
+    fn parse(input: &'a str) -> IResult<&'a str, M7> {
+        let (rest, vars) = delimited(tag("M7*"), take_until("~"), tag("~"))(input)?;
+        let (_, vars) = separated_list0(
+            tag("*"),
+            take_while(|x: char| {
+                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
+            }),
+        )(vars)?;
+        let obj = M7 {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).map(|x| x.to_string()),
+            _05: vars.get(4).map(|x| x.to_string()),
+        };
+        // look for trailing newline
+        let (rest, _) = opt(newline)(rest)?;
+        Ok((rest, obj))
+    }
 }
 
 /// M10 - Manifest Identifying Information
@@ -3193,16 +3633,26 @@ pub struct MS3 {
     pub _05: Option<String>,
 }
 
-pub fn parse_ms3(input: &str) -> IResult<&str, MS3> {
-    let (rest, object_str) = delimited(tag("MS3*"), take_until("~"), tag("~"))(input)?;
-    let mut obj = MS3::default();
-    let vars: Vec<&str> = object_str.split('*').collect();
-    obj._01 = vars.first().unwrap().to_string();
-    obj._02 = vars.get(1).unwrap().to_string();
-    obj._03 = vars.get(2).map(|x| x.to_string());
-    obj._04 = vars.get(3).map(|x| x.to_string());
-    obj._05 = vars.get(4).map(|x| x.to_string());
-    Ok((rest, obj))
+impl<'a> Parser<&'a str, MS3, nom::error::Error<&'a str>> for MS3 {
+    fn parse(input: &'a str) -> IResult<&'a str, MS3> {
+        let (rest, vars) = delimited(tag("MS3*"), take_until("~"), tag("~"))(input)?;
+        let (_, vars) = separated_list0(
+            tag("*"),
+            take_while(|x: char| {
+                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
+            }),
+        )(vars)?;
+        let obj = MS3 {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).unwrap().to_string(),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).map(|x| x.to_string()),
+            _05: vars.get(4).map(|x| x.to_string()),
+        };
+        // look for trailing newline
+        let (rest, _) = opt(newline)(rest)?;
+        Ok((rest, obj))
+    }
 }
 
 /// N1 - Name
@@ -3239,17 +3689,27 @@ pub struct N1 {
     pub _06: Option<String>,
 }
 
-pub fn parse_n1(input: &str) -> IResult<&str, N1> {
-    let (rest, object_str) = delimited(tag("N1*"), take_until("~"), tag("~"))(input)?;
-    let mut obj = N1::default();
-    let vars: Vec<&str> = object_str.split('*').collect();
-    obj._01 = vars.first().unwrap().to_string();
-    obj._02 = vars.get(1).map(|x| x.to_string());
-    obj._03 = vars.get(2).map(|x| x.to_string());
-    obj._04 = vars.get(3).map(|x| x.to_string());
-    obj._05 = vars.get(4).map(|x| x.to_string());
-    obj._06 = vars.get(5).map(|x| x.to_string());
-    Ok((rest, obj))
+impl<'a> Parser<&'a str, N1, nom::error::Error<&'a str>> for N1 {
+    fn parse(input: &'a str) -> IResult<&'a str, N1> {
+        let (rest, vars) = delimited(tag("N1*"), take_until("~"), tag("~"))(input)?;
+        let (_, vars) = separated_list0(
+            tag("*"),
+            take_while(|x: char| {
+                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
+            }),
+        )(vars)?;
+        let obj = N1 {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).map(|x| x.to_string()),
+            _05: vars.get(4).map(|x| x.to_string()),
+            _06: vars.get(5).map(|x| x.to_string()),
+        };
+        // look for trailing newline
+        let (rest, _) = opt(newline)(rest)?;
+        Ok((rest, obj))
+    }
 }
 
 /// N2 - Additional Name Information
@@ -3280,6 +3740,25 @@ pub struct N2 {
     pub _02: Option<String>,
 }
 
+impl<'a> Parser<&'a str, N2, nom::error::Error<&'a str>> for N2 {
+    fn parse(input: &'a str) -> IResult<&'a str, N2> {
+        let (rest, vars) = delimited(tag("N2*"), take_until("~"), tag("~"))(input)?;
+        let (_, vars) = separated_list0(
+            tag("*"),
+            take_while(|x: char| {
+                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
+            }),
+        )(vars)?;
+        let obj = N2 {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).map(|x| x.to_string()),
+        };
+        // look for trailing newline
+        let (rest, _) = opt(newline)(rest)?;
+        Ok((rest, obj))
+    }
+}
+
 /// N3 - Address Information
 ///
 /// To specify the location of the named party
@@ -3296,13 +3775,23 @@ pub struct N3 {
     pub _02: Option<String>,
 }
 
-pub fn parse_n3(input: &str) -> IResult<&str, N3> {
-    let (rest, object_str) = delimited(tag("N3*"), take_until("~"), tag("~"))(input)?;
-    let mut obj = N3::default();
-    let vars: Vec<&str> = object_str.split('*').collect();
-    obj._01 = vars.first().unwrap().to_string();
-    obj._02 = vars.get(1).map(|x| x.to_string());
-    Ok((rest, obj))
+impl<'a> Parser<&'a str, N3, nom::error::Error<&'a str>> for N3 {
+    fn parse(input: &'a str) -> IResult<&'a str, N3> {
+        let (rest, vars) = delimited(tag("N3*"), take_until("~"), tag("~"))(input)?;
+        let (_, vars) = separated_list0(
+            tag("*"),
+            take_while(|x: char| {
+                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
+            }),
+        )(vars)?;
+        let obj = N3 {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).map(|x| x.to_string()),
+        };
+        // look for trailing newline
+        let (rest, _) = opt(newline)(rest)?;
+        Ok((rest, obj))
+    }
 }
 
 /// N4 - Geographic Location
@@ -3339,17 +3828,27 @@ pub struct N4 {
     pub _06: Option<String>,
 }
 
-pub fn parse_n4(input: &str) -> IResult<&str, N4> {
-    let (rest, object_str) = delimited(tag("N4*"), take_until("~"), tag("~"))(input)?;
-    let mut obj = N4::default();
-    let vars: Vec<&str> = object_str.split('*').collect();
-    obj._01 = vars.first().map(|x| x.to_string());
-    obj._02 = vars.get(1).map(|x| x.to_string());
-    obj._03 = vars.get(2).map(|x| x.to_string());
-    obj._04 = vars.get(3).map(|x| x.to_string());
-    obj._05 = vars.get(4).map(|x| x.to_string());
-    obj._06 = vars.get(5).map(|x| x.to_string());
-    Ok((rest, obj))
+impl<'a> Parser<&'a str, N4, nom::error::Error<&'a str>> for N4 {
+    fn parse(input: &'a str) -> IResult<&'a str, N4> {
+        let (rest, vars) = delimited(tag("N4*"), take_until("~"), tag("~"))(input)?;
+        let (_, vars) = separated_list0(
+            tag("*"),
+            take_while(|x: char| {
+                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
+            }),
+        )(vars)?;
+        let obj = N4 {
+            _01: vars.first().map(|x| x.to_string()),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).map(|x| x.to_string()),
+            _05: vars.get(4).map(|x| x.to_string()),
+            _06: vars.get(5).map(|x| x.to_string()),
+        };
+        // look for trailing newline
+        let (rest, _) = opt(newline)(rest)?;
+        Ok((rest, obj))
+    }
 }
 
 /// N5 - Equipment Ordered
@@ -3438,6 +3937,47 @@ pub struct N7 {
     pub _24: Option<String>,
 }
 
+impl<'a> Parser<&'a str, N7, nom::error::Error<&'a str>> for N7 {
+    fn parse(input: &'a str) -> IResult<&'a str, N7> {
+        let (rest, vars) = delimited(tag("N7*"), take_until("~"), tag("~"))(input)?;
+        let (_, vars) = separated_list0(
+            tag("*"),
+            take_while(|x: char| {
+                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
+            }),
+        )(vars)?;
+        let obj = N7 {
+            _01: vars.first().map(|x| x.to_string()),
+            _02: vars.get(1).unwrap().to_string(),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).map(|x| x.to_string()),
+            _05: vars.get(4).map(|x| x.to_string()),
+            _06: vars.get(5).map(|x| x.to_string()),
+            _07: vars.get(6).map(|x| x.to_string()),
+            _08: vars.get(7).map(|x| x.to_string()),
+            _09: vars.get(8).map(|x| x.to_string()),
+            _10: vars.get(9).map(|x| x.to_string()),
+            _11: vars.get(10).map(|x| x.to_string()),
+            _12: vars.get(11).map(|x| x.to_string()),
+            _13: vars.get(12).map(|x| x.to_string()),
+            _14: vars.get(13).map(|x| x.to_string()),
+            _15: vars.get(14).map(|x| x.to_string()),
+            _16: vars.get(15).map(|x| x.to_string()),
+            _17: vars.get(16).map(|x| x.to_string()),
+            _18: vars.get(17).map(|x| x.to_string()),
+            _19: vars.get(18).map(|x| x.to_string()),
+            _20: vars.get(19).map(|x| x.to_string()),
+            _21: vars.get(20).map(|x| x.to_string()),
+            _22: vars.get(21).map(|x| x.to_string()),
+            _23: vars.get(22).map(|x| x.to_string()),
+            _24: vars.get(23).map(|x| x.to_string()),
+        };
+        // look for trailing newline
+        let (rest, _) = opt(newline)(rest)?;
+        Ok((rest, obj))
+    }
+}
+
 /// N9 - Reference Identification
 /// To transmit identifying information as specified by the Reference Identification Qualifier
 ///
@@ -3491,18 +4031,28 @@ pub struct N9 {
     pub _07: Option<String>,
 }
 
-pub fn parse_n9(input: &str) -> IResult<&str, N9> {
-    let (rest, object_str) = delimited(tag("N9*"), take_until("~"), tag("~"))(input)?;
-    let mut obj = N9::default();
-    let vars: Vec<&str> = object_str.split('*').collect();
-    obj._01 = vars.first().unwrap().to_string();
-    obj._02 = vars.get(1).unwrap().to_string();
-    obj._03 = vars.get(2).map(|x| x.to_string());
-    obj._04 = vars.get(3).map(|x| x.to_string());
-    obj._05 = vars.get(4).map(|x| x.to_string());
-    obj._06 = vars.get(5).map(|x| x.to_string());
-    obj._07 = vars.get(5).map(|x| x.to_string());
-    Ok((rest, obj))
+impl<'a> Parser<&'a str, N9, nom::error::Error<&'a str>> for N9 {
+    fn parse(input: &'a str) -> IResult<&'a str, N9> {
+        let (rest, vars) = delimited(tag("N9*"), take_until("~"), tag("~"))(input)?;
+        let (_, vars) = separated_list0(
+            tag("*"),
+            take_while(|x: char| {
+                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
+            }),
+        )(vars)?;
+        let obj = N9 {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).unwrap().to_string(),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).map(|x| x.to_string()),
+            _05: vars.get(4).map(|x| x.to_string()),
+            _06: vars.get(5).map(|x| x.to_string()),
+            _07: vars.get(6).map(|x| x.to_string()),
+        };
+        // look for trailing newline
+        let (rest, _) = opt(newline)(rest)?;
+        Ok((rest, obj))
+    }
 }
 
 /// N10 - Quantity and Description
@@ -3699,13 +4249,23 @@ pub struct NTE {
     pub _02: String,
 }
 
-pub fn parse_nte(input: &str) -> IResult<&str, NTE> {
-    let (rest, object_str) = delimited(tag("NTE*"), take_until("~"), tag("~"))(input)?;
-    let mut obj = NTE::default();
-    let vars: Vec<&str> = object_str.split('*').collect();
-    obj._01 = vars.first().map(|x| x.to_string());
-    obj._02 = vars.get(1).unwrap().to_string();
-    Ok((rest, obj))
+impl<'a> Parser<&'a str, NTE, nom::error::Error<&'a str>> for NTE {
+    fn parse(input: &'a str) -> IResult<&'a str, NTE> {
+        let (rest, vars) = delimited(tag("NTE*"), take_until("~"), tag("~"))(input)?;
+        let (_, vars) = separated_list0(
+            tag("*"),
+            take_while(|x: char| {
+                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
+            }),
+        )(vars)?;
+        let obj = NTE {
+            _01: vars.first().map(|x| x.to_string()),
+            _02: vars.get(1).unwrap().to_string(),
+        };
+        // look for trailing newline
+        let (rest, _) = opt(newline)(rest)?;
+        Ok((rest, obj))
+    }
 }
 
 /// OID - Order Identification Detail NEW
@@ -3883,15 +4443,25 @@ pub struct PLD {
     pub _04: Option<String>,
 }
 
-pub fn parse_pld(input: &str) -> IResult<&str, PLD> {
-    let (rest, object_str) = delimited(tag("PLD*"), take_until("~"), tag("~"))(input)?;
-    let mut obj = PLD::default();
-    let vars: Vec<&str> = object_str.split('*').collect();
-    obj._01 = vars.first().unwrap().to_string();
-    obj._02 = vars.get(1).map(|x| x.to_string());
-    obj._03 = vars.get(2).map(|x| x.to_string());
-    obj._04 = vars.get(3).map(|x| x.to_string());
-    Ok((rest, obj))
+impl<'a> Parser<&'a str, PLD, nom::error::Error<&'a str>> for PLD {
+    fn parse(input: &'a str) -> IResult<&'a str, PLD> {
+        let (rest, vars) = delimited(tag("PLD*"), take_until("~"), tag("~"))(input)?;
+        let (_, vars) = separated_list0(
+            tag("*"),
+            take_while(|x: char| {
+                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
+            }),
+        )(vars)?;
+        let obj = PLD {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).map(|x| x.to_string()),
+        };
+        // look for trailing newline
+        let (rest, _) = opt(newline)(rest)?;
+        Ok((rest, obj))
+    }
 }
 
 /// PRF - Purchase Order Reference
@@ -3994,6 +4564,32 @@ pub struct PWK {
     pub _07: Option<String>,
     pub _08: Option<String>,
     pub _09: Option<String>,
+}
+
+impl<'a> Parser<&'a str, PWK, nom::error::Error<&'a str>> for PWK {
+    fn parse(input: &'a str) -> IResult<&'a str, PWK> {
+        let (rest, vars) = delimited(tag("PWK*"), take_until("~"), tag("~"))(input)?;
+        let (_, vars) = separated_list0(
+            tag("*"),
+            take_while(|x: char| {
+                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
+            }),
+        )(vars)?;
+        let obj = PWK {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).map(|x| x.to_string()),
+            _05: vars.get(4).map(|x| x.to_string()),
+            _06: vars.get(5).map(|x| x.to_string()),
+            _07: vars.get(6).map(|x| x.to_string()),
+            _08: vars.get(7).map(|x| x.to_string()),
+            _09: vars.get(8).map(|x| x.to_string()),
+        };
+        // look for trailing newline
+        let (rest, _) = opt(newline)(rest)?;
+        Ok((rest, obj))
+    }
 }
 
 /// Q2 - Status Details (Ocean)
@@ -4249,6 +4845,36 @@ pub struct R2 {
     pub _13: Option<String>,
 }
 
+impl<'a> Parser<&'a str, R2, nom::error::Error<&'a str>> for R2 {
+    fn parse(input: &'a str) -> IResult<&'a str, R2> {
+        let (rest, vars) = delimited(tag("R2*"), take_until("~"), tag("~"))(input)?;
+        let (_, vars) = separated_list0(
+            tag("*"),
+            take_while(|x: char| {
+                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
+            }),
+        )(vars)?;
+        let obj = R2 {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).unwrap().to_string(),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).map(|x| x.to_string()),
+            _05: vars.get(4).map(|x| x.to_string()),
+            _06: vars.get(5).map(|x| x.to_string()),
+            _07: vars.get(6).map(|x| x.to_string()),
+            _08: vars.get(7).map(|x| x.to_string()),
+            _09: vars.get(8).map(|x| x.to_string()),
+            _10: vars.get(9).map(|x| x.to_string()),
+            _11: vars.get(10).map(|x| x.to_string()),
+            _12: vars.get(11).map(|x| x.to_string()),
+            _13: vars.get(12).map(|x| x.to_string()),
+        };
+        // look for trailing newline
+        let (rest, _) = opt(newline)(rest)?;
+        Ok((rest, obj))
+    }
+}
+
 /// R2A - Route Information with Preference
 ///
 /// To specify the responsibilities and carrier preference
@@ -4277,6 +4903,31 @@ pub struct R2A {
     pub _08: Option<String>,
     pub _09: Option<String>,
     pub _10: Option<String>,
+}
+
+impl<'a> Parser<&'a str, R2A, nom::error::Error<&'a str>> for R2A {
+    fn parse(input: &'a str) -> IResult<&'a str, R2A> {
+        let (rest, vars) = delimited(tag("R2A*"), take_until("~"), tag("~"))(input)?;
+        let (_, vars) = separated_list0(
+            tag("*"),
+            take_while(|x: char| x!='*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())),
+        )(vars)?;
+        let obj = R2A {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).unwrap().to_string(),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).map(|x| x.to_string()),
+            _05: vars.get(4).map(|x| x.to_string()),
+            _06: vars.get(5).map(|x| x.to_string()),
+            _07: vars.get(6).map(|x| x.to_string()),
+            _08: vars.get(7).map(|x| x.to_string()),
+            _09: vars.get(8).map(|x| x.to_string()),
+            _10: vars.get(9).map(|x| x.to_string()),
+        };
+        // look for trailing newline
+        let (rest, _) = opt(newline)(rest)?;
+        Ok((rest, obj))
+    }
 }
 
 /// R4 - Port or Terminal
@@ -4326,19 +4977,29 @@ pub struct R4 {
     pub _08: Option<String>,
 }
 
-pub fn parse_r4(input: &str) -> IResult<&str, R4> {
-    let (rest, object_str) = delimited(tag("R4*"), take_until("~"), tag("~"))(input)?;
-    let mut obj = R4::default();
-    let vars: Vec<&str> = object_str.split('*').collect();
-    obj._01 = vars.first().unwrap().to_string();
-    obj._02 = vars.get(1).map(|x| x.to_string());
-    obj._03 = vars.get(2).map(|x| x.to_string());
-    obj._04 = vars.get(3).map(|x| x.to_string());
-    obj._05 = vars.get(4).map(|x| x.to_string());
-    obj._06 = vars.get(5).map(|x| x.to_string());
-    obj._07 = vars.get(6).map(|x| x.to_string());
-    obj._08 = vars.get(7).map(|x| x.to_string());
-    Ok((rest, obj))
+impl<'a> Parser<&'a str, R4, nom::error::Error<&'a str>> for R4 {
+    fn parse(input: &'a str) -> IResult<&'a str, R4> {
+        let (rest, vars) = delimited(tag("R4*"), take_until("~"), tag("~"))(input)?;
+        let (_, vars) = separated_list0(
+            tag("*"),
+            take_while(|x: char| {
+                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
+            }),
+        )(vars)?;
+        let obj = R4 {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).map(|x| x.to_string()),
+            _05: vars.get(4).map(|x| x.to_string()),
+            _06: vars.get(5).map(|x| x.to_string()),
+            _07: vars.get(6).map(|x| x.to_string()),
+            _08: vars.get(7).map(|x| x.to_string()),
+        };
+        // look for trailing newline
+        let (rest, _) = opt(newline)(rest)?;
+        Ok((rest, obj))
+    }
 }
 
 /// R9 - Route Code
@@ -4590,13 +5251,23 @@ pub struct SE {
     pub _02: String,
 }
 
-pub fn parse_se(input: &str) -> IResult<&str, SE> {
-    let (rest, object_str) = delimited(tag("SE*"), take_until("~"), tag("~"))(input)?;
-    let mut obj = SE::default();
-    let vars: Vec<&str> = object_str.split('*').collect();
-    obj._01 = vars.first().unwrap().to_string();
-    obj._02 = vars.get(1).unwrap().to_string();
-    Ok((rest, obj))
+impl<'a> Parser<&'a str, SE, nom::error::Error<&'a str>> for SE {
+    fn parse(input: &'a str) -> IResult<&'a str, SE> {
+        let (rest, vars) = delimited(tag("SE*"), take_until("~"), tag("~"))(input)?;
+        let (_, vars) = separated_list0(
+            tag("*"),
+            take_while(|x: char| {
+                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
+            }),
+        )(vars)?;
+        let obj = SE {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).unwrap().to_string(),
+        };
+        // look for trailing newline
+        let (rest, _) = opt(newline)(rest)?;
+        Ok((rest, obj))
+    }
 }
 
 /// SG - Shipment Status
@@ -4698,9 +5369,14 @@ pub struct ST {
 }
 
 impl<'a> Parser<&'a str, ST, nom::error::Error<&'a str>> for ST {
-    fn parse(&mut self, input: &'a str) -> IResult<&'a str, ST> {
+    fn parse(input: &'a str) -> IResult<&'a str, ST> {
         let (rest, vars) = delimited(tag("ST*"), take_until("~"), tag("~"))(input)?;
-        let (_, vars) = separated_list0(tag("*"), take_while(char::is_alphanumeric))(vars)?;
+        let (_, vars) = separated_list0(
+            tag("*"),
+            take_while(|x: char| {
+                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
+            }),
+        )(vars)?;
         let obj = ST {
             _01: vars.first().unwrap().to_string(),
             _02: vars.get(1).unwrap().to_string(),
@@ -4957,20 +5633,30 @@ pub struct V1 {
     pub _09: Option<String>,
 }
 
-pub fn parse_v1(input: &str) -> IResult<&str, V1> {
-    let (rest, object_str) = delimited(tag("V1*"), take_until("~"), tag("~"))(input)?;
-    let mut obj = V1::default();
-    let vars: Vec<&str> = object_str.split('*').collect();
-    obj._01 = vars.first().map(|x| x.to_string());
-    obj._02 = vars.get(1).map(|x| x.to_string());
-    obj._03 = vars.get(2).map(|x| x.to_string());
-    obj._04 = vars.get(3).map(|x| x.to_string());
-    obj._05 = vars.get(4).map(|x| x.to_string());
-    obj._06 = vars.get(5).map(|x| x.to_string());
-    obj._07 = vars.get(6).map(|x| x.to_string());
-    obj._08 = vars.get(7).map(|x| x.to_string());
-    obj._09 = vars.get(8).map(|x| x.to_string());
-    Ok((rest, obj))
+impl<'a> Parser<&'a str, V1, nom::error::Error<&'a str>> for V1 {
+    fn parse(input: &'a str) -> IResult<&'a str, V1> {
+        let (rest, vars) = delimited(tag("V1*"), take_until("~"), tag("~"))(input)?;
+        let (_, vars) = separated_list0(
+            tag("*"),
+            take_while(|x: char| {
+                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
+            }),
+        )(vars)?;
+        let obj = V1 {
+            _01: vars.first().map(|x| x.to_string()),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).map(|x| x.to_string()),
+            _05: vars.get(4).map(|x| x.to_string()),
+            _06: vars.get(5).map(|x| x.to_string()),
+            _07: vars.get(6).map(|x| x.to_string()),
+            _08: vars.get(7).map(|x| x.to_string()),
+            _09: vars.get(8).map(|x| x.to_string()),
+        };
+        // look for trailing newline
+        let (rest, _) = opt(newline)(rest)?;
+        Ok((rest, obj))
+    }
 }
 
 /// V4 - Cargo Location Reference
@@ -4984,6 +5670,24 @@ pub fn parse_v1(input: &str) -> IResult<&str, V1> {
 pub struct V4 {
     #[serde(rename = "01")]
     pub _01: String,
+}
+
+impl<'a> Parser<&'a str, V4, nom::error::Error<&'a str>> for V4 {
+    fn parse(input: &'a str) -> IResult<&'a str, V4> {
+        let (rest, vars) = delimited(tag("V4*"), take_until("~"), tag("~"))(input)?;
+        let (_, vars) = separated_list0(
+            tag("*"),
+            take_while(|x: char| {
+                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
+            }),
+        )(vars)?;
+        let obj = V4 {
+            _01: vars.first().unwrap().to_string(),
+        };
+        // look for trailing newline
+        let (rest, _) = opt(newline)(rest)?;
+        Ok((rest, obj))
+    }
 }
 
 /// V9 - Event Detail
@@ -5084,6 +5788,41 @@ pub struct V9 {
     pub _19: Option<String>,
     #[serde(rename = "20")]
     pub _20: Option<String>,
+}
+
+impl<'a> Parser<&'a str, V9, nom::error::Error<&'a str>> for V9 {
+    fn parse(input: &'a str) -> IResult<&'a str, V9> {
+        let (rest, vars) = delimited(tag("V9*"), take_until("~"), tag("~"))(input)?;
+        let (_, vars) = separated_list0(
+            tag("*"),
+            take_while(|x: char| x!='*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())),
+        )(vars)?;
+        let obj = V9 {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).map(|x| x.to_string()),
+            _05: vars.get(4).map(|x| x.to_string()),
+            _06: vars.get(5).map(|x| x.to_string()),
+            _07: vars.get(6).map(|x| x.to_string()),
+            _08: vars.get(7).map(|x| x.to_string()),
+            _09: vars.get(8).map(|x| x.to_string()),
+            _10: vars.get(9).map(|x| x.to_string()),
+            _11: vars.get(10).map(|x| x.to_string()),
+            _12: vars.get(11).map(|x| x.to_string()),
+            _13: vars.get(12).map(|x| x.to_string()),
+            _14: vars.get(13).map(|x| x.to_string()),
+            _15: vars.get(14).map(|x| x.to_string()),
+            _16: vars.get(15).map(|x| x.to_string()),
+            _17: vars.get(16).map(|x| x.to_string()),
+            _18: vars.get(17).map(|x| x.to_string()),
+            _19: vars.get(18).map(|x| x.to_string()),
+            _20: vars.get(19).map(|x| x.to_string()),
+        };
+        // look for trailing newline
+        let (rest, _) = opt(newline)(rest)?;
+        Ok((rest, obj))
+    }
 }
 
 /// VC - Motor Vehicle Control
@@ -5464,6 +6203,31 @@ pub struct Y2 {
     pub _10: Option<String>,
 }
 
+impl<'a> Parser<&'a str, Y2, nom::error::Error<&'a str>> for Y2 {
+    fn parse(input: &'a str) -> IResult<&'a str, Y2> {
+        let (rest, vars) = delimited(tag("Y2*"), take_until("~"), tag("~"))(input)?;
+        let (_, vars) = separated_list0(
+            tag("*"),
+            take_while(|x: char| x!='*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())),
+        )(vars)?;
+        let obj = Y2 {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).unwrap().to_string(),
+            _05: vars.get(4).map(|x| x.to_string()),
+            _06: vars.get(5).map(|x| x.to_string()),
+            _07: vars.get(6).map(|x| x.to_string()),
+            _08: vars.get(7).map(|x| x.to_string()),
+            _09: vars.get(8).map(|x| x.to_string()),
+            _10: vars.get(9).map(|x| x.to_string()),
+        };
+        // look for trailing newline
+        let (rest, _) = opt(newline)(rest)?;
+        Ok((rest, obj))
+    }
+}
+
 /// Y3 - Space Confirmation
 ///
 /// To specify confirmation information for space booking including number, dates and load time
@@ -5494,9 +6258,14 @@ pub struct Y3 {
 }
 
 impl<'a> Parser<&'a str, Y3, nom::error::Error<&'a str>> for Y3 {
-    fn parse(&mut self, input: &'a str) -> IResult<&'a str, Y3> {
+    fn parse(input: &'a str) -> IResult<&'a str, Y3> {
         let (rest, vars) = delimited(tag("Y3*"), take_until("~"), tag("~"))(input)?;
-        let (_, vars) = separated_list0(tag("*"), take_while(char::is_alphanumeric))(vars)?;
+        let (_, vars) = separated_list0(
+            tag("*"),
+            take_while(|x: char| {
+                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
+            }),
+        )(vars)?;
         let obj = Y3 {
             _01: vars.first().unwrap().to_string(),
             _02: vars.get(1).map(|x| x.to_string()),
@@ -5543,21 +6312,31 @@ pub struct Y4 {
     pub _10: Option<String>,
 }
 
-pub fn parse_y4(input: &str) -> IResult<&str, Y4> {
-    let (rest, object_str) = delimited(tag("Y4*"), take_until("~"), tag("~"))(input)?;
-    let mut obj = Y4::default();
-    let vars: Vec<&str> = object_str.split('*').collect();
-    obj._01 = vars.get(1).map(|x| x.to_string());
-    obj._02 = vars.get(1).map(|x| x.to_string());
-    obj._03 = vars.get(2).map(|x| x.to_string());
-    obj._04 = vars.get(3).unwrap().to_string();
-    obj._05 = vars.get(3).map(|x| x.to_string());
-    obj._06 = vars.get(3).map(|x| x.to_string());
-    obj._07 = vars.get(3).map(|x| x.to_string());
-    obj._08 = vars.get(3).map(|x| x.to_string());
-    obj._09 = vars.get(3).map(|x| x.to_string());
-    obj._10 = vars.get(3).map(|x| x.to_string());
-    Ok((rest, obj))
+impl<'a> Parser<&'a str, Y4, nom::error::Error<&'a str>> for Y4 {
+    fn parse(input: &'a str) -> IResult<&'a str, Y4> {
+        let (rest, vars) = delimited(tag("Y4*"), take_until("~"), tag("~"))(input)?;
+        let (_, vars) = separated_list0(
+            tag("*"),
+            take_while(|x: char| {
+                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
+            }),
+        )(vars)?;
+        let obj = Y4 {
+            _01: vars.first().map(|x| x.to_string()),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).unwrap().to_string(),
+            _05: vars.get(4).map(|x| x.to_string()),
+            _06: vars.get(5).map(|x| x.to_string()),
+            _07: vars.get(6).map(|x| x.to_string()),
+            _08: vars.get(7).map(|x| x.to_string()),
+            _09: vars.get(8).map(|x| x.to_string()),
+            _10: vars.get(9).map(|x| x.to_string()),
+        };
+        // look for trailing newline
+        let (rest, _) = opt(newline)(rest)?;
+        Ok((rest, obj))
+    }
 }
 
 /// Y6 - Authentication
@@ -5577,6 +6356,26 @@ pub struct Y6 {
     pub _02: String,
     #[serde(rename = "03")]
     pub _03: String,
+}
+
+impl<'a> Parser<&'a str, Y6, nom::error::Error<&'a str>> for Y6 {
+    fn parse(input: &'a str) -> IResult<&'a str, Y6> {
+        let (rest, vars) = delimited(tag("Y6*"), take_until("~"), tag("~"))(input)?;
+        let (_, vars) = separated_list0(
+            tag("*"),
+            take_while(|x: char| {
+                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
+            }),
+        )(vars)?;
+        let obj = Y6 {
+            _01: vars.first().map(|x| x.to_string()),
+            _02: vars.get(1).unwrap().to_string(),
+            _03: vars.get(2).unwrap().to_string(),
+        };
+        // look for trailing newline
+        let (rest, _) = opt(newline)(rest)?;
+        Ok((rest, obj))
+    }
 }
 
 /// Y7 - Priority

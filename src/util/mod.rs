@@ -1,3 +1,5 @@
+use nom::IResult;
+
 use crate::v004010::Transmission;
 
 pub mod dt;
@@ -12,4 +14,8 @@ pub fn is_equal_payload<T: PartialEq>(src: &Transmission<T>, target: &Transmissi
         }
     }
     true
+}
+
+pub trait Parser<I,O,E>{
+    fn parse(str: I) -> IResult<I, O>;
 }

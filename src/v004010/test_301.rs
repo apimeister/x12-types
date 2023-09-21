@@ -158,7 +158,7 @@ L5*1*VEHICLES:PARTS~
 V1*3465322*CAP SAN ANTONIO*DK*456S****L~
 SE*17*33233~"#;
     // let str = str.replace("\n", "");
-    let obj = parse_301(&str).unwrap();
+    let obj = _301::parse(&str).unwrap();
     println!("{:?}", obj);
     assert!(obj.0.is_empty());
     let obj = obj.1;

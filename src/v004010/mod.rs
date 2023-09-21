@@ -1,9 +1,10 @@
 //! v004010 repesents all entities of the 004010 specification.
 
-use nom::character::complete::newline;
+use crate::util::Parser;
 use nom::combinator::opt;
+use nom::combinator::peek;
+use nom::multi::many0;
 use nom::IResult;
-use nom::Parser;
 use serde::{Deserialize, Serialize};
 use serde_x12::Path;
 use serde_x12::PathItem;
@@ -24,7 +25,6 @@ mod test_315;
 #[cfg(test)]
 mod test_segments;
 
-
 #[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
 pub struct Transmission<T> {
     pub isa: ISA,
@@ -32,16 +32,24 @@ pub struct Transmission<T> {
     pub iea: IEA,
 }
 
-impl<'a, T: Default + Parser<&'a str, Transmission<T>, nom::error::Error<&'a str>>>
+impl<'a, T: Default + Parser<&'a str, T, nom::error::Error<&'a str>>>
     Parser<&'a str, Transmission<T>, nom::error::Error<&'a str>> for Transmission<T>
 {
-    fn parse(&mut self, input: &'a str) -> IResult<&'a str, Transmission<T>> {
+    fn parse(input: &'a str) -> IResult<&'a str, Transmission<T>> {
         let mut output = Transmission::default();
-        let (input, obj) = parse_isa(input)?;
+        let (input, obj) = ISA::parse(input)?;
         output.isa = obj;
-        let mut o = T::default();
-        let _x = o.parse(input);
-        let (input, obj) = parse_iea(input)?;
+        // functional group
+        let (input, gs) = GS::parse(input)?;
+        let (input, t_obj) = T::parse(input)?;
+        let (input, ge) = GE::parse(input)?;
+        let fg = FunctionalGroup{
+            gs,
+            segments: vec![t_obj],
+            ge,
+        };
+        output.functional_group.push(fg);
+        let (input, obj) = IEA::parse(input)?;
         output.iea = obj;
         Ok((input, output))
     }
@@ -210,30 +218,29 @@ pub struct _204 {
 
 pub fn parse_204(input: &str) -> IResult<&str, _204> {
     let mut output = _204::default();
-    let mut x = ST::default();
-    let (input, obj) = x.parse(input)?;
+    let (input, obj) = ST::parse(input)?;
     output.st = obj;
-    let (input, obj) = parse_b2(input)?;
+    let (input, obj) = B2::parse(input)?;
     output.b2 = obj;
-    let (input, obj) = parse_b2a(input)?;
+    let (input, obj) = B2A::parse(input)?;
     output.b2a = obj;
-    let (input, obj) = opt(parse_l11)(input)?;
+    let (input, obj) = opt(L11::parse)(input)?;
     output.l11 = obj;
-    let (input, obj) = opt(parse_g62)(input)?;
+    let (input, obj) = opt(G62::parse)(input)?;
     output.g62 = obj;
-    let (input, obj) = opt(parse_ms3)(input)?;
+    let (input, obj) = opt(MS3::parse)(input)?;
     output.ms3 = obj;
-    let (input, obj) = opt(parse_at5)(input)?;
+    let (input, obj) = opt(AT5::parse)(input)?;
     output.at5 = obj;
-    let (input, obj) = opt(parse_pld)(input)?;
+    let (input, obj) = opt(PLD::parse)(input)?;
     output.pld = obj;
-    let (input, obj) = opt(parse_lh6)(input)?;
+    let (input, obj) = opt(LH6::parse)(input)?;
     output.lh6 = obj;
-    let (input, obj) = opt(parse_nte)(input)?;
+    let (input, obj) = opt(NTE::parse)(input)?;
     output.nte = obj;
-    let (input, obj) = opt(parse_l3)(input)?;
+    let (input, obj) = opt(L3::parse)(input)?;
     output.l3 = obj;
-    let (input, obj) = parse_se(input)?;
+    let (input, obj) = SE::parse(input)?;
     output.se = obj;
     Ok((input, output))
 }
@@ -562,84 +569,69 @@ pub struct _301 {
     pub se: SE,
 }
 
-pub fn parse_301(input: &str) -> IResult<&str, _301> {
-    let mut output = _301::default();
-    let mut x = ST::default();
-    let (input, obj) = x.parse(input)?;
-    output.st = obj;
-    let (input, _) = opt(newline)(input)?;
-    let (input, obj) = parse_b1(input)?;
-    output.b1 = obj;
-    let (input, _) = opt(newline)(input)?;
-    let mut x = Y3::default();
-    let (input, obj) = x.parse(input)?;
-    let (input, _) = opt(newline)(input)?;
-    output.y3 = obj;
-    let (input, obj) = parse_y4(input)?;
-    output.loop_y4.push(_301LoopY4 {
-        y4: Some(obj),
-        w09: None,
-    });
-    let (input, _) = opt(newline)(input)?;
-    let (input, obj) = parse_n9(input)?;
-    output.n9.push(obj);
-    let (input, _) = opt(newline)(input)?;
-    let (input, obj_n1) = parse_n1(input)?;
-    let (input, _) = opt(newline)(input)?;
-    let (input, obj_n3) = parse_n3(input)?;
-    let (input, _) = opt(newline)(input)?;
-    let (input, obj_n4) = parse_n4(input)?;
-    let (input, _) = opt(newline)(input)?;
-    output.loop_n1.push(_301LoopN1 {
-        n1: Some(obj_n1),
-        n2: None,
-        n3: Some(obj_n3),
-        n4: Some(obj_n4),
-        g61: None,
-    });
-    let (input, obj) = parse_r4(input)?;
-    output.loop_r4.push(_301LoopR4 {
-        r4: obj,
-        ..Default::default()
-    });
-    let (input, _) = opt(newline)(input)?;
-    let (input, obj_r4) = parse_r4(input)?;
-    let (input, _) = opt(newline)(input)?;
-    let (input, dtm_obj) = parse_dtm(input)?;
-    let (input, _) = opt(newline)(input)?;
-    output.loop_r4.push(_301LoopR4 {
-        r4: obj_r4,
-        dtm: vec![dtm_obj],
-    });
-    let (input, obj_r4) = parse_r4(input)?;
-    output.loop_r4.push(_301LoopR4 {
-        r4: obj_r4,
-        dtm: vec![],
-    });
-    let (input, _) = opt(newline)(input)?;
-    let (input, obj_lx) = parse_lx(input)?;
-    let (input, _) = opt(newline)(input)?;
-    let (input, obj_l0) = parse_l0(input)?;
-    let (input, _) = opt(newline)(input)?;
-    let (input, obj_l5) = parse_l5(input)?;
-    let (input, _) = opt(newline)(input)?;
-    output.loop_lx.push(_301LoopLx {
-        lx: obj_lx,
-        n7: None,
-        w09: None,
-        k1: vec![],
-        l0: Some(obj_l0),
-        l5: Some(obj_l5),
-        l4: None,
-        l1: None,
-        loop_h1: vec![],
-    });
-    let (input, obj) = parse_v1(input)?;
-    output.v1 = vec![obj];
-    let (input, _) = opt(newline)(input)?;
-    let (input, obj) = parse_se(input)?;
-    output.se = obj;
-    Ok((input, output))
+impl<'a> Parser<&'a str, _301, nom::error::Error<&'a str>> for _301 {
+    fn parse(input: &'a str) -> IResult<&'a str, _301> {
+        let mut output = _301::default();
+        let (input, obj) = ST::parse(input)?;
+        output.st = obj;
+        let (input, obj) = B1::parse(input)?;
+        output.b1 = obj;
+        let (input, obj) = Y3::parse(input)?;
+        output.y3 = obj;
+        let (input, obj) = Y4::parse(input)?;
+        output.loop_y4.push(_301LoopY4 {
+            y4: Some(obj),
+            w09: None,
+        });
+
+        let (input, obj) = N9::parse(input)?;
+        output.n9.push(obj);
+        let (input, obj_n1) = N1::parse(input)?;
+        let (input, obj_n3) = N3::parse(input)?;
+        let (input, obj_n4) = N4::parse(input)?;
+        output.loop_n1.push(_301LoopN1 {
+            n1: Some(obj_n1),
+            n2: None,
+            n3: Some(obj_n3),
+            n4: Some(obj_n4),
+            g61: None,
+        });
+        let (input, obj) = R4::parse(input)?;
+        output.loop_r4.push(_301LoopR4 {
+            r4: obj,
+            ..Default::default()
+        });
+        let (input, obj_r4) = R4::parse(input)?;
+        let (input, dtm_obj) = DTM::parse(input)?;
+        output.loop_r4.push(_301LoopR4 {
+            r4: obj_r4,
+            dtm: vec![dtm_obj],
+        });
+        let (input, obj_r4) = R4::parse(input)?;
+        output.loop_r4.push(_301LoopR4 {
+            r4: obj_r4,
+            dtm: vec![],
+        });
+        let (input, obj_lx) = LX::parse(input)?;
+        let (input, obj_l0) = L0::parse(input)?;
+        let (input, obj_l5) = L5::parse(input)?;
+        output.loop_lx.push(_301LoopLx {
+            lx: obj_lx,
+            n7: None,
+            w09: None,
+            k1: vec![],
+            l0: Some(obj_l0),
+            l5: Some(obj_l5),
+            l4: None,
+            l1: None,
+            loop_h1: vec![],
+        });
+        let (input, obj) = V1::parse(input)?;
+        output.v1 = vec![obj];
+        let (input, obj) = SE::parse(input)?;
+        output.se = obj;
+        Ok((input, output))
+    }
 }
 
 impl Reflect for _301 {
@@ -997,6 +989,162 @@ pub struct _310 {
     pub se: SE,
 }
 
+impl<'a> Parser<&'a str, _310, nom::error::Error<&'a str>> for _310 {
+    fn parse(input: &'a str) -> IResult<&'a str, _310> {
+        let (rest, st) = ST::parse(input)?;
+        let (rest, b3) = B3::parse(rest)?;
+        let (rest, b2a) = opt(B2A::parse)(rest)?;
+        let (rest, y6) = many0(Y6::parse)(rest)?;
+        let (rest, g3) = opt(G3::parse)(rest)?;
+        let (rest, n9) = many0(N9::parse)(rest)?;
+        let (rest, v1) = many0(V1::parse)(rest)?;
+        let (rest, m0) = opt(M0::parse)(rest)?;
+        let (rest, m1) = many0(M1::parse)(rest)?;
+        let (rest, c2) = opt(C2::parse)(rest)?;
+        let (rest, c3) = opt(C3::parse)(rest)?;
+        let (rest, y2) = many0(Y2::parse)(rest)?;
+        // n1 loop
+        let mut loop_n1 = vec![];
+        let mut loop_rest = rest.clone();
+        while peek(opt(N1::parse))(loop_rest)?.1.is_some() {
+            let (rest, n1) = N1::parse(loop_rest)?;
+            let (rest, n2) = opt(N2::parse)(rest)?;
+            let (rest, n3) = opt(N3::parse)(rest)?;
+            let (rest, n4) = opt(N4::parse)(rest)?;
+            loop_rest = rest;
+            loop_n1.push(_310LoopN1 { n1, n2, n3, n4 });
+        }
+        let rest = loop_rest;
+        let (rest, g61) = many0(G61::parse)(rest)?;
+        // loop r4
+        let mut loop_r4 = vec![];
+        let mut loop_rest = rest.clone();
+        while peek(opt(R4::parse))(loop_rest)?.1.is_some() {
+            let (rest, r4) = R4::parse(loop_rest)?;
+            let (rest, dtm) = opt(DTM::parse)(rest)?;
+            loop_rest = rest;
+            loop_r4.push(_310LoopR4 { r4, dtm });
+        }
+        let rest = loop_rest;
+        let (rest, r2a) = many0(R2A::parse)(rest)?;
+        let (rest, r2) = many0(R2::parse)(rest)?;
+        let (rest, k1) = many0(K1::parse)(rest)?;
+        let (rest, h3) = many0(H3::parse)(rest)?;
+        let (rest, l5) = opt(L5::parse)(rest)?;
+        // loop c8
+        let mut loop_c8 = vec![];
+        let mut loop_rest = rest.clone();
+        while peek(opt(C8::parse))(loop_rest)?.1.is_some() {
+            let (rest, c8) = opt(C8::parse)(loop_rest)?;
+            let (rest, c8c) = opt(C8C::parse)(rest)?;
+            loop_rest = rest;
+            loop_c8.push(_310LoopC8 { c8, c8c });
+        }
+        let rest = loop_rest;
+        // loop lx
+        let mut loop_lx = vec![];
+        let mut loop_rest = rest.clone();
+        while peek(opt(LX::parse))(loop_rest)?.1.is_some() {
+            let (rest, lx) = LX::parse(loop_rest)?;
+            loop_rest = rest;
+            // loop n7
+            let mut loop_n7 = vec![];
+            while peek(opt(N7::parse))(loop_rest)?.1.is_some() {
+                let (rest, n7) = opt(N7::parse)(loop_rest)?;
+                let (rest, m7) = many0(M7::parse)(rest)?;
+                loop_rest = rest;
+                loop_n7.push(_310LoopN7 {
+                    n7,
+                    qty: None,
+                    v4: None,
+                    n12: None,
+                    m7: m7,
+                    w09: None,
+                    loop_l1: vec![],
+                    l7: None,
+                    x1: None,
+                    x2: None,
+                    n9: vec![],
+                    loop_h1: vec![],
+                });
+            }
+            // loop l0
+            let mut loop_l0 = vec![];
+            while peek(opt(L0::parse))(loop_rest)?.1.is_some() {
+                let (rest, l0) = opt(L0::parse)(loop_rest)?;
+                let (rest, l5) = many0(L5::parse)(rest)?;
+                loop_rest = rest;
+                loop_l0.push(_310LoopL0 {
+                    l0,
+                    l5,
+                    loop_l1: vec![],
+                    l7: None,
+                    x1: None,
+                    x2: None,
+                    loop_c8: vec![],
+                    loop_h1: vec![],
+                });
+            }
+            loop_lx.push(_310LoopLX {
+                lx,
+                loop_n7,
+                loop_l0,
+            });
+        }
+        let rest = loop_rest;
+        let (rest, l3) = L3::parse(rest)?;
+        let (rest, pwk) = many0(PWK::parse)(rest)?;
+        // loop l1
+        let mut loop_l1 = vec![];
+        let mut loop_rest = rest.clone();
+        while peek(opt(L1::parse))(loop_rest)?.1.is_some() {
+            let (rest, l1) = opt(L1::parse)(loop_rest)?;
+            let (rest, c3) = opt(C3::parse)(rest)?;
+            loop_rest = rest;
+            loop_l1.push(_310LoopL1 { l1, c3 });
+        }
+        let rest = loop_rest;
+        let (rest, v9) = many0(V9::parse)(rest)?;
+        let (rest, c8) = many0(C8::parse)(rest)?;
+        let (rest, k1_2) = many0(K1::parse)(rest)?;
+        let (rest, l11) = opt(L11::parse)(rest)?;
+        let (rest, se) = SE::parse(rest)?;
+        let output = _310 {
+            st,
+            b3,
+            b2a,
+            y6,
+            g3,
+            n9,
+            v1,
+            m0,
+            m1,
+            c2,
+            c3,
+            y2,
+            loop_n1,
+            g61,
+            loop_r4,
+            r2a,
+            r2,
+            k1,
+            h3,
+            l5,
+            loop_c8,
+            loop_lx,
+            l3,
+            pwk,
+            loop_l1: vec![],
+            v9,
+            c8,
+            k1_2,
+            l11,
+            se,
+        };
+        Ok((rest, output))
+    }
+}
+
 impl Reflect for _310 {
     fn get_path(current_path: &Path, next_segment: &str, last_path: &Path) -> Path {
         match next_segment {
@@ -1068,7 +1216,7 @@ pub struct _310LoopN7 {
 #[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
 pub struct _310LoopL0 {
     pub l0: Option<L0>,
-    pub l5: Option<L5>,
+    pub l5: Vec<L5>,
     pub loop_l1: Vec<_310LoopL1>,
     pub l7: Option<L7>,
     pub x1: Option<X1>,
@@ -1123,6 +1271,13 @@ pub struct _315 {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub v9: Option<V9>,
     pub se: SE,
+}
+
+impl<'a> Parser<&'a str, _315, nom::error::Error<&'a str>> for _315 {
+    fn parse(input: &'a str) -> IResult<&'a str, _315> {
+        let output = _315::default();
+        Ok((input, output))
+    }
 }
 
 impl Reflect for _315 {
