@@ -1,7 +1,7 @@
 use crate::v004010::*;
 
 #[test]
-fn test_204() {
+fn render_204() {
     let obj = _204 {
         st: ST {
             _01: "204".to_string(),
@@ -244,6 +244,9 @@ N3*1717 MIDDLE HARBOR RD.*BERTH 58~
 N4*OAKLAND*CA*94607*US*ZZ*USOAKSSAM~
 G61*IC*N/A*TE*NOT AVAILABLE~
 SE*37*18711~"#;
-    let obj = parse_204(str);
+    let (str, obj) = _204::parse(str).unwrap();
     println!("{:?}", obj);
+    assert!(str.is_empty());
+    assert_eq!(obj.se._01, "37");
+    assert_eq!(obj.se._02, "18711");
 }

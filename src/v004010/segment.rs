@@ -8,8 +8,6 @@ use nom::multi::separated_list0;
 use nom::sequence::delimited;
 use nom::IResult;
 use serde::{Deserialize, Serialize};
-use serde_x12::Path;
-use serde_x12::Reflect;
 use validator::Validate;
 
 /// AK1 - Functional Group Response Header
@@ -236,6 +234,30 @@ pub struct AT8 {
     pub _06: Option<String>,
     #[serde(rename = "07")]
     pub _07: Option<String>,
+}
+
+impl<'a> Parser<&'a str, AT8, nom::error::Error<&'a str>> for AT8 {
+    fn parse(input: &'a str) -> IResult<&'a str, AT8> {
+        let (rest, vars) = delimited(tag("AT8*"), take_until("~"), tag("~"))(input)?;
+        let (_, vars) = separated_list0(
+            tag("*"),
+            take_while(|x: char| {
+                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
+            }),
+        )(vars)?;
+        let obj = AT8 {
+            _01: vars.first().map(|x| x.to_string()),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).map(|x| x.to_string()),
+            _05: vars.get(4).map(|x| x.to_string()),
+            _06: vars.get(5).map(|x| x.to_string()),
+            _07: vars.get(6).map(|x| x.to_string()),
+        };
+        // look for trailing newline
+        let (rest, _) = opt(newline)(rest)?;
+        Ok((rest, obj))
+    }
 }
 
 /// B1 - Beginning Segment for Booking or Pick-up/Delivery
@@ -2208,16 +2230,6 @@ impl<'a> Parser<&'a str, ISA, nom::error::Error<&'a str>> for ISA {
     }
 }
 
-impl Reflect for ISA {
-    fn get_path(current_path: &Path, _next_segment: &str, _last_path: &Path) -> Path {
-        current_path.clone()
-    }
-
-    fn get_type_name() -> String {
-        "ISA".to_string()
-    }
-}
-
 /// K1 - Remarks
 ///
 /// To transmit information in a free-form format for comment or special instruction
@@ -2774,6 +2786,36 @@ pub struct LAD {
     pub _12: Option<String>,
     #[serde(rename = "13")]
     pub _13: Option<String>,
+}
+
+impl<'a> Parser<&'a str, LAD, nom::error::Error<&'a str>> for LAD {
+    fn parse(input: &'a str) -> IResult<&'a str, LAD> {
+        let (rest, vars) = delimited(tag("LAD*"), take_until("~"), tag("~"))(input)?;
+        let (_, vars) = separated_list0(
+            tag("*"),
+            take_while(|x: char| {
+                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
+            }),
+        )(vars)?;
+        let obj = LAD {
+            _01: vars.first().map(|x| x.to_string()),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).map(|x| x.to_string()),
+            _05: vars.get(4).map(|x| x.to_string()),
+            _06: vars.get(5).map(|x| x.to_string()),
+            _07: vars.get(6).map(|x| x.to_string()),
+            _08: vars.get(7).map(|x| x.to_string()),
+            _09: vars.get(8).map(|x| x.to_string()),
+            _10: vars.get(9).map(|x| x.to_string()),
+            _11: vars.get(10).map(|x| x.to_string()),
+            _12: vars.get(11).map(|x| x.to_string()),
+            _13: vars.get(12).map(|x| x.to_string()),
+        };
+        // look for trailing newline
+        let (rest, _) = opt(newline)(rest)?;
+        Ok((rest, obj))
+    }
 }
 
 /// LE - Loop Trailer
@@ -3565,6 +3607,25 @@ pub struct MEA {
     pub _10: Option<String>,
 }
 
+impl<'a> Parser<&'a str, MEA, nom::error::Error<&'a str>> for MEA {
+    fn parse(input: &'a str) -> IResult<&'a str, MEA> {
+        let (rest, vars) = crate::util::parse_line(input, "MEA")?;
+        let obj = MEA {
+            _01: vars.first().map(|x| x.to_string()),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).map(|x| x.to_string()),
+            _05: vars.get(4).map(|x| x.to_string()),
+            _06: vars.get(5).map(|x| x.to_string()),
+            _07: vars.get(6).map(|x| x.to_string()),
+            _08: vars.get(7).map(|x| x.to_string()),
+            _09: vars.get(8).map(|x| x.to_string()),
+            _10: vars.get(9).map(|x| x.to_string()),
+        };
+        Ok((rest, obj))
+    }
+}
+
 /// MS1 - Equipment, Shipment, or Real Property Location
 ///
 /// To specify the location of a piece of equipment, a shipment, or real property in terms of city and state or longitude and latitude
@@ -3994,6 +4055,89 @@ impl<'a> Parser<&'a str, N7, nom::error::Error<&'a str>> for N7 {
     }
 }
 
+/// N7A - Accessorial Equipment Details
+///
+/// To identify the accessorial equipment required to load or unload product
+///
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 1042 | Load or Device Code | 1 | O | ID | 2/2
+/// 02 | 82 | Length | 1 | O/Z | R | 1/8
+/// 03 | 1043 | Diameter | 1 | O/Z | R | 1/2
+/// 04 | 1044 | Hose Type Code | 1 | O | ID | 3/3
+/// 05 | 1043 | Diameter | 1 | O/Z | R | 1/2
+/// 06 | 1043 | Diameter | 1 | O/Z | R | 1/2
+/// 07 | 1045 | Inlet or Outlet Material Type Code | 1 | O | ID | 2/2
+/// 08 | 1046 | Inlet or Outlet Fitting Type Code | 1 | O | ID | 2/2
+/// 09 | 1047 | Miscellaneous Equipment Code | 1 | O | ID | 2/2
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+pub struct N7A {
+    pub _01: Option<String>,
+    pub _02: Option<String>,
+    pub _03: Option<String>,
+    pub _04: Option<String>,
+    pub _05: Option<String>,
+    pub _06: Option<String>,
+    pub _07: Option<String>,
+    pub _08: Option<String>,
+    pub _09: Option<String>,
+}
+
+impl<'a> Parser<&'a str, N7A, nom::error::Error<&'a str>> for N7A {
+    fn parse(input: &'a str) -> IResult<&'a str, N7A> {
+        let (rest, vars) = crate::util::parse_line(input, "N7A")?;
+        let obj = N7A {
+            _01: vars.first().map(|x| x.to_string()),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).map(|x| x.to_string()),
+            _05: vars.get(4).map(|x| x.to_string()),
+            _06: vars.get(5).map(|x| x.to_string()),
+            _07: vars.get(6).map(|x| x.to_string()),
+            _08: vars.get(7).map(|x| x.to_string()),
+            _09: vars.get(8).map(|x| x.to_string()),
+        };
+        Ok((rest, obj))
+    }
+}
+
+/// N7B - Additional Equipment Details
+///
+/// To identify additional equipment details
+///
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 1024 | Number of Tank Compartments | 1 | O | N0 | 1/2
+/// 02 | 1025 | Loading or Discharge Location Code | 1 | O | ID | 1/1
+/// 03 | 1026 | Vessel Material Code | 1 | O | ID | 3/3
+/// 04 | 1030 | Gasket Type Code | 1 | O | ID | 3/3
+/// 05 | 1031 | Trailer Lining Type Code | 1 | O | ID | 3/3
+/// 06 | 127 | Reference Identification | 1 | O/Z | AN | 1/30
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+pub struct N7B {
+    pub _01: Option<String>,
+    pub _02: Option<String>,
+    pub _03: Option<String>,
+    pub _04: Option<String>,
+    pub _05: Option<String>,
+    pub _06: Option<String>,
+}
+
+impl<'a> Parser<&'a str, N7B, nom::error::Error<&'a str>> for N7B {
+    fn parse(input: &'a str) -> IResult<&'a str, N7B> {
+        let (rest, vars) = crate::util::parse_line(input, "N7B")?;
+        let obj = N7B {
+            _01: vars.first().map(|x| x.to_string()),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).map(|x| x.to_string()),
+            _05: vars.get(4).map(|x| x.to_string()),
+            _06: vars.get(5).map(|x| x.to_string()),
+        };
+        Ok((rest, obj))
+    }
+}
+
 /// N9 - Reference Identification
 /// To transmit identifying information as specified by the Reference Identification Qualifier
 ///
@@ -4133,56 +4277,6 @@ pub struct N12 {
     pub _01: String,
     #[serde(rename = "02")]
     pub _02: String,
-}
-
-/// N7A - Accessorial Equipment Details
-///
-/// To identify the accessorial equipment required to load or unload product
-///
-/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
-/// ----|----|-------|--------|----|------|-------
-/// 01 | 1042 | Load or Device Code | 1 | O | ID | 2/2
-/// 02 | 82 | Length | 1 | O/Z | R | 1/8
-/// 03 | 1043 | Diameter | 1 | O/Z | R | 1/2
-/// 04 | 1044 | Hose Type Code | 1 | O | ID | 3/3
-/// 05 | 1043 | Diameter | 1 | O/Z | R | 1/2
-/// 06 | 1043 | Diameter | 1 | O/Z | R | 1/2
-/// 07 | 1045 | Inlet or Outlet Material Type Code | 1 | O | ID | 2/2
-/// 08 | 1046 | Inlet or Outlet Fitting Type Code | 1 | O | ID | 2/2
-/// 09 | 1047 | Miscellaneous Equipment Code | 1 | O | ID | 2/2
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
-pub struct N7A {
-    pub _01: Option<String>,
-    pub _02: Option<String>,
-    pub _03: Option<String>,
-    pub _04: Option<String>,
-    pub _05: Option<String>,
-    pub _06: Option<String>,
-    pub _07: Option<String>,
-    pub _08: Option<String>,
-    pub _09: Option<String>,
-}
-
-/// N7B - Additional Equipment Details
-///
-/// To identify additional equipment details
-///
-/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
-/// ----|----|-------|--------|----|------|-------
-/// 01 | 1024 | Number of Tank Compartments | 1 | O | N0 | 1/2
-/// 02 | 1025 | Loading or Discharge Location Code | 1 | O | ID | 1/1
-/// 03 | 1026 | Vessel Material Code | 1 | O | ID | 3/3
-/// 04 | 1030 | Gasket Type Code | 1 | O | ID | 3/3
-/// 05 | 1031 | Trailer Lining Type Code | 1 | O | ID | 3/3
-/// 06 | 127 | Reference Identification | 1 | O/Z | AN | 1/30
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
-pub struct N7B {
-    pub _01: Option<String>,
-    pub _02: Option<String>,
-    pub _03: Option<String>,
-    pub _04: Option<String>,
-    pub _05: Option<String>,
-    pub _06: Option<String>,
 }
 
 /// NA - Cross-Reference Equipment
@@ -5096,6 +5190,29 @@ pub struct S1 {
     pub _06: Option<String>,
 }
 
+impl<'a> Parser<&'a str, S1, nom::error::Error<&'a str>> for S1 {
+    fn parse(input: &'a str) -> IResult<&'a str, S1> {
+        let (rest, vars) = delimited(tag("S1*"), take_until("~"), tag("~"))(input)?;
+        let (_, vars) = separated_list0(
+            tag("*"),
+            take_while(|x: char| {
+                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
+            }),
+        )(vars)?;
+        let obj = S1 {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).unwrap().to_string(),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).map(|x| x.to_string()),
+            _05: vars.get(4).map(|x| x.to_string()),
+            _06: vars.get(5).map(|x| x.to_string()),
+        };
+        // look for trailing newline
+        let (rest, _) = opt(newline)(rest)?;
+        Ok((rest, obj))
+    }
+}
+
 /// S2 - Stop-off Address
 ///
 /// To specify the address of the stop-off party
@@ -5113,6 +5230,26 @@ pub struct S2 {
     pub _02: String,
     #[serde(rename = "03")]
     pub _03: Option<String>,
+}
+
+impl<'a> Parser<&'a str, S2, nom::error::Error<&'a str>> for S2 {
+    fn parse(input: &'a str) -> IResult<&'a str, S2> {
+        let (rest, vars) = delimited(tag("S2*"), take_until("~"), tag("~"))(input)?;
+        let (_, vars) = separated_list0(
+            tag("*"),
+            take_while(|x: char| {
+                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
+            }),
+        )(vars)?;
+        let obj = S2 {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).unwrap().to_string(),
+            _03: vars.get(2).map(|x| x.to_string()),
+        };
+        // look for trailing newline
+        let (rest, _) = opt(newline)(rest)?;
+        Ok((rest, obj))
+    }
 }
 
 /// S5 - Stop Off Details
@@ -5145,6 +5282,34 @@ pub struct S5 {
     pub _09: Option<String>,
     pub _10: Option<String>,
     pub _11: Option<String>,
+}
+
+impl<'a> Parser<&'a str, S5, nom::error::Error<&'a str>> for S5 {
+    fn parse(input: &'a str) -> IResult<&'a str, S5> {
+        let (rest, vars) = delimited(tag("S5*"), take_until("~"), tag("~"))(input)?;
+        let (_, vars) = separated_list0(
+            tag("*"),
+            take_while(|x: char| {
+                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
+            }),
+        )(vars)?;
+        let obj = S5 {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).unwrap().to_string(),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).map(|x| x.to_string()),
+            _05: vars.get(4).map(|x| x.to_string()),
+            _06: vars.get(5).map(|x| x.to_string()),
+            _07: vars.get(6).map(|x| x.to_string()),
+            _08: vars.get(7).map(|x| x.to_string()),
+            _09: vars.get(8).map(|x| x.to_string()),
+            _10: vars.get(9).map(|x| x.to_string()),
+            _11: vars.get(10).map(|x| x.to_string()),
+        };
+        // look for trailing newline
+        let (rest, _) = opt(newline)(rest)?;
+        Ok((rest, obj))
+    }
 }
 
 /// S9 - Stop-off Station
@@ -5183,6 +5348,31 @@ pub struct S9 {
     pub _06: String,
     pub _07: Option<String>,
     pub _08: Option<String>,
+}
+
+impl<'a> Parser<&'a str, S9, nom::error::Error<&'a str>> for S9 {
+    fn parse(input: &'a str) -> IResult<&'a str, S9> {
+        let (rest, vars) = delimited(tag("S9*"), take_until("~"), tag("~"))(input)?;
+        let (_, vars) = separated_list0(
+            tag("*"),
+            take_while(|x: char| {
+                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
+            }),
+        )(vars)?;
+        let obj = S9 {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).unwrap().to_string(),
+            _04: vars.get(3).unwrap().to_string(),
+            _05: vars.get(4).map(|x| x.to_string()),
+            _06: vars.get(5).unwrap().to_string(),
+            _07: vars.get(6).map(|x| x.to_string()),
+            _08: vars.get(7).map(|x| x.to_string()),
+        };
+        // look for trailing newline
+        let (rest, _) = opt(newline)(rest)?;
+        Ok((rest, obj))
+    }
 }
 
 /// SDQ - Destination Quantity

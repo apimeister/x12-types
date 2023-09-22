@@ -1,3 +1,8 @@
+# 0.7.2 2023-09-22
+
+* remove hard serde dependency (only used for testing)
+* more nom sgment parsing
+
 # 0.7.0 2022-12-04
 
 * update serde

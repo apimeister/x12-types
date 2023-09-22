@@ -1,15 +1,12 @@
 //! v004010 repesents all entities of the 004010 specification.
 
 use crate::util::Parser;
+use nom::character::complete::newline;
 use nom::combinator::opt;
 use nom::combinator::peek;
 use nom::multi::many0;
 use nom::IResult;
 use serde::{Deserialize, Serialize};
-use serde_x12::Path;
-use serde_x12::PathItem;
-use serde_x12::PathOperation;
-use serde_x12::Reflect;
 use std::fmt::Debug;
 mod segment;
 pub use segment::*;
@@ -52,41 +49,6 @@ impl<'a, T: Default + Parser<&'a str, T, nom::error::Error<&'a str>>>
         let (input, obj) = IEA::parse(input)?;
         output.iea = obj;
         Ok((input, output))
-    }
-}
-
-impl<T: Reflect> Reflect for Transmission<T> {
-    fn get_path(current_path: &Path, next_segment: &str, last_path: &Path) -> Path {
-        match next_segment {
-            "ISA" => Path {
-                elem: vec![PathItem {
-                    name: "isa".to_string(),
-                    ..Default::default()
-                }],
-                ..Default::default()
-            },
-            "IEA" => Path {
-                elem: vec![PathItem {
-                    name: "iea".to_string(),
-                    ..Default::default()
-                }],
-                ..Default::default()
-            },
-            "GS" => current_path
-                .push("functional_group".to_string(), Some(0), false)
-                .push("gs".to_string(), None, true)
-                .next_op(PathOperation::Push(PathItem {
-                    name: "segments".to_string(),
-                    vec_position: Some(0),
-                    leaf: false,
-                })),
-            "GE" => current_path.pop().push("ge".to_string(), None, true),
-            _ => T::get_path(current_path, next_segment, last_path),
-        }
-    }
-
-    fn get_type_name() -> String {
-        "Transmission".to_string()
     }
 }
 
@@ -216,56 +178,158 @@ pub struct _204 {
     pub se: SE,
 }
 
-pub fn parse_204(input: &str) -> IResult<&str, _204> {
-    let mut output = _204::default();
-    let (input, obj) = ST::parse(input)?;
-    output.st = obj;
-    let (input, obj) = B2::parse(input)?;
-    output.b2 = obj;
-    let (input, obj) = B2A::parse(input)?;
-    output.b2a = obj;
-    let (input, obj) = opt(L11::parse)(input)?;
-    output.l11 = obj;
-    let (input, obj) = opt(G62::parse)(input)?;
-    output.g62 = obj;
-    let (input, obj) = opt(MS3::parse)(input)?;
-    output.ms3 = obj;
-    let (input, obj) = opt(AT5::parse)(input)?;
-    output.at5 = obj;
-    let (input, obj) = opt(PLD::parse)(input)?;
-    output.pld = obj;
-    let (input, obj) = opt(LH6::parse)(input)?;
-    output.lh6 = obj;
-    let (input, obj) = opt(NTE::parse)(input)?;
-    output.nte = obj;
-    let (input, obj) = opt(L3::parse)(input)?;
-    output.l3 = obj;
-    let (input, obj) = SE::parse(input)?;
-    output.se = obj;
-    Ok((input, output))
-}
-
-impl Reflect for _204 {
-    fn get_type_name() -> String {
-        "_204".to_string()
-    }
-
-    fn get_path(current_path: &Path, next_segment: &str, last_path: &Path) -> Path {
-        match next_segment {
-            "ST" => current_path.push("st".to_string(), None, true),
-            "B2" => current_path.push("b2".to_string(), None, true),
-            "B2A" => current_path.push("b2a".to_string(), None, true),
-            "L11" => current_path.push("l11".to_string(), None, true),
-            "G62" => current_path.push("g62".to_string(), None, true),
-            "MS3" => current_path.push("ms3".to_string(), None, true),
-            "AT5" => current_path.push("at5".to_string(), None, true),
-            "PLD" => current_path.push("pld".to_string(), None, true),
-            "LH6" => current_path.push("lh6".to_string(), None, true),
-            "NTE" => current_path.push("nte".to_string(), None, true),
-            "L3" => current_path.push("l3".to_string(), None, true),
-            "SE" => current_path.push("se".to_string(), None, true),
-            _ => last_path.clone(),
+impl<'a> Parser<&'a str, _204, nom::error::Error<&'a str>> for _204 {
+    fn parse(input: &'a str) -> IResult<&'a str, _204> {
+        let mut output = _204::default();
+        let (rest, obj) = ST::parse(input)?;
+        output.st = obj;
+        let (rest, obj) = B2::parse(rest)?;
+        output.b2 = obj;
+        let (rest, obj) = B2A::parse(rest)?;
+        output.b2a = obj;
+        let (rest, obj) = opt(L11::parse)(rest)?;
+        output.l11 = obj;
+        let (rest, obj) = opt(G62::parse)(rest)?;
+        output.g62 = obj;
+        let (rest, obj) = opt(MS3::parse)(rest)?;
+        output.ms3 = obj;
+        let (rest, obj) = opt(AT5::parse)(rest)?;
+        output.at5 = obj;
+        let (rest, obj) = opt(PLD::parse)(rest)?;
+        output.pld = obj;
+        let (rest, obj) = opt(LH6::parse)(rest)?;
+        output.lh6 = obj;
+        let (rest, obj) = opt(NTE::parse)(rest)?;
+        output.nte = obj;
+        // loop 100
+        let mut loop_100 = vec![];
+        let mut loop_rest = rest.clone();
+        while peek(opt(N1::parse))(loop_rest)?.1.is_some() {
+            println!("found loop 100");
+            let (rest, n1) = opt(N1::parse)(loop_rest)?;
+            let (rest, n2) = opt(N2::parse)(rest)?;
+            let (rest, n3) = many0(N3::parse)(rest)?;
+            let (rest, n4) = opt(N4::parse)(rest)?;
+            let (rest, l11) = opt(L11::parse)(rest)?;
+            let (rest, g61) = many0(G61::parse)(rest)?;
+            loop_rest = rest;
+            loop_100.push(_204Loop100 {
+                n1,
+                n2,
+                n3,
+                n4,
+                l11,
+                g61,
+            });
         }
+        let rest = loop_rest;
+        output.loop_100 = loop_100;
+        // loop 200
+        let mut loop_200 = vec![];
+        let mut loop_rest = rest.clone();
+        while peek(opt(N7::parse))(loop_rest)?.1.is_some() {
+            println!("found loop 200");
+            let (rest, n7) = opt(N7::parse)(loop_rest)?;
+            let (rest, n7a) = opt(N7A::parse)(rest)?;
+            let (rest, n7b) = opt(N7B::parse)(rest)?;
+            let (rest, mea) = opt(MEA::parse)(rest)?;
+            let (rest, m7) = opt(M7::parse)(rest)?;
+            loop_rest = rest;
+            loop_200.push(_204Loop200 {
+                n7,
+                n7a,
+                n7b,
+                mea,
+                m7,
+            });
+        }
+        let rest = loop_rest;
+        output.loop_200 = loop_200;
+        // loop 300
+        let mut loop_300 = vec![];
+        let mut loop_rest = rest.clone();
+        while peek(opt(S5::parse))(loop_rest)?.1.is_some() {
+            println!("found loop 300");
+            let (rest, s5) = S5::parse(loop_rest)?;
+            let (rest, l11) = many0(L11::parse)(rest)?;
+            let (rest, g62) = many0(G62::parse)(rest)?;
+            let (rest, at8) = opt(AT8::parse)(rest)?;
+            let (rest, lad) = many0(LAD::parse)(rest)?;
+            let (rest, at5) = many0(AT5::parse)(rest)?;
+            let (rest, pld) = opt(PLD::parse)(rest)?;
+            let (rest, nte) = many0(NTE::parse)(rest)?;
+            loop_rest = rest;
+            // loop 310
+            let mut loop_310 = vec![];
+            while peek(opt(N1::parse))(loop_rest)?.1.is_some() {
+                let (rest, n1) = opt(N1::parse)(loop_rest)?;
+                let (rest, n2) = opt(N2::parse)(rest)?;
+                let (rest, n3) = many0(N3::parse)(rest)?;
+                let (rest, n4) = opt(N4::parse)(rest)?;
+                let (rest, g61) = many0(G61::parse)(rest)?;
+                loop_rest = rest;
+                loop_310.push(_204Loop310 {
+                    n1,
+                    n2,
+                    n3,
+                    n4,
+                    g61,
+                });
+            }
+            // loop 320
+            let mut loop_320 = vec![];
+            while peek(opt(L5::parse))(loop_rest)?.1.is_some() {
+                let (rest, l5) = opt(L5::parse)(loop_rest)?;
+                let (rest, at8) = opt(AT8::parse)(rest)?;
+                loop_rest = rest;
+                loop_320.push(_204Loop320 {
+                    l5,
+                    at8,
+                    loop_325: vec![],
+                });
+            }
+            // loop 380
+            let mut loop_380 = vec![];
+            while peek(opt(N7::parse))(loop_rest)?.1.is_some() {
+                let (rest, n7) = opt(N7::parse)(loop_rest)?;
+                let (rest, n7a) = opt(N7A::parse)(rest)?;
+                let (rest, n7b) = opt(N7B::parse)(rest)?;
+                let (rest, mea) = opt(MEA::parse)(rest)?;
+                let (rest, m7) = opt(M7::parse)(rest)?;
+                loop_rest = rest;
+                loop_380.push(_204Loop380 {
+                    n7,
+                    n7a,
+                    n7b,
+                    mea,
+                    m7,
+                });
+            }
+            loop_300.push(_204Loop300 {
+                s5,
+                l11,
+                g62,
+                at8,
+                lad,
+                at5,
+                pld,
+                nte,
+                loop_310,
+                loop_320,
+                loop_350: vec![],
+                loop_380,
+            });
+        }
+        let rest = loop_rest;
+        output.loop_300 = loop_300;
+        let (rest, obj) = opt(L3::parse)(rest)?;
+        output.l3 = obj;
+        let (rest, obj) = SE::parse(rest)?;
+        output.se = obj;
+
+        // look for trailing newline
+        let (rest, _) = opt(newline)(rest)?;
+        Ok((rest, output))
     }
 }
 
@@ -634,71 +698,6 @@ impl<'a> Parser<&'a str, _301, nom::error::Error<&'a str>> for _301 {
     }
 }
 
-impl Reflect for _301 {
-    fn get_path(current_path: &Path, next_segment: &str, last_path: &Path) -> Path {
-        match next_segment {
-            "ST" => current_path.push("st".to_string(), None, true),
-            "B1" => current_path.push("b1".to_string(), None, true),
-            "Y3" => current_path.push("y3".to_string(), None, true),
-            "Y4" => {
-                println!("get_path: Y4: current_path: {current_path}, next_segment: {next_segment}, last_path: {last_path}");
-                //must be part of _301LoopY4 loop
-                let new_path = current_path.push("loop_y4".to_string(), Some(0), false);
-                let x = _301LoopR4::get_path(&new_path, next_segment, last_path);
-                x.next_op(PathOperation::Pop)
-
-                // let counter = match last_path.elem.last().unwrap().vec_position {
-                //     Some(count) => count + 1,
-                //     None => 0,
-                // };
-                // let new_path = current_path.push("loop_y4".to_string(), Some(counter), false);
-                // let x = _301LoopY4::get_path(&new_path, next_segment, last_path);
-                // x.next_op(PathOperation::Pop)
-            }
-            "N9" => {
-                let counter = match last_path.elem.last().unwrap().vec_position {
-                    Some(count) => count + 1,
-                    None => 0,
-                };
-                current_path.push("N9".to_string(), Some(counter), true)
-            }
-            "N1" => {
-                let counter = match last_path.elem.last().unwrap().vec_position {
-                    Some(count) => count + 1,
-                    None => 0,
-                };
-                current_path.push("N1".to_string(), Some(counter), true)
-            }
-            "H3" => current_path.push("h3".to_string(), None, true),
-            "SE" => current_path.push("se".to_string(), None, true),
-            _ => {
-                //must be part of _301LoopR4 loop
-                let v = last_path.pop();
-                if !v.elem.is_empty() {
-                    let last_elem = v.elem.last().unwrap();
-                    let counter = if last_elem.name == "loop_r4" {
-                        match last_path.pop().elem.last().unwrap().vec_position {
-                            Some(count) => count + 1,
-                            None => 0,
-                        }
-                    } else {
-                        0
-                    };
-                    let new_path = current_path.push("loop_r4".to_string(), Some(counter), false);
-                    let x = _301LoopR4::get_path(&new_path, next_segment, last_path);
-                    x.next_op(PathOperation::Pop)
-                } else {
-                    last_path.clone()
-                }
-            }
-        }
-    }
-
-    fn get_type_name() -> String {
-        "_301".to_string()
-    }
-}
-
 #[derive(Serialize, Deserialize, Clone, Default, Debug)]
 pub struct _301LoopLx {
     pub lx: LX,
@@ -716,19 +715,6 @@ pub struct _301LoopLx {
 pub struct _301LoopY4 {
     pub y4: Option<Y4>,
     pub w09: Option<W09>,
-}
-
-impl Reflect for _301LoopY4 {
-    fn get_type_name() -> String {
-        "_301LoopY4".to_string()
-    }
-    fn get_path(current_path: &Path, next_segment: &str, last_path: &Path) -> Path {
-        match next_segment {
-            "Y4" => current_path.push("y4".to_string(), None, true),
-            "W09" => last_path.pop().push("w09".to_string(), Some(0), true),
-            _ => Path::default(),
-        }
-    }
 }
 
 #[derive(Serialize, Deserialize, Clone, Default, Debug)]
@@ -752,19 +738,6 @@ pub struct _301LoopR4 {
     #[serde(default)]
     #[serde(skip_serializing_if = "Vec::is_empty")]
     pub dtm: Vec<DTM>,
-}
-
-impl Reflect for _301LoopR4 {
-    fn get_type_name() -> String {
-        "_301LoopR4".to_string()
-    }
-    fn get_path(current_path: &Path, next_segment: &str, last_path: &Path) -> Path {
-        match next_segment {
-            "R4" => current_path.push("r4".to_string(), None, true),
-            "DTM" => last_path.pop().push("dtm".to_string(), Some(0), true),
-            _ => Path::default(),
-        }
-    }
 }
 
 /// 309 - U.S. Customs Manifest
@@ -1145,28 +1118,6 @@ impl<'a> Parser<&'a str, _310, nom::error::Error<&'a str>> for _310 {
     }
 }
 
-impl Reflect for _310 {
-    fn get_path(current_path: &Path, next_segment: &str, last_path: &Path) -> Path {
-        match next_segment {
-            "ST" => current_path.push("st".to_string(), None, true),
-            "B3" => current_path.push("b3".to_string(), None, true),
-            "B2A" => current_path.push("b2a".to_string(), None, true),
-            "Y6" => {
-                let counter = match last_path.elem.last().unwrap().vec_position {
-                    Some(count) => count + 1,
-                    None => 0,
-                };
-                current_path.push("y6".to_string(), Some(counter), true)
-            }
-            _ => Path::default(),
-        }
-    }
-
-    fn get_type_name() -> String {
-        "_310".to_string()
-    }
-}
-
 #[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
 pub struct _310LoopN1 {
     pub n1: N1,
@@ -1280,69 +1231,12 @@ impl<'a> Parser<&'a str, _315, nom::error::Error<&'a str>> for _315 {
     }
 }
 
-impl Reflect for _315 {
-    fn get_path(current_path: &Path, next_segment: &str, last_path: &Path) -> Path {
-        match next_segment {
-            "ST" => current_path.push("st".to_string(), None, true),
-            "B4" => current_path.push("b4".to_string(), None, true),
-            "N9" => {
-                let counter = match last_path.elem.last().unwrap().vec_position {
-                    Some(count) => count + 1,
-                    None => 0,
-                };
-                current_path.push("n9".to_string(), Some(counter), true)
-            }
-            "Q2" => current_path.push("q2".to_string(), None, true),
-            "SG" => current_path.push("sg".to_string(), Some(0), true),
-            "V9" => current_path.push("v9".to_string(), None, true),
-            "SE" => current_path.push("se".to_string(), None, true),
-            _ => {
-                //must be part of _315LoopR4 loop
-                let v = last_path.pop();
-                if !v.elem.is_empty() {
-                    let last_elem = v.elem.last().unwrap();
-                    let counter = if last_elem.name == "loop_r4" {
-                        match last_path.pop().elem.last().unwrap().vec_position {
-                            Some(count) => count + 1,
-                            None => 0,
-                        }
-                    } else {
-                        0
-                    };
-                    let new_path = current_path.push("loop_r4".to_string(), Some(counter), false);
-                    let x = _315LoopR4::get_path(&new_path, next_segment, last_path);
-                    x.next_op(PathOperation::Pop)
-                } else {
-                    last_path.clone()
-                }
-            }
-        }
-    }
-
-    fn get_type_name() -> String {
-        "_315".to_string()
-    }
-}
-
 #[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
 pub struct _315LoopR4 {
     pub r4: R4,
     #[serde(default)]
     #[serde(skip_serializing_if = "Vec::is_empty")]
     pub dtm: Vec<DTM>,
-}
-
-impl Reflect for _315LoopR4 {
-    fn get_type_name() -> String {
-        "_315LoopR4".to_string()
-    }
-    fn get_path(current_path: &Path, next_segment: &str, last_path: &Path) -> Path {
-        match next_segment {
-            "R4" => current_path.push("r4".to_string(), None, true),
-            "DTM" => last_path.pop().push("dtm".to_string(), Some(0), true),
-            _ => Path::default(),
-        }
-    }
 }
 
 /// 322 - Terminal Operations and Intermodal Ramp Activity
