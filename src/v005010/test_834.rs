@@ -2,6 +2,7 @@ use super::*;
 
 #[test]
 fn parse_834() {
+    //source: https://github.com/EdiFabric/X12.NET/blob/master/Files/HIPAA/BenefitEnrollment.txt
     let str = r#"ISA*00*          *00*          *ZZ*386028429      *30*382328142      *050221*0602*U*00501*000012345*0*P*:~
 GS*BE*386028429*382328142*20050221*0602*000012345*X*005010X220A1~
 ST*834*12345*005010X220A1~
@@ -833,6 +834,58 @@ SE*68*193230003~
 GE*3*193230001~
 IEA*1*193230001~"#;
     let (rest, obj) = Transmission::<_834>::parse(&str).unwrap();
+    println!("{rest}");
+    println!("{obj:?}");
+}
+
+#[test]
+fn parse_834_4() {
+    // source: https://www.vbaplans.com/media/xh1dj3ft/834-companion-guide0720.pdf
+    let s = r#"ISA*00* *00* *30*123456789 *ZZ*VBA *190424*1253*^*00501*000000001*0*T*:~
+GS*BE*123456789*VBA*20190402*1253*1*X*005010X220A1~
+ST*834*0001*005010X220A1~
+BGN*00*018140498*20190402*125319****4~
+REF*38*1234~
+DTP*007*D8*20191011~
+N1*P5*VBA GROUP NAME*FI*123456789~
+N1*IN*VBA*FI*25-1149206~
+INS*Y*18*030**A***FT~
+REF*0F*123456789~
+DTP*336*D8*20190101~
+NM1*IL*1*Doe*John*M***34*123456789~
+PER*IP**HP*4128814900~
+N3*400 Lydia Street~
+N4*Carnegie*PA*15106~
+DMG*D8*19790910*M~
+HD*030**VIS*1234*EMP~
+DTP*348*D8*20190101~
+REF*1L*0000~
+INS*Y*18*030**A***FT~
+REF*0F*987654321~
+DTP*336*D8*20190101~
+NM1*IL*1*Flinstone*Fred*M***34*987654321~
+PER*IP**HP*4128814901~
+N3*300 Lydia Street~
+N4*Carnegie*PA*15106~
+DMG*D8*19801010*M~
+HD*030**VIS*1234*ECH~
+DTP*348*D8*20190101~
+REF*1L*0000~
+INS*N*19*030**A~
+REF*0F*987654321~
+DTP*336*D8*20190101~
+NM1*IL*1*Flinstone*Jane*M***34*923456781~
+PER*IP**HP*4128814901~
+N3*300 Lydia Street~
+N4*Carnegie*PA*15106~
+DMG*D8*20000101*F~
+HD*030**VIS*1234~
+DTP*348*D8*20190101~
+REF*1L*0000~
+SE*40*0001~
+GE*1*1~
+IEA*1*000000001~"#;
+    let (rest, obj) = Transmission::<_834>::parse(s).unwrap();
     println!("{rest}");
     println!("{obj:?}");
 }
