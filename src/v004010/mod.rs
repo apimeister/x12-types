@@ -6,10 +6,11 @@ use nom::combinator::opt;
 use nom::combinator::peek;
 use nom::multi::many0;
 use nom::IResult;
+pub use segment::*;
 use serde::{Deserialize, Serialize};
 use std::fmt::Debug;
+
 mod segment;
-pub use segment::*;
 
 #[cfg(test)]
 mod test_204;

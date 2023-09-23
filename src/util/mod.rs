@@ -39,3 +39,7 @@ pub fn parse_line<'a>(input: &'a str, segment_name: &str) -> IResult<&'a str, Ve
 pub trait Parser<I, O, E> {
     fn parse(str: I) -> IResult<I, O>;
 }
+
+pub fn unborrow_string(input: &&str) -> String {
+    input.to_string()
+}
