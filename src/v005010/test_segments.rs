@@ -115,10 +115,9 @@ fn test_se() {
     assert_eq!(obj._01, "68");
 }
 
-
 #[test]
 fn test_act() {
-    let obj1 = ACT{
+    let obj1 = ACT {
         _01: "".to_string(),
         _02: Some("".to_string()),
         _03: Some("".to_string()),

@@ -581,7 +581,7 @@ IEA*1*193290002~"#;
 }
 
 #[test]
-fn parse_834_3(){
+fn parse_834_3() {
     // source:https://www.emedny.org/hipaa/5010/transactions/834_sample_files/MCE834Sample_verification.txt
     let str = r#"ISA*00*          *00*          *ZZ*EMEDNYVER      *ZZ*8-DIGIT PLAN ID*191119*2020*^*00501*193230001*0*T*:~
 GS*BE*EMEDNYVER*ETIN*20191119*202000*193230001*X*005010X220A1~
