@@ -1,11 +1,8 @@
-name: build
+name: check-pr
 on:
-  workflow_dispatch:
-  push:
-    branches:
-    - main
+  pull_request:
 jobs:
-  build:
+  check-pr:
     permissions: write-all
     runs-on: ubuntu-latest
     steps:
@@ -42,3 +39,9 @@ jobs:
       with:
         command: test
         args: -q
+    - name: merge
+      if: ${{ github.actor == 'dependabot[bot]' }}
+      run: |
+        gh pr merge --auto --merge $GITHUB_HEAD_REF
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
