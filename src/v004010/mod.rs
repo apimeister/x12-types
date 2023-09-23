@@ -206,7 +206,6 @@ impl<'a> Parser<&'a str, _204, nom::error::Error<&'a str>> for _204 {
         let mut loop_100 = vec![];
         let mut loop_rest = rest.clone();
         while peek(opt(N1::parse))(loop_rest)?.1.is_some() {
-            println!("found loop 100");
             let (rest, n1) = opt(N1::parse)(loop_rest)?;
             let (rest, n2) = opt(N2::parse)(rest)?;
             let (rest, n3) = many0(N3::parse)(rest)?;
