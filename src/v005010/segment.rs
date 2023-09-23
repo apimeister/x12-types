@@ -44,6 +44,35 @@ impl<'a> Parser<&'a str, ACT, nom::error::Error<&'a str>> for ACT {
     }
 }
 
+/// AD1 - Adjustment Amount
+#[derive(Serialize, Deserialize, Clone, Default, Debug, Validate, PartialEq, Eq)]
+pub struct AD1 {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+}
+
+impl<'a> Parser<&'a str, AD1, nom::error::Error<&'a str>> for AD1 {
+    fn parse(input: &'a str) -> IResult<&'a str, AD1> {
+        let (rest, vars) = crate::util::parse_line(input, "AD1")?;
+        let obj = AD1 {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).map(util::unborrow_string),
+            _03: vars.get(2).map(util::unborrow_string),
+            _04: vars.get(3).map(util::unborrow_string),
+            _05: vars.get(4).map(util::unborrow_string),
+        };
+        Ok((rest, obj))
+    }
+}
+
 /// AMT - Monitary Amount Information
 #[derive(Serialize, Deserialize, Clone, Default, Debug, Validate, PartialEq, Eq)]
 pub struct AMT {
@@ -176,6 +205,44 @@ impl<'a> Parser<&'a str, DMG, nom::error::Error<&'a str>> for DMG {
             _09: vars.get(8).map(util::unborrow_string),
             _10: vars.get(9).map(util::unborrow_string),
             _11: vars.get(10).map(util::unborrow_string),
+        };
+        Ok((rest, obj))
+    }
+}
+
+/// DSB - Disability Information
+#[derive(Serialize, Deserialize, Clone, Default, Debug, Validate, PartialEq, Eq)]
+pub struct DSB {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+}
+
+impl<'a> Parser<&'a str, DSB, nom::error::Error<&'a str>> for DSB {
+    fn parse(input: &'a str) -> IResult<&'a str, DSB> {
+        let (rest, vars) = crate::util::parse_line(input, "DSB")?;
+        let obj = DSB {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).map(util::unborrow_string),
+            _03: vars.get(2).map(util::unborrow_string),
+            _04: vars.get(3).map(util::unborrow_string),
+            _05: vars.get(4).map(util::unborrow_string),
+            _06: vars.get(5).map(util::unborrow_string),
+            _07: vars.get(6).map(util::unborrow_string),
+            _08: vars.get(7).map(util::unborrow_string),
         };
         Ok((rest, obj))
     }
@@ -588,6 +655,41 @@ impl<'a> Parser<&'a str, INS, nom::error::Error<&'a str>> for INS {
     }
 }
 
+/// INV - Incestment Vehicle Selection
+#[derive(Serialize, Deserialize, Clone, Default, Debug, Validate, PartialEq, Eq)]
+pub struct INV {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+}
+
+impl<'a> Parser<&'a str, INV, nom::error::Error<&'a str>> for INV {
+    fn parse(input: &'a str) -> IResult<&'a str, INV> {
+        let (rest, vars) = crate::util::parse_line(input, "INV")?;
+        let obj = INV {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).map(util::unborrow_string),
+            _03: vars.get(2).map(util::unborrow_string),
+            _04: vars.get(3).map(util::unborrow_string),
+            _05: vars.get(4).map(util::unborrow_string),
+            _06: vars.get(5).map(util::unborrow_string),
+            _07: vars.get(6).map(util::unborrow_string),
+        };
+        Ok((rest, obj))
+    }
+}
+
 /// ISA - Interchange Control Header
 ///
 /// To start and identify an interchange of zero or more functional groups and interchange-related control segments
@@ -771,6 +873,29 @@ impl<'a> Parser<&'a str, ISA, nom::error::Error<&'a str>> for ISA {
     }
 }
 
+/// K3 - File Information
+#[derive(Serialize, Deserialize, Clone, Default, Debug, Validate, PartialEq, Eq)]
+pub struct K3 {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+}
+
+impl<'a> Parser<&'a str, K3, nom::error::Error<&'a str>> for K3 {
+    fn parse(input: &'a str) -> IResult<&'a str, K3> {
+        let (rest, vars) = crate::util::parse_line(input, "K3")?;
+        let obj = K3 {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).map(util::unborrow_string),
+            _03: vars.get(2).map(util::unborrow_string),
+        };
+        Ok((rest, obj))
+    }
+}
+
 /// LE - Loop Trailer
 #[derive(Serialize, Deserialize, Clone, Default, Debug, Validate, PartialEq, Eq)]
 pub struct LE {
@@ -829,6 +954,23 @@ impl<'a> Parser<&'a str, LUI, nom::error::Error<&'a str>> for LUI {
             _03: vars.get(2).map(util::unborrow_string),
             _04: vars.get(3).map(util::unborrow_string),
             _05: vars.get(4).map(util::unborrow_string),
+        };
+        Ok((rest, obj))
+    }
+}
+
+/// LX - Transaction Set Line Number
+#[derive(Serialize, Deserialize, Clone, Default, Debug, Validate, PartialEq, Eq)]
+pub struct LX {
+    #[serde(rename = "01")]
+    pub _01: String,
+}
+
+impl<'a> Parser<&'a str, LX, nom::error::Error<&'a str>> for LX {
+    fn parse(input: &'a str) -> IResult<&'a str, LX> {
+        let (rest, vars) = crate::util::parse_line(input, "LX")?;
+        let obj = LX {
+            _01: vars.first().unwrap().to_string(),
         };
         Ok((rest, obj))
     }
@@ -1032,6 +1174,35 @@ impl<'a> Parser<&'a str, PER, nom::error::Error<&'a str>> for PER {
     }
 }
 
+/// PLA - Place or Location
+#[derive(Serialize, Deserialize, Clone, Default, Debug, Validate, PartialEq, Eq)]
+pub struct PLA {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: String,
+    #[serde(rename = "03")]
+    pub _03: String,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+}
+
+impl<'a> Parser<&'a str, PLA, nom::error::Error<&'a str>> for PLA {
+    fn parse(input: &'a str) -> IResult<&'a str, PLA> {
+        let (rest, vars) = crate::util::parse_line(input, "PLA")?;
+        let obj = PLA {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).unwrap().to_string(),
+            _03: vars.get(2).unwrap().to_string(),
+            _04: vars.get(3).map(util::unborrow_string),
+            _05: vars.get(4).map(util::unborrow_string),
+        };
+        Ok((rest, obj))
+    }
+}
+
 /// PM - Electronic Funds Transfer Information
 #[derive(Serialize, Deserialize, Clone, Default, Debug, Validate, PartialEq, Eq)]
 pub struct PM {
@@ -1064,6 +1235,38 @@ impl<'a> Parser<&'a str, PM, nom::error::Error<&'a str>> for PM {
     }
 }
 
+/// PRV - Provider Information
+#[derive(Serialize, Deserialize, Clone, Default, Debug, Validate, PartialEq, Eq)]
+pub struct PRV {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+}
+
+impl<'a> Parser<&'a str, PRV, nom::error::Error<&'a str>> for PRV {
+    fn parse(input: &'a str) -> IResult<&'a str, PRV> {
+        let (rest, vars) = crate::util::parse_line(input, "PRV")?;
+        let obj = PRV {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).map(util::unborrow_string),
+            _03: vars.get(2).map(util::unborrow_string),
+            _04: vars.get(3).map(util::unborrow_string),
+            _05: vars.get(4).map(util::unborrow_string),
+            _06: vars.get(5).map(util::unborrow_string),
+        };
+        Ok((rest, obj))
+    }
+}
+
 /// REF - Reference Information
 #[derive(Serialize, Deserialize, Clone, Default, Debug, Validate, PartialEq, Eq)]
 pub struct REF {
@@ -1085,6 +1288,67 @@ impl<'a> Parser<&'a str, REF, nom::error::Error<&'a str>> for REF {
             _02: vars.get(1).map(util::unborrow_string),
             _03: vars.get(2).map(util::unborrow_string),
             _04: vars.get(3).map(util::unborrow_string),
+        };
+        Ok((rest, obj))
+    }
+}
+
+/// REL - Relationship
+#[derive(Serialize, Deserialize, Clone, Default, Debug, Validate, PartialEq, Eq)]
+pub struct REL {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+}
+
+impl<'a> Parser<&'a str, REL, nom::error::Error<&'a str>> for REL {
+    fn parse(input: &'a str) -> IResult<&'a str, REL> {
+        let (rest, vars) = crate::util::parse_line(input, "REL")?;
+        let obj = REL {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).map(util::unborrow_string),
+        };
+        Ok((rest, obj))
+    }
+}
+
+/// RP - Retirement Product
+#[derive(Serialize, Deserialize, Clone, Default, Debug, Validate, PartialEq, Eq)]
+pub struct RP {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+}
+
+impl<'a> Parser<&'a str, RP, nom::error::Error<&'a str>> for RP {
+    fn parse(input: &'a str) -> IResult<&'a str, RP> {
+        let (rest, vars) = crate::util::parse_line(input, "RP")?;
+        let obj = RP {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).map(util::unborrow_string),
+            _03: vars.get(2).map(util::unborrow_string),
+            _04: vars.get(3).map(util::unborrow_string),
+            _05: vars.get(4).map(util::unborrow_string),
+            _06: vars.get(5).map(util::unborrow_string),
+            _07: vars.get(6).map(util::unborrow_string),
+            _08: vars.get(7).map(util::unborrow_string),
+            _09: vars.get(8).map(util::unborrow_string),
         };
         Ok((rest, obj))
     }

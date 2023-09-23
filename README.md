@@ -25,6 +25,8 @@ So far, there is also no validation attached to the structs.
   * 404 - Rail Carrier Shipment Information
   * 997 - Functional Acknowledgment
   * 998 - Set Cancellation
+* 005010
+  * 834 - Benefit Enrollment and Maintenance
 
 Something missing? Please open an issue.
 

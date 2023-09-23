@@ -1,3 +1,7 @@
+# 0.7.3 2023-09-24
+
+* added 005010/834 - Benefit Enrollment and Maintenance
+
 # 0.7.2 2023-09-22
 
 * remove hard serde dependency (only used for testing)
