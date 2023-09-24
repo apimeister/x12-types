@@ -1,3 +1,5 @@
+//! v005010 repesents all entities of the 005010 specification.
+
 use nom::{
     combinator::{opt, peek},
     multi::many0,
