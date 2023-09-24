@@ -1512,13 +1512,7 @@ pub struct G3 {
 
 impl<'a> Parser<&'a str, G3, nom::error::Error<&'a str>> for G3 {
     fn parse(input: &'a str) -> IResult<&'a str, G3> {
-        let (rest, vars) = delimited(tag("G3*"), take_until("~"), tag("~"))(input)?;
-        let (_, vars) = separated_list0(
-            tag("*"),
-            take_while(|x: char| {
-                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
-            }),
-        )(vars)?;
+        let (rest, vars) = crate::util::parse_line(input, "G3")?;
         let obj = G3 {
             _01: vars.first().map(|x| x.to_string()),
             _02: vars.get(1).unwrap().to_string(),
@@ -1527,8 +1521,6 @@ impl<'a> Parser<&'a str, G3, nom::error::Error<&'a str>> for G3 {
             _05: vars.get(4).map(|x| x.to_string()),
             _06: vars.get(5).map(|x| x.to_string()),
         };
-        // look for trailing newline
-        let (rest, _) = opt(newline)(rest)?;
         Ok((rest, obj))
     }
 }
@@ -1566,13 +1558,7 @@ pub struct G61 {
 
 impl<'a> Parser<&'a str, G61, nom::error::Error<&'a str>> for G61 {
     fn parse(input: &'a str) -> IResult<&'a str, G61> {
-        let (rest, vars) = delimited(tag("G61*"), take_until("~"), tag("~"))(input)?;
-        let (_, vars) = separated_list0(
-            tag("*"),
-            take_while(|x: char| {
-                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
-            }),
-        )(vars)?;
+        let (rest, vars) = crate::util::parse_line(input, "G61")?;
         let obj = G61 {
             _01: vars.first().unwrap().to_string(),
             _02: vars.get(1).unwrap().to_string(),
@@ -1580,8 +1566,6 @@ impl<'a> Parser<&'a str, G61, nom::error::Error<&'a str>> for G61 {
             _04: vars.get(3).map(|x| x.to_string()),
             _05: vars.get(4).map(|x| x.to_string()),
         };
-        // look for trailing newline
-        let (rest, _) = opt(newline)(rest)?;
         Ok((rest, obj))
     }
 }
@@ -1625,13 +1609,7 @@ pub struct G62 {
 
 impl<'a> Parser<&'a str, G62, nom::error::Error<&'a str>> for G62 {
     fn parse(input: &'a str) -> IResult<&'a str, G62> {
-        let (rest, vars) = delimited(tag("G62*"), take_until("~"), tag("~"))(input)?;
-        let (_, vars) = separated_list0(
-            tag("*"),
-            take_while(|x: char| {
-                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
-            }),
-        )(vars)?;
+        let (rest, vars) = crate::util::parse_line(input, "G62")?;
         let obj = G62 {
             _01: vars.first().map(|x| x.to_string()),
             _02: vars.get(1).map(|x| x.to_string()),
@@ -1639,8 +1617,6 @@ impl<'a> Parser<&'a str, G62, nom::error::Error<&'a str>> for G62 {
             _04: vars.get(3).map(|x| x.to_string()),
             _05: vars.get(4).map(|x| x.to_string()),
         };
-        // look for trailing newline
-        let (rest, _) = opt(newline)(rest)?;
         Ok((rest, obj))
     }
 }
@@ -1742,19 +1718,11 @@ pub struct GE {
 
 impl<'a> Parser<&'a str, GE, nom::error::Error<&'a str>> for GE {
     fn parse(input: &'a str) -> IResult<&'a str, GE> {
-        let (rest, vars) = delimited(tag("GE*"), take_until("~"), tag("~"))(input)?;
-        let (_, vars) = separated_list0(
-            tag("*"),
-            take_while(|x: char| {
-                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
-            }),
-        )(vars)?;
+        let (rest, vars) = crate::util::parse_line(input, "GE")?;
         let obj = GE {
             _01: vars.first().unwrap().to_string(),
             _02: vars.get(1).unwrap().to_string(),
         };
-        // look for trailing newline
-        let (rest, _) = opt(newline)(rest)?;
         Ok((rest, obj))
     }
 }
@@ -1832,13 +1800,7 @@ pub struct GS {
 
 impl<'a> Parser<&'a str, GS, nom::error::Error<&'a str>> for GS {
     fn parse(input: &'a str) -> IResult<&'a str, GS> {
-        let (rest, vars) = delimited(tag("GS*"), take_until("~"), tag("~"))(input)?;
-        let (_, vars) = separated_list0(
-            tag("*"),
-            take_while(|x: char| {
-                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
-            }),
-        )(vars)?;
+        let (rest, vars) = crate::util::parse_line(input, "GS")?;
         let obj = GS {
             _01: vars.first().unwrap().to_string(),
             _02: vars.get(1).unwrap().to_string(),
@@ -1849,8 +1811,6 @@ impl<'a> Parser<&'a str, GS, nom::error::Error<&'a str>> for GS {
             _07: vars.get(4).unwrap().to_string(),
             _08: vars.get(4).unwrap().to_string(),
         };
-        // look for trailing newline
-        let (rest, _) = opt(newline)(rest)?;
         Ok((rest, obj))
     }
 }
@@ -1935,13 +1895,7 @@ pub struct H3 {
 
 impl<'a> Parser<&'a str, H3, nom::error::Error<&'a str>> for H3 {
     fn parse(input: &'a str) -> IResult<&'a str, H3> {
-        let (rest, vars) = delimited(tag("H3*"), take_until("~"), tag("~"))(input)?;
-        let (_, vars) = separated_list0(
-            tag("*"),
-            take_while(|x: char| {
-                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
-            }),
-        )(vars)?;
+        let (rest, vars) = crate::util::parse_line(input, "H3")?;
         let obj = H3 {
             _01: vars.first().map(|x| x.to_string()),
             _02: vars.get(1).map(|x| x.to_string()),
@@ -1949,8 +1903,6 @@ impl<'a> Parser<&'a str, H3, nom::error::Error<&'a str>> for H3 {
             _04: vars.get(3).map(|x| x.to_string()),
             _05: vars.get(4).map(|x| x.to_string()),
         };
-        // look for trailing newline
-        let (rest, _) = opt(newline)(rest)?;
         Ok((rest, obj))
     }
 }
@@ -2038,11 +1990,11 @@ pub struct IEA {
 
 impl<'a> Parser<&'a str, IEA, nom::error::Error<&'a str>> for IEA {
     fn parse(input: &'a str) -> IResult<&'a str, IEA> {
-        let (rest, object_str) = delimited(tag("IEA*"), take_until("~"), tag("~"))(input)?;
-        let mut obj = IEA::default();
-        let vars: Vec<&str> = object_str.split('*').collect();
-        obj._01 = vars.first().unwrap().to_string();
-        obj._02 = vars.get(1).unwrap().to_string();
+        let (rest, vars) = crate::util::parse_line(input, "IEA")?;
+        let obj = IEA {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).unwrap().to_string(),
+        };
         Ok((rest, obj))
     }
 }
@@ -2207,25 +2159,25 @@ pub struct ISA {
 
 impl<'a> Parser<&'a str, ISA, nom::error::Error<&'a str>> for ISA {
     fn parse(input: &'a str) -> IResult<&'a str, ISA> {
-        let (rest, object_str) = delimited(tag("ISA*"), take_until("~"), tag("~"))(input)?;
-        let mut obj = ISA::default();
-        let vars: Vec<&str> = object_str.split('*').collect();
-        obj._01 = vars.first().unwrap().to_string();
-        obj._02 = vars.get(1).unwrap().to_string();
-        obj._03 = vars.get(2).unwrap().to_string();
-        obj._04 = vars.get(3).unwrap().to_string();
-        obj._05 = vars.get(4).unwrap().to_string();
-        obj._06 = vars.get(5).unwrap().to_string();
-        obj._07 = vars.get(6).unwrap().to_string();
-        obj._08 = vars.get(7).unwrap().to_string();
-        obj._09 = vars.get(8).unwrap().to_string();
-        obj._10 = vars.get(9).unwrap().to_string();
-        obj._11 = vars.get(10).unwrap().to_string();
-        obj._12 = vars.get(11).unwrap().to_string();
-        obj._13 = vars.get(12).unwrap().to_string();
-        obj._14 = vars.get(13).unwrap().to_string();
-        obj._15 = vars.get(14).unwrap().to_string();
-        obj._16 = vars.get(15).unwrap().to_string();
+        let (rest, vars) = crate::util::parse_line(input, "ISA")?;
+        let obj = ISA {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).unwrap().to_string(),
+            _03: vars.get(2).unwrap().to_string(),
+            _04: vars.get(3).unwrap().to_string(),
+            _05: vars.get(4).unwrap().to_string(),
+            _06: vars.get(5).unwrap().to_string(),
+            _07: vars.get(6).unwrap().to_string(),
+            _08: vars.get(7).unwrap().to_string(),
+            _09: vars.get(8).unwrap().to_string(),
+            _10: vars.get(9).unwrap().to_string(),
+            _11: vars.get(10).unwrap().to_string(),
+            _12: vars.get(11).unwrap().to_string(),
+            _13: vars.get(12).unwrap().to_string(),
+            _14: vars.get(13).unwrap().to_string(),
+            _15: vars.get(14).unwrap().to_string(),
+            _16: vars.get(15).unwrap().to_string(),
+        };
         Ok((rest, obj))
     }
 }
@@ -2248,19 +2200,11 @@ pub struct K1 {
 
 impl<'a> Parser<&'a str, K1, nom::error::Error<&'a str>> for K1 {
     fn parse(input: &'a str) -> IResult<&'a str, K1> {
-        let (rest, vars) = delimited(tag("K1*"), take_until("~"), tag("~"))(input)?;
-        let (_, vars) = separated_list0(
-            tag("*"),
-            take_while(|x: char| {
-                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
-            }),
-        )(vars)?;
+        let (rest, vars) = crate::util::parse_line(input, "K1")?;
         let obj = K1 {
             _01: vars.first().unwrap().to_string(),
             _02: vars.get(1).map(|x| x.to_string()),
         };
-        // look for trailing newline
-        let (rest, _) = opt(newline)(rest)?;
         Ok((rest, obj))
     }
 }
@@ -2322,13 +2266,7 @@ pub struct L0 {
 
 impl<'a> Parser<&'a str, L0, nom::error::Error<&'a str>> for L0 {
     fn parse(input: &'a str) -> IResult<&'a str, L0> {
-        let (rest, vars) = delimited(tag("L0*"), take_until("~"), tag("~"))(input)?;
-        let (_, vars) = separated_list0(
-            tag("*"),
-            take_while(|x: char| {
-                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
-            }),
-        )(vars)?;
+        let (rest, vars) = crate::util::parse_line(input, "L0")?;
         let obj = L0 {
             _01: vars.first().map(|x| x.to_string()),
             _02: vars.get(1).map(|x| x.to_string()),
@@ -2346,8 +2284,6 @@ impl<'a> Parser<&'a str, L0, nom::error::Error<&'a str>> for L0 {
             _14: vars.get(13).map(|x| x.to_string()),
             _15: vars.get(14).map(|x| x.to_string()),
         };
-        // look for trailing newline
-        let (rest, _) = opt(newline)(rest)?;
         Ok((rest, obj))
     }
 }
@@ -2427,13 +2363,7 @@ pub struct L1 {
 
 impl<'a> Parser<&'a str, L1, nom::error::Error<&'a str>> for L1 {
     fn parse(input: &'a str) -> IResult<&'a str, L1> {
-        let (rest, vars) = delimited(tag("L1*"), take_until("~"), tag("~"))(input)?;
-        let (_, vars) = separated_list0(
-            tag("*"),
-            take_while(|x: char| {
-                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
-            }),
-        )(vars)?;
+        let (rest, vars) = crate::util::parse_line(input, "L1")?;
         let obj = L1 {
             _01: vars.first().map(|x| x.to_string()),
             _02: vars.get(1).map(|x| x.to_string()),
@@ -2457,8 +2387,6 @@ impl<'a> Parser<&'a str, L1, nom::error::Error<&'a str>> for L1 {
             _20: vars.get(19).map(|x| x.to_string()),
             _21: vars.get(20).map(|x| x.to_string()),
         };
-        // look for trailing newline
-        let (rest, _) = opt(newline)(rest)?;
         Ok((rest, obj))
     }
 }
@@ -2520,13 +2448,7 @@ pub struct L3 {
 
 impl<'a> Parser<&'a str, L3, nom::error::Error<&'a str>> for L3 {
     fn parse(input: &'a str) -> IResult<&'a str, L3> {
-        let (rest, vars) = delimited(tag("L3*"), take_until("~"), tag("~"))(input)?;
-        let (_, vars) = separated_list0(
-            tag("*"),
-            take_while(|x: char| {
-                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
-            }),
-        )(vars)?;
+        let (rest, vars) = crate::util::parse_line(input, "L3")?;
         let obj = L3 {
             _01: vars.first().map(|x| x.to_string()),
             _02: vars.get(1).map(|x| x.to_string()),
@@ -2544,8 +2466,6 @@ impl<'a> Parser<&'a str, L3, nom::error::Error<&'a str>> for L3 {
             _14: vars.get(13).map(|x| x.to_string()),
             _15: vars.get(14).map(|x| x.to_string()),
         };
-        // look for trailing newline
-        let (rest, _) = opt(newline)(rest)?;
         Ok((rest, obj))
     }
 }
@@ -2617,13 +2537,7 @@ pub struct L5 {
 
 impl<'a> Parser<&'a str, L5, nom::error::Error<&'a str>> for L5 {
     fn parse(input: &'a str) -> IResult<&'a str, L5> {
-        let (rest, vars) = delimited(tag("L5*"), take_until("~"), tag("~"))(input)?;
-        let (_, vars) = separated_list0(
-            tag("*"),
-            take_while(|x: char| {
-                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
-            }),
-        )(vars)?;
+        let (rest, vars) = crate::util::parse_line(input, "L5")?;
         let obj = L5 {
             _01: vars.first().map(|x| x.to_string()),
             _02: vars.get(1).map(|x| x.to_string()),
@@ -2636,8 +2550,6 @@ impl<'a> Parser<&'a str, L5, nom::error::Error<&'a str>> for L5 {
             _09: vars.get(8).map(|x| x.to_string()),
             _10: vars.get(9).map(|x| x.to_string()),
         };
-        // look for trailing newline
-        let (rest, _) = opt(newline)(rest)?;
         Ok((rest, obj))
     }
 }
@@ -2721,20 +2633,12 @@ pub struct L11 {
 
 impl<'a> Parser<&'a str, L11, nom::error::Error<&'a str>> for L11 {
     fn parse(input: &'a str) -> IResult<&'a str, L11> {
-        let (rest, vars) = delimited(tag("L11*"), take_until("~"), tag("~"))(input)?;
-        let (_, vars) = separated_list0(
-            tag("*"),
-            take_while(|x: char| {
-                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
-            }),
-        )(vars)?;
+        let (rest, vars) = crate::util::parse_line(input, "L11")?;
         let obj = L11 {
             _01: vars.first().map(|x| x.to_string()),
             _02: vars.get(1).map(|x| x.to_string()),
             _03: vars.get(2).map(|x| x.to_string()),
         };
-        // look for trailing newline
-        let (rest, _) = opt(newline)(rest)?;
         Ok((rest, obj))
     }
 }
@@ -2790,13 +2694,7 @@ pub struct LAD {
 
 impl<'a> Parser<&'a str, LAD, nom::error::Error<&'a str>> for LAD {
     fn parse(input: &'a str) -> IResult<&'a str, LAD> {
-        let (rest, vars) = delimited(tag("LAD*"), take_until("~"), tag("~"))(input)?;
-        let (_, vars) = separated_list0(
-            tag("*"),
-            take_while(|x: char| {
-                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
-            }),
-        )(vars)?;
+        let (rest, vars) = crate::util::parse_line(input, "LAD")?;
         let obj = LAD {
             _01: vars.first().map(|x| x.to_string()),
             _02: vars.get(1).map(|x| x.to_string()),
@@ -2812,8 +2710,6 @@ impl<'a> Parser<&'a str, LAD, nom::error::Error<&'a str>> for LAD {
             _12: vars.get(11).map(|x| x.to_string()),
             _13: vars.get(12).map(|x| x.to_string()),
         };
-        // look for trailing newline
-        let (rest, _) = opt(newline)(rest)?;
         Ok((rest, obj))
     }
 }
@@ -3068,21 +2964,13 @@ pub struct LH6 {
 
 impl<'a> Parser<&'a str, LH6, nom::error::Error<&'a str>> for LH6 {
     fn parse(input: &'a str) -> IResult<&'a str, LH6> {
-        let (rest, vars) = delimited(tag("LH6*"), take_until("~"), tag("~"))(input)?;
-        let (_, vars) = separated_list0(
-            tag("*"),
-            take_while(|x: char| {
-                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
-            }),
-        )(vars)?;
+        let (rest, vars) = crate::util::parse_line(input, "LH6")?;
         let obj = LH6 {
             _01: vars.first().map(|x| x.to_string()),
             _02: vars.get(1).map(|x| x.to_string()),
             _03: vars.get(2).map(|x| x.to_string()),
             _04: vars.get(3).map(|x| x.to_string()),
         };
-        // look for trailing newline
-        let (rest, _) = opt(newline)(rest)?;
         Ok((rest, obj))
     }
 }
@@ -3159,18 +3047,10 @@ pub struct LX {
 
 impl<'a> Parser<&'a str, LX, nom::error::Error<&'a str>> for LX {
     fn parse(input: &'a str) -> IResult<&'a str, LX> {
-        let (rest, vars) = delimited(tag("LX*"), take_until("~"), tag("~"))(input)?;
-        let (_, vars) = separated_list0(
-            tag("*"),
-            take_while(|x: char| {
-                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
-            }),
-        )(vars)?;
+        let (rest, vars) = crate::util::parse_line(input, "LX")?;
         let obj = LX {
             _01: vars.first().unwrap().to_string(),
         };
-        // look for trailing newline
-        let (rest, _) = opt(newline)(rest)?;
         Ok((rest, obj))
     }
 }
@@ -3199,21 +3079,13 @@ pub struct M0 {
 
 impl<'a> Parser<&'a str, M0, nom::error::Error<&'a str>> for M0 {
     fn parse(input: &'a str) -> IResult<&'a str, M0> {
-        let (rest, vars) = delimited(tag("M0*"), take_until("~"), tag("~"))(input)?;
-        let (_, vars) = separated_list0(
-            tag("*"),
-            take_while(|x: char| {
-                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
-            }),
-        )(vars)?;
+        let (rest, vars) = crate::util::parse_line(input, "M0")?;
         let obj = M0 {
             _01: vars.first().unwrap().to_string(),
             _02: vars.get(1).map(|x| x.to_string()),
             _03: vars.get(2).map(|x| x.to_string()),
             _04: vars.get(3).map(|x| x.to_string()),
         };
-        // look for trailing newline
-        let (rest, _) = opt(newline)(rest)?;
         Ok((rest, obj))
     }
 }
@@ -3272,13 +3144,7 @@ pub struct M1 {
 
 impl<'a> Parser<&'a str, M1, nom::error::Error<&'a str>> for M1 {
     fn parse(input: &'a str) -> IResult<&'a str, M1> {
-        let (rest, vars) = delimited(tag("M1*"), take_until("~"), tag("~"))(input)?;
-        let (_, vars) = separated_list0(
-            tag("*"),
-            take_while(|x: char| {
-                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
-            }),
-        )(vars)?;
+        let (rest, vars) = crate::util::parse_line(input, "M1")?;
         let obj = M1 {
             _01: vars.first().map(|x| x.to_string()),
             _02: vars.get(1).map(|x| x.to_string()),
@@ -3293,8 +3159,6 @@ impl<'a> Parser<&'a str, M1, nom::error::Error<&'a str>> for M1 {
             _11: vars.get(10).map(|x| x.to_string()),
             _12: vars.get(11).map(|x| x.to_string()),
         };
-        // look for trailing newline
-        let (rest, _) = opt(newline)(rest)?;
         Ok((rest, obj))
     }
 }
@@ -3333,6 +3197,19 @@ pub struct M3 {
     pub _04: Option<String>,
 }
 
+impl<'a> Parser<&'a str, M3, nom::error::Error<&'a str>> for M3 {
+    fn parse(input: &'a str) -> IResult<&'a str, M3> {
+        let (rest, vars) = crate::util::parse_line(input, "M3")?;
+        let obj = M3 {
+            _01: vars.first().map(|x| x.to_string()),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).map(|x| x.to_string()),
+        };
+        Ok((rest, obj))
+    }
+}
+
 /// M7 - Seal Numbers
 ///
 /// To record seal numbers used and the organization that applied the seals
@@ -3360,13 +3237,7 @@ pub struct M7 {
 
 impl<'a> Parser<&'a str, M7, nom::error::Error<&'a str>> for M7 {
     fn parse(input: &'a str) -> IResult<&'a str, M7> {
-        let (rest, vars) = delimited(tag("M7*"), take_until("~"), tag("~"))(input)?;
-        let (_, vars) = separated_list0(
-            tag("*"),
-            take_while(|x: char| {
-                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
-            }),
-        )(vars)?;
+        let (rest, vars) = crate::util::parse_line(input, "M7")?;
         let obj = M7 {
             _01: vars.first().unwrap().to_string(),
             _02: vars.get(1).map(|x| x.to_string()),
@@ -3374,8 +3245,6 @@ impl<'a> Parser<&'a str, M7, nom::error::Error<&'a str>> for M7 {
             _04: vars.get(3).map(|x| x.to_string()),
             _05: vars.get(4).map(|x| x.to_string()),
         };
-        // look for trailing newline
-        let (rest, _) = opt(newline)(rest)?;
         Ok((rest, obj))
     }
 }
@@ -3424,6 +3293,27 @@ pub struct M10 {
     pub _11: Option<String>,
     #[serde(rename = "12")]
     pub _12: Option<String>,
+}
+
+impl<'a> Parser<&'a str, M10, nom::error::Error<&'a str>> for M10 {
+    fn parse(input: &'a str) -> IResult<&'a str, M10> {
+        let (rest, vars) = crate::util::parse_line(input, "M10")?;
+        let obj = M10 {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).map(|x| x.to_string()),
+            _05: vars.get(4).map(|x| x.to_string()),
+            _06: vars.get(5).map(|x| x.to_string()),
+            _07: vars.get(6).map(|x| x.to_string()),
+            _08: vars.get(7).map(|x| x.to_string()),
+            _09: vars.get(8).map(|x| x.to_string()),
+            _10: vars.get(9).map(|x| x.to_string()),
+            _11: vars.get(10).map(|x| x.to_string()),
+            _12: vars.get(11).map(|x| x.to_string()),
+        };
+        Ok((rest, obj))
+    }
 }
 
 /// M11 - Manifest Bill of Lading Details
@@ -3712,13 +3602,7 @@ pub struct MS3 {
 
 impl<'a> Parser<&'a str, MS3, nom::error::Error<&'a str>> for MS3 {
     fn parse(input: &'a str) -> IResult<&'a str, MS3> {
-        let (rest, vars) = delimited(tag("MS3*"), take_until("~"), tag("~"))(input)?;
-        let (_, vars) = separated_list0(
-            tag("*"),
-            take_while(|x: char| {
-                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
-            }),
-        )(vars)?;
+        let (rest, vars) = crate::util::parse_line(input, "MS3")?;
         let obj = MS3 {
             _01: vars.first().unwrap().to_string(),
             _02: vars.get(1).unwrap().to_string(),
@@ -3726,8 +3610,6 @@ impl<'a> Parser<&'a str, MS3, nom::error::Error<&'a str>> for MS3 {
             _04: vars.get(3).map(|x| x.to_string()),
             _05: vars.get(4).map(|x| x.to_string()),
         };
-        // look for trailing newline
-        let (rest, _) = opt(newline)(rest)?;
         Ok((rest, obj))
     }
 }
@@ -3768,13 +3650,7 @@ pub struct N1 {
 
 impl<'a> Parser<&'a str, N1, nom::error::Error<&'a str>> for N1 {
     fn parse(input: &'a str) -> IResult<&'a str, N1> {
-        let (rest, vars) = delimited(tag("N1*"), take_until("~"), tag("~"))(input)?;
-        let (_, vars) = separated_list0(
-            tag("*"),
-            take_while(|x: char| {
-                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
-            }),
-        )(vars)?;
+        let (rest, vars) = crate::util::parse_line(input, "N1")?;
         let obj = N1 {
             _01: vars.first().unwrap().to_string(),
             _02: vars.get(1).map(|x| x.to_string()),
@@ -3783,8 +3659,6 @@ impl<'a> Parser<&'a str, N1, nom::error::Error<&'a str>> for N1 {
             _05: vars.get(4).map(|x| x.to_string()),
             _06: vars.get(5).map(|x| x.to_string()),
         };
-        // look for trailing newline
-        let (rest, _) = opt(newline)(rest)?;
         Ok((rest, obj))
     }
 }
@@ -3819,19 +3693,11 @@ pub struct N2 {
 
 impl<'a> Parser<&'a str, N2, nom::error::Error<&'a str>> for N2 {
     fn parse(input: &'a str) -> IResult<&'a str, N2> {
-        let (rest, vars) = delimited(tag("N2*"), take_until("~"), tag("~"))(input)?;
-        let (_, vars) = separated_list0(
-            tag("*"),
-            take_while(|x: char| {
-                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
-            }),
-        )(vars)?;
+        let (rest, vars) = crate::util::parse_line(input, "N2")?;
         let obj = N2 {
             _01: vars.first().unwrap().to_string(),
             _02: vars.get(1).map(|x| x.to_string()),
         };
-        // look for trailing newline
-        let (rest, _) = opt(newline)(rest)?;
         Ok((rest, obj))
     }
 }
@@ -3854,19 +3720,11 @@ pub struct N3 {
 
 impl<'a> Parser<&'a str, N3, nom::error::Error<&'a str>> for N3 {
     fn parse(input: &'a str) -> IResult<&'a str, N3> {
-        let (rest, vars) = delimited(tag("N3*"), take_until("~"), tag("~"))(input)?;
-        let (_, vars) = separated_list0(
-            tag("*"),
-            take_while(|x: char| {
-                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
-            }),
-        )(vars)?;
+        let (rest, vars) = crate::util::parse_line(input, "N3")?;
         let obj = N3 {
             _01: vars.first().unwrap().to_string(),
             _02: vars.get(1).map(|x| x.to_string()),
         };
-        // look for trailing newline
-        let (rest, _) = opt(newline)(rest)?;
         Ok((rest, obj))
     }
 }
@@ -3907,13 +3765,7 @@ pub struct N4 {
 
 impl<'a> Parser<&'a str, N4, nom::error::Error<&'a str>> for N4 {
     fn parse(input: &'a str) -> IResult<&'a str, N4> {
-        let (rest, vars) = delimited(tag("N4*"), take_until("~"), tag("~"))(input)?;
-        let (_, vars) = separated_list0(
-            tag("*"),
-            take_while(|x: char| {
-                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
-            }),
-        )(vars)?;
+        let (rest, vars) = crate::util::parse_line(input, "N4")?;
         let obj = N4 {
             _01: vars.first().map(|x| x.to_string()),
             _02: vars.get(1).map(|x| x.to_string()),
@@ -3922,8 +3774,6 @@ impl<'a> Parser<&'a str, N4, nom::error::Error<&'a str>> for N4 {
             _05: vars.get(4).map(|x| x.to_string()),
             _06: vars.get(5).map(|x| x.to_string()),
         };
-        // look for trailing newline
-        let (rest, _) = opt(newline)(rest)?;
         Ok((rest, obj))
     }
 }
@@ -4016,13 +3866,7 @@ pub struct N7 {
 
 impl<'a> Parser<&'a str, N7, nom::error::Error<&'a str>> for N7 {
     fn parse(input: &'a str) -> IResult<&'a str, N7> {
-        let (rest, vars) = delimited(tag("N7*"), take_until("~"), tag("~"))(input)?;
-        let (_, vars) = separated_list0(
-            tag("*"),
-            take_while(|x: char| {
-                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
-            }),
-        )(vars)?;
+        let (rest, vars) = crate::util::parse_line(input, "N7")?;
         let obj = N7 {
             _01: vars.first().map(|x| x.to_string()),
             _02: vars.get(1).unwrap().to_string(),
@@ -4049,8 +3893,6 @@ impl<'a> Parser<&'a str, N7, nom::error::Error<&'a str>> for N7 {
             _23: vars.get(22).map(|x| x.to_string()),
             _24: vars.get(23).map(|x| x.to_string()),
         };
-        // look for trailing newline
-        let (rest, _) = opt(newline)(rest)?;
         Ok((rest, obj))
     }
 }
@@ -4193,13 +4035,7 @@ pub struct N9 {
 
 impl<'a> Parser<&'a str, N9, nom::error::Error<&'a str>> for N9 {
     fn parse(input: &'a str) -> IResult<&'a str, N9> {
-        let (rest, vars) = delimited(tag("N9*"), take_until("~"), tag("~"))(input)?;
-        let (_, vars) = separated_list0(
-            tag("*"),
-            take_while(|x: char| {
-                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
-            }),
-        )(vars)?;
+        let (rest, vars) = crate::util::parse_line(input, "N9")?;
         let obj = N9 {
             _01: vars.first().unwrap().to_string(),
             _02: vars.get(1).unwrap().to_string(),
@@ -4209,8 +4045,6 @@ impl<'a> Parser<&'a str, N9, nom::error::Error<&'a str>> for N9 {
             _06: vars.get(5).map(|x| x.to_string()),
             _07: vars.get(6).map(|x| x.to_string()),
         };
-        // look for trailing newline
-        let (rest, _) = opt(newline)(rest)?;
         Ok((rest, obj))
     }
 }
@@ -4361,19 +4195,11 @@ pub struct NTE {
 
 impl<'a> Parser<&'a str, NTE, nom::error::Error<&'a str>> for NTE {
     fn parse(input: &'a str) -> IResult<&'a str, NTE> {
-        let (rest, vars) = delimited(tag("NTE*"), take_until("~"), tag("~"))(input)?;
-        let (_, vars) = separated_list0(
-            tag("*"),
-            take_while(|x: char| {
-                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
-            }),
-        )(vars)?;
+        let (rest, vars) = crate::util::parse_line(input, "NTE")?;
         let obj = NTE {
             _01: vars.first().map(|x| x.to_string()),
             _02: vars.get(1).unwrap().to_string(),
         };
-        // look for trailing newline
-        let (rest, _) = opt(newline)(rest)?;
         Ok((rest, obj))
     }
 }
@@ -4555,21 +4381,13 @@ pub struct PLD {
 
 impl<'a> Parser<&'a str, PLD, nom::error::Error<&'a str>> for PLD {
     fn parse(input: &'a str) -> IResult<&'a str, PLD> {
-        let (rest, vars) = delimited(tag("PLD*"), take_until("~"), tag("~"))(input)?;
-        let (_, vars) = separated_list0(
-            tag("*"),
-            take_while(|x: char| {
-                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
-            }),
-        )(vars)?;
+        let (rest, vars) = crate::util::parse_line(input, "PLD")?;
         let obj = PLD {
             _01: vars.first().unwrap().to_string(),
             _02: vars.get(1).map(|x| x.to_string()),
             _03: vars.get(2).map(|x| x.to_string()),
             _04: vars.get(3).map(|x| x.to_string()),
         };
-        // look for trailing newline
-        let (rest, _) = opt(newline)(rest)?;
         Ok((rest, obj))
     }
 }
@@ -4678,13 +4496,7 @@ pub struct PWK {
 
 impl<'a> Parser<&'a str, PWK, nom::error::Error<&'a str>> for PWK {
     fn parse(input: &'a str) -> IResult<&'a str, PWK> {
-        let (rest, vars) = delimited(tag("PWK*"), take_until("~"), tag("~"))(input)?;
-        let (_, vars) = separated_list0(
-            tag("*"),
-            take_while(|x: char| {
-                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
-            }),
-        )(vars)?;
+        let (rest, vars) = crate::util::parse_line(input, "PWK")?;
         let obj = PWK {
             _01: vars.first().unwrap().to_string(),
             _02: vars.get(1).map(|x| x.to_string()),
@@ -4696,8 +4508,6 @@ impl<'a> Parser<&'a str, PWK, nom::error::Error<&'a str>> for PWK {
             _08: vars.get(7).map(|x| x.to_string()),
             _09: vars.get(8).map(|x| x.to_string()),
         };
-        // look for trailing newline
-        let (rest, _) = opt(newline)(rest)?;
         Ok((rest, obj))
     }
 }
@@ -4957,13 +4767,7 @@ pub struct R2 {
 
 impl<'a> Parser<&'a str, R2, nom::error::Error<&'a str>> for R2 {
     fn parse(input: &'a str) -> IResult<&'a str, R2> {
-        let (rest, vars) = delimited(tag("R2*"), take_until("~"), tag("~"))(input)?;
-        let (_, vars) = separated_list0(
-            tag("*"),
-            take_while(|x: char| {
-                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
-            }),
-        )(vars)?;
+        let (rest, vars) = crate::util::parse_line(input, "R2")?;
         let obj = R2 {
             _01: vars.first().unwrap().to_string(),
             _02: vars.get(1).unwrap().to_string(),
@@ -4979,8 +4783,6 @@ impl<'a> Parser<&'a str, R2, nom::error::Error<&'a str>> for R2 {
             _12: vars.get(11).map(|x| x.to_string()),
             _13: vars.get(12).map(|x| x.to_string()),
         };
-        // look for trailing newline
-        let (rest, _) = opt(newline)(rest)?;
         Ok((rest, obj))
     }
 }
@@ -5017,13 +4819,7 @@ pub struct R2A {
 
 impl<'a> Parser<&'a str, R2A, nom::error::Error<&'a str>> for R2A {
     fn parse(input: &'a str) -> IResult<&'a str, R2A> {
-        let (rest, vars) = delimited(tag("R2A*"), take_until("~"), tag("~"))(input)?;
-        let (_, vars) = separated_list0(
-            tag("*"),
-            take_while(|x: char| {
-                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
-            }),
-        )(vars)?;
+        let (rest, vars) = crate::util::parse_line(input, "R2A")?;
         let obj = R2A {
             _01: vars.first().unwrap().to_string(),
             _02: vars.get(1).unwrap().to_string(),
@@ -5036,8 +4832,6 @@ impl<'a> Parser<&'a str, R2A, nom::error::Error<&'a str>> for R2A {
             _09: vars.get(8).map(|x| x.to_string()),
             _10: vars.get(9).map(|x| x.to_string()),
         };
-        // look for trailing newline
-        let (rest, _) = opt(newline)(rest)?;
         Ok((rest, obj))
     }
 }
@@ -5091,13 +4885,7 @@ pub struct R4 {
 
 impl<'a> Parser<&'a str, R4, nom::error::Error<&'a str>> for R4 {
     fn parse(input: &'a str) -> IResult<&'a str, R4> {
-        let (rest, vars) = delimited(tag("R4*"), take_until("~"), tag("~"))(input)?;
-        let (_, vars) = separated_list0(
-            tag("*"),
-            take_while(|x: char| {
-                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
-            }),
-        )(vars)?;
+        let (rest, vars) = crate::util::parse_line(input, "R4")?;
         let obj = R4 {
             _01: vars.first().unwrap().to_string(),
             _02: vars.get(1).map(|x| x.to_string()),
@@ -5108,8 +4896,6 @@ impl<'a> Parser<&'a str, R4, nom::error::Error<&'a str>> for R4 {
             _07: vars.get(6).map(|x| x.to_string()),
             _08: vars.get(7).map(|x| x.to_string()),
         };
-        // look for trailing newline
-        let (rest, _) = opt(newline)(rest)?;
         Ok((rest, obj))
     }
 }
@@ -5192,13 +4978,7 @@ pub struct S1 {
 
 impl<'a> Parser<&'a str, S1, nom::error::Error<&'a str>> for S1 {
     fn parse(input: &'a str) -> IResult<&'a str, S1> {
-        let (rest, vars) = delimited(tag("S1*"), take_until("~"), tag("~"))(input)?;
-        let (_, vars) = separated_list0(
-            tag("*"),
-            take_while(|x: char| {
-                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
-            }),
-        )(vars)?;
+        let (rest, vars) = crate::util::parse_line(input, "S1")?;
         let obj = S1 {
             _01: vars.first().unwrap().to_string(),
             _02: vars.get(1).unwrap().to_string(),
@@ -5207,8 +4987,6 @@ impl<'a> Parser<&'a str, S1, nom::error::Error<&'a str>> for S1 {
             _05: vars.get(4).map(|x| x.to_string()),
             _06: vars.get(5).map(|x| x.to_string()),
         };
-        // look for trailing newline
-        let (rest, _) = opt(newline)(rest)?;
         Ok((rest, obj))
     }
 }
@@ -5234,20 +5012,12 @@ pub struct S2 {
 
 impl<'a> Parser<&'a str, S2, nom::error::Error<&'a str>> for S2 {
     fn parse(input: &'a str) -> IResult<&'a str, S2> {
-        let (rest, vars) = delimited(tag("S2*"), take_until("~"), tag("~"))(input)?;
-        let (_, vars) = separated_list0(
-            tag("*"),
-            take_while(|x: char| {
-                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
-            }),
-        )(vars)?;
+        let (rest, vars) = crate::util::parse_line(input, "S2")?;
         let obj = S2 {
             _01: vars.first().unwrap().to_string(),
             _02: vars.get(1).unwrap().to_string(),
             _03: vars.get(2).map(|x| x.to_string()),
         };
-        // look for trailing newline
-        let (rest, _) = opt(newline)(rest)?;
         Ok((rest, obj))
     }
 }
@@ -5286,13 +5056,7 @@ pub struct S5 {
 
 impl<'a> Parser<&'a str, S5, nom::error::Error<&'a str>> for S5 {
     fn parse(input: &'a str) -> IResult<&'a str, S5> {
-        let (rest, vars) = delimited(tag("S5*"), take_until("~"), tag("~"))(input)?;
-        let (_, vars) = separated_list0(
-            tag("*"),
-            take_while(|x: char| {
-                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
-            }),
-        )(vars)?;
+        let (rest, vars) = crate::util::parse_line(input, "S5")?;
         let obj = S5 {
             _01: vars.first().unwrap().to_string(),
             _02: vars.get(1).unwrap().to_string(),
@@ -5306,8 +5070,6 @@ impl<'a> Parser<&'a str, S5, nom::error::Error<&'a str>> for S5 {
             _10: vars.get(9).map(|x| x.to_string()),
             _11: vars.get(10).map(|x| x.to_string()),
         };
-        // look for trailing newline
-        let (rest, _) = opt(newline)(rest)?;
         Ok((rest, obj))
     }
 }
@@ -5352,13 +5114,7 @@ pub struct S9 {
 
 impl<'a> Parser<&'a str, S9, nom::error::Error<&'a str>> for S9 {
     fn parse(input: &'a str) -> IResult<&'a str, S9> {
-        let (rest, vars) = delimited(tag("S9*"), take_until("~"), tag("~"))(input)?;
-        let (_, vars) = separated_list0(
-            tag("*"),
-            take_while(|x: char| {
-                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
-            }),
-        )(vars)?;
+        let (rest, vars) = crate::util::parse_line(input, "S9")?;
         let obj = S9 {
             _01: vars.first().unwrap().to_string(),
             _02: vars.get(1).map(|x| x.to_string()),
@@ -5369,8 +5125,6 @@ impl<'a> Parser<&'a str, S9, nom::error::Error<&'a str>> for S9 {
             _07: vars.get(6).map(|x| x.to_string()),
             _08: vars.get(7).map(|x| x.to_string()),
         };
-        // look for trailing newline
-        let (rest, _) = opt(newline)(rest)?;
         Ok((rest, obj))
     }
 }
@@ -5461,19 +5215,11 @@ pub struct SE {
 
 impl<'a> Parser<&'a str, SE, nom::error::Error<&'a str>> for SE {
     fn parse(input: &'a str) -> IResult<&'a str, SE> {
-        let (rest, vars) = delimited(tag("SE*"), take_until("~"), tag("~"))(input)?;
-        let (_, vars) = separated_list0(
-            tag("*"),
-            take_while(|x: char| {
-                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
-            }),
-        )(vars)?;
+        let (rest, vars) = crate::util::parse_line(input, "SE")?;
         let obj = SE {
             _01: vars.first().unwrap().to_string(),
             _02: vars.get(1).unwrap().to_string(),
         };
-        // look for trailing newline
-        let (rest, _) = opt(newline)(rest)?;
         Ok((rest, obj))
     }
 }
@@ -5578,19 +5324,11 @@ pub struct ST {
 
 impl<'a> Parser<&'a str, ST, nom::error::Error<&'a str>> for ST {
     fn parse(input: &'a str) -> IResult<&'a str, ST> {
-        let (rest, vars) = delimited(tag("ST*"), take_until("~"), tag("~"))(input)?;
-        let (_, vars) = separated_list0(
-            tag("*"),
-            take_while(|x: char| {
-                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
-            }),
-        )(vars)?;
+        let (rest, vars) = crate::util::parse_line(input, "ST")?;
         let obj = ST {
             _01: vars.first().unwrap().to_string(),
             _02: vars.get(1).unwrap().to_string(),
         };
-        // look for trailing newline
-        let (rest, _) = opt(newline)(rest)?;
         Ok((rest, obj))
     }
 }
@@ -5843,13 +5581,7 @@ pub struct V1 {
 
 impl<'a> Parser<&'a str, V1, nom::error::Error<&'a str>> for V1 {
     fn parse(input: &'a str) -> IResult<&'a str, V1> {
-        let (rest, vars) = delimited(tag("V1*"), take_until("~"), tag("~"))(input)?;
-        let (_, vars) = separated_list0(
-            tag("*"),
-            take_while(|x: char| {
-                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
-            }),
-        )(vars)?;
+        let (rest, vars) = crate::util::parse_line(input, "V1")?;
         let obj = V1 {
             _01: vars.first().map(|x| x.to_string()),
             _02: vars.get(1).map(|x| x.to_string()),
@@ -5861,8 +5593,6 @@ impl<'a> Parser<&'a str, V1, nom::error::Error<&'a str>> for V1 {
             _08: vars.get(7).map(|x| x.to_string()),
             _09: vars.get(8).map(|x| x.to_string()),
         };
-        // look for trailing newline
-        let (rest, _) = opt(newline)(rest)?;
         Ok((rest, obj))
     }
 }
@@ -5882,18 +5612,10 @@ pub struct V4 {
 
 impl<'a> Parser<&'a str, V4, nom::error::Error<&'a str>> for V4 {
     fn parse(input: &'a str) -> IResult<&'a str, V4> {
-        let (rest, vars) = delimited(tag("V4*"), take_until("~"), tag("~"))(input)?;
-        let (_, vars) = separated_list0(
-            tag("*"),
-            take_while(|x: char| {
-                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
-            }),
-        )(vars)?;
+        let (rest, vars) = crate::util::parse_line(input, "V4")?;
         let obj = V4 {
             _01: vars.first().unwrap().to_string(),
         };
-        // look for trailing newline
-        let (rest, _) = opt(newline)(rest)?;
         Ok((rest, obj))
     }
 }
@@ -6000,13 +5722,7 @@ pub struct V9 {
 
 impl<'a> Parser<&'a str, V9, nom::error::Error<&'a str>> for V9 {
     fn parse(input: &'a str) -> IResult<&'a str, V9> {
-        let (rest, vars) = delimited(tag("V9*"), take_until("~"), tag("~"))(input)?;
-        let (_, vars) = separated_list0(
-            tag("*"),
-            take_while(|x: char| {
-                x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
-            }),
-        )(vars)?;
+        let (rest, vars) = crate::util::parse_line(input, "V9")?;
         let obj = V9 {
             _01: vars.first().unwrap().to_string(),
             _02: vars.get(1).map(|x| x.to_string()),
@@ -6029,8 +5745,6 @@ impl<'a> Parser<&'a str, V9, nom::error::Error<&'a str>> for V9 {
             _19: vars.get(18).map(|x| x.to_string()),
             _20: vars.get(19).map(|x| x.to_string()),
         };
-        // look for trailing newline
-        let (rest, _) = opt(newline)(rest)?;
         Ok((rest, obj))
     }
 }
@@ -6661,6 +6375,23 @@ pub struct ZC1 {
     pub _08: Option<String>,
 }
 
+impl<'a> Parser<&'a str, ZC1, nom::error::Error<&'a str>> for ZC1 {
+    fn parse(input: &'a str) -> IResult<&'a str, ZC1> {
+        let (rest, vars) = crate::util::parse_line(input, "ZC1")?;
+        let obj = ZC1 {
+            _01: vars.first().map(|x| x.to_string()),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).unwrap().to_string(),
+            _04: vars.get(3).unwrap().to_string(),
+            _05: vars.get(4).unwrap().to_string(),
+            _06: vars.get(5).unwrap().to_string(),
+            _07: vars.get(6).unwrap().to_string(),
+            _08: vars.get(7).map(|x| x.to_string()),
+        };
+        Ok((rest, obj))
+    }
+}
+
 /// ZD - Transaction Set Deletion - ID, Reason, and Source
 ///
 /// This segment is used to specify the transaction set to be canceled
@@ -6699,4 +6430,21 @@ pub struct ZD {
     pub _07: String,
     #[serde(rename = "08")]
     pub _08: Option<String>,
+}
+
+impl<'a> Parser<&'a str, ZD, nom::error::Error<&'a str>> for ZD {
+    fn parse(input: &'a str) -> IResult<&'a str, ZD> {
+        let (rest, vars) = crate::util::parse_line(input, "ZD")?;
+        let obj = ZD {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).unwrap().to_string(),
+            _04: vars.get(3).unwrap().to_string(),
+            _05: vars.get(4).map(|x| x.to_string()),
+            _06: vars.get(5).map(|x| x.to_string()),
+            _07: vars.get(6).unwrap().to_string(),
+            _08: vars.get(7).map(|x| x.to_string()),
+        };
+        Ok((rest, obj))
+    }
 }

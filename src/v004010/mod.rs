@@ -21,6 +21,8 @@ mod test_310;
 #[cfg(test)]
 mod test_315;
 #[cfg(test)]
+mod test_998;
+#[cfg(test)]
 mod test_segments;
 
 #[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
@@ -778,6 +780,20 @@ pub struct _309 {
     pub se: SE,
 }
 
+impl<'a> Parser<&'a str, _309, nom::error::Error<&'a str>> for _309 {
+    fn parse(input: &'a str) -> IResult<&'a str, _309> {
+        let mut output = _309::default();
+        let (input, obj) = ST::parse(input)?;
+        output.st = obj;
+        let (input, obj) = M10::parse(input)?;
+        output.m10 = obj;
+        // TODO missing implementation
+        let (input, obj) = SE::parse(input)?;
+        output.se = obj;
+        Ok((input, output))
+    }
+}
+
 #[derive(Serialize, Deserialize, Clone, Default, Debug)]
 pub struct _309LoopP4 {
     pub p4: P4,
@@ -1431,15 +1447,15 @@ pub struct _322LoopL0 {
 /// 0840 | SE | Transaction Set Trailer | M | 1
 #[derive(Debug, Default, Clone, Serialize, Deserialize)]
 pub struct _404 {
-    pub _010: ST,
-    pub _020: Option<ZC1>,
-    pub _030: Option<BX>,
-    pub _040: Option<BNX>,
-    pub _050: M3,
-    pub _060: N9,
-    pub _070: Option<CM>,
-    pub _080: Option<M1>,
-    pub _090: Option<DTM>,
+    pub st: ST,
+    pub zc1: Option<ZC1>,
+    pub bx: Option<BX>,
+    pub bnx: Option<BNX>,
+    pub m3: M3,
+    pub n9: N9,
+    pub cm: Option<CM>,
+    pub m1: Option<M1>,
+    pub dtm: Option<DTM>,
     pub loop_n7: Vec<_404LoopN7>,
     pub na: Option<NA>,
     pub f9: F9,
@@ -1465,6 +1481,19 @@ pub struct _404 {
     pub x7: Option<X7>,
     pub se: SE,
 }
+
+impl<'a> Parser<&'a str, _404, nom::error::Error<&'a str>> for _404 {
+    fn parse(input: &'a str) -> IResult<&'a str, _404> {
+        let mut output = _404::default();
+        let (input, obj) = ST::parse(input)?;
+        output.st = obj;
+        // TODO missing implementation
+        let (input, obj) = SE::parse(input)?;
+        output.se = obj;
+        Ok((input, output))
+    }
+}
+
 #[derive(Debug, Default, Clone, Serialize, Deserialize)]
 pub struct _404LoopN7 {
     pub n7: N7,
@@ -1633,4 +1662,17 @@ pub struct _998 {
     pub st: ST,
     pub zd: ZD,
     pub se: SE,
+}
+
+impl<'a> Parser<&'a str, _998, nom::error::Error<&'a str>> for _998 {
+    fn parse(input: &'a str) -> IResult<&'a str, _998> {
+        let mut output = _998::default();
+        let (input, obj) = ST::parse(input)?;
+        output.st = obj;
+        let (input, obj) = ZD::parse(input)?;
+        output.zd = obj;
+        let (input, obj) = SE::parse(input)?;
+        output.se = obj;
+        Ok((input, output))
+    }
 }
