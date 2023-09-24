@@ -151,8 +151,8 @@ pub struct _204 {
     pub st: ST,
     pub b2: B2,
     pub b2a: B2A,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub l11: Option<L11>,
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    pub l11: Vec<L11>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub g62: Option<G62>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -188,7 +188,7 @@ impl<'a> Parser<&'a str, _204, nom::error::Error<&'a str>> for _204 {
         output.b2 = obj;
         let (rest, obj) = B2A::parse(rest)?;
         output.b2a = obj;
-        let (rest, obj) = opt(L11::parse)(rest)?;
+        let (rest, obj) = many0(L11::parse)(rest)?;
         output.l11 = obj;
         let (rest, obj) = opt(G62::parse)(rest)?;
         output.g62 = obj;

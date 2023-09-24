@@ -17,11 +17,11 @@ fn render_204() {
             _01: "00".to_string(),
             _02: None,
         },
-        l11: Some(L11 {
+        l11: vec![L11 {
             _01: Some("6XULT02DCM".to_string()),
             _02: Some("9R".to_string()),
             ..Default::default()
-        }),
+        }],
         g62: Some(G62 {
             _01: Some("04".to_string()),
             _02: Some("20221121".to_string()),
