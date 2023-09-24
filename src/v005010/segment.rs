@@ -73,6 +73,59 @@ impl<'a> Parser<&'a str, AD1, nom::error::Error<&'a str>> for AD1 {
     }
 }
 
+/// AIN - Income
+#[derive(Serialize, Deserialize, Clone, Default, Debug, Validate, PartialEq, Eq)]
+pub struct AIN {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: String,
+    #[serde(rename = "03")]
+    pub _03: String,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+    #[serde(rename = "10")]
+    pub _10: Option<String>,
+    #[serde(rename = "11")]
+    pub _11: Option<String>,
+    #[serde(rename = "12")]
+    pub _12: Option<String>,
+    #[serde(rename = "13")]
+    pub _13: Option<String>,
+}
+
+impl<'a> Parser<&'a str, AIN, nom::error::Error<&'a str>> for AIN {
+    fn parse(input: &'a str) -> IResult<&'a str, AIN> {
+        let (rest, vars) = crate::util::parse_line(input, "AIN")?;
+        let obj = AIN {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).unwrap().to_string(),
+            _03: vars.get(2).unwrap().to_string(),
+            _04: vars.get(3).map(util::unborrow_string),
+            _05: vars.get(4).map(util::unborrow_string),
+            _06: vars.get(5).map(util::unborrow_string),
+            _07: vars.get(6).map(util::unborrow_string),
+            _08: vars.get(7).map(util::unborrow_string),
+            _09: vars.get(8).map(util::unborrow_string),
+            _10: vars.get(9).map(util::unborrow_string),
+            _11: vars.get(10).map(util::unborrow_string),
+            _12: vars.get(11).map(util::unborrow_string),
+            _13: vars.get(12).map(util::unborrow_string),
+        };
+        Ok((rest, obj))
+    }
+}
+
 /// AMT - Monitary Amount Information
 #[derive(Serialize, Deserialize, Clone, Default, Debug, Validate, PartialEq, Eq)]
 pub struct AMT {
@@ -91,6 +144,38 @@ impl<'a> Parser<&'a str, AMT, nom::error::Error<&'a str>> for AMT {
             _01: vars.first().unwrap().to_string(),
             _02: vars.get(1).unwrap().to_string(),
             _03: vars.get(2).map(util::unborrow_string),
+        };
+        Ok((rest, obj))
+    }
+}
+
+/// BEN - Financial Contribution
+#[derive(Serialize, Deserialize, Clone, Default, Debug, Validate, PartialEq, Eq)]
+pub struct BEN {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+}
+
+impl<'a> Parser<&'a str, BEN, nom::error::Error<&'a str>> for BEN {
+    fn parse(input: &'a str) -> IResult<&'a str, BEN> {
+        let (rest, vars) = crate::util::parse_line(input, "BEN")?;
+        let obj = BEN {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).map(util::unborrow_string),
+            _03: vars.get(2).map(util::unborrow_string),
+            _04: vars.get(3).map(util::unborrow_string),
+            _05: vars.get(4).map(util::unborrow_string),
+            _06: vars.get(5).map(util::unborrow_string),
         };
         Ok((rest, obj))
     }
@@ -298,6 +383,117 @@ impl<'a> Parser<&'a str, EC, nom::error::Error<&'a str>> for EC {
             _04: vars.get(3).map(util::unborrow_string),
             _05: vars.get(4).map(util::unborrow_string),
             _06: vars.get(5).map(util::unborrow_string),
+        };
+        Ok((rest, obj))
+    }
+}
+
+/// ENT - Entity
+#[derive(Serialize, Deserialize, Clone, Default, Debug, Validate, PartialEq, Eq)]
+pub struct ENT {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+}
+
+impl<'a> Parser<&'a str, ENT, nom::error::Error<&'a str>> for ENT {
+    fn parse(input: &'a str) -> IResult<&'a str, ENT> {
+        let (rest, vars) = crate::util::parse_line(input, "ENT")?;
+        let obj = ENT {
+            _01: vars.first().map(util::unborrow_string),
+            _02: vars.get(1).map(util::unborrow_string),
+            _03: vars.get(2).map(util::unborrow_string),
+            _04: vars.get(3).map(util::unborrow_string),
+            _05: vars.get(4).map(util::unborrow_string),
+            _06: vars.get(5).map(util::unborrow_string),
+            _07: vars.get(6).map(util::unborrow_string),
+            _08: vars.get(7).map(util::unborrow_string),
+            _09: vars.get(8).map(util::unborrow_string),
+        };
+        Ok((rest, obj))
+    }
+}
+
+/// FC - Financial Contribution
+#[derive(Serialize, Deserialize, Clone, Default, Debug, Validate, PartialEq, Eq)]
+pub struct FC {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+}
+
+impl<'a> Parser<&'a str, FC, nom::error::Error<&'a str>> for FC {
+    fn parse(input: &'a str) -> IResult<&'a str, FC> {
+        let (rest, vars) = crate::util::parse_line(input, "FC")?;
+        let obj = FC {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).map(util::unborrow_string),
+            _03: vars.get(2).map(util::unborrow_string),
+            _04: vars.get(3).map(util::unborrow_string),
+            _05: vars.get(4).map(util::unborrow_string),
+        };
+        Ok((rest, obj))
+    }
+}
+
+/// FSA - Flexible Spending Amount
+#[derive(Serialize, Deserialize, Clone, Default, Debug, Validate, PartialEq, Eq)]
+pub struct FSA {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+}
+
+impl<'a> Parser<&'a str, FSA, nom::error::Error<&'a str>> for FSA {
+    fn parse(input: &'a str) -> IResult<&'a str, FSA> {
+        let (rest, vars) = crate::util::parse_line(input, "FSA")?;
+        let obj = FSA {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).map(util::unborrow_string),
+            _03: vars.get(2).map(util::unborrow_string),
+            _04: vars.get(3).map(util::unborrow_string),
+            _05: vars.get(4).map(util::unborrow_string),
+            _06: vars.get(5).map(util::unborrow_string),
+            _07: vars.get(6).map(util::unborrow_string),
+            _08: vars.get(7).map(util::unborrow_string),
+            _09: vars.get(8).map(util::unborrow_string),
         };
         Ok((rest, obj))
     }
@@ -896,6 +1092,41 @@ impl<'a> Parser<&'a str, K3, nom::error::Error<&'a str>> for K3 {
     }
 }
 
+/// LC - Life Coverage
+#[derive(Serialize, Deserialize, Clone, Default, Debug, Validate, PartialEq, Eq)]
+pub struct LC {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+}
+
+impl<'a> Parser<&'a str, LC, nom::error::Error<&'a str>> for LC {
+    fn parse(input: &'a str) -> IResult<&'a str, LC> {
+        let (rest, vars) = crate::util::parse_line(input, "LC")?;
+        let obj = LC {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).map(util::unborrow_string),
+            _03: vars.get(2).map(util::unborrow_string),
+            _04: vars.get(3).map(util::unborrow_string),
+            _05: vars.get(4).map(util::unborrow_string),
+            _06: vars.get(5).map(util::unborrow_string),
+            _07: vars.get(6).map(util::unborrow_string),
+        };
+        Ok((rest, obj))
+    }
+}
+
 /// LE - Loop Trailer
 #[derive(Serialize, Deserialize, Clone, Default, Debug, Validate, PartialEq, Eq)]
 pub struct LE {
@@ -1128,6 +1359,35 @@ impl<'a> Parser<&'a str, NM1, nom::error::Error<&'a str>> for NM1 {
             _10: vars.get(9).map(util::unborrow_string),
             _11: vars.get(10).map(util::unborrow_string),
             _12: vars.get(11).map(util::unborrow_string),
+        };
+        Ok((rest, obj))
+    }
+}
+
+/// NX1 - Property or Entity Identification
+#[derive(Serialize, Deserialize, Clone, Default, Debug, Validate, PartialEq, Eq)]
+pub struct NX1 {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+}
+
+impl<'a> Parser<&'a str, NX1, nom::error::Error<&'a str>> for NX1 {
+    fn parse(input: &'a str) -> IResult<&'a str, NX1> {
+        let (rest, vars) = crate::util::parse_line(input, "NX1")?;
+        let obj = NX1 {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).map(util::unborrow_string),
+            _03: vars.get(2).map(util::unborrow_string),
+            _04: vars.get(3).map(util::unborrow_string),
+            _05: vars.get(4).map(util::unborrow_string),
         };
         Ok((rest, obj))
     }

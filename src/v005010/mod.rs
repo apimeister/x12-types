@@ -340,106 +340,164 @@ pub struct _834Loop2000 {
 
 #[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
 pub struct _834Loop2100 {
-    nm1: Option<NM1>,
-    per: Option<PER>,
-    n3: Option<N3>,
-    n4: Option<N4>,
-    dmg: Option<DMG>,
-    pm: Option<PM>,
-    ec: Vec<EC>,
-    icm: Option<ICM>,
-    amt: Vec<AMT>,
-    hlh: Option<HLH>,
-    hi: Vec<HI>,
-    lui: Vec<LUI>,
+    pub nm1: Option<NM1>,
+    pub per: Option<PER>,
+    pub n3: Option<N3>,
+    pub n4: Option<N4>,
+    pub dmg: Option<DMG>,
+    pub pm: Option<PM>,
+    pub ec: Vec<EC>,
+    pub icm: Option<ICM>,
+    pub amt: Vec<AMT>,
+    pub hlh: Option<HLH>,
+    pub hi: Vec<HI>,
+    pub lui: Vec<LUI>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
 pub struct _834Loop2200 {
-    dsb: Option<DSB>,
-    dtp: Vec<DTP>,
-    ad1: Vec<AD1>,
+    pub dsb: Option<DSB>,
+    pub dtp: Vec<DTP>,
+    pub ad1: Vec<AD1>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
 pub struct _834Loop2300 {
-    hd: Option<HD>,
-    dtp: Vec<DTP>,
-    amt: Vec<AMT>,
-    r#ref: Vec<REF>,
-    idc: Vec<IDC>,
-    loop_2310: Vec<_834Loop2310>,
-    loop_2320: Vec<_834Loop2320>,
+    pub hd: Option<HD>,
+    pub dtp: Vec<DTP>,
+    pub amt: Vec<AMT>,
+    pub r#ref: Vec<REF>,
+    pub idc: Vec<IDC>,
+    pub loop_2310: Vec<_834Loop2310>,
+    pub loop_2320: Vec<_834Loop2320>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
 pub struct _834Loop2310 {
-    lx: Option<LX>,
-    nm1: Option<NM1>,
-    n1: Vec<N1>,
-    n2: Option<N2>,
-    n3: Vec<N3>,
-    n4: Option<N4>,
-    per: Vec<PER>,
-    prv: Option<PRV>,
-    dtp: Vec<DTP>,
-    pla: Option<PLA>,
+    pub lx: Option<LX>,
+    pub nm1: Option<NM1>,
+    pub n1: Vec<N1>,
+    pub n2: Option<N2>,
+    pub n3: Vec<N3>,
+    pub n4: Option<N4>,
+    pub per: Vec<PER>,
+    pub prv: Option<PRV>,
+    pub dtp: Vec<DTP>,
+    pub pla: Option<PLA>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
 pub struct _834Loop2320 {
-    cob: Option<COB>,
-    r#ref: Option<REF>,
-    dtp: Option<DTP>,
-    loop_2330: Vec<_834Loop2330>,
+    pub cob: Option<COB>,
+    pub r#ref: Option<REF>,
+    pub dtp: Option<DTP>,
+    pub loop_2330: Vec<_834Loop2330>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
 pub struct _834Loop2330 {
-    nm1: Option<NM1>,
-    n2: Option<N2>,
-    n3: Vec<N3>,
-    n4: Option<N4>,
-    per: Option<PER>,
+    pub nm1: Option<NM1>,
+    pub n2: Option<N2>,
+    pub n3: Vec<N3>,
+    pub n4: Option<N4>,
+    pub per: Option<PER>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
-pub struct _834Loop2400 {}
+pub struct _834Loop2400 {
+    pub lc: Option<LC>,
+    pub amt: Vec<AMT>,
+    pub dtp: Vec<DTP>,
+    pub r#ref: Vec<REF>,
+    pub loop_2410: Vec<_834Loop2410>,
+}
 
 #[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
-pub struct _834Loop2500 {}
+pub struct _834Loop2410 {
+    pub ben: Option<BEN>,
+    pub nm1: Option<NM1>,
+    pub n1: Option<N1>,
+    pub n2: Option<N2>,
+    pub n3: Option<N3>,
+    pub n4: Option<N4>,
+    pub dmg: Option<DMG>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+pub struct _834Loop2500 {
+    pub fsa: Option<FSA>,
+    pub amt: Vec<AMT>,
+    pub dtp: Vec<DTP>,
+    pub r#ref: Vec<REF>,
+}
 
 #[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
 pub struct _834Loop2600 {
-    rp: Option<RP>,
-    dtp: Vec<DTP>,
-    r#ref: Vec<REF>,
-    inv: Vec<INV>,
-    amt: Vec<AMT>,
-    qty: Vec<QTY>,
-    k3: Vec<K3>,
-    rel: Option<REL>,
-    loop_2610: Vec<_834Loop2610>,
-    loop_2630: Vec<_834Loop2630>,
-    loop_2650: Vec<_834Loop2650>,
+    pub rp: Option<RP>,
+    pub dtp: Vec<DTP>,
+    pub r#ref: Vec<REF>,
+    pub inv: Vec<INV>,
+    pub amt: Vec<AMT>,
+    pub qty: Vec<QTY>,
+    pub k3: Vec<K3>,
+    pub rel: Option<REL>,
+    pub loop_2610: Vec<_834Loop2610>,
+    pub loop_2630: Vec<_834Loop2630>,
+    pub loop_2650: Vec<_834Loop2650>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
-pub struct _834Loop2610 {}
+pub struct _834Loop2610 {
+    pub nm1: Option<NM1>,
+    pub n2: Option<N2>,
+    pub dmg: Option<DMG>,
+    pub ben: Option<BEN>,
+    pub r#ref: Vec<REF>,
+    pub loop_2620: Vec<_834Loop2620>,
+}
+
 #[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
-pub struct _834Loop2630 {}
+pub struct _834Loop2620 {
+    pub nx1: Option<NX1>,
+    pub n3: Option<N3>,
+    pub n4: Option<N4>,
+    pub dtp: Vec<DTP>,
+}
+
 #[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
-pub struct _834Loop2650 {}
+pub struct _834Loop2630 {
+    pub fc: Option<FC>,
+    pub dtp: Vec<DTP>,
+    pub loop_2640: Vec<_834Loop2640>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+pub struct _834Loop2640 {
+    pub inv: Option<INV>,
+    pub dtp: Vec<DTP>,
+    pub qty: Vec<QTY>,
+    pub ent: Vec<ENT>,
+    pub r#ref: Vec<REF>,
+    pub amt: Vec<AMT>,
+    pub k3: Vec<K3>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+pub struct _834Loop2650 {
+    pub ain: Option<AIN>,
+    pub qty: Vec<QTY>,
+    pub dtp: Vec<DTP>,
+}
 
 #[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
 pub struct _834Loop2700 {
-    lx: Option<LX>,
-    loop_2750: Vec<_834Loop2750>,
+    pub lx: Option<LX>,
+    pub loop_2750: Vec<_834Loop2750>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
 pub struct _834Loop2750 {
-    n1: N1,
-    r#ref: REF,
-    dtp: Option<DTP>,
+    pub n1: N1,
+    pub r#ref: REF,
+    pub dtp: Option<DTP>,
 }
