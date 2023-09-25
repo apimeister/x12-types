@@ -34,6 +34,238 @@ IEA*1*000012345~"#;
 }
 
 #[test]
+fn render_834() {
+    //source: https://github.com/EdiFabric/X12.NET/blob/master/Files/HIPAA/BenefitEnrollment.txt
+    let str = r#"ISA*00*          *00*          *ZZ*386028429      *30*382328142      *050221*0602*U*00501*000012345*0*P*:~
+GS*BE*386028429*382328142*20050221*0602*000012345*X*005010X220A1~
+ST*834*12345*005010X220A1~
+BGN*00*12456*19980520*1200****2~
+N1*P5**FI*999888777~
+N1*IN**FI*654456654~
+INS*Y*18*021*20*A***FT~
+REF*0F*123456789~
+REF*1L*123456001~
+DTP*356*D8*19960523~
+NM1*IL*1*DOE*JOHN*P***34*123456789~
+PER*IP**HP*7172343334*WP*7172341240~
+N3*100 MARKET ST*APT 3G~
+N4*CAMP HILL*PA*17011**CY*CUMBERLAND~
+DMG*D8*19400816*M~
+HD*021**HLT~
+DTP*348*D8*19960601~
+COB*P*890111*5~
+HD*021**DEN~
+DTP*348*D8*19960601~
+HD*021**VIS~
+DTP*348*D8*19960601~
+SE*21*12345~
+GE*1*000012345~
+IEA*1*000012345~
+"#;
+    let obj: Transmission<_834> = Transmission::<_834> {
+        isa: ISA {
+            _01: "00".to_string(),
+            _02: "          ".to_string(),
+            _03: "00".to_string(),
+            _04: "          ".to_string(),
+            _05: "ZZ".to_string(),
+            _06: "386028429      ".to_string(),
+            _07: "30".to_string(),
+            _08: "382328142      ".to_string(),
+            _09: "050221".to_string(),
+            _10: "0602".to_string(),
+            _11: "U".to_string(),
+            _12: "00501".to_string(),
+            _13: "000012345".to_string(),
+            _14: "0".to_string(),
+            _15: "P".to_string(),
+            _16: ":".to_string(),
+        },
+        functional_group: vec![FunctionalGroup {
+            gs: GS {
+                _01: "BE".to_string(),
+                _02: "386028429".to_string(),
+                _03: "382328142".to_string(),
+                _04: "20050221".to_string(),
+                _05: "0602".to_string(),
+                _06: "000012345".to_string(),
+                _07: "X".to_string(),
+                _08: "005010X220A1".to_string(),
+                ..Default::default()
+            },
+            segments: vec![_834 {
+                st: ST {
+                    _01: "834".to_string(),
+                    _02: "12345".to_string(),
+                    _03: Some("005010X220A1".to_string()),
+                },
+                bgn: BGN {
+                    _01: "00".to_string(),
+                    _02: "12456".to_string(),
+                    _03: "19980520".to_string(),
+                    _04: Some("1200".to_string()),
+                    _08: Some("2".to_string()),
+                    ..Default::default()
+                },
+                loop_1000: vec![
+                    _834Loop1000 {
+                        n1: N1 {
+                            _01: "P5".to_string(),
+                            _03: Some("FI".to_string()),
+                            _04: Some("999888777".to_string()),
+                            ..Default::default()
+                        },
+                        ..Default::default()
+                    },
+                    _834Loop1000 {
+                        n1: N1 {
+                            _01: "IN".to_string(),
+                            _03: Some("FI".to_string()),
+                            _04: Some("654456654".to_string()),
+                            ..Default::default()
+                        },
+                        ..Default::default()
+                    },
+                ],
+                loop_2000: vec![_834Loop2000 {
+                    ins: Some(INS {
+                        _01: "Y".to_string(),
+                        _02: "18".to_string(),
+                        _03: Some("021".to_string()),
+                        _04: Some("20".to_string()),
+                        _05: Some("A".to_string()),
+                        _08: Some("FT".to_string()),
+                        ..Default::default()
+                    }),
+                    r#ref: vec![
+                        REF {
+                            _01: "0F".to_string(),
+                            _02: Some("123456789".to_string()),
+                            ..Default::default()
+                        },
+                        REF {
+                            _01: "1L".to_string(),
+                            _02: Some("123456001".to_string()),
+                            ..Default::default()
+                        },
+                    ],
+                    dtp: vec![DTP {
+                        _01: "356".to_string(),
+                        _02: "D8".to_string(),
+                        _03: "19960523".to_string(),
+                    }],
+                    loop_2100: vec![_834Loop2100 {
+                        nm1: Some(NM1 {
+                            _01: "IL".to_string(),
+                            _02: "1".to_string(),
+                            _03: Some("DOE".to_string()),
+                            _04: Some("JOHN".to_string()),
+                            _05: Some("P".to_string()),
+                            _08: Some("34".to_string()),
+                            _09: Some("123456789".to_string()),
+                            ..Default::default()
+                        }),
+                        per: Some(PER {
+                            _01: "IP".to_string(),
+                            _03: Some("HP".to_string()),
+                            _04: Some("7172343334".to_string()),
+                            _05: Some("WP".to_string()),
+                            _06: Some("7172341240".to_string()),
+                            ..Default::default()
+                        }),
+                        n3: Some(N3 {
+                            _01: "100 MARKET ST".to_string(),
+                            _02: Some("APT 3G".to_string()),
+                        }),
+                        n4: Some(N4 {
+                            _01: Some("CAMP HILL".to_string()),
+                            _02: Some("PA".to_string()),
+                            _03: Some("17011".to_string()),
+                            _05: Some("CY".to_string()),
+                            _06: Some("CUMBERLAND".to_string()),
+                            ..Default::default()
+                        }),
+                        dmg: Some(DMG {
+                            _01: Some("D8".to_string()),
+                            _02: Some("19400816".to_string()),
+                            _03: Some("M".to_string()),
+                            ..Default::default()
+                        }),
+                        ..Default::default()
+                    }],
+                    loop_2300: vec![
+                        _834Loop2300 {
+                            hd: Some(HD {
+                                _01: "021".to_string(),
+                                _03: Some("HLT".to_string()),
+                                ..Default::default()
+                            }),
+                            dtp: vec![DTP {
+                                _01: "348".to_string(),
+                                _02: "D8".to_string(),
+                                _03: "19960601".to_string(),
+                            }],
+                            loop_2320: vec![_834Loop2320 {
+                                cob: Some(COB {
+                                    _01: Some("P".to_string()),
+                                    _02: Some("890111".to_string()),
+                                    _03: Some("5".to_string()),
+                                    ..Default::default()
+                                }),
+                                ..Default::default()
+                            }],
+                            ..Default::default()
+                        },
+                        _834Loop2300 {
+                            hd: Some(HD {
+                                _01: "021".to_string(),
+                                _03: Some("DEN".to_string()),
+                                ..Default::default()
+                            }),
+                            dtp: vec![DTP {
+                                _01: "348".to_string(),
+                                _02: "D8".to_string(),
+                                _03: "19960601".to_string(),
+                            }],
+                            ..Default::default()
+                        },
+                        _834Loop2300 {
+                            hd: Some(HD {
+                                _01: "021".to_string(),
+                                _03: Some("VIS".to_string()),
+                                ..Default::default()
+                            }),
+                            dtp: vec![DTP {
+                                _01: "348".to_string(),
+                                _02: "D8".to_string(),
+                                _03: "19960601".to_string(),
+                            }],
+                            ..Default::default()
+                        },
+                    ],
+                    ..Default::default()
+                }],
+                se: SE {
+                    _01: "21".to_string(),
+                    _02: "12345".to_string(),
+                },
+                ..Default::default()
+            }],
+            ge: GE {
+                _01: "1".to_string(),
+                _02: "000012345".to_string(),
+            },
+        }],
+        iea: IEA {
+            _01: "1".to_string(),
+            _02: "000012345".to_string(),
+        },
+    };
+    let obj_str = serde_x12::to_string(&obj).unwrap();
+    assert_eq!(str, obj_str);
+}
+
+#[test]
 fn parse_834_2() {
     // source: https://www.emedny.org/hipaa/5010/transactions/834_sample_files/MCE834Sample_2.txt
     let str = r#"ISA*00*          *00*          *ZZ*EMEDNYMCR      *ZZ*8-DIGIT PLAN ID*191125*1409*^*00501*193290002*0*T*:~
