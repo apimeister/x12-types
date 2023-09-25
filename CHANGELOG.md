@@ -1,3 +1,7 @@
+# 0.7.4 2023-09-*
+
+* fixed 004010 refine parsing
+
 # 0.7.3 2023-09-24
 
 * added 005010/834 - Benefit Enrollment and Maintenance
