@@ -1333,6 +1333,18 @@ pub struct EA {
     pub _03: Option<String>,
 }
 
+impl<'a> Parser<&'a str, EA, nom::error::Error<&'a str>> for EA {
+    fn parse(input: &'a str) -> IResult<&'a str, EA> {
+        let (rest, vars) = crate::util::parse_line(input, "EA")?;
+        let obj = EA {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).map(|x| x.to_string()),
+        };
+        Ok((rest, obj))
+    }
+}
+
 /// EFI - Electronic Format Identification
 ///
 /// To provide basic information about the electronic format of the interchange data

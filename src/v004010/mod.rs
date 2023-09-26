@@ -649,6 +649,8 @@ impl<'a> Parser<&'a str, _301, nom::error::Error<&'a str>> for _301 {
         });
         let (rest, obj) = many0(N9::parse)(rest)?;
         output.n9 = obj;
+        let (rest, obj) = many0(R2A::parse)(rest)?;
+        output.r2a = obj;
         // loop n1
         let mut loop_n1 = vec![];
         let mut loop_rest = rest.clone();
@@ -680,10 +682,18 @@ impl<'a> Parser<&'a str, _301, nom::error::Error<&'a str>> for _301 {
         }
         let rest = loop_rest;
         output.loop_r4 = loop_r4;
+        let (rest, obj) = opt(W09::parse)(rest)?;
+        output.w09 = obj;
+        let (rest, obj) = opt(H3::parse)(rest)?;
+        output.h3 = obj;
+        let (rest, obj) = many0(EA::parse)(rest)?;
+        output.ea = obj;
         // loop lx
         let mut loop_lx = vec![];
         let mut loop_rest = rest.clone();
-        while peek(opt(LX::parse))(loop_rest)?.1.is_some() {
+        while peek(opt(LX::parse))(loop_rest)?.1.is_some()
+            || peek(opt(W09::parse))(loop_rest)?.1.is_some()
+        {
             let (rest, lx) = LX::parse(loop_rest)?;
             let (rest, n7) = opt(N7::parse)(rest)?;
             let (rest, w09) = opt(W09::parse)(rest)?;
