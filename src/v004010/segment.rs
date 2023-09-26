@@ -1829,9 +1829,9 @@ impl<'a> Parser<&'a str, GS, nom::error::Error<&'a str>> for GS {
             _03: vars.get(2).unwrap().to_string(),
             _04: vars.get(3).unwrap().to_string(),
             _05: vars.get(4).unwrap().to_string(),
-            _06: vars.get(4).unwrap().to_string(),
-            _07: vars.get(4).unwrap().to_string(),
-            _08: vars.get(4).unwrap().to_string(),
+            _06: vars.get(5).unwrap().to_string(),
+            _07: vars.get(6).unwrap().to_string(),
+            _08: vars.get(7).unwrap().to_string(),
         };
         Ok((rest, obj))
     }
@@ -1874,6 +1874,24 @@ pub struct H1 {
     pub _09: Option<String>,
 }
 
+impl<'a> Parser<&'a str, H1, nom::error::Error<&'a str>> for H1 {
+    fn parse(input: &'a str) -> IResult<&'a str, H1> {
+        let (rest, vars) = crate::util::parse_line(input, "H1")?;
+        let obj = H1 {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).map(|x| x.to_string()),
+            _05: vars.get(4).map(|x| x.to_string()),
+            _06: vars.get(5).map(|x| x.to_string()),
+            _07: vars.get(6).map(|x| x.to_string()),
+            _08: vars.get(7).map(|x| x.to_string()),
+            _09: vars.get(8).map(|x| x.to_string()),
+        };
+        Ok((rest, obj))
+    }
+}
+
 /// H2 - Additional Hazardous Material Description
 ///
 /// To specify free-form hazardous material descriptive data in addition to the information provided in the H1 segment
@@ -1888,6 +1906,17 @@ pub struct H2 {
     pub _01: String,
     #[serde(rename = "02")]
     pub _02: Option<String>,
+}
+
+impl<'a> Parser<&'a str, H2, nom::error::Error<&'a str>> for H2 {
+    fn parse(input: &'a str) -> IResult<&'a str, H2> {
+        let (rest, vars) = crate::util::parse_line(input, "H2")?;
+        let obj = H2 {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).map(|x| x.to_string()),
+        };
+        Ok((rest, obj))
+    }
 }
 
 /// H3 - Special Handling Instructions

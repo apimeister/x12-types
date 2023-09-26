@@ -647,8 +647,8 @@ impl<'a> Parser<&'a str, _301, nom::error::Error<&'a str>> for _301 {
             y4: Some(obj),
             w09: None,
         });
-        let (rest, obj) = N9::parse(rest)?;
-        output.n9.push(obj);
+        let (rest, obj) = many0(N9::parse)(rest)?;
+        output.n9 = obj;
         // loop n1
         let mut loop_n1 = vec![];
         let mut loop_rest = rest.clone();
@@ -684,7 +684,7 @@ impl<'a> Parser<&'a str, _301, nom::error::Error<&'a str>> for _301 {
         let mut loop_lx = vec![];
         let mut loop_rest = rest.clone();
         while peek(opt(LX::parse))(loop_rest)?.1.is_some() {
-            let (rest, lx) = LX::parse(rest)?;
+            let (rest, lx) = LX::parse(loop_rest)?;
             let (rest, n7) = opt(N7::parse)(rest)?;
             let (rest, w09) = opt(W09::parse)(rest)?;
             let (rest, k1) = many0(K1::parse)(rest)?;
@@ -693,6 +693,14 @@ impl<'a> Parser<&'a str, _301, nom::error::Error<&'a str>> for _301 {
             let (rest, l4) = opt(L4::parse)(rest)?;
             let (rest, l1) = opt(L1::parse)(rest)?;
             loop_rest = rest;
+            // loop h1
+            let mut loop_h1 = vec![];
+            while peek(opt(H1::parse))(loop_rest)?.1.is_some() {
+                let (rest, h1) = opt(H1::parse)(loop_rest)?;
+                let (rest, h2) = many0(H2::parse)(rest)?;
+                loop_rest = rest;
+                loop_h1.push(_301LoopLxLoopH1 { h1, h2 });
+            }
             loop_lx.push(_301LoopLx {
                 lx,
                 n7,
@@ -702,7 +710,7 @@ impl<'a> Parser<&'a str, _301, nom::error::Error<&'a str>> for _301 {
                 l5,
                 l4,
                 l1,
-                loop_h1: vec![],
+                loop_h1,
             });
         }
         let rest = loop_rest;
