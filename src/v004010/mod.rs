@@ -676,10 +676,7 @@ impl<'a> Parser<&'a str, _301, nom::error::Error<&'a str>> for _301 {
             let (rest, r4) = R4::parse(loop_rest)?;
             let (rest, dtm) = many0(DTM::parse)(rest)?;
             loop_rest = rest;
-            loop_r4.push(_301LoopR4 {
-                r4,
-                dtm,
-            });
+            loop_r4.push(_301LoopR4 { r4, dtm });
         }
         let rest = loop_rest;
         output.loop_r4 = loop_r4;
@@ -706,7 +703,7 @@ impl<'a> Parser<&'a str, _301, nom::error::Error<&'a str>> for _301 {
                 l4,
                 l1,
                 loop_h1: vec![],
-                });
+            });
         }
         let rest = loop_rest;
         output.loop_lx = loop_lx;
@@ -1278,10 +1275,7 @@ impl<'a> Parser<&'a str, _315, nom::error::Error<&'a str>> for _315 {
             let (rest, r4) = R4::parse(loop_rest)?;
             let (rest, dtm) = many0(DTM::parse)(rest)?;
             loop_rest = rest;
-            loop_r4.push(_315LoopR4 {
-                r4,
-                dtm,
-            });
+            loop_r4.push(_315LoopR4 { r4, dtm });
         }
         let rest = loop_rest;
         output.loop_r4 = loop_r4;
