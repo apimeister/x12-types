@@ -677,11 +677,19 @@ impl<'a> Parser<&'a str, _301, nom::error::Error<&'a str>> for _301 {
         output.b1 = obj;
         let (rest, obj) = Y3::parse(rest)?;
         output.y3 = obj;
-        let (rest, obj) = Y4::parse(rest)?;
-        output.loop_y4.push(_301LoopY4 {
-            y4: Some(obj),
-            w09: None,
-        });
+        // loop y4
+        let mut loop_y4 = vec![];
+        let mut loop_rest = rest.clone();
+        while peek(opt(Y4::parse))(loop_rest)?.1.is_some()
+            || peek(opt(W09::parse))(loop_rest)?.1.is_some()
+        {
+            let (rest, y4) = opt(Y4::parse)(rest)?;
+            let (rest, w09) = opt(W09::parse)(rest)?;
+            loop_rest = rest;
+            loop_y4.push(_301LoopY4 { y4, w09 });
+        }
+        let rest = loop_rest;
+        output.loop_y4 = loop_y4;
         let (rest, obj) = many0(N9::parse)(rest)?;
         output.n9 = obj;
         let (rest, obj) = many0(R2A::parse)(rest)?;
