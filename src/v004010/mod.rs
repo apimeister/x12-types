@@ -317,11 +317,7 @@ impl<'a> Parser<&'a str, _204, nom::error::Error<&'a str>> for _204 {
                         loop_330,
                     });
                 }
-                loop_320.push(_204Loop320 {
-                    l5,
-                    at8,
-                    loop_325,
-                });
+                loop_320.push(_204Loop320 { l5, at8, loop_325 });
             }
             // loop 380
             let mut loop_380 = vec![];
