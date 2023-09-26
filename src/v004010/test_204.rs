@@ -258,3 +258,11 @@ fn test_2() {
     println!("{obj:?}");
     assert!(rest.is_empty());
 }
+
+#[test]
+fn test_3() {
+    let str = r#"ISA*00*          *00*          *ZZ*USANYC999      *ZZ*8435778122     *230524*1214*U*00401*000136909*0*P*>~GS*SM*USANYC999*8435778122*20230524*1214*136909*X*004010~ST*204*136581~B2******DE~B2A*00~L11*SUDU33SYD002692X*BM~L11*MAERSK WILLEMSTADT*WU~L11*316N*V3~L11*3PHLT00RVY*PO~AT5*IP**IMPORT~N1*SH*ADCHEM (AUSTRALIA) PTY LTD~N7*GESU*132086*17600*N*2180******CN*SUDU***2000**K*8****2200~M7*SF0046088~S5*1*PA~N1*RO*CN~S5*2*DT~N1*RD*CSX~LH1*PK*20*UN3077***KG*17600***III~SE*17*136581~GE*1*136909~IEA*1*000136909~"#;
+    let (rest, obj) = Transmission::<_204>::parse(str).unwrap();
+    println!("{obj:?}");
+    assert!(rest.is_empty());
+}

@@ -278,13 +278,17 @@ impl<'a> Parser<&'a str, _204, nom::error::Error<&'a str>> for _204 {
             }
             // loop 320
             let mut loop_320 = vec![];
-            while peek(opt(L5::parse))(loop_rest)?.1.is_some() {
+            while peek(opt(L5::parse))(loop_rest)?.1.is_some()
+                || peek(opt(LH1::parse))(loop_rest)?.1.is_some()
+            {
                 let (rest, l5) = opt(L5::parse)(loop_rest)?;
                 let (rest, at8) = opt(AT8::parse)(rest)?;
                 loop_rest = rest;
                 // loop 325
                 let mut loop_325 = vec![];
-                while peek(opt(G61::parse))(loop_rest)?.1.is_some() {
+                while peek(opt(G61::parse))(loop_rest)?.1.is_some()
+                    || peek(opt(LH1::parse))(loop_rest)?.1.is_some()
+                {
                     let (rest, g61) = opt(G61::parse)(loop_rest)?;
                     let (rest, l11) = many0(L11::parse)(rest)?;
                     let (rest, lh6) = opt(LH6::parse)(rest)?;
