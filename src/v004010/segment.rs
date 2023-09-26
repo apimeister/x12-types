@@ -550,6 +550,28 @@ pub struct B4 {
     pub _13: Option<String>,
 }
 
+impl<'a> Parser<&'a str, B4, nom::error::Error<&'a str>> for B4 {
+    fn parse(input: &'a str) -> IResult<&'a str, B4> {
+        let (rest, vars) = crate::util::parse_line(input, "B4")?;
+        let obj = B4 {
+            _01: vars.first().map(|x| x.to_string()),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).map(|x| x.to_string()),
+            _05: vars.get(4).map(|x| x.to_string()),
+            _06: vars.get(5).map(|x| x.to_string()),
+            _07: vars.get(6).map(|x| x.to_string()),
+            _08: vars.get(7).map(|x| x.to_string()),
+            _09: vars.get(8).map(|x| x.to_string()),
+            _10: vars.get(9).map(|x| x.to_string()),
+            _11: vars.get(10).map(|x| x.to_string()),
+            _12: vars.get(11).map(|x| x.to_string()),
+            _13: vars.get(12).map(|x| x.to_string()),
+        };
+        Ok((rest, obj))
+    }
+}
+
 /// B10 - Beginning Segment for Transportation Carrier Shipment Status Message
 ///
 /// To transmit identifying numbers and other basic data relating to the transaction set
@@ -2493,6 +2515,21 @@ pub struct L4 {
     /// 271 - Industry Code
     #[serde(rename = "06")]
     pub _06: Option<String>,
+}
+
+impl<'a> Parser<&'a str, L4, nom::error::Error<&'a str>> for L4 {
+    fn parse(input: &'a str) -> IResult<&'a str, L4> {
+        let (rest, vars) = crate::util::parse_line(input, "L4")?;
+        let obj = L4 {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).unwrap().to_string(),
+            _03: vars.get(2).unwrap().to_string(),
+            _04: vars.get(3).unwrap().to_string(),
+            _05: vars.get(4).map(|x| x.to_string()),
+            _06: vars.get(5).map(|x| x.to_string()),
+        };
+        Ok((rest, obj))
+    }
 }
 
 /// L5 - Description, Marks and Numbers
@@ -4609,6 +4646,31 @@ pub struct Q2 {
     pub _16: Option<String>,
 }
 
+impl<'a> Parser<&'a str, Q2, nom::error::Error<&'a str>> for Q2 {
+    fn parse(input: &'a str) -> IResult<&'a str, Q2> {
+        let (rest, vars) = crate::util::parse_line(input, "Q2")?;
+        let obj = Q2 {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).map(|x| x.to_string()),
+            _05: vars.get(4).map(|x| x.to_string()),
+            _06: vars.get(5).map(|x| x.to_string()),
+            _07: vars.get(6).map(|x| x.to_string()),
+            _08: vars.get(7).map(|x| x.to_string()),
+            _09: vars.get(8).map(|x| x.to_string()),
+            _10: vars.get(9).map(|x| x.to_string()),
+            _11: vars.get(10).map(|x| x.to_string()),
+            _12: vars.get(11).map(|x| x.to_string()),
+            _13: vars.get(12).map(|x| x.to_string()),
+            _14: vars.get(13).map(|x| x.to_string()),
+            _15: vars.get(14).map(|x| x.to_string()),
+            _16: vars.get(15).map(|x| x.to_string()),
+        };
+        Ok((rest, obj))
+    }
+}
+
 /// Q5 - Status Details
 ///
 /// To specify the status of the shipment in terms of dates, time, reference numbers, and location
@@ -5268,6 +5330,21 @@ pub struct SG {
     /// - MAX=2
     #[serde(rename = "06")]
     pub _06: Option<String>,
+}
+
+impl<'a> Parser<&'a str, SG, nom::error::Error<&'a str>> for SG {
+    fn parse(input: &'a str) -> IResult<&'a str, SG> {
+        let (rest, vars) = crate::util::parse_line(input, "SG")?;
+        let obj = SG {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).unwrap().to_string(),
+            _03: vars.get(2).unwrap().to_string(),
+            _04: vars.get(3).map(|x| x.to_string()),
+            _05: vars.get(4).unwrap().to_string(),
+            _06: vars.get(5).map(|x| x.to_string()),
+        };
+        Ok((rest, obj))
+    }
 }
 
 /// SPO - Shipment Purchase Order Detail
@@ -5940,6 +6017,24 @@ pub struct W09 {
     pub _08: Option<String>,
     #[serde(rename = "09")]
     pub _09: Option<String>,
+}
+
+impl<'a> Parser<&'a str, W09, nom::error::Error<&'a str>> for W09 {
+    fn parse(input: &'a str) -> IResult<&'a str, W09> {
+        let (rest, vars) = crate::util::parse_line(input, "W09")?;
+        let obj = W09 {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).map(|x| x.to_string()),
+            _05: vars.get(4).map(|x| x.to_string()),
+            _06: vars.get(5).map(|x| x.to_string()),
+            _07: vars.get(6).map(|x| x.to_string()),
+            _08: vars.get(7).map(|x| x.to_string()),
+            _09: vars.get(8).map(|x| x.to_string()),
+        };
+        Ok((rest, obj))
+    }
 }
 
 /// X1 - Export License

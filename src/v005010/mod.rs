@@ -1,5 +1,6 @@
 //! v005010 repesents all entities of the 005010 specification.
 
+use crate::util::Parser;
 use nom::{
     combinator::{opt, peek},
     multi::many0,
@@ -7,8 +8,6 @@ use nom::{
 };
 pub use segment::*;
 use serde::{Deserialize, Serialize};
-
-use crate::util::Parser;
 
 mod segment;
 

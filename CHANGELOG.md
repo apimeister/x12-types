@@ -1,4 +1,9 @@
-# 0.7.4 2023-09-*
+# 0.7.5 2023-09-26
+
+* 004010/315 refine parsing
+* 004010/301 refine parsing
+
+# 0.7.4 2023-09-25
 
 * fixed 004010 refine parsing
 
