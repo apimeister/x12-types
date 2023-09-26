@@ -163,8 +163,8 @@ pub struct _204 {
     pub at5: Option<AT5>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub pld: Option<PLD>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub lh6: Option<LH6>,
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    pub lh6: Vec<LH6>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub nte: Option<NTE>,
     #[serde(default)]
@@ -200,7 +200,7 @@ impl<'a> Parser<&'a str, _204, nom::error::Error<&'a str>> for _204 {
         output.at5 = obj;
         let (rest, obj) = opt(PLD::parse)(rest)?;
         output.pld = obj;
-        let (rest, obj) = opt(LH6::parse)(rest)?;
+        let (rest, obj) = many0(LH6::parse)(rest)?;
         output.lh6 = obj;
         let (rest, obj) = opt(NTE::parse)(rest)?;
         output.nte = obj;
@@ -282,10 +282,45 @@ impl<'a> Parser<&'a str, _204, nom::error::Error<&'a str>> for _204 {
                 let (rest, l5) = opt(L5::parse)(loop_rest)?;
                 let (rest, at8) = opt(AT8::parse)(rest)?;
                 loop_rest = rest;
+                // loop 325
+                let mut loop_325 = vec![];
+                while peek(opt(G61::parse))(loop_rest)?.1.is_some() {
+                    let (rest, g61) = opt(G61::parse)(loop_rest)?;
+                    let (rest, l11) = many0(L11::parse)(rest)?;
+                    let (rest, lh6) = opt(LH6::parse)(rest)?;
+                    loop_rest = rest;
+                    // loop 330
+                    let mut loop_330 = vec![];
+                    while peek(opt(LH1::parse))(loop_rest)?.1.is_some() {
+                        let (rest, lh1) = opt(LH1::parse)(loop_rest)?;
+                        let (rest, lh2) = many0(LH2::parse)(rest)?;
+                        let (rest, lh3) = many0(LH3::parse)(rest)?;
+                        let (rest, lfh) = many0(LFH::parse)(rest)?;
+                        let (rest, lep) = many0(LEP::parse)(rest)?;
+                        let (rest, lh4) = opt(LH4::parse)(rest)?;
+                        let (rest, lht) = many0(LHT::parse)(rest)?;
+                        loop_rest = rest;
+                        loop_330.push(_204Loop330 {
+                            lh1,
+                            lh2,
+                            lh3,
+                            lfh,
+                            lep,
+                            lh4,
+                            lht,
+                        });
+                    }
+                    loop_325.push(_204Loop325 {
+                        g61,
+                        l11,
+                        lh6,
+                        loop_330,
+                    });
+                }
                 loop_320.push(_204Loop320 {
                     l5,
                     at8,
-                    loop_325: vec![],
+                    loop_325,
                 });
             }
             // loop 380
@@ -391,7 +426,7 @@ pub struct _204Loop330 {
     pub lh1: Option<LH1>,
     pub lh2: Vec<LH2>,
     pub lh3: Vec<LH3>,
-    pub lfh: Option<LFH>,
+    pub lfh: Vec<LFH>,
     pub lep: Vec<LEP>,
     pub lh4: Option<LH4>,
     pub lht: Vec<LHT>,

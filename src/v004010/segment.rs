@@ -2827,6 +2827,19 @@ pub struct LEP {
     pub _04: Option<String>,
 }
 
+impl<'a> Parser<&'a str, LEP, nom::error::Error<&'a str>> for LEP {
+    fn parse(input: &'a str) -> IResult<&'a str, LEP> {
+        let (rest, vars) = crate::util::parse_line(input, "LEP")?;
+        let obj = LEP {
+            _01: vars.first().map(|x| x.to_string()),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).map(|x| x.to_string()),
+        };
+        Ok((rest, obj))
+    }
+}
+
 /// LFH - Freeform Hazardous Material Information
 ///
 /// To uniquely identify the variable information required by government regulation covering the transportation of hazardous material shipments
@@ -2856,6 +2869,22 @@ pub struct LFH {
     pub _06: Option<String>,
     #[serde(rename = "07")]
     pub _07: Option<String>,
+}
+
+impl<'a> Parser<&'a str, LFH, nom::error::Error<&'a str>> for LFH {
+    fn parse(input: &'a str) -> IResult<&'a str, LFH> {
+        let (rest, vars) = crate::util::parse_line(input, "LFH")?;
+        let obj = LFH {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).unwrap().to_string(),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).map(|x| x.to_string()),
+            _05: vars.get(4).map(|x| x.to_string()),
+            _06: vars.get(5).map(|x| x.to_string()),
+            _07: vars.get(6).map(|x| x.to_string()),
+        };
+        Ok((rest, obj))
+    }
 }
 
 /// LH1 - Hazardous Identification Information
@@ -2901,6 +2930,26 @@ pub struct LH1 {
     pub _11: Option<String>,
 }
 
+impl<'a> Parser<&'a str, LH1, nom::error::Error<&'a str>> for LH1 {
+    fn parse(input: &'a str) -> IResult<&'a str, LH1> {
+        let (rest, vars) = crate::util::parse_line(input, "LH1")?;
+        let obj = LH1 {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).unwrap().to_string(),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).map(|x| x.to_string()),
+            _05: vars.get(4).map(|x| x.to_string()),
+            _06: vars.get(5).map(|x| x.to_string()),
+            _07: vars.get(6).map(|x| x.to_string()),
+            _08: vars.get(7).map(|x| x.to_string()),
+            _09: vars.get(8).map(|x| x.to_string()),
+            _10: vars.get(9).map(|x| x.to_string()),
+            _11: vars.get(10).map(|x| x.to_string()),
+        };
+        Ok((rest, obj))
+    }
+}
+
 /// LH2 - Hazardous Classification Information
 ///
 /// To specify the hazardous notation and endorsement information
@@ -2944,6 +2993,26 @@ pub struct LH2 {
     pub _11: Option<String>,
 }
 
+impl<'a> Parser<&'a str, LH2, nom::error::Error<&'a str>> for LH2 {
+    fn parse(input: &'a str) -> IResult<&'a str, LH2> {
+        let (rest, vars) = crate::util::parse_line(input, "LH2")?;
+        let obj = LH2 {
+            _01: vars.first().map(|x| x.to_string()),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).map(|x| x.to_string()),
+            _05: vars.get(4).map(|x| x.to_string()),
+            _06: vars.get(5).map(|x| x.to_string()),
+            _07: vars.get(6).map(|x| x.to_string()),
+            _08: vars.get(7).map(|x| x.to_string()),
+            _09: vars.get(8).map(|x| x.to_string()),
+            _10: vars.get(9).map(|x| x.to_string()),
+            _11: vars.get(10).map(|x| x.to_string()),
+        };
+        Ok((rest, obj))
+    }
+}
+
 /// LH3 - Hazardous Material Shipping Name
 ///
 /// To specify the hazardous material shipping name and additional descriptive requirements
@@ -2964,6 +3033,19 @@ pub struct LH3 {
     pub _03: Option<String>,
     #[serde(rename = "04")]
     pub _04: Option<String>,
+}
+
+impl<'a> Parser<&'a str, LH3, nom::error::Error<&'a str>> for LH3 {
+    fn parse(input: &'a str) -> IResult<&'a str, LH3> {
+        let (rest, vars) = crate::util::parse_line(input, "LH3")?;
+        let obj = LH3 {
+            _01: vars.first().map(|x| x.to_string()),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).map(|x| x.to_string()),
+        };
+        Ok((rest, obj))
+    }
 }
 
 /// LH4 - Canadian Dangerous Requirements
@@ -3010,6 +3092,27 @@ pub struct LH4 {
     _11: Option<String>,
     #[serde(rename = "12")]
     _12: Option<String>,
+}
+
+impl<'a> Parser<&'a str, LH4, nom::error::Error<&'a str>> for LH4 {
+    fn parse(input: &'a str) -> IResult<&'a str, LH4> {
+        let (rest, vars) = crate::util::parse_line(input, "LH4")?;
+        let obj = LH4 {
+            _01: vars.first().map(|x| x.to_string()),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).map(|x| x.to_string()),
+            _05: vars.get(4).map(|x| x.to_string()),
+            _06: vars.get(5).map(|x| x.to_string()),
+            _07: vars.get(6).map(|x| x.to_string()),
+            _08: vars.get(7).map(|x| x.to_string()),
+            _09: vars.get(8).map(|x| x.to_string()),
+            _10: vars.get(9).map(|x| x.to_string()),
+            _11: vars.get(10).map(|x| x.to_string()),
+            _12: vars.get(11).map(|x| x.to_string()),
+        };
+        Ok((rest, obj))
+    }
 }
 
 /// LH6 - Hazardous Certification
@@ -3095,6 +3198,18 @@ pub struct LHT {
     pub _02: Option<String>,
     #[serde(rename = "03")]
     pub _03: Option<String>,
+}
+
+impl<'a> Parser<&'a str, LHT, nom::error::Error<&'a str>> for LHT {
+    fn parse(input: &'a str) -> IResult<&'a str, LHT> {
+        let (rest, vars) = crate::util::parse_line(input, "LHT")?;
+        let obj = LHT {
+            _01: vars.first().map(|x| x.to_string()),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).map(|x| x.to_string()),
+        };
+        Ok((rest, obj))
+    }
 }
 
 /// LS - Loop Header
