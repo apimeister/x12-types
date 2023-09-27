@@ -306,5 +306,5 @@ IEA*1*000002910~
     println!("{obj:?}");
     assert!(rest.is_empty());
     let s = serde_x12::to_string(&obj).unwrap();
-    assert_eq!(s,str);
+    assert_eq!(s, str);
 }
