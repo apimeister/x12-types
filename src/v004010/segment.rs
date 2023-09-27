@@ -3576,6 +3576,34 @@ pub struct M11 {
     pub _19: Option<String>,
 }
 
+impl<'a> Parser<&'a str, M11, nom::error::Error<&'a str>> for M11 {
+    fn parse(input: &'a str) -> IResult<&'a str, M11> {
+        let (rest, vars) = crate::util::parse_line(input, "M11")?;
+        let obj = M11 {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).unwrap().to_string(),
+            _03: vars.get(2).unwrap().to_string(),
+            _04: vars.get(3).unwrap().to_string(),
+            _05: vars.get(4).unwrap().to_string(),
+            _06: vars.get(5).unwrap().to_string(),
+            _07: vars.get(6).map(|x| x.to_string()),
+            _08: vars.get(7).map(|x| x.to_string()),
+            _09: vars.get(8).map(|x| x.to_string()),
+            _10: vars.get(9).map(|x| x.to_string()),
+            _11: vars.get(10).map(|x| x.to_string()),
+            _12: vars.get(11).unwrap().to_string(),
+            _13: vars.get(12).map(|x| x.to_string()),
+            _14: vars.get(13).map(|x| x.to_string()),
+            _15: vars.get(14).map(|x| x.to_string()),
+            _16: vars.get(15).map(|x| x.to_string()),
+            _17: vars.get(16).map(|x| x.to_string()),
+            _18: vars.get(17).map(|x| x.to_string()),
+            _19: vars.get(18).map(|x| x.to_string()),
+        };
+        Ok((rest, obj))
+    }
+}
+
 /// M12 - In-bond Identifying Information
 ///
 /// To transmit in-bond information
@@ -3608,6 +3636,26 @@ pub struct M12 {
     pub _11: Option<String>,
 }
 
+impl<'a> Parser<&'a str, M12, nom::error::Error<&'a str>> for M12 {
+    fn parse(input: &'a str) -> IResult<&'a str, M12> {
+        let (rest, vars) = crate::util::parse_line(input, "M12")?;
+        let obj = M12 {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).map(|x| x.to_string()),
+            _05: vars.get(4).map(|x| x.to_string()),
+            _06: vars.get(5).map(|x| x.to_string()),
+            _07: vars.get(6).map(|x| x.to_string()),
+            _08: vars.get(7).map(|x| x.to_string()),
+            _09: vars.get(8).map(|x| x.to_string()),
+            _10: vars.get(9).map(|x| x.to_string()),
+            _11: vars.get(10).map(|x| x.to_string()),
+        };
+        Ok((rest, obj))
+    }
+}
+
 /// M13 - Manifest Amendment Details
 ///
 /// To correct a manifest record prior to conveyance arrival or to amend a manifest record after conveyance arrival
@@ -3636,6 +3684,25 @@ pub struct M13 {
     pub _08: Option<String>,
     pub _09: String,
     pub _10: Option<String>,
+}
+
+impl<'a> Parser<&'a str, M13, nom::error::Error<&'a str>> for M13 {
+    fn parse(input: &'a str) -> IResult<&'a str, M13> {
+        let (rest, vars) = crate::util::parse_line(input, "M13")?;
+        let obj = M13 {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).unwrap().to_string(),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).unwrap().to_string(),
+            _05: vars.get(4).map(|x| x.to_string()),
+            _06: vars.get(5).map(|x| x.to_string()),
+            _07: vars.get(6).map(|x| x.to_string()),
+            _08: vars.get(7).map(|x| x.to_string()),
+            _09: vars.get(8).unwrap().to_string(),
+            _10: vars.get(9).map(|x| x.to_string()),
+        };
+        Ok((rest, obj))
+    }
 }
 
 /// MAN - Marks and Numbers
@@ -4290,6 +4357,28 @@ pub struct N10 {
     pub _13: Option<String>,
 }
 
+impl<'a> Parser<&'a str, N10, nom::error::Error<&'a str>> for N10 {
+    fn parse(input: &'a str) -> IResult<&'a str, N10> {
+        let (rest, vars) = crate::util::parse_line(input, "N10")?;
+        let obj = N10 {
+            _01: vars.first().map(|x| x.to_string()),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).map(|x| x.to_string()),
+            _05: vars.get(4).map(|x| x.to_string()),
+            _06: vars.get(5).map(|x| x.to_string()),
+            _07: vars.get(6).map(|x| x.to_string()),
+            _08: vars.get(7).map(|x| x.to_string()),
+            _09: vars.get(8).map(|x| x.to_string()),
+            _10: vars.get(9).map(|x| x.to_string()),
+            _11: vars.get(10).map(|x| x.to_string()),
+            _12: vars.get(11).map(|x| x.to_string()),
+            _13: vars.get(12).map(|x| x.to_string()),
+        };
+        Ok((rest, obj))
+    }
+}
+
 /// N12 - Equipment Environment
 ///
 /// To describe the operating environment of the equipment
@@ -4445,6 +4534,20 @@ pub struct P4 {
     pub _05: Option<String>,
 }
 
+impl<'a> Parser<&'a str, P4, nom::error::Error<&'a str>> for P4 {
+    fn parse(input: &'a str) -> IResult<&'a str, P4> {
+        let (rest, vars) = crate::util::parse_line(input, "P4")?;
+        let obj = P4 {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).unwrap().to_string(),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).map(|x| x.to_string()),
+            _05: vars.get(4).map(|x| x.to_string()),
+        };
+        Ok((rest, obj))
+    }
+}
+
 /// P5 - Port Information
 ///
 /// To indicate port-related data
@@ -4462,6 +4565,18 @@ pub struct P5 {
     pub _02: String,
     #[serde(rename = "03")]
     pub _03: String,
+}
+
+impl<'a> Parser<&'a str, P5, nom::error::Error<&'a str>> for P5 {
+    fn parse(input: &'a str) -> IResult<&'a str, P5> {
+        let (rest, vars) = crate::util::parse_line(input, "P5")?;
+        let obj = P5 {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).unwrap().to_string(),
+            _03: vars.get(2).unwrap().to_string(),
+        };
+        Ok((rest, obj))
+    }
 }
 
 /// PER - Administrative Communications Contact
@@ -4496,6 +4611,24 @@ pub struct PER {
     pub _07: Option<String>,
     pub _08: Option<String>,
     pub _09: Option<String>,
+}
+
+impl<'a> Parser<&'a str, PER, nom::error::Error<&'a str>> for PER {
+    fn parse(input: &'a str) -> IResult<&'a str, PER> {
+        let (rest, vars) = crate::util::parse_line(input, "PER")?;
+        let obj = PER {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).map(|x| x.to_string()),
+            _05: vars.get(4).map(|x| x.to_string()),
+            _06: vars.get(5).map(|x| x.to_string()),
+            _07: vars.get(6).map(|x| x.to_string()),
+            _08: vars.get(7).map(|x| x.to_string()),
+            _09: vars.get(8).map(|x| x.to_string()),
+        };
+        Ok((rest, obj))
+    }
 }
 
 /// PI - Price Authority Identification
@@ -6025,6 +6158,26 @@ pub struct VC {
     pub _11: Option<String>,
 }
 
+impl<'a> Parser<&'a str, VC, nom::error::Error<&'a str>> for VC {
+    fn parse(input: &'a str) -> IResult<&'a str, VC> {
+        let (rest, vars) = crate::util::parse_line(input, "VC")?;
+        let obj = VC {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).map(|x| x.to_string()),
+            _05: vars.get(4).map(|x| x.to_string()),
+            _06: vars.get(5).map(|x| x.to_string()),
+            _07: vars.get(6).map(|x| x.to_string()),
+            _08: vars.get(7).map(|x| x.to_string()),
+            _09: vars.get(8).map(|x| x.to_string()),
+            _10: vars.get(9).map(|x| x.to_string()),
+            _11: vars.get(10).map(|x| x.to_string()),
+        };
+        Ok((rest, obj))
+    }
+}
+
 /// VID - Conveyance Identification
 ///
 /// To identify a conveyance and its attributes
@@ -6072,6 +6225,28 @@ pub struct VID {
     pub _12: Option<String>,
     #[serde(rename = "13")]
     pub _13: Option<String>,
+}
+
+impl<'a> Parser<&'a str, VID, nom::error::Error<&'a str>> for VID {
+    fn parse(input: &'a str) -> IResult<&'a str, VID> {
+        let (rest, vars) = crate::util::parse_line(input, "VID")?;
+        let obj = VID {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).unwrap().to_string(),
+            _04: vars.get(3).map(|x| x.to_string()),
+            _05: vars.get(4).map(|x| x.to_string()),
+            _06: vars.get(5).map(|x| x.to_string()),
+            _07: vars.get(6).map(|x| x.to_string()),
+            _08: vars.get(7).map(|x| x.to_string()),
+            _09: vars.get(8).map(|x| x.to_string()),
+            _10: vars.get(9).map(|x| x.to_string()),
+            _11: vars.get(10).map(|x| x.to_string()),
+            _12: vars.get(11).map(|x| x.to_string()),
+            _13: vars.get(12).map(|x| x.to_string()),
+        };
+        Ok((rest, obj))
+    }
 }
 
 /// W2 - Equipment Identification

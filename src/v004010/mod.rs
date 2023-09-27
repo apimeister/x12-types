@@ -17,6 +17,8 @@ mod test_204;
 #[cfg(test)]
 mod test_301;
 #[cfg(test)]
+mod test_309;
+#[cfg(test)]
 mod test_310;
 #[cfg(test)]
 mod test_315;
@@ -861,14 +863,90 @@ pub struct _309 {
 impl<'a> Parser<&'a str, _309, nom::error::Error<&'a str>> for _309 {
     fn parse(input: &'a str) -> IResult<&'a str, _309> {
         let mut output = _309::default();
-        let (input, obj) = ST::parse(input)?;
+        let (rest, obj) = ST::parse(input)?;
         output.st = obj;
-        let (input, obj) = M10::parse(input)?;
+        let (rest, obj) = M10::parse(rest)?;
         output.m10 = obj;
-        // TODO missing implementation
-        let (input, obj) = SE::parse(input)?;
+        // loop p4
+        let mut loop_p4 = vec![];
+        let mut loop_rest = rest;
+        while peek(opt(P4::parse))(loop_rest)?.1.is_some() {
+            let (rest, p4) = P4::parse(loop_rest)?;
+            loop_rest = rest;
+            // loop lx
+            let mut loop_lx = vec![];
+            while peek(opt(LX::parse))(loop_rest)?.1.is_some() {
+                let (rest, lx) = LX::parse(loop_rest)?;
+                let (rest, m13) = opt(M13::parse)(rest)?;
+                let (rest, m11) = opt(M11::parse)(rest)?;
+                let (rest, n9) = many0(N9::parse)(rest)?;
+                loop_rest = rest;
+                // loop n1
+                let mut loop_n1 = vec![];
+                while peek(opt(N1::parse))(loop_rest)?.1.is_some() {
+                    let (rest, n1) = opt(N1::parse)(loop_rest)?;
+                    let (rest, n3) = opt(N3::parse)(rest)?;
+                    let (rest, n4) = opt(N4::parse)(rest)?;
+                    let (rest, dtm) = opt(DTM::parse)(rest)?;
+                    let (rest, per) = opt(PER::parse)(rest)?;
+                    loop_rest = rest;
+                    loop_n1.push(_309LoopN1 {
+                        n1,
+                        n3,
+                        n4,
+                        dtm,
+                        per,
+                    });
+                }
+                // loop m12
+                let mut loop_m12 = vec![];
+                while peek(opt(M12::parse))(loop_rest)?.1.is_some() {
+                    let (rest, m12) = opt(M12::parse)(loop_rest)?;
+                    let (rest, r4) = many0(R4::parse)(rest)?;
+                    loop_rest = rest;
+                    loop_m12.push(_309LoopM12 { m12, r4 });
+                }
+                // loop vid
+                let mut loop_vid = vec![];
+                while peek(opt(VID::parse))(loop_rest)?.1.is_some() {
+                    let (rest, vid) = opt(VID::parse)(loop_rest)?;
+                    let (rest, m7) = many0(M7::parse)(rest)?;
+                    loop_rest = rest;
+                    // loop n10
+                    let mut loop_n10 = vec![];
+                    while peek(opt(N10::parse))(loop_rest)?.1.is_some() {
+                        let (rest, n10) = opt(N10::parse)(loop_rest)?;
+                        let (rest, vc) = many0(VC::parse)(rest)?;
+                        loop_rest = rest;
+                        // loop h1
+                        let mut loop_h1 = vec![];
+                        while peek(opt(H1::parse))(loop_rest)?.1.is_some() {
+                            let (rest, h1) = opt(H1::parse)(loop_rest)?;
+                            let (rest, h2) = many0(H2::parse)(rest)?;
+                            loop_rest = rest;
+                            loop_h1.push(_309LoopH1 { h1, h2 });
+                        }
+                        loop_n10.push(_309LoopN10 { n10, vc, loop_h1 });
+                    }
+                    loop_vid.push(_309LoopVID { vid, m7, loop_n10 });
+                }
+                loop_lx.push(_309LoopLX {
+                    lx,
+                    m13,
+                    m11,
+                    n9,
+                    loop_n1,
+                    loop_m12,
+                    loop_vid,
+                });
+            }
+            loop_p4.push(_309LoopP4 { p4, loop_lx });
+        }
+        output.loop_p4 = loop_p4;
+        let rest = loop_rest;
+        let (rest, obj) = SE::parse(rest)?;
         output.se = obj;
-        Ok((input, output))
+        Ok((rest, output))
     }
 }
 
@@ -881,8 +959,8 @@ pub struct _309LoopP4 {
 #[derive(Serialize, Deserialize, Clone, Default, Debug)]
 pub struct _309LoopLX {
     pub lx: LX,
-    pub m13: M13,
-    pub m11: M11,
+    pub m13: Option<M13>,
+    pub m11: Option<M11>,
     pub n9: Vec<N9>,
     pub loop_n1: Vec<_309LoopN1>,
     pub loop_m12: Vec<_309LoopM12>,
@@ -901,19 +979,20 @@ pub struct _309LoopN1 {
 #[derive(Serialize, Deserialize, Clone, Default, Debug)]
 pub struct _309LoopM12 {
     pub m12: Option<M12>,
-    pub p5: Vec<P5>,
+    pub r4: Vec<R4>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Default, Debug)]
 pub struct _309LoopVID {
     pub vid: Option<VID>,
-    pub vc: Vec<VC>,
+    pub m7: Vec<M7>,
     pub loop_n10: Vec<_309LoopN10>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Default, Debug)]
 pub struct _309LoopN10 {
     pub n10: Option<N10>,
+    pub vc: Vec<VC>,
     pub loop_h1: Vec<_309LoopH1>,
 }
 
