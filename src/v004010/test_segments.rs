@@ -123,6 +123,16 @@ fn test_n1() {
 }
 
 #[test]
+fn test_n1_2() {
+    let str = "N1*SF*VANWARD INTL ( HONG KONG) LTD~\n";
+    let (str, obj) = N1::parse(str).unwrap();
+    assert!(str.is_empty());
+    assert_eq!(obj._01, "SF");
+    assert_eq!(obj._02, Some("VANWARD INTL ( HONG KONG) LTD".to_string()));
+    assert_eq!(obj._03, None);
+}
+
+#[test]
 fn test_n3() {
     let obj = N3 {
         _01: "TEST STR. 56".to_string(),

@@ -704,6 +704,32 @@ pub struct BL {
     pub _17: Option<String>,
 }
 
+impl<'a> Parser<&'a str, BL, nom::error::Error<&'a str>> for BL {
+    fn parse(input: &'a str) -> IResult<&'a str, BL> {
+        let (rest, vars) = crate::util::parse_line(input, "BL")?;
+        let obj = BL {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).map(|x| x.to_string()),
+            _05: vars.get(4).map(|x| x.to_string()),
+            _06: vars.get(5).map(|x| x.to_string()),
+            _07: vars.get(6).map(|x| x.to_string()),
+            _08: vars.get(7).map(|x| x.to_string()),
+            _09: vars.get(8).map(|x| x.to_string()),
+            _10: vars.get(9).map(|x| x.to_string()),
+            _11: vars.get(10).map(|x| x.to_string()),
+            _12: vars.get(11).map(|x| x.to_string()),
+            _13: vars.get(12).map(|x| x.to_string()),
+            _14: vars.get(13).map(|x| x.to_string()),
+            _15: vars.get(14).map(|x| x.to_string()),
+            _16: vars.get(15).map(|x| x.to_string()),
+            _17: vars.get(15).map(|x| x.to_string()),
+        };
+        Ok((rest, obj))
+    }
+}
+
 /// BNX - Rail Shipment Information
 ///
 /// To transmit rail-specific shipment data
@@ -724,6 +750,19 @@ pub struct BNX {
     pub _03: Option<String>,
     #[serde(rename = "04")]
     pub _04: Option<String>,
+}
+
+impl<'a> Parser<&'a str, BNX, nom::error::Error<&'a str>> for BNX {
+    fn parse(input: &'a str) -> IResult<&'a str, BNX> {
+        let (rest, vars) = crate::util::parse_line(input, "BNX")?;
+        let obj = BNX {
+            _01: vars.first().map(|x| x.to_string()),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).map(|x| x.to_string()),
+        };
+        Ok((rest, obj))
+    }
 }
 
 /// BX - General Shipment Information
@@ -776,6 +815,29 @@ pub struct BX {
     pub _13: Option<String>,
     #[serde(rename = "14")]
     pub _14: Option<String>,
+}
+
+impl<'a> Parser<&'a str, BX, nom::error::Error<&'a str>> for BX {
+    fn parse(input: &'a str) -> IResult<&'a str, BX> {
+        let (rest, vars) = crate::util::parse_line(input, "BX")?;
+        let obj = BX {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).unwrap().to_string(),
+            _03: vars.get(2).unwrap().to_string(),
+            _04: vars.get(3).map(|x| x.to_string()),
+            _05: vars.get(4).map(|x| x.to_string()),
+            _06: vars.get(5).map(|x| x.to_string()),
+            _07: vars.get(6).map(|x| x.to_string()),
+            _08: vars.get(7).map(|x| x.to_string()),
+            _09: vars.get(8).map(|x| x.to_string()),
+            _10: vars.get(9).map(|x| x.to_string()),
+            _11: vars.get(10).map(|x| x.to_string()),
+            _12: vars.get(11).map(|x| x.to_string()),
+            _13: vars.get(12).map(|x| x.to_string()),
+            _14: vars.get(13).map(|x| x.to_string()),
+        };
+        Ok((rest, obj))
+    }
 }
 
 /// C2 - Bank ID
@@ -1095,6 +1157,32 @@ pub struct CM {
     pub _17: Option<String>,
 }
 
+impl<'a> Parser<&'a str, CM, nom::error::Error<&'a str>> for CM {
+    fn parse(input: &'a str) -> IResult<&'a str, CM> {
+        let (rest, vars) = crate::util::parse_line(input, "CM")?;
+        let obj = CM {
+            _01: vars.first().map(|x| x.to_string()),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).map(|x| x.to_string()),
+            _05: vars.get(4).map(|x| x.to_string()),
+            _06: vars.get(5).map(|x| x.to_string()),
+            _07: vars.get(6).map(|x| x.to_string()),
+            _08: vars.get(7).map(|x| x.to_string()),
+            _09: vars.get(8).map(|x| x.to_string()),
+            _10: vars.get(9).map(|x| x.to_string()),
+            _11: vars.get(10).map(|x| x.to_string()),
+            _12: vars.get(11).map(|x| x.to_string()),
+            _13: vars.get(12).map(|x| x.to_string()),
+            _14: vars.get(13).map(|x| x.to_string()),
+            _15: vars.get(14).map(|x| x.to_string()),
+            _16: vars.get(15).map(|x| x.to_string()),
+            _17: vars.get(16).map(|x| x.to_string()),
+        };
+        Ok((rest, obj))
+    }
+}
+
 /// D9 - Destination Station
 ///
 /// To identify the rail destination of the shipment
@@ -1163,6 +1251,27 @@ pub struct D9 {
     /// - MAX=3
     #[serde(rename = "12")]
     pub _12: Option<String>,
+}
+
+impl<'a> Parser<&'a str, D9, nom::error::Error<&'a str>> for D9 {
+    fn parse(input: &'a str) -> IResult<&'a str, D9> {
+        let (rest, vars) = crate::util::parse_line(input, "D9")?;
+        let obj = D9 {
+            _01: vars.first().map(|x| x.to_string()),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).unwrap().to_string(),
+            _04: vars.get(3).map(|x| x.to_string()),
+            _05: vars.get(4).map(|x| x.to_string()),
+            _06: vars.get(5).map(|x| x.to_string()),
+            _07: vars.get(6).map(|x| x.to_string()),
+            _08: vars.get(7).map(|x| x.to_string()),
+            _09: vars.get(8).map(|x| x.to_string()),
+            _10: vars.get(9).map(|x| x.to_string()),
+            _11: vars.get(10).map(|x| x.to_string()),
+            _12: vars.get(11).map(|x| x.to_string()),
+        };
+        Ok((rest, obj))
+    }
 }
 
 /// DTM - Date/Time Reference
@@ -1446,6 +1555,22 @@ pub struct EM {
     pub _07: Option<String>,
 }
 
+impl<'a> Parser<&'a str, EM, nom::error::Error<&'a str>> for EM {
+    fn parse(input: &'a str) -> IResult<&'a str, EM> {
+        let (rest, vars) = crate::util::parse_line(input, "EM")?;
+        let obj = EM {
+            _01: vars.first().map(|x| x.to_string()),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).map(|x| x.to_string()),
+            _05: vars.get(4).map(|x| x.to_string()),
+            _06: vars.get(5).map(|x| x.to_string()),
+            _07: vars.get(6).map(|x| x.to_string()),
+        };
+        Ok((rest, obj))
+    }
+}
+
 /// F9 - Origin Station
 ///
 /// To identify the rail origin of the shipment
@@ -1514,6 +1639,27 @@ pub struct F9 {
     /// - MAX=3
     #[serde(rename = "12")]
     pub _12: Option<String>,
+}
+
+impl<'a> Parser<&'a str, F9, nom::error::Error<&'a str>> for F9 {
+    fn parse(input: &'a str) -> IResult<&'a str, F9> {
+        let (rest, vars) = crate::util::parse_line(input, "F9")?;
+        let obj = F9 {
+            _01: vars.first().map(|x| x.to_string()),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).unwrap().to_string(),
+            _04: vars.get(3).map(|x| x.to_string()),
+            _05: vars.get(4).map(|x| x.to_string()),
+            _06: vars.get(5).map(|x| x.to_string()),
+            _07: vars.get(6).map(|x| x.to_string()),
+            _08: vars.get(7).map(|x| x.to_string()),
+            _09: vars.get(8).map(|x| x.to_string()),
+            _10: vars.get(9).map(|x| x.to_string()),
+            _11: vars.get(10).map(|x| x.to_string()),
+            _12: vars.get(11).map(|x| x.to_string()),
+        };
+        Ok((rest, obj))
+    }
 }
 
 /// G3 - Compensation Information
@@ -1720,6 +1866,32 @@ pub struct GA {
     pub _16: Option<String>,
     #[serde(rename = "17")]
     pub _17: Option<String>,
+}
+
+impl<'a> Parser<&'a str, GA, nom::error::Error<&'a str>> for GA {
+    fn parse(input: &'a str) -> IResult<&'a str, GA> {
+        let (rest, vars) = crate::util::parse_line(input, "GA")?;
+        let obj = GA {
+            _01: vars.first().map(|x| x.to_string()),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).map(|x| x.to_string()),
+            _05: vars.get(4).map(|x| x.to_string()),
+            _06: vars.get(5).map(|x| x.to_string()),
+            _07: vars.get(6).map(|x| x.to_string()),
+            _08: vars.get(7).map(|x| x.to_string()),
+            _09: vars.get(8).map(|x| x.to_string()),
+            _10: vars.get(9).map(|x| x.to_string()),
+            _11: vars.get(10).map(|x| x.to_string()),
+            _12: vars.get(11).map(|x| x.to_string()),
+            _13: vars.get(12).map(|x| x.to_string()),
+            _14: vars.get(13).map(|x| x.to_string()),
+            _15: vars.get(14).map(|x| x.to_string()),
+            _16: vars.get(15).map(|x| x.to_string()),
+            _17: vars.get(16).map(|x| x.to_string()),
+        };
+        Ok((rest, obj))
+    }
 }
 
 /// GE - Functional Group Trailer
@@ -2004,6 +2176,23 @@ pub struct IC {
     pub _08: Option<String>,
 }
 
+impl<'a> Parser<&'a str, IC, nom::error::Error<&'a str>> for IC {
+    fn parse(input: &'a str) -> IResult<&'a str, IC> {
+        let (rest, vars) = crate::util::parse_line(input, "IC")?;
+        let obj = IC {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).unwrap().to_string(),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).map(|x| x.to_string()),
+            _05: vars.get(4).map(|x| x.to_string()),
+            _06: vars.get(5).map(|x| x.to_string()),
+            _07: vars.get(6).map(|x| x.to_string()),
+            _08: vars.get(7).map(|x| x.to_string()),
+        };
+        Ok((rest, obj))
+    }
+}
+
 /// IM - Intermodal Movement Information
 ///
 /// To specify the overall movement of a shipment
@@ -2021,6 +2210,18 @@ pub struct IM {
     pub _02: Option<String>,
     #[serde(rename = "03")]
     pub _03: Option<String>,
+}
+
+impl<'a> Parser<&'a str, IM, nom::error::Error<&'a str>> for IM {
+    fn parse(input: &'a str) -> IResult<&'a str, IM> {
+        let (rest, vars) = crate::util::parse_line(input, "IM")?;
+        let obj = IM {
+            _01: vars.first().map(|x| x.to_string()),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).map(|x| x.to_string()),
+        };
+        Ok((rest, obj))
+    }
 }
 
 /// IEA - Interchange Control Trailer
@@ -2805,6 +3006,16 @@ pub struct LE {
     pub _01: String,
 }
 
+impl<'a> Parser<&'a str, LE, nom::error::Error<&'a str>> for LE {
+    fn parse(input: &'a str) -> IResult<&'a str, LE> {
+        let (rest, vars) = crate::util::parse_line(input, "LE")?;
+        let obj = LE {
+            _01: vars.first().unwrap().to_string(),
+        };
+        Ok((rest, obj))
+    }
+}
+
 /// LEP - EPA Required Data
 ///
 /// To specify the Environmental Protection Agency (EPA) information relating to shipments of hazardous material
@@ -3181,6 +3392,18 @@ pub struct LHR {
     pub _03: Option<String>,
 }
 
+impl<'a> Parser<&'a str, LHR, nom::error::Error<&'a str>> for LHR {
+    fn parse(input: &'a str) -> IResult<&'a str, LHR> {
+        let (rest, vars) = crate::util::parse_line(input, "LHR")?;
+        let obj = LHR {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).unwrap().to_string(),
+            _03: vars.get(2).map(|x| x.to_string()),
+        };
+        Ok((rest, obj))
+    }
+}
+
 /// LHT - Transborder Hazardous Requirements
 ///
 /// To specify the placard information required by the second government agency when shipment is to cross into another country
@@ -3223,6 +3446,16 @@ impl<'a> Parser<&'a str, LHT, nom::error::Error<&'a str>> for LHT {
 pub struct LS {
     #[serde(rename = "01")]
     pub _01: String,
+}
+
+impl<'a> Parser<&'a str, LS, nom::error::Error<&'a str>> for LS {
+    fn parse(input: &'a str) -> IResult<&'a str, LS> {
+        let (rest, vars) = crate::util::parse_line(input, "LS")?;
+        let obj = LS {
+            _01: vars.first().unwrap().to_string(),
+        };
+        Ok((rest, obj))
+    }
 }
 
 /// LX - Assigned Number
@@ -4066,6 +4299,24 @@ pub struct N5 {
     pub _09: Option<String>,
 }
 
+impl<'a> Parser<&'a str, N5, nom::error::Error<&'a str>> for N5 {
+    fn parse(input: &'a str) -> IResult<&'a str, N5> {
+        let (rest, vars) = crate::util::parse_line(input, "N5")?;
+        let obj = N5 {
+            _01: vars.first().map(|x| x.to_string()),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).map(|x| x.to_string()),
+            _05: vars.get(4).map(|x| x.to_string()),
+            _06: vars.get(5).map(|x| x.to_string()),
+            _07: vars.get(6).map(|x| x.to_string()),
+            _08: vars.get(7).map(|x| x.to_string()),
+            _09: vars.get(8).map(|x| x.to_string()),
+        };
+        Ok((rest, obj))
+    }
+}
+
 /// N7 - Equipment Details
 ///
 /// To identify the equipment
@@ -4427,6 +4678,26 @@ pub struct NA {
     pub _11: Option<String>,
 }
 
+impl<'a> Parser<&'a str, NA, nom::error::Error<&'a str>> for NA {
+    fn parse(input: &'a str) -> IResult<&'a str, NA> {
+        let (rest, vars) = crate::util::parse_line(input, "NA")?;
+        let obj = NA {
+            _01: vars.first().map(|x| x.to_string()),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).unwrap().to_string(),
+            _04: vars.get(3).unwrap().to_string(),
+            _05: vars.get(4).map(|x| x.to_string()),
+            _06: vars.get(5).map(|x| x.to_string()),
+            _07: vars.get(6).map(|x| x.to_string()),
+            _08: vars.get(7).map(|x| x.to_string()),
+            _09: vars.get(8).map(|x| x.to_string()),
+            _10: vars.get(9).map(|x| x.to_string()),
+            _11: vars.get(10).map(|x| x.to_string()),
+        };
+        Ok((rest, obj))
+    }
+}
+
 /// NM1 - Individual or Organizational Name
 ///
 /// To supply the full name of an individual or organizational entity
@@ -4683,6 +4954,30 @@ pub struct PI {
     pub _15: Option<String>,
 }
 
+impl<'a> Parser<&'a str, PI, nom::error::Error<&'a str>> for PI {
+    fn parse(input: &'a str) -> IResult<&'a str, PI> {
+        let (rest, vars) = crate::util::parse_line(input, "PI")?;
+        let obj = PI {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).unwrap().to_string(),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).map(|x| x.to_string()),
+            _05: vars.get(4).map(|x| x.to_string()),
+            _06: vars.get(5).map(|x| x.to_string()),
+            _07: vars.get(6).map(|x| x.to_string()),
+            _08: vars.get(7).map(|x| x.to_string()),
+            _09: vars.get(8).map(|x| x.to_string()),
+            _10: vars.get(9).map(|x| x.to_string()),
+            _11: vars.get(10).map(|x| x.to_string()),
+            _12: vars.get(11).map(|x| x.to_string()),
+            _13: vars.get(12).map(|x| x.to_string()),
+            _14: vars.get(13).map(|x| x.to_string()),
+            _15: vars.get(14).map(|x| x.to_string()),
+        };
+        Ok((rest, obj))
+    }
+}
+
 /// PLD - Pallet Information NEW
 ///
 /// To specify pallet information including quantity, exchange, and weight
@@ -4790,6 +5085,29 @@ pub struct PS {
     pub _12: Option<String>,
     pub _13: Option<String>,
     pub _14: Option<String>,
+}
+
+impl<'a> Parser<&'a str, PS, nom::error::Error<&'a str>> for PS {
+    fn parse(input: &'a str) -> IResult<&'a str, PS> {
+        let (rest, vars) = crate::util::parse_line(input, "PS")?;
+        let obj = PS {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).unwrap().to_string(),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).map(|x| x.to_string()),
+            _05: vars.get(4).map(|x| x.to_string()),
+            _06: vars.get(5).map(|x| x.to_string()),
+            _07: vars.get(6).map(|x| x.to_string()),
+            _08: vars.get(7).map(|x| x.to_string()),
+            _09: vars.get(8).map(|x| x.to_string()),
+            _10: vars.get(9).map(|x| x.to_string()),
+            _11: vars.get(10).map(|x| x.to_string()),
+            _12: vars.get(11).map(|x| x.to_string()),
+            _13: vars.get(12).map(|x| x.to_string()),
+            _14: vars.get(13).map(|x| x.to_string()),
+        };
+        Ok((rest, obj))
+    }
 }
 
 /// PWK - Paperwork
@@ -5277,6 +5595,23 @@ pub struct R9 {
     pub _08: Option<String>,
 }
 
+impl<'a> Parser<&'a str, R9, nom::error::Error<&'a str>> for R9 {
+    fn parse(input: &'a str) -> IResult<&'a str, R9> {
+        let (rest, vars) = crate::util::parse_line(input, "R9")?;
+        let obj = R9 {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).map(|x| x.to_string()),
+            _05: vars.get(4).map(|x| x.to_string()),
+            _06: vars.get(5).map(|x| x.to_string()),
+            _07: vars.get(6).map(|x| x.to_string()),
+            _08: vars.get(7).map(|x| x.to_string()),
+        };
+        Ok((rest, obj))
+    }
+}
+
 /// REF - Reference Identification
 ///
 /// To specify identifying information
@@ -5297,6 +5632,19 @@ pub struct REF {
     pub _03: Option<String>,
     #[serde(rename = "04")]
     pub _04: Option<String>,
+}
+
+impl<'a> Parser<&'a str, REF, nom::error::Error<&'a str>> for REF {
+    fn parse(input: &'a str) -> IResult<&'a str, REF> {
+        let (rest, vars) = crate::util::parse_line(input, "REF")?;
+        let obj = REF {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).map(|x| x.to_string()),
+        };
+        Ok((rest, obj))
+    }
 }
 
 /// S1 - Stop-off Name
@@ -6438,6 +6786,31 @@ pub struct X1 {
     pub _16: Option<String>,
 }
 
+impl<'a> Parser<&'a str, X1, nom::error::Error<&'a str>> for X1 {
+    fn parse(input: &'a str) -> IResult<&'a str, X1> {
+        let (rest, vars) = crate::util::parse_line(input, "X1")?;
+        let obj = X1 {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).unwrap().to_string(),
+            _03: vars.get(2).unwrap().to_string(),
+            _04: vars.get(3).map(|x| x.to_string()),
+            _05: vars.get(4).unwrap().to_string(),
+            _06: vars.get(5).unwrap().to_string(),
+            _07: vars.get(6).map(|x| x.to_string()),
+            _08: vars.get(7).map(|x| x.to_string()),
+            _09: vars.get(8).map(|x| x.to_string()),
+            _10: vars.get(9).map(|x| x.to_string()),
+            _11: vars.get(10).map(|x| x.to_string()),
+            _12: vars.get(11).map(|x| x.to_string()),
+            _13: vars.get(12).map(|x| x.to_string()),
+            _14: vars.get(13).map(|x| x.to_string()),
+            _15: vars.get(14).map(|x| x.to_string()),
+            _16: vars.get(15).map(|x| x.to_string()),
+        };
+        Ok((rest, obj))
+    }
+}
+
 /// X2 - Import License
 ///
 /// To transmit import license number and effective dates
@@ -6482,6 +6855,17 @@ pub struct X7 {
     pub _02: Option<String>,
 }
 
+impl<'a> Parser<&'a str, X7, nom::error::Error<&'a str>> for X7 {
+    fn parse(input: &'a str) -> IResult<&'a str, X7> {
+        let (rest, vars) = crate::util::parse_line(input, "X7")?;
+        let obj = X7 {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).map(|x| x.to_string()),
+        };
+        Ok((rest, obj))
+    }
+}
+
 /// XH - Pro Forma - B13 Information
 ///
 /// This segment is used to specify a pro forma invoice and B13 Canadian Customs Export Declaration information, required by U.S. and Canadian customs
@@ -6511,6 +6895,22 @@ pub struct XH {
     pub _06: Option<String>,
     #[serde(rename = "07")]
     pub _07: Option<String>,
+}
+
+impl<'a> Parser<&'a str, XH, nom::error::Error<&'a str>> for XH {
+    fn parse(input: &'a str) -> IResult<&'a str, XH> {
+        let (rest, vars) = crate::util::parse_line(input, "XH")?;
+        let obj = XH {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).map(|x| x.to_string()),
+            _05: vars.get(4).map(|x| x.to_string()),
+            _06: vars.get(5).map(|x| x.to_string()),
+            _07: vars.get(6).map(|x| x.to_string()),
+        };
+        Ok((rest, obj))
+    }
 }
 
 /// Y2 - Container Details
