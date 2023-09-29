@@ -1244,6 +1244,14 @@ impl<'a> Parser<&'a str, _310, nom::error::Error<&'a str>> for _310 {
                     loop_rest = rest;
                     loop_c8.push(_310LoopC8 { c8, c8c });
                 }
+                // loop h1
+                let mut loop_h1 = vec![];
+                while peek(opt(H1::parse))(loop_rest)?.1.is_some() {
+                    let (rest, h1) = opt(H1::parse)(loop_rest)?;
+                    let (rest, h2) = many0(H2::parse)(rest)?;
+                    loop_rest = rest;
+                    loop_h1.push(_310LoopH1 { h1, h2 });
+                }
                 loop_l0.push(_310LoopL0 {
                     l0,
                     l5,
@@ -1252,7 +1260,7 @@ impl<'a> Parser<&'a str, _310, nom::error::Error<&'a str>> for _310 {
                     x1: None,
                     x2: None,
                     loop_c8,
-                    loop_h1: vec![],
+                    loop_h1,
                 });
             }
             loop_lx.push(_310LoopLX {
@@ -1382,7 +1390,7 @@ pub struct _310LoopL1 {
 #[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
 pub struct _310LoopH1 {
     pub h1: Option<H1>,
-    pub h2: Option<H2>,
+    pub h2: Vec<H2>,
 }
 
 /// 315 - Status Details (Ocean)
