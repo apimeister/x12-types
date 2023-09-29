@@ -1785,6 +1785,34 @@ impl<'a> Parser<&'a str, _404, nom::error::Error<&'a str>> for _404 {
         output.l3 = obj;
         let (rest, obj) = opt(LS::parse)(rest)?;
         output.ls = obj;
+        // loop lh1
+        let mut loop_lh1 = vec![];
+        let mut loop_rest = rest;
+        while peek(opt(LH1::parse))(loop_rest)?.1.is_some() {
+            let (rest, lh1) = opt(LH1::parse)(loop_rest)?;
+            let (rest, lh2) = many0(LH2::parse)(rest)?;
+            let (rest, lh3) = many0(LH3::parse)(rest)?;
+            let (rest, lfh) = many0(LFH::parse)(rest)?;
+            let (rest, lep) = opt(LEP::parse)(rest)?;
+            let (rest, lh4) = opt(LH4::parse)(rest)?;
+            let (rest, lht) = opt(LHT::parse)(rest)?;
+            let (rest, lhr) = opt(LHR::parse)(rest)?;
+            let (rest, per) = opt(PER::parse)(rest)?;
+            loop_rest = rest;
+            loop_lh1.push(_404LoopLH1 {
+                lh1,
+                lh2,
+                lh3,
+                lfh,
+                lep,
+                lh4,
+                lht,
+                lhr,
+                per,
+            });
+        }
+        output.loop_lh1 = loop_lh1;
+        let rest = loop_rest;
         let (rest, obj) = opt(LE::parse)(rest)?;
         output.le = obj;
         let (rest, obj) = opt(PER::parse)(rest)?;
@@ -1896,9 +1924,9 @@ pub struct _404LoopT1 {
 #[derive(Debug, Default, Clone, Serialize, Deserialize)]
 pub struct _404LoopLH1 {
     pub lh1: Option<LH1>,
-    pub lh2: Option<LH2>,
-    pub lh3: Option<LH3>,
-    pub lfh: Option<LFH>,
+    pub lh2: Vec<LH2>,
+    pub lh3: Vec<LH3>,
+    pub lfh: Vec<LFH>,
     pub lep: Option<LEP>,
     pub lh4: Option<LH4>,
     pub lht: Option<LHT>,
