@@ -1182,7 +1182,7 @@ impl<'a> Parser<&'a str, _310, nom::error::Error<&'a str>> for _310 {
         let mut loop_rest = rest.clone();
         while peek(opt(C8::parse))(loop_rest)?.1.is_some() {
             let (rest, c8) = opt(C8::parse)(loop_rest)?;
-            let (rest, c8c) = opt(C8C::parse)(rest)?;
+            let (rest, c8c) = many0(C8C::parse)(rest)?;
             loop_rest = rest;
             loop_c8.push(_310LoopC8 { c8, c8c });
         }
@@ -1236,6 +1236,14 @@ impl<'a> Parser<&'a str, _310, nom::error::Error<&'a str>> for _310 {
                     loop_rest = rest;
                     loop_l1.push(_310LoopL1 { l1, c3 });
                 }
+                // loop c8
+                let mut loop_c8 = vec![];
+                while peek(opt(C8::parse))(loop_rest)?.1.is_some() {
+                    let (rest, c8) = opt(C8::parse)(loop_rest)?;
+                    let (rest, c8c) = many0(C8C::parse)(rest)?;
+                    loop_rest = rest;
+                    loop_c8.push(_310LoopC8 { c8, c8c  });
+                }
                 loop_l0.push(_310LoopL0 {
                     l0,
                     l5,
@@ -1243,7 +1251,7 @@ impl<'a> Parser<&'a str, _310, nom::error::Error<&'a str>> for _310 {
                     l7: None,
                     x1: None,
                     x2: None,
-                    loop_c8: vec![],
+                    loop_c8,
                     loop_h1: vec![],
                 });
             }
@@ -1326,8 +1334,8 @@ pub struct _310LoopR4 {
 pub struct _310LoopC8 {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub c8: Option<C8>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub c8c: Option<C8C>,
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    pub c8c: Vec<C8C>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
