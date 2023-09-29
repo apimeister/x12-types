@@ -1234,10 +1234,7 @@ impl<'a> Parser<&'a str, _310, nom::error::Error<&'a str>> for _310 {
                     let (rest, l1) = opt(L1::parse)(loop_rest)?;
                     let (rest, c3) = opt(C3::parse)(rest)?;
                     loop_rest = rest;
-                    loop_l1.push(_310LoopL1 {
-                        l1,
-                        c3,
-                    });
+                    loop_l1.push(_310LoopL1 { l1, c3 });
                 }
                 loop_l0.push(_310LoopL0 {
                     l0,
