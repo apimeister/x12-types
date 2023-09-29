@@ -1195,14 +1195,25 @@ impl<'a> Parser<&'a str, _310, nom::error::Error<&'a str>> for _310 {
             loop_rest = rest;
             // loop n7
             let mut loop_n7 = vec![];
-            while peek(opt(N7::parse))(loop_rest)?.1.is_some() {
+            while peek(opt(N7::parse))(loop_rest)?.1.is_some()
+                || peek(opt(L1::parse))(loop_rest)?.1.is_some()
+            {
                 let (rest, n7) = opt(N7::parse)(loop_rest)?;
                 let (rest, qty) = opt(QTY::parse)(rest)?;
                 let (rest, v4) = opt(V4::parse)(rest)?;
                 let (rest, n12) = opt(N12::parse)(rest)?;
                 let (rest, m7) = many0(M7::parse)(rest)?;
                 let (rest, w09) = opt(W09::parse)(rest)?;
-                let (rest, l7) = opt(L7::parse)(rest)?;
+                // loop l1
+                let mut loop_l1 = vec![];
+                loop_rest = rest;
+                while peek(opt(L1::parse))(loop_rest)?.1.is_some() {
+                    let (rest, l1) = opt(L1::parse)(loop_rest)?;
+                    let (rest, c3) = opt(C3::parse)(rest)?;
+                    loop_rest = rest;
+                    loop_l1.push(_310LoopL1 { l1, c3 });
+                }
+                let (rest, l7) = opt(L7::parse)(loop_rest)?;
                 let (rest, x1) = opt(X1::parse)(rest)?;
                 let (rest, x2) = opt(X2::parse)(rest)?;
                 let (rest, n9) = many0(N9::parse)(rest)?;
@@ -1214,7 +1225,7 @@ impl<'a> Parser<&'a str, _310, nom::error::Error<&'a str>> for _310 {
                     n12,
                     m7,
                     w09,
-                    loop_l1: vec![],
+                    loop_l1,
                     l7,
                     x1,
                     x2,
