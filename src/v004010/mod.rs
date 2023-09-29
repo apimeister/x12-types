@@ -1242,7 +1242,7 @@ impl<'a> Parser<&'a str, _310, nom::error::Error<&'a str>> for _310 {
                     let (rest, c8) = opt(C8::parse)(loop_rest)?;
                     let (rest, c8c) = many0(C8C::parse)(rest)?;
                     loop_rest = rest;
-                    loop_c8.push(_310LoopC8 { c8, c8c  });
+                    loop_c8.push(_310LoopC8 { c8, c8c });
                 }
                 loop_l0.push(_310LoopL0 {
                     l0,
