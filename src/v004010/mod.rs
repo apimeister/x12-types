@@ -773,8 +773,10 @@ impl<'a> Parser<&'a str, _301, nom::error::Error<&'a str>> for _301 {
         }
         let rest = loop_rest;
         output.loop_lx = loop_lx;
-        let (rest, obj) = V1::parse(rest)?;
-        output.v1 = vec![obj];
+        let (rest, obj) = many0(V1::parse)(rest)?;
+        output.v1 = obj;
+        let (rest, obj) = many0(V9::parse)(rest)?;
+        output.v9 = obj;
         let (rest, obj) = SE::parse(rest)?;
         output.se = obj;
         Ok((rest, output))
