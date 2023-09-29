@@ -1646,7 +1646,7 @@ pub struct _404 {
     pub d9: D9,
     pub loop_n1: Vec<_404LoopN1>,
     pub loop_s1: Vec<_404LoopS1>,
-    pub r2: Option<R2>,
+    pub r2: Vec<R2>,
     pub r9: Option<R9>,
     pub loop_e1: Vec<_404LoopE1>,
     pub h3: Vec<H3>,
@@ -1746,7 +1746,7 @@ impl<'a> Parser<&'a str, _404, nom::error::Error<&'a str>> for _404 {
         }
         let rest = loop_rest;
         output.loop_n1 = loop_n1;
-        let (rest, obj) = opt(R2::parse)(rest)?;
+        let (rest, obj) = many0(R2::parse)(rest)?;
         output.r2 = obj;
         let (rest, obj) = opt(R9::parse)(rest)?;
         output.r9 = obj;
