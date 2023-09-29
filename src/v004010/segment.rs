@@ -2891,6 +2891,31 @@ pub struct L7 {
     pub _16: Option<String>,
 }
 
+impl<'a> Parser<&'a str, L7, nom::error::Error<&'a str>> for L7 {
+    fn parse(input: &'a str) -> IResult<&'a str, L7> {
+        let (rest, vars) = crate::util::parse_line(input, "L7")?;
+        let obj = L7 {
+            _01: vars.first().map(|x| x.to_string()),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).map(|x| x.to_string()),
+            _05: vars.get(4).map(|x| x.to_string()),
+            _06: vars.get(5).map(|x| x.to_string()),
+            _07: vars.get(6).map(|x| x.to_string()),
+            _08: vars.get(7).map(|x| x.to_string()),
+            _09: vars.get(8).map(|x| x.to_string()),
+            _10: vars.get(9).map(|x| x.to_string()),
+            _11: vars.get(10).map(|x| x.to_string()),
+            _12: vars.get(11).map(|x| x.to_string()),
+            _13: vars.get(12).map(|x| x.to_string()),
+            _14: vars.get(13).map(|x| x.to_string()),
+            _15: vars.get(14).map(|x| x.to_string()),
+            _16: vars.get(15).map(|x| x.to_string()),
+        };
+        Ok((rest, obj))
+    }
+}
+
 /// L11 - Business Instructions and Reference Number
 ///
 /// To specify instructions in this business relationship or a reference number
@@ -4646,6 +4671,17 @@ pub struct N12 {
     pub _02: String,
 }
 
+impl<'a> Parser<&'a str, N12, nom::error::Error<&'a str>> for N12 {
+    fn parse(input: &'a str) -> IResult<&'a str, N12> {
+        let (rest, vars) = crate::util::parse_line(input, "N12")?;
+        let obj = N12 {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).unwrap().to_string(),
+        };
+        Ok((rest, obj))
+    }
+}
+
 /// NA - Cross-Reference Equipment
 ///
 /// To cross-reference additional equipment to a primary piece of equipment
@@ -5384,6 +5420,19 @@ pub struct QTY {
     pub _03: Option<String>,
     #[serde(rename = "04")]
     pub _04: Option<String>,
+}
+
+impl<'a> Parser<&'a str, QTY, nom::error::Error<&'a str>> for QTY {
+    fn parse(input: &'a str) -> IResult<&'a str, QTY> {
+        let (rest, vars) = crate::util::parse_line(input, "QTY")?;
+        let obj = QTY {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).map(|x| x.to_string()),
+        };
+        Ok((rest, obj))
+    }
 }
 
 /// R2 - Route Information
@@ -6837,6 +6886,21 @@ pub struct X2 {
     pub _05: Option<String>,
     #[serde(rename = "06")]
     pub _06: Option<String>,
+}
+
+impl<'a> Parser<&'a str, X2, nom::error::Error<&'a str>> for X2 {
+    fn parse(input: &'a str) -> IResult<&'a str, X2> {
+        let (rest, vars) = crate::util::parse_line(input, "X2")?;
+        let obj = X2 {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).map(|x| x.to_string()),
+            _05: vars.get(4).map(|x| x.to_string()),
+            _06: vars.get(5).map(|x| x.to_string()),
+        };
+        Ok((rest, obj))
+    }
 }
 
 /// X7 - Customs Information
