@@ -7056,7 +7056,7 @@ pub struct Y3 {
     #[serde(rename = "03")]
     pub _03: Option<String>,
     #[serde(rename = "04")]
-    pub _04: String,
+    pub _04: Option<String>,
     #[serde(rename = "05")]
     pub _05: Option<String>,
     #[serde(rename = "06")]
@@ -7086,7 +7086,7 @@ impl<'a> Parser<&'a str, Y3, nom::error::Error<&'a str>> for Y3 {
             _01: vars.first().unwrap().to_string(),
             _02: vars.get(1).map(|x| x.to_string()),
             _03: vars.get(2).map(|x| x.to_string()),
-            _04: vars.get(3).unwrap().to_string(),
+            _04: vars.get(3).map(|x| x.to_string()),
             _05: vars.get(4).map(|x| x.to_string()),
             _06: vars.get(5).map(|x| x.to_string()),
             _07: vars.get(6).map(|x| x.to_string()),
