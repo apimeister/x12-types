@@ -185,9 +185,19 @@ impl<'a> Parser<&'a str, _404, nom::error::Error<&'a str>> for _404 {
                 let (rest, l0) = opt(L0::parse)(loop_rest)?;
                 let (rest, mea) = opt(MEA::parse)(rest)?;
                 let (rest, l1) = opt(L1::parse)(rest)?;
-                let (rest, pi) = opt(PI::parse)(rest)?;
                 loop_rest = rest;
-                loop_l0.push(_404LoopL0 { l0, mea, l1, pi });
+                // loop pi
+                let mut loop_pi = vec![];
+                while peek(opt(PI::parse))(loop_rest)?.1.is_some() {
+                    let (rest, pi) = opt(PI::parse)(loop_rest)?;
+                    let (rest, cd) = many0(CD::parse)(rest)?;
+                    loop_rest = rest;
+                    loop_pi.push(_404LoopL0PI{
+                        pi,
+                        cd,
+                    });
+                }
+                loop_l0.push(_404LoopL0 { l0, mea, l1, loop_pi });
             }
             loop_lx.push(_404LoopLX {
                 lx,
@@ -334,13 +344,21 @@ pub struct _404LoopE1 {
     pub e5: Option<E5>,
     pub pi: Option<PI>,
 }
+
 #[derive(Debug, Default, Clone, Serialize, Deserialize)]
 pub struct _404LoopL0 {
     pub l0: Option<L0>,
     pub mea: Option<MEA>,
     pub l1: Option<L1>,
-    pub pi: Option<PI>,
+    pub loop_pi: Vec<_404LoopL0PI>,
 }
+
+#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+pub struct _404LoopL0PI {
+    pub pi: Option<PI>,
+    pub cd: Vec<CD>,
+}
+
 #[derive(Debug, Default, Clone, Serialize, Deserialize)]
 pub struct _404LoopT1 {
     pub t1: Option<T1>,

@@ -151,6 +151,53 @@ impl<'a> Parser<&'a str, BX, nom::error::Error<&'a str>> for BX {
     }
 }
 
+/// CD - Shipment Condition
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+pub struct CD {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+    #[serde(rename = "10")]
+    pub _10: Option<String>,
+    #[serde(rename = "11")]
+    pub _11: Option<String>,
+}
+
+impl<'a> Parser<&'a str, CD, nom::error::Error<&'a str>> for CD {
+    fn parse(input: &'a str) -> IResult<&'a str, CD> {
+        let (rest, vars) = crate::util::parse_line(input, "CD")?;
+        let obj = CD {
+            _01: vars.first().unwrap().to_string(),
+            _02: vars.get(1).map(|x| x.to_string()),
+            _03: vars.get(2).map(|x| x.to_string()),
+            _04: vars.get(3).map(|x| x.to_string()),
+            _05: vars.get(4).map(|x| x.to_string()),
+            _06: vars.get(5).map(|x| x.to_string()),
+            _07: vars.get(6).map(|x| x.to_string()),
+            _08: vars.get(7).map(|x| x.to_string()),
+            _09: vars.get(8).map(|x| x.to_string()),
+            _10: vars.get(9).map(|x| x.to_string()),
+            _11: vars.get(10).map(|x| x.to_string()),
+        };
+        Ok((rest, obj))
+    }
+}
+
 /// CM - Cargo Manifest
 #[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
 pub struct CM {
