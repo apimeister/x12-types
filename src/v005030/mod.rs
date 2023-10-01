@@ -1,4 +1,5 @@
 //! v005030 repesents all entities of the 005030 specification.
+use crate::util::Parser;
 use nom::{
     combinator::{opt, peek},
     multi::many0,
@@ -7,9 +8,10 @@ use nom::{
 pub use segment::*;
 use serde::{Deserialize, Serialize};
 
-use crate::util::Parser;
-
 mod segment;
+
+#[cfg(test)]
+mod test_404;
 #[cfg(test)]
 mod test_segments;
 
@@ -214,6 +216,16 @@ impl<'a> Parser<&'a str, _404, nom::error::Error<&'a str>> for _404 {
             let (rest, lhr) = opt(LHR::parse)(rest)?;
             let (rest, per) = opt(PER::parse)(rest)?;
             loop_rest = rest;
+            // loop n1
+            let mut loop_n1 = vec![];
+            while peek(opt(N1::parse))(loop_rest)?.1.is_some() {
+                let (rest, n1) = opt(N1::parse)(loop_rest)?;
+                let (rest, n3) = many0(N3::parse)(rest)?;
+                let (rest, n4) = opt(N4::parse)(rest)?;
+                let (rest, per) = many0(PER::parse)(rest)?;
+                loop_n1.push(_404LoopLh1N1 { n1, n3, n4, per });
+                loop_rest = rest;
+            }
             loop_lh1.push(_404LoopLH1 {
                 lh1,
                 lh2,
@@ -224,6 +236,7 @@ impl<'a> Parser<&'a str, _404, nom::error::Error<&'a str>> for _404 {
                 lht,
                 lhr,
                 per,
+                loop_n1,
             });
         }
         output.loop_lh1 = loop_lh1;
@@ -336,6 +349,7 @@ pub struct _404LoopT1 {
     pub t6: Option<T6>,
     pub t8: Option<T8>,
 }
+
 #[derive(Debug, Default, Clone, Serialize, Deserialize)]
 pub struct _404LoopLH1 {
     pub lh1: Option<LH1>,
@@ -347,7 +361,17 @@ pub struct _404LoopLH1 {
     pub lht: Option<LHT>,
     pub lhr: Option<LHR>,
     pub per: Option<PER>,
+    pub loop_n1: Vec<_404LoopLh1N1>,
 }
+
+#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+pub struct _404LoopLh1N1 {
+    pub n1: Option<N1>,
+    pub n3: Vec<N3>,
+    pub n4: Option<N4>,
+    pub per: Vec<PER>,
+}
+
 #[derive(Debug, Default, Clone, Serialize, Deserialize)]
 pub struct _404LoopLX {
     pub lx: LX,
