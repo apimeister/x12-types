@@ -192,12 +192,14 @@ impl<'a> Parser<&'a str, _404, nom::error::Error<&'a str>> for _404 {
                     let (rest, pi) = opt(PI::parse)(loop_rest)?;
                     let (rest, cd) = many0(CD::parse)(rest)?;
                     loop_rest = rest;
-                    loop_pi.push(_404LoopL0PI{
-                        pi,
-                        cd,
-                    });
+                    loop_pi.push(_404LoopL0PI { pi, cd });
                 }
-                loop_l0.push(_404LoopL0 { l0, mea, l1, loop_pi });
+                loop_l0.push(_404LoopL0 {
+                    l0,
+                    mea,
+                    l1,
+                    loop_pi,
+                });
             }
             loop_lx.push(_404LoopLX {
                 lx,

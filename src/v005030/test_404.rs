@@ -86,7 +86,6 @@ IEA*1*000099667~
     assert_eq!(s, str);
 }
 
-
 #[test]
 fn parse_2() {
     let str = r#"ISA*00*XXXXX     *00*          *ZZ*XXXXXXX        *ZZ*XXXXXX         *230519*1304*^*00503*000097314*0*P*>~
