@@ -14,6 +14,8 @@ mod segment;
 #[cfg(test)]
 mod test_834;
 #[cfg(test)]
+mod test_837;
+#[cfg(test)]
 mod test_segments;
 
 #[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
@@ -501,4 +503,23 @@ pub struct _834Loop2750 {
     pub n1: N1,
     pub r#ref: REF,
     pub dtp: Option<DTP>,
+}
+
+/// 837 - ???
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+pub struct _837 {
+    pub st: ST,
+    pub se: SE,
+}
+
+impl<'a> Parser<&'a str, _837, nom::error::Error<&'a str>> for _837 {
+    fn parse(input: &'a str) -> IResult<&'a str, _837> {
+        let mut output = _837::default();
+        let (rest, obj) = ST::parse(input)?;
+        output.st = obj;
+        // TODO
+        let (rest, obj) = SE::parse(rest)?;
+        output.se = obj;
+        Ok((rest, output))
+    }
 }
