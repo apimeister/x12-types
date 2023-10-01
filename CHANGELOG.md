@@ -1,8 +1,9 @@
-# 0.7.5 2023-09-29
+# 0.7.5 2023-10-01
 
 * 004010/315 refine parsing
 * 004010/301 refine parsing
 * 004010/404 refine parsing
+* added 005030/404 - Rail Carrier Shipment Information
 
 # 0.7.4 2023-09-25
 

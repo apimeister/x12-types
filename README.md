@@ -7,7 +7,7 @@ This library provides bindings for the ASC X12 standard.
 
 The types should be used inconjuction with a X12 serializer.
 
-We do recommend the `serde_x12` crate, since we are using this serializer for testing.
+We do recommend the [serde_x12](https://crates.io/crates/serde_x12) crate, since we are using this serializer for testing.
 
 So far, there is also no validation attached to the structs.
 
@@ -27,6 +27,8 @@ So far, there is also no validation attached to the structs.
   * 998 - Set Cancellation
 * 005010
   * 834 - Benefit Enrollment and Maintenance (005010X220A1)
+* 005030
+  * 404 - Rail Carrier Shipment Information
 
 Something missing? Please open an issue.
 
