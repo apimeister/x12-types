@@ -8,6 +8,7 @@ use nom::multi::separated_list0;
 use nom::sequence::delimited;
 use nom::IResult;
 use serde::{Deserialize, Serialize};
+use std::fmt::Display;
 use validator::Validate;
 
 /// AK1 - Functional Group Response Header
@@ -6093,6 +6094,12 @@ impl<'a> Parser<&'a str, ST, nom::error::Error<&'a str>> for ST {
             _02: vars.get(1).unwrap().to_string(),
         };
         Ok((rest, obj))
+    }
+}
+
+impl Display for ST {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "ST*{}*{}~\n", self._01, self._02)
     }
 }
 

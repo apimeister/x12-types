@@ -7,6 +7,8 @@ fn test_st() {
         _02: "33233".to_string(),
     };
     let str = serde_x12::to_string(&obj).unwrap();
+    println!("{str}");
+    println!("{obj}");
     let result = ST::parse(&str).unwrap();
     // not data left to process
     assert!(result.0.is_empty());
@@ -14,6 +16,16 @@ fn test_st() {
     let obj = result.1;
     assert_eq!(obj._01, "301");
     assert_eq!(obj._02, "33233");
+}
+
+#[test]
+fn st_display() {
+    let obj = ST {
+        _01: "301".to_string(),
+        _02: "33233".to_string(),
+    };
+    let str = format!("{obj}");
+    assert_eq!(str, "ST*301*33233~\n");
 }
 
 #[test]
