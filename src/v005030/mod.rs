@@ -1,5 +1,9 @@
 //! v005030 repesents all entities of the 005030 specification.
-use nom::{IResult, combinator::{peek, opt}, multi::many0};
+use nom::{
+    combinator::{opt, peek},
+    multi::many0,
+    IResult,
+};
 pub use segment::*;
 use serde::{Deserialize, Serialize};
 
