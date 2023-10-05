@@ -668,7 +668,7 @@ pub struct _837Loop2400 {
     loop_2410: Vec<_837Loop2410>,
     loop_2420: Vec<_837Loop2420>,
     loop_2430: Vec<_837Loop2430>,
-    loop_2440: Vec<_837Loop2440>,    
+    loop_2440: Vec<_837Loop2440>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]

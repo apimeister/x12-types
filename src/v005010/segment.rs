@@ -3326,12 +3326,10 @@ impl<'a> Parser<&'a str, SV1, nom::error::Error<&'a str>> for SV1 {
             _19: vars.get(18).map(util::unborrow_string),
             _20: vars.get(19).map(util::unborrow_string),
             _21: vars.get(20).map(util::unborrow_string),
-
         };
         Ok((rest, obj))
     }
 }
-
 
 /// SV2 - Institutional Service
 #[derive(Serialize, Deserialize, Clone, Default, Debug, Validate, PartialEq, Eq)]
