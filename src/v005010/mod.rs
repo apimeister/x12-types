@@ -505,10 +505,14 @@ pub struct _834Loop2750 {
     pub dtp: Option<DTP>,
 }
 
-/// 837 - ???
+/// 837 - Health Care Claim
 #[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
 pub struct _837 {
     pub st: ST,
+    pub bht: BHT,
+    pub r#ref: Option<REF>,
+    pub loop_1000: Vec<_837Loop1000>,
+    pub loop_2000: Vec<_837Loop2000>,
     pub se: SE,
 }
 
@@ -517,9 +521,184 @@ impl<'a> Parser<&'a str, _837, nom::error::Error<&'a str>> for _837 {
         let mut output = _837::default();
         let (rest, obj) = ST::parse(input)?;
         output.st = obj;
+        let (rest, obj) = BHT::parse(rest)?;
+        output.bht = obj;
         // TODO
         let (rest, obj) = SE::parse(rest)?;
         output.se = obj;
         Ok((rest, output))
     }
+}
+
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+pub struct _837Loop1000 {
+    nm1: NM1,
+    n2: Option<N2>,
+    n3: Option<N3>,
+    n4: Option<N4>,
+    r#ref: Option<REF>,
+    per: Option<PER>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+pub struct _837Loop2000 {
+    hl: HL,
+    prv: Option<PRV>,
+    sbr: Option<SBR>,
+    pat: Option<PAT>,
+    dtp: Option<DTP>,
+    cur: Option<CUR>,
+    loop_2010: Vec<_837Loop2010>,
+    loop_2300: Vec<_837Loop2300>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+pub struct _837Loop2010 {
+    nm1: NM1,
+    n2: Option<N2>,
+    n3: Option<N3>,
+    n4: Option<N4>,
+    dmg: Option<DMG>,
+    r#ref: Option<REF>,
+    per: Option<PER>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+pub struct _837Loop2300 {
+    clm: CLM,
+    dtp: Option<DTP>,
+    cl1: Option<CL1>,
+    dn1: Option<DN1>,
+    dn2: Option<DN2>,
+    pwk: Option<PWK>,
+    cn1: Option<CN1>,
+    dsb: Option<DSB>,
+    ur: Option<UR>,
+    amt: Option<AMT>,
+    r#ref: Option<REF>,
+    k3: Option<K3>,
+    nte: Option<NTE>,
+    cr1: Option<CR1>,
+    cr2: Option<CR2>,
+    cr3: Option<CR3>,
+    cr4: Option<CR4>,
+    cr5: Option<CR5>,
+    cr6: Option<CR6>,
+    cr8: Option<CR8>,
+    crc: Option<CRC>,
+    hi: Option<HI>,
+    qty: Option<QTY>,
+    hcp: Option<HCP>,
+    loop_2305: Vec<_837Loop2305>,
+    loop_2310: Vec<_837Loop2310>,
+    loop_2320: Vec<_837Loop2320>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+pub struct _837Loop2305 {
+    cr7: CR7,
+    hsd: Vec<HSD>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+pub struct _837Loop2310 {
+    nm1: NM1,
+    prv: Option<PRV>,
+    n2: Option<N2>,
+    n3: Option<N3>,
+    n4: Option<N4>,
+    r#ref: Option<REF>,
+    per: Option<PER>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+pub struct _837Loop2320 {
+    sbr: SBR,
+    cas: Option<CAS>,
+    amt: Option<AMT>,
+    dmg: Option<DMG>,
+    oi: Option<OI>,
+    mia: Option<MIA>,
+    moa: Option<MOA>,
+    loop_2330: Vec<_837Loop2330>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+pub struct _837Loop2330 {
+    nm1: NM1,
+    n2: Option<N2>,
+    n3: Option<N3>,
+    n4: Option<N4>,
+    per: Option<PER>,
+    dtp: Option<DTP>,
+    r#ref: Option<REF>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+pub struct _837Loop2400 {
+    lx: LX,
+    sv1: Option<SV1>,
+    sv2: Option<SV2>,
+    sv3: Option<SV3>,
+    too: Option<TOO>,
+    sv4: Option<SV4>,
+    sv5: Option<SV5>,
+    sv6: Option<SV6>,
+    sv7: Option<SV7>,
+    hi: Option<HI>,
+    pwk: Option<PWK>,
+    cr1: Option<CR1>,
+    cr2: Option<CR2>,
+    cr3: Option<CR3>,
+    cr4: Option<CR4>,
+    cr5: Option<CR5>,
+    crc: Option<CRC>,
+    dtp: Option<DTP>,
+    qty: Option<QTY>,
+    mea: Option<MEA>,
+    cn1: Option<CN1>,
+    r#ref: Option<REF>,
+    amt: Option<AMT>,
+    k3: Option<K3>,
+    nte: Option<NTE>,
+    ps1: Option<PS1>,
+    imm: Option<IMM>,
+    hsd: Option<HSD>,
+    hcp: Option<HCP>,
+    loop_2410: Vec<_837Loop2410>,
+    loop_2420: Vec<_837Loop2420>,
+    loop_2430: Vec<_837Loop2430>,
+    loop_2440: Vec<_837Loop2440>,    
+}
+
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+pub struct _837Loop2410 {
+    lin: LIN,
+    ctp: Option<CTP>,
+    r#ref: Option<REF>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+pub struct _837Loop2420 {
+    nm1: NM1,
+    prv: Option<PRV>,
+    n2: Option<N2>,
+    n3: Option<N3>,
+    n4: Option<N4>,
+    r#ref: Option<REF>,
+    per: Option<PER>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+pub struct _837Loop2430 {
+    svd: SVD,
+    cas: Option<CAS>,
+    dtp: Option<DTP>,
+    amt: Option<AMT>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+pub struct _837Loop2440 {
+    lq: LQ,
+    frm: FRM,
 }
