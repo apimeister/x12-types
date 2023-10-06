@@ -27,6 +27,7 @@ So far, there is also no validation attached to the structs.
   * 998 - Set Cancellation
 * 005010
   * 834 - Benefit Enrollment and Maintenance (005010X220A1)
+  * 837 - Health Care Claim
 * 005030
   * 404 - Rail Carrier Shipment Information
 
