@@ -1,6 +1,6 @@
 [package]
 name = "x12-types"
-version = "0.7.5"
+version = "0.7.6"
 edition = "2021"
 authors = ["Jens Walter <jens@apimeister.com>"]
 license = "MIT OR Apache-2.0"
@@ -14,14 +14,6 @@ serde = { version = "1.0", features = ["derive"] }
 validator = { version = "0.16", features = ["derive"] }
 chrono = "0.4"
 nom = "7"
-# inline-proc = "0.1"
-# heck = "0.4"
-# proc-macro2 = "1"
-# quote = "1"
-# rustversion = "1"
-# syn = { version = "2", features = ["parsing", "extra-traits"] }
-# ron = "0.8.1"
-# metadata = { version = "0.1.8",features = ["static"] }
 
 [dev-dependencies]
 serde_x12 = { version = "0.7" }
