@@ -733,12 +733,7 @@ impl<'a> Parser<&'a str, _837, nom::error::Error<&'a str>> for _837 {
                         let (rest, dtp) = opt(DTP::parse)(rest)?;
                         let (rest, amt) = opt(AMT::parse)(rest)?;
                         loop_rest = rest;
-                        loop_2430.push(_837Loop2430 {
-                            svd,
-                            cas,
-                            dtp,
-                            amt,
-                        });
+                        loop_2430.push(_837Loop2430 { svd, cas, dtp, amt });
                     }
                     loop_2400.push(_837Loop2400 {
                         lx,
