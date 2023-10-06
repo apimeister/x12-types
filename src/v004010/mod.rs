@@ -210,7 +210,7 @@ impl<'a> Parser<&'a str, _204, nom::error::Error<&'a str>> for _204 {
         output.nte = obj;
         // loop 100
         let mut loop_100 = vec![];
-        let mut loop_rest = rest.clone();
+        let mut loop_rest = rest;
         while peek(opt(N1::parse))(loop_rest)?.1.is_some() {
             let (rest, n1) = opt(N1::parse)(loop_rest)?;
             let (rest, n2) = opt(N2::parse)(rest)?;
@@ -232,7 +232,7 @@ impl<'a> Parser<&'a str, _204, nom::error::Error<&'a str>> for _204 {
         output.loop_100 = loop_100;
         // loop 200
         let mut loop_200 = vec![];
-        let mut loop_rest = rest.clone();
+        let mut loop_rest = rest;
         while peek(opt(N7::parse))(loop_rest)?.1.is_some() {
             let (rest, n7) = opt(N7::parse)(loop_rest)?;
             let (rest, n7a) = opt(N7A::parse)(rest)?;
@@ -252,7 +252,7 @@ impl<'a> Parser<&'a str, _204, nom::error::Error<&'a str>> for _204 {
         output.loop_200 = loop_200;
         // loop 300
         let mut loop_300 = vec![];
-        let mut loop_rest = rest.clone();
+        let mut loop_rest = rest;
         while peek(opt(S5::parse))(loop_rest)?.1.is_some() {
             let (rest, s5) = S5::parse(loop_rest)?;
             let (rest, l11) = many0(L11::parse)(rest)?;
@@ -683,7 +683,7 @@ impl<'a> Parser<&'a str, _301, nom::error::Error<&'a str>> for _301 {
         output.y3 = obj;
         // loop y4
         let mut loop_y4 = vec![];
-        let mut loop_rest = rest.clone();
+        let mut loop_rest = rest;
         while peek(opt(Y4::parse))(loop_rest)?.1.is_some()
             || peek(opt(W09::parse))(loop_rest)?.1.is_some()
         {
@@ -1154,7 +1154,7 @@ impl<'a> Parser<&'a str, _310, nom::error::Error<&'a str>> for _310 {
         let (rest, y2) = many0(Y2::parse)(rest)?;
         // n1 loop
         let mut loop_n1 = vec![];
-        let mut loop_rest = rest.clone();
+        let mut loop_rest = rest;
         while peek(opt(N1::parse))(loop_rest)?.1.is_some() {
             let (rest, n1) = N1::parse(loop_rest)?;
             let (rest, n2) = opt(N2::parse)(rest)?;
@@ -1167,7 +1167,7 @@ impl<'a> Parser<&'a str, _310, nom::error::Error<&'a str>> for _310 {
         let (rest, g61) = many0(G61::parse)(rest)?;
         // loop r4
         let mut loop_r4 = vec![];
-        let mut loop_rest = rest.clone();
+        let mut loop_rest = rest;
         while peek(opt(R4::parse))(loop_rest)?.1.is_some() {
             let (rest, r4) = R4::parse(loop_rest)?;
             let (rest, dtm) = opt(DTM::parse)(rest)?;
@@ -1182,7 +1182,7 @@ impl<'a> Parser<&'a str, _310, nom::error::Error<&'a str>> for _310 {
         let (rest, l5) = opt(L5::parse)(rest)?;
         // loop c8
         let mut loop_c8 = vec![];
-        let mut loop_rest = rest.clone();
+        let mut loop_rest = rest;
         while peek(opt(C8::parse))(loop_rest)?.1.is_some() {
             let (rest, c8) = opt(C8::parse)(loop_rest)?;
             let (rest, c8c) = many0(C8C::parse)(rest)?;
@@ -1192,7 +1192,7 @@ impl<'a> Parser<&'a str, _310, nom::error::Error<&'a str>> for _310 {
         let rest = loop_rest;
         // loop lx
         let mut loop_lx = vec![];
-        let mut loop_rest = rest.clone();
+        let mut loop_rest = rest;
         while peek(opt(LX::parse))(loop_rest)?.1.is_some() {
             let (rest, lx) = LX::parse(loop_rest)?;
             loop_rest = rest;
@@ -1288,7 +1288,7 @@ impl<'a> Parser<&'a str, _310, nom::error::Error<&'a str>> for _310 {
         let (rest, pwk) = many0(PWK::parse)(rest)?;
         // loop l1
         let mut loop_l1 = vec![];
-        let mut loop_rest = rest.clone();
+        let mut loop_rest = rest;
         while peek(opt(L1::parse))(loop_rest)?.1.is_some() {
             let (rest, l1) = opt(L1::parse)(loop_rest)?;
             let (rest, c3) = opt(C3::parse)(rest)?;
@@ -1458,7 +1458,7 @@ impl<'a> Parser<&'a str, _315, nom::error::Error<&'a str>> for _315 {
         output.sg = obj;
         // loop r4
         let mut loop_r4 = vec![];
-        let mut loop_rest = rest.clone();
+        let mut loop_rest = rest;
         while peek(opt(R4::parse))(loop_rest)?.1.is_some() {
             let (rest, r4) = R4::parse(loop_rest)?;
             let (rest, dtm) = many0(DTM::parse)(rest)?;

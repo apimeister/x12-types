@@ -6099,7 +6099,7 @@ impl<'a> Parser<&'a str, ST, nom::error::Error<&'a str>> for ST {
 
 impl Display for ST {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "ST*{}*{}~\n", self._01, self._02)
+        writeln!(f, "ST*{}*{}~", self._01, self._02)
     }
 }
 

@@ -93,7 +93,7 @@ impl<'a> Parser<&'a str, _834, nom::error::Error<&'a str>> for _834 {
         output.qty = obj;
         // loop 1000
         let mut loop_1000 = vec![];
-        let mut loop_rest = rest.clone();
+        let mut loop_rest = rest;
         while peek(opt(N1::parse))(loop_rest)?.1.is_some() {
             let (rest, n1) = N1::parse(loop_rest)?;
             let (rest, n2) = many0(N2::parse)(rest)?;
@@ -114,7 +114,7 @@ impl<'a> Parser<&'a str, _834, nom::error::Error<&'a str>> for _834 {
         output.loop_1000 = loop_1000;
         // loop 2000
         let mut loop_2000 = vec![];
-        let mut loop_rest = rest.clone();
+        let mut loop_rest = rest;
         while peek(opt(INS::parse))(loop_rest)?.1.is_some() {
             let (rest, ins) = opt(INS::parse)(loop_rest)?;
             let (rest, r#ref) = many0(REF::parse)(rest)?;
