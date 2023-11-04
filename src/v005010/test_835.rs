@@ -105,5 +105,4 @@ IEA*1*004075123~"#;
     println!("{rest}");
     println!("{obj:?}");
     assert!(rest.is_empty());
-
 }
