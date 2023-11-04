@@ -321,11 +321,13 @@ pub struct _404LoopN7RefN1 {
     pub n3: Option<N3>,
     pub n4: Option<N4>,
 }
+
 #[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
 pub struct _404LoopVC {
     pub vc: Option<VC>,
     pub loop_n1: Vec<_404LoopVcN1>,
 }
+
 #[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
 pub struct _404LoopVcN1 {
     pub n1: Option<N1>,
@@ -333,6 +335,7 @@ pub struct _404LoopVcN1 {
     pub n4: Option<N4>,
     pub h3: Option<H3>,
 }
+
 #[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
 pub struct _404LoopN1 {
     pub n1: N1,
@@ -343,6 +346,7 @@ pub struct _404LoopN1 {
     pub per: Option<PER>,
     pub bl: Option<BL>,
 }
+
 #[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
 pub struct _404LoopS1 {
     pub s1: Option<S1>,
@@ -354,6 +358,7 @@ pub struct _404LoopS1 {
     pub n4: Option<N4>,
     pub per: Option<PER>,
 }
+
 #[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
 pub struct _404LoopN7E1 {
     pub e1: E1,
@@ -361,6 +366,7 @@ pub struct _404LoopN7E1 {
     pub e5: Option<E5>,
     pub pi: Option<PI>,
 }
+
 #[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
 pub struct _404LoopE1 {
     pub e1: E1,
