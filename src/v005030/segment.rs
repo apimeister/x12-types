@@ -833,7 +833,9 @@ impl<'a> Parser<&'a str, IM, nom::error::Error<&'a str>> for IM {
 /// 14 | I13 | Acknowledgment Requested | 1 | M | ID | 1/1
 /// 15 | I14 | Usage Indicator | 1 | M | ID | 1/1
 /// 16 | I15 | Component Element Separator | 1 | M |  | 1/1
-#[derive(Serialize, Deserialize, Clone, Default, Debug, Validate, PartialEq, Eq, DisplaySegment)]
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, Validate, PartialEq, Eq, DisplaySegment,
+)]
 pub struct ISA {
     /// I01 - Authorization Information Qualifier
     ///

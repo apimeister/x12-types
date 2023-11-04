@@ -8,8 +8,8 @@ use nom::multi::separated_list0;
 use nom::sequence::delimited;
 use nom::IResult;
 use serde::{Deserialize, Serialize};
-use x12_types_macros::DisplaySegment;
 use validator::Validate;
+use x12_types_macros::DisplaySegment;
 
 /// AK1 - Functional Group Response Header
 ///
@@ -2286,7 +2286,9 @@ impl<'a> Parser<&'a str, IEA, nom::error::Error<&'a str>> for IEA {
 /// 14 | I13 | Acknowledgment Requested | 1 | M | ID | 1/1
 /// 15 | I14 | Usage Indicator | 1 | M | ID | 1/1
 /// 16 | I15 | Component Element Separator | 1 | M |  | 1/1
-#[derive(Serialize, Deserialize, Clone, Default, Debug, Validate, PartialEq, Eq, DisplaySegment)]
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, Validate, PartialEq, Eq, DisplaySegment,
+)]
 pub struct ISA {
     /// I01 - Authorization Information Qualifier
     ///
