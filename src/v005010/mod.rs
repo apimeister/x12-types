@@ -8,6 +8,8 @@ use nom::{
 };
 pub use segment::*;
 use serde::{Deserialize, Serialize};
+use std::fmt::Display;
+use x12_types_macros::DisplayX12;
 
 mod segment;
 
@@ -55,6 +57,23 @@ impl<'a, T: Default + Parser<&'a str, T, nom::error::Error<&'a str>>>
     }
 }
 
+impl<T: Display> Display for Transmission<T> {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        let mut lines = vec![];
+        lines.push(format!("{}", self.isa));
+        for fg in &self.functional_group {
+            lines.push(format!("{}", fg.gs));
+            for segment in &fg.segments {
+                lines.push(format!("{}", segment));
+            }
+            lines.push(format!("{}", fg.ge));
+        }
+        lines.push(format!("{}", self.iea));
+        let all = lines.join("");
+        write!(f, "{all}")
+    }
+}
+
 #[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
 pub struct FunctionalGroup<T> {
     pub gs: GS,
@@ -63,7 +82,7 @@ pub struct FunctionalGroup<T> {
 }
 
 /// 834 - Benefit Enrollment and Maintenance
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
 pub struct _834 {
     pub st: ST,
     pub bgn: BGN,
@@ -304,7 +323,7 @@ impl<'a> Parser<&'a str, _834, nom::error::Error<&'a str>> for _834 {
     }
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
 pub struct _834Loop1000 {
     pub n1: N1,
     pub n2: Vec<N2>,
@@ -314,7 +333,7 @@ pub struct _834Loop1000 {
     pub loop_1100: Vec<_834Loop1100>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
 pub struct _834Loop1100 {
     pub act: Option<ACT>,
     pub r#ref: Vec<REF>,
@@ -325,7 +344,7 @@ pub struct _834Loop1100 {
     pub amt: Option<AMT>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
 pub struct _834Loop2000 {
     pub ins: Option<INS>,
     pub r#ref: Vec<REF>,
@@ -341,7 +360,7 @@ pub struct _834Loop2000 {
     pub le: Option<LE>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
 pub struct _834Loop2100 {
     pub nm1: Option<NM1>,
     pub per: Option<PER>,
@@ -357,14 +376,14 @@ pub struct _834Loop2100 {
     pub lui: Vec<LUI>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
 pub struct _834Loop2200 {
     pub dsb: Option<DSB>,
     pub dtp: Vec<DTP>,
     pub ad1: Vec<AD1>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
 pub struct _834Loop2300 {
     pub hd: Option<HD>,
     pub dtp: Vec<DTP>,
@@ -375,7 +394,7 @@ pub struct _834Loop2300 {
     pub loop_2320: Vec<_834Loop2320>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
 pub struct _834Loop2310 {
     pub lx: Option<LX>,
     pub nm1: Option<NM1>,
@@ -389,7 +408,7 @@ pub struct _834Loop2310 {
     pub pla: Option<PLA>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
 pub struct _834Loop2320 {
     pub cob: Option<COB>,
     pub r#ref: Option<REF>,
@@ -397,7 +416,7 @@ pub struct _834Loop2320 {
     pub loop_2330: Vec<_834Loop2330>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
 pub struct _834Loop2330 {
     pub nm1: Option<NM1>,
     pub n2: Option<N2>,
@@ -406,7 +425,7 @@ pub struct _834Loop2330 {
     pub per: Option<PER>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
 pub struct _834Loop2400 {
     pub lc: Option<LC>,
     pub amt: Vec<AMT>,
@@ -415,7 +434,7 @@ pub struct _834Loop2400 {
     pub loop_2410: Vec<_834Loop2410>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
 pub struct _834Loop2410 {
     pub ben: Option<BEN>,
     pub nm1: Option<NM1>,
@@ -426,7 +445,7 @@ pub struct _834Loop2410 {
     pub dmg: Option<DMG>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
 pub struct _834Loop2500 {
     pub fsa: Option<FSA>,
     pub amt: Vec<AMT>,
@@ -434,7 +453,7 @@ pub struct _834Loop2500 {
     pub r#ref: Vec<REF>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
 pub struct _834Loop2600 {
     pub rp: Option<RP>,
     pub dtp: Vec<DTP>,
@@ -449,7 +468,7 @@ pub struct _834Loop2600 {
     pub loop_2650: Vec<_834Loop2650>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
 pub struct _834Loop2610 {
     pub nm1: Option<NM1>,
     pub n2: Option<N2>,
@@ -459,7 +478,7 @@ pub struct _834Loop2610 {
     pub loop_2620: Vec<_834Loop2620>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
 pub struct _834Loop2620 {
     pub nx1: Option<NX1>,
     pub n3: Option<N3>,
@@ -467,14 +486,14 @@ pub struct _834Loop2620 {
     pub dtp: Vec<DTP>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
 pub struct _834Loop2630 {
     pub fc: Option<FC>,
     pub dtp: Vec<DTP>,
     pub loop_2640: Vec<_834Loop2640>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
 pub struct _834Loop2640 {
     pub inv: Option<INV>,
     pub dtp: Vec<DTP>,
@@ -485,20 +504,20 @@ pub struct _834Loop2640 {
     pub k3: Vec<K3>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
 pub struct _834Loop2650 {
     pub ain: Option<AIN>,
     pub qty: Vec<QTY>,
     pub dtp: Vec<DTP>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
 pub struct _834Loop2700 {
     pub lx: Option<LX>,
     pub loop_2750: Vec<_834Loop2750>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
 pub struct _834Loop2750 {
     pub n1: N1,
     pub r#ref: REF,
@@ -506,7 +525,7 @@ pub struct _834Loop2750 {
 }
 
 /// 837 - Health Care Claim
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
 pub struct _837 {
     pub st: ST,
     pub bht: BHT,
@@ -821,7 +840,7 @@ impl<'a> Parser<&'a str, _837, nom::error::Error<&'a str>> for _837 {
     }
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
 pub struct _837Loop1000 {
     nm1: NM1,
     n2: Vec<N2>,
@@ -831,7 +850,7 @@ pub struct _837Loop1000 {
     per: Vec<PER>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
 pub struct _837Loop2000 {
     hl: HL,
     prv: Option<PRV>,
@@ -843,7 +862,7 @@ pub struct _837Loop2000 {
     loop_2300: Vec<_837Loop2300>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
 pub struct _837Loop2010 {
     nm1: NM1,
     n2: Option<N2>,
@@ -854,7 +873,7 @@ pub struct _837Loop2010 {
     per: Option<PER>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
 pub struct _837Loop2300 {
     clm: CLM,
     dtp: Option<DTP>,
@@ -886,13 +905,13 @@ pub struct _837Loop2300 {
     loop_2400: Vec<_837Loop2400>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
 pub struct _837Loop2305 {
     cr7: CR7,
     hsd: Vec<HSD>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
 pub struct _837Loop2310 {
     nm1: NM1,
     prv: Option<PRV>,
@@ -903,7 +922,7 @@ pub struct _837Loop2310 {
     per: Option<PER>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
 pub struct _837Loop2320 {
     sbr: SBR,
     cas: Option<CAS>,
@@ -915,7 +934,7 @@ pub struct _837Loop2320 {
     loop_2330: Vec<_837Loop2330>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
 pub struct _837Loop2330 {
     nm1: NM1,
     n2: Option<N2>,
@@ -926,7 +945,7 @@ pub struct _837Loop2330 {
     r#ref: Option<REF>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
 pub struct _837Loop2400 {
     lx: LX,
     sv1: Option<SV1>,
@@ -963,14 +982,14 @@ pub struct _837Loop2400 {
     loop_2440: Vec<_837Loop2440>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
 pub struct _837Loop2410 {
     lin: LIN,
     ctp: Option<CTP>,
     r#ref: Option<REF>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
 pub struct _837Loop2420 {
     nm1: NM1,
     prv: Option<PRV>,
@@ -981,7 +1000,7 @@ pub struct _837Loop2420 {
     per: Option<PER>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
 pub struct _837Loop2430 {
     svd: SVD,
     cas: Vec<CAS>,
@@ -989,7 +1008,7 @@ pub struct _837Loop2430 {
     amt: Option<AMT>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
 pub struct _837Loop2440 {
     lq: LQ,
     frm: FRM,

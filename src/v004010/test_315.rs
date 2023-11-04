@@ -117,7 +117,7 @@ fn parse_315() {
             _02: "000000001".to_string(),
         },
     };
-    let str = serde_x12::to_string(&x).unwrap();
+    let str = format!("{x}");
     println!("{}", str);
     // let obj: Transmission<_315> = serde_x12::from_str(&new_input).unwrap();
     // println!("{:?}", obj);
@@ -268,7 +268,7 @@ fn test_315() {
             _02: "000000001".to_string(),
         },
     };
-    let serialized = serde_x12::to_string(&x).unwrap();
+    let serialized = format!("{x}");
     let original = r#"ISA*00*          *00*          *ZZ*SOURCE         *ZZ*TARGET         *220524*1120*U*00401*000000001*0*P*>~
 GS*QO*SOURCE*TARGET*20220524*1600*1*X*004010~
 ST*315*00001~
@@ -404,7 +404,7 @@ fn test_315_defaults() {
             _02: "000000001".to_string(),
         },
     };
-    let serialized = serde_x12::to_string(&x).unwrap();
+    let serialized = format!("{x}");
     let original = r#"ISA*00*          *00*          *ZZ*SOURCE         *ZZ*TARGET         *220524*1120*U*00401*000000001*0*P*>~
 GS*QO*SOURCE*TARGET*20220524*1600*1*X*004010~
 ST*315*00001~

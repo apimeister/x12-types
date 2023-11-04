@@ -128,7 +128,7 @@ fn test_act() {
         _08: Some("".to_string()),
         _09: Some("X".to_string()),
     };
-    let s = serde_x12::to_string(&obj1).unwrap();
+    let s = format!("{obj1}");
     let (rest, obj) = ACT::parse(&s).unwrap();
     assert!(rest.is_empty());
     assert_eq!(obj._01, "");

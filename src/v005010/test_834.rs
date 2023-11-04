@@ -261,7 +261,7 @@ IEA*1*000012345~
             _02: "000012345".to_string(),
         },
     };
-    let obj_str = serde_x12::to_string(&obj).unwrap();
+    let obj_str = format!("{obj}");
     assert_eq!(str, obj_str);
 }
 

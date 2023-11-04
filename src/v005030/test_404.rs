@@ -82,7 +82,7 @@ IEA*1*000099667~
     let (rest, obj) = Transmission::<_404>::parse(str).unwrap();
     println!("{obj:?}");
     assert!(rest.is_empty());
-    let s = serde_x12::to_string(&obj).unwrap();
+    let s = format!("{obj}");
     assert_eq!(s, str);
 }
 
@@ -139,6 +139,6 @@ IEA*1*000097314~
     let (rest, obj) = Transmission::<_404>::parse(str).unwrap();
     println!("{obj:?}");
     assert!(rest.is_empty());
-    let s = serde_x12::to_string(&obj).unwrap();
+    let s = format!("{obj}");
     assert_eq!(s, str);
 }

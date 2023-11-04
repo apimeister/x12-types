@@ -1,6 +1,6 @@
 [package]
 name = "x12-types"
-version = "0.7.6"
+version = "0.8.0"
 edition = "2021"
 authors = ["Jens Walter <jens@apimeister.com>"]
 license = "MIT OR Apache-2.0"
@@ -9,14 +9,16 @@ repository = "https://github.com/apimeister/x12-types/"
 documentation = "https://docs.rs/x12-types/"
 description = "Bindings for the ASC X12 EDI definitions"
 
+[lib]
+crate-type = ["cdylib"]
+
 [dependencies]
 serde = { version = "1.0", features = ["derive"] }
 validator = { version = "0.16", features = ["derive"] }
 chrono = "0.4"
 nom = "7"
-
-[dev-dependencies]
-serde_x12 = { version = "0.7" }
+# wit-bindgen = { git = "https://github.com/bytecodealliance/wit-bindgen", version = "0.13.0" }
+x12-types-macros = { version = "0.1" }
 
 [features]
 default = ["v003030","v004010","v004030","v005010","v005030"]

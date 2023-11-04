@@ -1,3 +1,8 @@
+# 0.8.0 2023-11.04
+
+* implement display trait
+* use display macros
+
 # 0.7.6 2023-10-06
 
 * added 005010/837 - Health Care Claim

@@ -209,7 +209,7 @@ fn render_204() {
         },
         ..Default::default()
     };
-    let obj = serde_x12::to_string(&obj).unwrap();
+    let obj = format!("{obj}");
     println!("{}", obj);
 }
 

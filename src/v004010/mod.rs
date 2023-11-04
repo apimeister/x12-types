@@ -1,7 +1,6 @@
 //! v004010 repesents all entities of the 004010 specification.
 
 use crate::util::Parser;
-use nom::character::complete::newline;
 use nom::combinator::opt;
 use nom::combinator::peek;
 use nom::multi::many0;
@@ -9,6 +8,8 @@ use nom::IResult;
 pub use segment::*;
 use serde::{Deserialize, Serialize};
 use std::fmt::Debug;
+use std::fmt::Display;
+use x12_types_macros::DisplayX12;
 
 mod segment;
 
@@ -56,6 +57,23 @@ impl<'a, T: Default + Parser<&'a str, T, nom::error::Error<&'a str>>>
         let (input, obj) = IEA::parse(input)?;
         output.iea = obj;
         Ok((input, output))
+    }
+}
+
+impl<T: Display> Display for Transmission<T> {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        let mut lines = vec![];
+        lines.push(format!("{}", self.isa));
+        for fg in &self.functional_group {
+            lines.push(format!("{}", fg.gs));
+            for segment in &fg.segments {
+                lines.push(format!("{}", segment));
+            }
+            lines.push(format!("{}", fg.ge));
+        }
+        lines.push(format!("{}", self.iea));
+        let all = lines.join("");
+        write!(f, "{all}")
     }
 }
 
@@ -152,7 +170,7 @@ pub struct FunctionalGroup<T> {
 /// 0300 -> 0380 -> 0250 | M7 | Seal Numbers | O | 2
 /// 9010 | L3 | Total Weight and Charges | O | 1
 /// 9020 | SE | Transaction Set Trailer | M | 1
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+#[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
 pub struct _204 {
     pub st: ST,
     pub b2: B2,
@@ -365,14 +383,11 @@ impl<'a> Parser<&'a str, _204, nom::error::Error<&'a str>> for _204 {
         output.l3 = obj;
         let (rest, obj) = SE::parse(rest)?;
         output.se = obj;
-
-        // look for trailing newline
-        let (rest, _) = opt(newline)(rest)?;
         Ok((rest, output))
     }
 }
 
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+#[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
 pub struct _204Loop100 {
     pub n1: Option<N1>,
     pub n2: Option<N2>,
@@ -381,7 +396,8 @@ pub struct _204Loop100 {
     pub l11: Option<L11>,
     pub g61: Vec<G61>,
 }
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+
+#[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
 pub struct _204Loop200 {
     pub n7: Option<N7>,
     pub n7a: Option<N7A>,
@@ -389,7 +405,8 @@ pub struct _204Loop200 {
     pub mea: Option<MEA>,
     pub m7: Option<M7>,
 }
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+
+#[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
 pub struct _204Loop300 {
     pub s5: S5,
     pub l11: Vec<L11>,
@@ -404,7 +421,8 @@ pub struct _204Loop300 {
     pub loop_350: Vec<_204Loop350>,
     pub loop_380: Vec<_204Loop380>,
 }
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+
+#[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
 pub struct _204Loop310 {
     pub n1: Option<N1>,
     pub n2: Option<N2>,
@@ -412,20 +430,23 @@ pub struct _204Loop310 {
     pub n4: Option<N4>,
     pub g61: Vec<G61>,
 }
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+
+#[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
 pub struct _204Loop320 {
     pub l5: Option<L5>,
     pub at8: Option<AT8>,
     pub loop_325: Vec<_204Loop325>,
 }
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+
+#[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
 pub struct _204Loop325 {
     pub g61: Option<G61>,
     pub l11: Vec<L11>,
     pub lh6: Option<LH6>,
     pub loop_330: Vec<_204Loop330>,
 }
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+
+#[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
 pub struct _204Loop330 {
     pub lh1: Option<LH1>,
     pub lh2: Vec<LH2>,
@@ -435,27 +456,31 @@ pub struct _204Loop330 {
     pub lh4: Option<LH4>,
     pub lht: Vec<LHT>,
 }
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+
+#[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
 pub struct _204Loop350 {
     pub oid: Option<OID>,
     pub g62: Vec<G62>,
     pub lad: Vec<LAD>,
     pub loop_360: Vec<_204Loop360>,
 }
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+
+#[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
 pub struct _204Loop360 {
     pub l5: Option<L5>,
     pub at8: Option<AT8>,
     pub loop_365: Vec<_204Loop365>,
 }
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+
+#[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
 pub struct _204Loop365 {
     pub g61: Option<G61>,
     pub l11: Vec<L11>,
     pub lh6: Vec<LH6>,
     pub loop_370: Vec<_204Loop370>,
 }
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+
+#[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
 pub struct _204Loop370 {
     pub lh1: Option<LH1>,
     pub lh2: Vec<LH2>,
@@ -465,7 +490,8 @@ pub struct _204Loop370 {
     pub lh4: Option<LH4>,
     pub lht: Vec<LHT>,
 }
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+
+#[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
 pub struct _204Loop380 {
     pub n7: Option<N7>,
     pub n7a: Option<N7A>,
@@ -545,7 +571,7 @@ pub struct _204Loop380 {
 /// 0200 -> 0260 -> 0423 | EFI | Electronic Format Identification | O | 1
 /// 0200 -> 0260 -> 0426 | BIN | Binary Data | M | 1
 /// 0610 | SE | Transaction Set Trailer | M | 1
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+#[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
 pub struct _214 {
     pub st: ST,
     pub b10: B10,
@@ -558,7 +584,7 @@ pub struct _214 {
     pub se: SE,
 }
 
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+#[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
 pub struct _214Loop0100 {
     pub n1: Option<N1>,
     pub n2: Option<N2>,
@@ -569,7 +595,7 @@ pub struct _214Loop0100 {
     pub l11: Vec<L11>,
 }
 
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+#[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
 pub struct _214Loop0200 {
     pub lx: Option<LX>,
     pub loop_0205: Vec<_214Loop0200Loop0205>,
@@ -584,13 +610,13 @@ pub struct _214Loop0200 {
     pub loop_0250: Vec<_214Loop0200Loop0250>,
     pub loop_0260: Vec<_214Loop0200Loop0260>,
 }
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+#[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
 pub struct _214Loop0200Loop0205 {
     pub at7: Option<AT7>,
     pub ms1: Option<MS1>,
     pub ms2: Option<MS2>,
 }
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+#[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
 pub struct _214Loop0200Loop0210 {
     pub cd3: Option<CD3>,
     pub l11: Vec<L11>,
@@ -601,13 +627,13 @@ pub struct _214Loop0200Loop0210 {
     pub man: Vec<MAN>,
     pub loop_0220: Vec<_214Loop0200Loop0210Loop0220>,
 }
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+#[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
 pub struct _214Loop0200Loop0210Loop0215 {
     pub at7: Option<AT7>,
     pub ms1: Option<MS1>,
     pub ms2: Option<MS2>,
 }
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+#[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
 pub struct _214Loop0200Loop0210Loop0220 {
     pub n1: Option<N1>,
     pub n2: Option<N2>,
@@ -615,13 +641,13 @@ pub struct _214Loop0200Loop0210Loop0220 {
     pub n4: Option<N4>,
     pub l11: Vec<L11>,
 }
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+#[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
 pub struct _214Loop0200Loop0230 {
     pub prf: Option<PRF>,
     pub loop_0231: Vec<_214Loop0200Loop0230Loop0231>,
     pub loop_0233: Vec<_214Loop0200Loop0230Loop0233>,
 }
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+#[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
 pub struct _214Loop0200Loop0230Loop0231 {
     pub n1: Option<N1>,
     pub n2: Option<N2>,
@@ -629,31 +655,31 @@ pub struct _214Loop0200Loop0230Loop0231 {
     pub n4: Option<N4>,
     pub l11: Vec<L11>,
 }
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+#[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
 pub struct _214Loop0200Loop0230Loop0233 {
     pub cd3: Option<CD3>,
     pub l11: Vec<L11>,
     pub loop_0240: Vec<_214Loop0200Loop0230Loop0233Loop0240>,
 }
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+#[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
 pub struct _214Loop0200Loop0230Loop0233Loop0240 {
     pub at7: Option<AT7>,
     pub ms1: Option<MS1>,
     pub ms2: Option<MS2>,
 }
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+#[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
 pub struct _214Loop0200Loop0250 {
     pub spo: Option<SPO>,
     pub sdq: Option<SDQ>,
 }
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+#[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
 pub struct _214Loop0200Loop0260 {
     pub efi: Option<EFI>,
     pub bin: BIN,
 }
 
 /// 301 Confirmation (Ocean)
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, DisplayX12)]
 pub struct _301 {
     pub st: ST,
     pub b1: B1,
@@ -783,7 +809,7 @@ impl<'a> Parser<&'a str, _301, nom::error::Error<&'a str>> for _301 {
     }
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, DisplayX12)]
 pub struct _301LoopLx {
     pub lx: LX,
     pub n7: Option<N7>,
@@ -796,13 +822,13 @@ pub struct _301LoopLx {
     pub loop_h1: Vec<_301LoopLxLoopH1>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, DisplayX12)]
 pub struct _301LoopY4 {
     pub y4: Option<Y4>,
     pub w09: Option<W09>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, DisplayX12)]
 pub struct _301LoopN1 {
     pub n1: Option<N1>,
     pub n2: Option<N2>,
@@ -811,13 +837,13 @@ pub struct _301LoopN1 {
     pub g61: Option<G61>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, DisplayX12)]
 pub struct _301LoopLxLoopH1 {
     pub h1: Option<H1>,
     pub h2: Vec<H2>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, DisplayX12)]
 pub struct _301LoopR4 {
     pub r4: R4,
     #[serde(default)]
@@ -857,7 +883,7 @@ pub struct _301LoopR4 {
 /// P4 -> LX -> VID -> N10 -> H1 -> 0165 | H1 | Hazardous Material | O | 1
 /// P4 -> LX -> VID -> N10 -> H1 -> 0166 | H2 | Additional Hazardous Material Description | O | 99
 /// 0200 | SE | Transaction Set Trailer | M | 1
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, DisplayX12)]
 pub struct _309 {
     pub st: ST,
     pub m10: M10,
@@ -955,13 +981,13 @@ impl<'a> Parser<&'a str, _309, nom::error::Error<&'a str>> for _309 {
     }
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, DisplayX12)]
 pub struct _309LoopP4 {
     pub p4: P4,
     pub loop_lx: Vec<_309LoopLX>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, DisplayX12)]
 pub struct _309LoopLX {
     pub lx: LX,
     pub m13: Option<M13>,
@@ -972,7 +998,7 @@ pub struct _309LoopLX {
     pub loop_vid: Vec<_309LoopVID>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, DisplayX12)]
 pub struct _309LoopN1 {
     pub n1: Option<N1>,
     pub n3: Option<N3>,
@@ -981,27 +1007,27 @@ pub struct _309LoopN1 {
     pub per: Option<PER>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, DisplayX12)]
 pub struct _309LoopM12 {
     pub m12: Option<M12>,
     pub r4: Vec<R4>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, DisplayX12)]
 pub struct _309LoopVID {
     pub vid: Option<VID>,
     pub m7: Vec<M7>,
     pub loop_n10: Vec<_309LoopN10>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, DisplayX12)]
 pub struct _309LoopN10 {
     pub n10: Option<N10>,
     pub vc: Vec<VC>,
     pub loop_h1: Vec<_309LoopH1>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, DisplayX12)]
 pub struct _309LoopH1 {
     pub h1: Option<H1>,
     pub h2: Vec<H2>,
@@ -1086,7 +1112,7 @@ pub struct _309LoopH1 {
 /// 060 | K1 | Remarks | O | 999  
 /// 070 | L11 | Business Instructions and Reference Number | O | 1  
 /// 080 | SE | Transaction Set Trailer | M | 1 |
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
 pub struct _310 {
     pub st: ST,
     pub b3: B3,
@@ -1337,7 +1363,7 @@ impl<'a> Parser<&'a str, _310, nom::error::Error<&'a str>> for _310 {
     }
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
 pub struct _310LoopN1 {
     pub n1: N1,
     pub n2: Option<N2>,
@@ -1345,14 +1371,14 @@ pub struct _310LoopN1 {
     pub n4: Option<N4>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
 pub struct _310LoopR4 {
     pub r4: R4,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub dtm: Option<DTM>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
 pub struct _310LoopC8 {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub c8: Option<C8>,
@@ -1360,14 +1386,14 @@ pub struct _310LoopC8 {
     pub c8c: Vec<C8C>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
 pub struct _310LoopLX {
     pub lx: LX,
     pub loop_n7: Vec<_310LoopN7>,
     pub loop_l0: Vec<_310LoopL0>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
 pub struct _310LoopN7 {
     pub n7: Option<N7>,
     pub qty: Option<QTY>,
@@ -1383,7 +1409,7 @@ pub struct _310LoopN7 {
     pub loop_h1: Vec<_310LoopH1>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
 pub struct _310LoopL0 {
     pub l0: Option<L0>,
     pub l5: Vec<L5>,
@@ -1395,13 +1421,13 @@ pub struct _310LoopL0 {
     pub loop_h1: Vec<_310LoopH1>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
 pub struct _310LoopL1 {
     pub l1: Option<L1>,
     pub c3: Option<C3>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
 pub struct _310LoopH1 {
     pub h1: Option<H1>,
     pub h2: Vec<H2>,
@@ -1423,7 +1449,7 @@ pub struct _310LoopH1 {
 /// R4 -> 0070 | DTM | Date/Time Reference | O | 15
 /// 0080 | V9 | Event Detail | O | 10
 /// 0090 | SE | Transaction Set Trailer | M | 1
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
 pub struct _315 {
     pub st: ST,
     pub b4: B4,
@@ -1475,7 +1501,7 @@ impl<'a> Parser<&'a str, _315, nom::error::Error<&'a str>> for _315 {
     }
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
 pub struct _315LoopR4 {
     pub r4: R4,
     #[serde(default)]
@@ -1519,7 +1545,7 @@ pub struct _315LoopR4 {
 /// N7 -> L0 -> 0200 | H1 | Hazardous Material | O | 3 |   |  
 /// N7 -> 0210 | L3 | Total Weight and Charges | O | 2 |   |  
 /// 0220 | SE | Transaction Set Trailer | M | 1 |   |
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, DisplayX12)]
 pub struct _322 {
     pub st: ST,
     pub zc1: Option<ZC1>,
@@ -1528,7 +1554,7 @@ pub struct _322 {
     pub se: SE,
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, DisplayX12)]
 pub struct _322LoopN7 {
     pub n7: N7,
     pub v4: Option<V4>,
@@ -1549,19 +1575,19 @@ pub struct _322LoopN7 {
     pub l3: Vec<L3>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, DisplayX12)]
 pub struct _322LoopR4 {
     r4: R4,
     #[serde(default)]
     dtm: Vec<DTM>,
 }
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, DisplayX12)]
 pub struct _322LoopN1 {
     n1: Option<N1>,
     n3: Vec<N3>,
     n4: Option<N4>,
 }
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, DisplayX12)]
 pub struct _322LoopL0 {
     l0: Option<L0>,
     l5: Option<L5>,
@@ -1675,7 +1701,7 @@ pub struct _322LoopL0 {
 /// 0810 | XH | Pro Forma - B13 Information | O | 1 |   |   |  
 /// 0820 | X7 | Customs Information | O | 10 |   |   |  
 /// 0840 | SE | Transaction Set Trailer | M | 1
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+#[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
 pub struct _404 {
     pub st: ST,
     pub zc1: Option<ZC1>,
@@ -1879,7 +1905,7 @@ impl<'a> Parser<&'a str, _404, nom::error::Error<&'a str>> for _404 {
     }
 }
 
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+#[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
 pub struct _404LoopN7 {
     pub n7: N7,
     pub em: Option<EM>,
@@ -1893,31 +1919,31 @@ pub struct _404LoopN7 {
     pub ga: Option<GA>,
     pub loop_ref: Vec<_404LoopN7Ref>,
 }
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+#[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
 pub struct _404LoopN7Ref {
     pub _ref: Option<REF>,
     pub n10: Option<N10>,
     pub loop_n1: Vec<_404LoopN7RefN1>,
 }
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+#[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
 pub struct _404LoopN7RefN1 {
     pub n1: Option<N1>,
     pub n3: Option<N3>,
     pub n4: Option<N4>,
 }
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+#[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
 pub struct _404LoopVC {
     pub vc: Option<VC>,
     pub loop_n1: Vec<_404LoopVcN1>,
 }
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+#[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
 pub struct _404LoopVcN1 {
     pub n1: Option<N1>,
     pub n3: Option<N3>,
     pub n4: Option<N4>,
     pub h3: Option<H3>,
 }
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+#[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
 pub struct _404LoopN1 {
     pub n1: N1,
     pub n2: Option<N2>,
@@ -1927,7 +1953,7 @@ pub struct _404LoopN1 {
     pub per: Option<PER>,
     pub bl: Option<BL>,
 }
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+#[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
 pub struct _404LoopS1 {
     pub s1: Option<S1>,
     pub s2: Option<S2>,
@@ -1938,28 +1964,28 @@ pub struct _404LoopS1 {
     pub n4: Option<N4>,
     pub per: Option<PER>,
 }
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+#[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
 pub struct _404LoopN7E1 {
     pub e1: E1,
     pub e4: Option<E4>,
     pub e5: Option<E5>,
     pub pi: Option<PI>,
 }
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+#[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
 pub struct _404LoopE1 {
     pub e1: E1,
     pub e4: Option<E4>,
     pub e5: Option<E5>,
     pub pi: Option<PI>,
 }
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+#[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
 pub struct _404LoopL0 {
     pub l0: Option<L0>,
     pub mea: Option<MEA>,
     pub l1: Option<L1>,
     pub pi: Option<PI>,
 }
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+#[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
 pub struct _404LoopT1 {
     pub t1: Option<T1>,
     pub t2: Option<T2>,
@@ -1967,7 +1993,7 @@ pub struct _404LoopT1 {
     pub t6: Option<T6>,
     pub t8: Option<T8>,
 }
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+#[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
 pub struct _404LoopLH1 {
     pub lh1: Option<LH1>,
     pub lh2: Vec<LH2>,
@@ -1979,20 +2005,20 @@ pub struct _404LoopLH1 {
     pub lhr: Option<LHR>,
     pub per: Option<PER>,
 }
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+#[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
 pub struct _404LoopLX {
     pub lx: LX,
     pub l5: L5,
     pub loop_l0: Vec<_404LoopL0>,
     pub x1: Option<X1>,
 }
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+#[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
 pub struct _404LoopRef {
     pub _ref: Option<REF>,
     pub n10: Option<N10>,
     pub loop_n1: Vec<_404LoopRefN1>,
 }
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+#[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
 pub struct _404LoopRefN1 {
     pub n1: Option<N1>,
     pub n3: Option<N3>,
@@ -2015,7 +2041,7 @@ pub struct _404LoopRefN1 {
 /// AK2 -> 0060 | AK5 | Transaction Set Response Trailer | M | 1 |   |  
 /// 0070 | AK9 | Functional Group Response Trailer | M | 1 |   |  
 /// 0080 | SE | Transaction Set Trailer | M | 1 |  
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, DisplayX12)]
 pub struct _997 {
     pub st: ST,
     pub ak1: AK1,
@@ -2023,12 +2049,12 @@ pub struct _997 {
     pub ak9: AK9,
     pub se: SE,
 }
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, DisplayX12)]
 pub struct _997LoopAk2 {
     pub ak2: AK2,
     pub loop_ak3: Vec<_997LoopAk3>,
 }
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, DisplayX12)]
 pub struct _997LoopAk3 {
     pub ak3: Option<AK3>,
     pub ak4: Vec<AK4>,
@@ -2042,7 +2068,7 @@ pub struct _997LoopAk3 {
 /// 0100 | ST | Transaction Set Header | M | 1
 /// 0200 | ZD | Transaction Set Deletion - ID, Reason, and Source | M | 1
 /// 0300 | SE | Transaction Set Trailer | M | 1
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, DisplayX12)]
 pub struct _998 {
     pub st: ST,
     pub zd: ZD,

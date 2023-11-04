@@ -6,7 +6,7 @@ fn test_st() {
         _01: "301".to_string(),
         _02: "33233".to_string(),
     };
-    let str = serde_x12::to_string(&obj).unwrap();
+    let str = format!("{obj}");
     println!("{str}");
     println!("{obj}");
     let result = ST::parse(&str).unwrap();
@@ -29,6 +29,17 @@ fn st_display() {
 }
 
 #[test]
+fn t1_display() {
+    let obj = T1 {
+        _01: "301".to_string(),
+        _02: Some("33233".to_string()),
+        ..Default::default()
+    };
+    let str = format!("{obj}");
+    assert_eq!(str, "T1*301*33233~\n");
+}
+
+#[test]
 fn test_b1() {
     let obj = B1 {
         _01: Some("SNDR".to_string()),
@@ -36,7 +47,7 @@ fn test_b1() {
         _03: Some("20221121".to_string()),
         _04: "A".to_string(),
     };
-    let str = serde_x12::to_string(&obj).unwrap();
+    let str = format!("{obj}");
     let result = B1::parse(&str).unwrap();
     assert!(result.0.is_empty());
     assert_eq!(result.1._04, "A");
@@ -78,7 +89,7 @@ fn test_y3() {
         _10: Some("HP".to_string()),
         ..Default::default()
     };
-    let str = serde_x12::to_string(&obj).unwrap();
+    let str = format!("{obj}");
     let result = Y3::parse(&str).unwrap();
     let obj2 = result.1;
     assert!(result.0.is_empty());
@@ -97,7 +108,7 @@ fn test_y4() {
         _06: Some("45G1".to_string()),
         ..Default::default()
     };
-    let y4_str = serde_x12::to_string(&obj).unwrap();
+    let y4_str = format!("{obj}");
     let result = Y4::parse(&y4_str).unwrap();
     let obj2 = result.1;
     assert!(result.0.is_empty());
@@ -111,7 +122,7 @@ fn test_n9() {
         _02: "ERXX412223".to_string(),
         ..Default::default()
     };
-    let n9_str = serde_x12::to_string(&obj).unwrap();
+    let n9_str = format!("{obj}");
     let result = N9::parse(&n9_str).unwrap();
     assert!(result.0.is_empty());
     assert_eq!(result.1._01, "BN");
@@ -127,7 +138,7 @@ fn test_n1() {
         _04: Some("312343123".to_string()),
         ..Default::default()
     };
-    let n1_str = serde_x12::to_string(&obj).unwrap();
+    let n1_str = format!("{obj}");
     let result = N1::parse(&n1_str).unwrap();
     assert!(result.0.is_empty());
     assert_eq!(result.1._01, "SH");
@@ -150,7 +161,7 @@ fn test_n3() {
         _01: "TEST STR. 56".to_string(),
         _02: Some("XA 124324 4".to_string()),
     };
-    let n3_str = serde_x12::to_string(&obj).unwrap();
+    let n3_str = format!("{obj}");
     let result = N3::parse(&n3_str).unwrap();
     assert!(result.0.is_empty());
     assert_eq!(result.1._01, "TEST STR. 56");
@@ -166,7 +177,7 @@ fn test_n4() {
         _04: Some("DE".to_string()),
         ..Default::default()
     };
-    let n4_str = serde_x12::to_string(&obj).unwrap();
+    let n4_str = format!("{obj}");
     let result = N4::parse(&n4_str).unwrap();
     assert!(result.0.is_empty());
     assert_eq!(result.1._01, Some("MUNICH".to_string()));
@@ -184,7 +195,7 @@ fn test_r4() {
         _08: Some("BY".to_string()),
         ..Default::default()
     };
-    let str = serde_x12::to_string(&obj).unwrap();
+    let str = format!("{obj}");
     let result = R4::parse(&str).unwrap();
     assert!(result.0.is_empty());
     assert_eq!(result.1._01, "R");
@@ -198,7 +209,7 @@ fn test_dtm() {
         _02: Some("20230102".to_string()),
         ..Default::default()
     };
-    let str = serde_x12::to_string(&obj).unwrap();
+    let str = format!("{obj}");
     let result = DTM::parse(&str).unwrap();
     assert!(result.0.is_empty());
     assert_eq!(result.1._01, "649");
@@ -210,7 +221,7 @@ fn test_lx() {
     let obj = LX {
         _01: "2".to_string(),
     };
-    let str = serde_x12::to_string(&obj).unwrap();
+    let str = format!("{obj}");
     let result = LX::parse(&str).unwrap();
     assert!(result.0.is_empty());
     assert_eq!(result.1._01, "2");
@@ -228,7 +239,7 @@ fn test_l0() {
         _12: Some("HP".to_string()),
         ..Default::default()
     };
-    let str = serde_x12::to_string(&obj).unwrap();
+    let str = format!("{obj}");
     let result = L0::parse(&str).unwrap();
     assert!(result.0.is_empty());
     assert_eq!(result.1._01, Some("1".to_string()));
@@ -242,7 +253,7 @@ fn test_l5() {
         _02: Some("VEHICLES:PARTS".to_string()),
         ..Default::default()
     };
-    let str = serde_x12::to_string(&obj).unwrap();
+    let str = format!("{obj}");
     let result = L5::parse(&str).unwrap();
     assert!(result.0.is_empty());
     assert_eq!(result.1._01, Some("1".to_string()));
@@ -259,7 +270,7 @@ fn test_v1() {
         _08: Some("L".to_string()),
         ..Default::default()
     };
-    let str = serde_x12::to_string(&obj).unwrap();
+    let str = format!("{obj}");
     let result = V1::parse(&str).unwrap();
     assert!(result.0.is_empty());
     assert_eq!(result.1._01, Some("3465322".to_string()));
@@ -272,7 +283,7 @@ fn test_se() {
         _01: "17".to_string(),
         _02: "33233".to_string(),
     };
-    let str = serde_x12::to_string(&obj).unwrap();
+    let str = format!("{obj}");
     let result = SE::parse(&str).unwrap();
     assert!(result.0.is_empty());
     assert_eq!(result.1._01, "17");

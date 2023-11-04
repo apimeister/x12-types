@@ -1,4 +1,5 @@
 //! v005030 repesents all entities of the 005030 specification.
+
 use crate::util::Parser;
 use nom::{
     combinator::{opt, peek},
@@ -7,6 +8,8 @@ use nom::{
 };
 pub use segment::*;
 use serde::{Deserialize, Serialize};
+use std::fmt::Display;
+use x12_types_macros::DisplayX12;
 
 mod segment;
 
@@ -45,8 +48,25 @@ impl<'a, T: Default + Parser<&'a str, T, nom::error::Error<&'a str>>>
     }
 }
 
+impl<T: Display> Display for Transmission<T> {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        let mut lines = vec![];
+        lines.push(format!("{}", self.isa));
+        for fg in &self.functional_group {
+            lines.push(format!("{}", fg.gs));
+            for segment in &fg.segments {
+                lines.push(format!("{}", segment));
+            }
+            lines.push(format!("{}", fg.ge));
+        }
+        lines.push(format!("{}", self.iea));
+        let all = lines.join("");
+        write!(f, "{all}")
+    }
+}
+
 /// 404 - Rail Carrier Shipment Information
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+#[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
 pub struct _404 {
     pub st: ST,
     pub zc1: Option<ZC1>,
@@ -273,7 +293,7 @@ impl<'a> Parser<&'a str, _404, nom::error::Error<&'a str>> for _404 {
     }
 }
 
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+#[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
 pub struct _404LoopN7 {
     pub n7: N7,
     pub em: Option<EM>,
@@ -287,31 +307,33 @@ pub struct _404LoopN7 {
     pub ga: Option<GA>,
     pub loop_ref: Vec<_404LoopN7Ref>,
 }
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+
+#[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
 pub struct _404LoopN7Ref {
     pub _ref: Option<REF>,
     pub n10: Option<N10>,
     pub loop_n1: Vec<_404LoopN7RefN1>,
 }
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+
+#[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
 pub struct _404LoopN7RefN1 {
     pub n1: Option<N1>,
     pub n3: Option<N3>,
     pub n4: Option<N4>,
 }
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+#[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
 pub struct _404LoopVC {
     pub vc: Option<VC>,
     pub loop_n1: Vec<_404LoopVcN1>,
 }
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+#[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
 pub struct _404LoopVcN1 {
     pub n1: Option<N1>,
     pub n3: Option<N3>,
     pub n4: Option<N4>,
     pub h3: Option<H3>,
 }
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+#[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
 pub struct _404LoopN1 {
     pub n1: N1,
     pub n2: Option<N2>,
@@ -321,7 +343,7 @@ pub struct _404LoopN1 {
     pub per: Option<PER>,
     pub bl: Option<BL>,
 }
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+#[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
 pub struct _404LoopS1 {
     pub s1: Option<S1>,
     pub s2: Option<S2>,
@@ -332,14 +354,14 @@ pub struct _404LoopS1 {
     pub n4: Option<N4>,
     pub per: Option<PER>,
 }
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+#[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
 pub struct _404LoopN7E1 {
     pub e1: E1,
     pub e4: Option<E4>,
     pub e5: Option<E5>,
     pub pi: Option<PI>,
 }
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+#[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
 pub struct _404LoopE1 {
     pub e1: E1,
     pub e4: Option<E4>,
@@ -347,7 +369,7 @@ pub struct _404LoopE1 {
     pub pi: Option<PI>,
 }
 
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+#[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
 pub struct _404LoopL0 {
     pub l0: Option<L0>,
     pub mea: Option<MEA>,
@@ -355,13 +377,13 @@ pub struct _404LoopL0 {
     pub loop_pi: Vec<_404LoopL0PI>,
 }
 
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+#[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
 pub struct _404LoopL0PI {
     pub pi: Option<PI>,
     pub cd: Vec<CD>,
 }
 
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+#[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
 pub struct _404LoopT1 {
     pub t1: Option<T1>,
     pub t2: Option<T2>,
@@ -370,7 +392,7 @@ pub struct _404LoopT1 {
     pub t8: Option<T8>,
 }
 
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+#[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
 pub struct _404LoopLH1 {
     pub lh1: Option<LH1>,
     pub lh2: Vec<LH2>,
@@ -384,7 +406,7 @@ pub struct _404LoopLH1 {
     pub loop_n1: Vec<_404LoopLh1N1>,
 }
 
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+#[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
 pub struct _404LoopLh1N1 {
     pub n1: Option<N1>,
     pub n3: Vec<N3>,
@@ -392,20 +414,20 @@ pub struct _404LoopLh1N1 {
     pub per: Vec<PER>,
 }
 
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+#[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
 pub struct _404LoopLX {
     pub lx: LX,
     pub l5: L5,
     pub loop_l0: Vec<_404LoopL0>,
     pub x1: Option<X1>,
 }
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+#[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
 pub struct _404LoopRef {
     pub _ref: Option<REF>,
     pub n10: Option<N10>,
     pub loop_n1: Vec<_404LoopRefN1>,
 }
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+#[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
 pub struct _404LoopRefN1 {
     pub n1: Option<N1>,
     pub n3: Option<N3>,

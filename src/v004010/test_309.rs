@@ -305,6 +305,6 @@ IEA*1*000002910~
     let (rest, obj) = Transmission::<_309>::parse(str).unwrap();
     println!("{obj:?}");
     assert!(rest.is_empty());
-    let s = serde_x12::to_string(&obj).unwrap();
+    let s = format!("{obj}");
     assert_eq!(s, str);
 }

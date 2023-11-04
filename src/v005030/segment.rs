@@ -1,11 +1,12 @@
 use nom::IResult;
 use serde::{Deserialize, Serialize};
 use validator::Validate;
+use x12_types_macros::DisplaySegment;
 
 use crate::util::Parser;
 
 /// BL - Billing Information
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct BL {
     #[serde(rename = "01")]
     pub _01: String,
@@ -70,7 +71,7 @@ impl<'a> Parser<&'a str, BL, nom::error::Error<&'a str>> for BL {
 }
 
 /// BNX - Rail Shipment Information
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct BNX {
     #[serde(rename = "01")]
     pub _01: Option<String>,
@@ -96,7 +97,7 @@ impl<'a> Parser<&'a str, BNX, nom::error::Error<&'a str>> for BNX {
 }
 
 /// BX - General Shipment Information
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct BX {
     #[serde(rename = "01")]
     pub _01: String,
@@ -152,7 +153,7 @@ impl<'a> Parser<&'a str, BX, nom::error::Error<&'a str>> for BX {
 }
 
 /// CD - Shipment Condition
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct CD {
     #[serde(rename = "01")]
     pub _01: String,
@@ -199,7 +200,7 @@ impl<'a> Parser<&'a str, CD, nom::error::Error<&'a str>> for CD {
 }
 
 /// CM - Cargo Manifest
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct CM {
     #[serde(rename = "01")]
     pub _01: Option<String>,
@@ -264,7 +265,7 @@ impl<'a> Parser<&'a str, CM, nom::error::Error<&'a str>> for CM {
 }
 
 /// D9 - Destination Station
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct D9 {
     #[serde(rename = "01")]
     pub _01: Option<String>,
@@ -314,7 +315,7 @@ impl<'a> Parser<&'a str, D9, nom::error::Error<&'a str>> for D9 {
 }
 
 /// DTM - Date/Time Reference
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct DTM {
     #[serde(rename = "01")]
     pub _01: String,
@@ -346,7 +347,7 @@ impl<'a> Parser<&'a str, DTM, nom::error::Error<&'a str>> for DTM {
 }
 
 /// E1 - Empty Car Disposition - Pended Destination Consignee
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct E1 {
     #[serde(rename = "01")]
     pub _01: String,
@@ -369,7 +370,7 @@ impl<'a> Parser<&'a str, E1, nom::error::Error<&'a str>> for E1 {
 }
 
 /// E4 - Empty Car Disposition - Pended Destination City
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct E4 {
     #[serde(rename = "01")]
     pub _01: String,
@@ -398,7 +399,7 @@ impl<'a> Parser<&'a str, E4, nom::error::Error<&'a str>> for E4 {
 }
 
 /// E5 - Empty Car Disposition - Pended Destination Route
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct E5 {
     #[serde(rename = "01")]
     pub _01: String,
@@ -424,7 +425,7 @@ impl<'a> Parser<&'a str, E5, nom::error::Error<&'a str>> for E5 {
 }
 
 /// EM - Equipment Characteristics
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct EM {
     #[serde(rename = "01")]
     pub _01: Option<String>,
@@ -459,7 +460,7 @@ impl<'a> Parser<&'a str, EM, nom::error::Error<&'a str>> for EM {
 }
 
 /// F9 - Origin Station
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct F9 {
     #[serde(rename = "01")]
     pub _01: Option<String>,
@@ -509,7 +510,7 @@ impl<'a> Parser<&'a str, F9, nom::error::Error<&'a str>> for F9 {
 }
 
 /// GA - Price Authority Information
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct GA {
     #[serde(rename = "01")]
     pub _01: Option<String>,
@@ -584,7 +585,7 @@ impl<'a> Parser<&'a str, GA, nom::error::Error<&'a str>> for GA {
 /// ----|----|-------|--------|----|------|-------
 /// 01 | 97 | Number of Transaction Sets Included | 1 | M | N0 | 1/6
 /// 02 | 28 | Group Control Number | 1 | M/Z | N0 | 1/9
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct GE {
     /// 97 - Number of Transaction Sets Included
     ///
@@ -629,7 +630,7 @@ impl<'a> Parser<&'a str, GE, nom::error::Error<&'a str>> for GE {
 /// 06 | 28 | Group Control Number | 1 | M/Z | N0 | 1/9
 /// 07 | 455 | Responsible Agency Code | 1 | M | ID | 1/2
 /// 08 | 480 | Version / Release / Industry Identifier Code | 1 | M | AN | 1/12
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct GS {
     #[serde(rename = "01")]
     pub _01: String,
@@ -679,7 +680,7 @@ impl<'a> Parser<&'a str, GS, nom::error::Error<&'a str>> for GS {
 }
 
 /// H3 - Special Handling Instructions
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct H3 {
     #[serde(rename = "01")]
     pub _01: Option<String>,
@@ -708,7 +709,7 @@ impl<'a> Parser<&'a str, H3, nom::error::Error<&'a str>> for H3 {
 }
 
 /// IC - Intermodal Chassis Equipment
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct IC {
     #[serde(rename = "01")]
     pub _01: String,
@@ -756,7 +757,7 @@ impl<'a> Parser<&'a str, IC, nom::error::Error<&'a str>> for IC {
 /// ----|----|-------|--------|----|------|-------
 /// 01 | I16 | Number of Included Functional Groups | 1 | M | N0 | 1/5
 /// 02 | I12 | Interchange Control Number | 1 | M | N0 | 9/9
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct IEA {
     /// I16 - Number of Included Functional Groups
     ///
@@ -788,7 +789,7 @@ impl<'a> Parser<&'a str, IEA, nom::error::Error<&'a str>> for IEA {
 }
 
 /// IM - Intermodal Movement Information
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct IM {
     #[serde(rename = "01")]
     pub _01: Option<String>,
@@ -832,7 +833,7 @@ impl<'a> Parser<&'a str, IM, nom::error::Error<&'a str>> for IM {
 /// 14 | I13 | Acknowledgment Requested | 1 | M | ID | 1/1
 /// 15 | I14 | Usage Indicator | 1 | M | ID | 1/1
 /// 16 | I15 | Component Element Separator | 1 | M |  | 1/1
-#[derive(Serialize, Deserialize, Clone, Default, Debug, Validate, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, Validate, PartialEq, Eq, DisplaySegment)]
 pub struct ISA {
     /// I01 - Authorization Information Qualifier
     ///
@@ -994,7 +995,7 @@ impl<'a> Parser<&'a str, ISA, nom::error::Error<&'a str>> for ISA {
 }
 
 /// L0 - Line Item - Quantity and Weight
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct L0 {
     #[serde(rename = "01")]
     pub _01: Option<String>,
@@ -1053,7 +1054,7 @@ impl<'a> Parser<&'a str, L0, nom::error::Error<&'a str>> for L0 {
 }
 
 /// L1 - Rates and Charges
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct L1 {
     #[serde(rename = "01")]
     pub _01: Option<String>,
@@ -1133,7 +1134,7 @@ impl<'a> Parser<&'a str, L1, nom::error::Error<&'a str>> for L1 {
 }
 
 /// L3 - Total Weight and Charges
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct L3 {
     #[serde(rename = "01")]
     pub _01: Option<String>,
@@ -1192,7 +1193,7 @@ impl<'a> Parser<&'a str, L3, nom::error::Error<&'a str>> for L3 {
 }
 
 /// L5 - Description, Marks and Numbers
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct L5 {
     #[serde(rename = "01")]
     pub _01: Option<String>,
@@ -1236,7 +1237,7 @@ impl<'a> Parser<&'a str, L5, nom::error::Error<&'a str>> for L5 {
 }
 
 /// LE - Loop Trailer
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct LE {
     #[serde(rename = "01")]
     pub _01: String,
@@ -1253,7 +1254,7 @@ impl<'a> Parser<&'a str, LE, nom::error::Error<&'a str>> for LE {
 }
 
 /// LEP - EPA Required Data
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct LEP {
     #[serde(rename = "01")]
     pub _01: Option<String>,
@@ -1279,7 +1280,7 @@ impl<'a> Parser<&'a str, LEP, nom::error::Error<&'a str>> for LEP {
 }
 
 /// LFH - Free-form Hazardous Material Information
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct LFH {
     #[serde(rename = "01")]
     pub _01: String,
@@ -1317,7 +1318,7 @@ impl<'a> Parser<&'a str, LFH, nom::error::Error<&'a str>> for LFH {
 }
 
 /// LH1 - Hazardous Identification Information
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct LH1 {
     #[serde(rename = "01")]
     pub _01: String,
@@ -1367,7 +1368,7 @@ impl<'a> Parser<&'a str, LH1, nom::error::Error<&'a str>> for LH1 {
 }
 
 /// LH2 - Hazardous Identification Information
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct LH2 {
     #[serde(rename = "01")]
     pub _01: Option<String>,
@@ -1420,7 +1421,7 @@ impl<'a> Parser<&'a str, LH2, nom::error::Error<&'a str>> for LH2 {
 }
 
 /// LH3 - Hazardous Material Shipping Name Information
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct LH3 {
     #[serde(rename = "01")]
     pub _01: Option<String>,
@@ -1446,7 +1447,7 @@ impl<'a> Parser<&'a str, LH3, nom::error::Error<&'a str>> for LH3 {
 }
 
 /// LH4 - Canadian Dangerous Requirements
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct LH4 {
     #[serde(rename = "01")]
     pub _01: Option<String>,
@@ -1496,7 +1497,7 @@ impl<'a> Parser<&'a str, LH4, nom::error::Error<&'a str>> for LH4 {
 }
 
 /// LH6 - Hazardous Certification
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct LH6 {
     #[serde(rename = "01")]
     pub _01: Option<String>,
@@ -1522,7 +1523,7 @@ impl<'a> Parser<&'a str, LH6, nom::error::Error<&'a str>> for LH6 {
 }
 
 /// LHR - Hazardous Material Identification Reference Numbers
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct LHR {
     #[serde(rename = "01")]
     pub _01: String,
@@ -1545,7 +1546,7 @@ impl<'a> Parser<&'a str, LHR, nom::error::Error<&'a str>> for LHR {
 }
 
 /// LHT - Hazardous Material Identification Reference Numbers
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct LHT {
     #[serde(rename = "01")]
     pub _01: Option<String>,
@@ -1568,7 +1569,7 @@ impl<'a> Parser<&'a str, LHT, nom::error::Error<&'a str>> for LHT {
 }
 
 /// LS - Loop Header
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct LS {
     #[serde(rename = "01")]
     pub _01: String,
@@ -1585,7 +1586,7 @@ impl<'a> Parser<&'a str, LS, nom::error::Error<&'a str>> for LS {
 }
 
 /// LX - Transaction Set Line Number
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct LX {
     #[serde(rename = "01")]
     pub _01: String,
@@ -1602,7 +1603,7 @@ impl<'a> Parser<&'a str, LX, nom::error::Error<&'a str>> for LX {
 }
 
 /// M1 - Insurance
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct M1 {
     #[serde(rename = "01")]
     pub _01: String,
@@ -1652,7 +1653,7 @@ impl<'a> Parser<&'a str, M1, nom::error::Error<&'a str>> for M1 {
 }
 
 /// M12 - In-bond Indifying Information
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct M12 {
     #[serde(rename = "01")]
     pub _01: String,
@@ -1708,7 +1709,7 @@ impl<'a> Parser<&'a str, M12, nom::error::Error<&'a str>> for M12 {
 }
 
 /// M3 - Release
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct M3 {
     #[serde(rename = "01")]
     pub _01: String,
@@ -1734,7 +1735,7 @@ impl<'a> Parser<&'a str, M3, nom::error::Error<&'a str>> for M3 {
 }
 
 /// M7 - Seal Numbers
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct M7 {
     #[serde(rename = "01")]
     pub _01: String,
@@ -1763,7 +1764,7 @@ impl<'a> Parser<&'a str, M7, nom::error::Error<&'a str>> for M7 {
 }
 
 /// MEA - Measurements
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct MEA {
     #[serde(rename = "01")]
     pub _01: Option<String>,
@@ -1813,7 +1814,7 @@ impl<'a> Parser<&'a str, MEA, nom::error::Error<&'a str>> for MEA {
 }
 
 /// N1 - Party Identification
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct N1 {
     #[serde(rename = "01")]
     pub _01: String,
@@ -1845,7 +1846,7 @@ impl<'a> Parser<&'a str, N1, nom::error::Error<&'a str>> for N1 {
 }
 
 /// N10 - Quantity and Description
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct N10 {
     #[serde(rename = "01")]
     pub _01: Option<String>,
@@ -1898,7 +1899,7 @@ impl<'a> Parser<&'a str, N10, nom::error::Error<&'a str>> for N10 {
 }
 
 /// N2 - Additional Name Information
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct N2 {
     #[serde(rename = "01")]
     pub _01: String,
@@ -1918,7 +1919,7 @@ impl<'a> Parser<&'a str, N2, nom::error::Error<&'a str>> for N2 {
 }
 
 /// N3 - Party Location
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct N3 {
     #[serde(rename = "01")]
     pub _01: String,
@@ -1938,7 +1939,7 @@ impl<'a> Parser<&'a str, N3, nom::error::Error<&'a str>> for N3 {
 }
 
 /// N4 - Geographic Location
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct N4 {
     #[serde(rename = "01")]
     pub _01: Option<String>,
@@ -1973,7 +1974,7 @@ impl<'a> Parser<&'a str, N4, nom::error::Error<&'a str>> for N4 {
 }
 
 /// N5 - Equipment Ordered
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct N5 {
     #[serde(rename = "01")]
     pub _01: Option<String>,
@@ -2014,7 +2015,7 @@ impl<'a> Parser<&'a str, N5, nom::error::Error<&'a str>> for N5 {
 }
 
 /// N7 - Equipment Details
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct N7 {
     #[serde(rename = "01")]
     pub _01: String,
@@ -2100,7 +2101,7 @@ impl<'a> Parser<&'a str, N7, nom::error::Error<&'a str>> for N7 {
 }
 
 /// N9 - Extended Reference Information
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct N9 {
     #[serde(rename = "01")]
     pub _01: String,
@@ -2135,7 +2136,7 @@ impl<'a> Parser<&'a str, N9, nom::error::Error<&'a str>> for N9 {
 }
 
 /// NA - Cross-Reference Equipment
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct NA {
     #[serde(rename = "01")]
     pub _01: Option<String>,
@@ -2185,7 +2186,7 @@ impl<'a> Parser<&'a str, NA, nom::error::Error<&'a str>> for NA {
 }
 
 /// PER - Administrative Communication Contract
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct PER {
     #[serde(rename = "01")]
     pub _01: String,
@@ -2226,7 +2227,7 @@ impl<'a> Parser<&'a str, PER, nom::error::Error<&'a str>> for PER {
 }
 
 /// PI - Price Authority Information
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct PI {
     #[serde(rename = "01")]
     pub _01: String,
@@ -2288,7 +2289,7 @@ impl<'a> Parser<&'a str, PI, nom::error::Error<&'a str>> for PI {
 }
 
 /// PS - Protective Service Instructions
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct PS {
     #[serde(rename = "01")]
     pub _01: String,
@@ -2344,7 +2345,7 @@ impl<'a> Parser<&'a str, PS, nom::error::Error<&'a str>> for PS {
 }
 
 /// R2 - Route Information
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct R2 {
     #[serde(rename = "01")]
     pub _01: String,
@@ -2397,7 +2398,7 @@ impl<'a> Parser<&'a str, R2, nom::error::Error<&'a str>> for R2 {
 }
 
 /// R9 - Code Identification
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct R9 {
     #[serde(rename = "01")]
     pub _01: String,
@@ -2438,7 +2439,7 @@ impl<'a> Parser<&'a str, R9, nom::error::Error<&'a str>> for R9 {
 }
 
 /// REF - Party Identification
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct REF {
     #[serde(rename = "01")]
     pub _01: String,
@@ -2464,7 +2465,7 @@ impl<'a> Parser<&'a str, REF, nom::error::Error<&'a str>> for REF {
 }
 
 /// S1 - Stop-off Name
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct S1 {
     #[serde(rename = "01")]
     pub _01: String,
@@ -2496,7 +2497,7 @@ impl<'a> Parser<&'a str, S1, nom::error::Error<&'a str>> for S1 {
 }
 
 /// S2 - Stop-off Address
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct S2 {
     #[serde(rename = "01")]
     pub _01: String,
@@ -2519,7 +2520,7 @@ impl<'a> Parser<&'a str, S2, nom::error::Error<&'a str>> for S2 {
 }
 
 /// S9 - Stop-off Name
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct S9 {
     #[serde(rename = "01")]
     pub _01: String,
@@ -2564,7 +2565,7 @@ impl<'a> Parser<&'a str, S9, nom::error::Error<&'a str>> for S9 {
 /// ----|----|-------|--------|----|------|-------
 /// 01 | 96 | Number of Included Segments | 1 | M | N0 | 1/10
 /// 02 | 329 | Transaction Set Control Number | 1 | M | AN | 4/9
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct SE {
     /// 96 - Number of Included Segments
     ///
@@ -2603,7 +2604,7 @@ impl<'a> Parser<&'a str, SE, nom::error::Error<&'a str>> for SE {
 /// ----|----|------|--------|----|------|-------
 /// 01 | 143 | Transaction Set Identifier Code | 1 | M/Z | ID | 3/3
 /// 02 | 329 | Transaction Set Control Number | 1 | M | AN | 4/9
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct ST {
     /// 143 - Transaction Set Identifier Code 3/3
     #[serde(rename = "01")]
@@ -2625,7 +2626,7 @@ impl<'a> Parser<&'a str, ST, nom::error::Error<&'a str>> for ST {
 }
 
 /// T1 - Transit Inbound Origin
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct T1 {
     #[serde(rename = "01")]
     pub _01: String,
@@ -2672,7 +2673,7 @@ impl<'a> Parser<&'a str, T1, nom::error::Error<&'a str>> for T1 {
 }
 
 /// T2 - Transit Inbound Lading
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct T2 {
     #[serde(rename = "01")]
     pub _01: String,
@@ -2722,7 +2723,7 @@ impl<'a> Parser<&'a str, T2, nom::error::Error<&'a str>> for T2 {
 }
 
 /// T3 - Transit Inbound Route
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct T3 {
     #[serde(rename = "01")]
     pub _01: String,
@@ -2757,7 +2758,7 @@ impl<'a> Parser<&'a str, T3, nom::error::Error<&'a str>> for T3 {
 }
 
 /// T6 - Transit Inbound Rates
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct T6 {
     #[serde(rename = "01")]
     pub _01: String,
@@ -2792,7 +2793,7 @@ impl<'a> Parser<&'a str, T6, nom::error::Error<&'a str>> for T6 {
 }
 
 /// T8 - Transit Inbound Rates
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct T8 {
     #[serde(rename = "01")]
     pub _01: String,
@@ -2812,7 +2813,7 @@ impl<'a> Parser<&'a str, T8, nom::error::Error<&'a str>> for T8 {
 }
 
 /// VC - Motor Vehicle Control
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct VC {
     #[serde(rename = "01")]
     pub _01: String,
@@ -2865,7 +2866,7 @@ impl<'a> Parser<&'a str, VC, nom::error::Error<&'a str>> for VC {
 }
 
 /// X1 - Export License
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct X1 {
     #[serde(rename = "01")]
     pub _01: Option<String>,
@@ -2930,7 +2931,7 @@ impl<'a> Parser<&'a str, X1, nom::error::Error<&'a str>> for X1 {
 }
 
 /// X7 - Customs Information
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct X7 {
     #[serde(rename = "01")]
     pub _01: String,
@@ -2950,7 +2951,7 @@ impl<'a> Parser<&'a str, X7, nom::error::Error<&'a str>> for X7 {
 }
 
 /// XH - Pro Forma - B13 Information
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct XH {
     #[serde(rename = "01")]
     pub _01: String,
@@ -2985,7 +2986,7 @@ impl<'a> Parser<&'a str, XH, nom::error::Error<&'a str>> for XH {
 }
 
 /// ZC1 - Beginning Segment for Data Correction or Change
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment)]
 pub struct ZC1 {
     #[serde(rename = "01")]
     pub _01: Option<String>,
