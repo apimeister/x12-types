@@ -1,6 +1,6 @@
 [package]
 name = "x12-types"
-version = "0.8.1"
+version = "0.8.2"
 edition = "2021"
 authors = ["Jens Walter <jens@apimeister.com>"]
 license = "MIT OR Apache-2.0"
@@ -15,7 +15,7 @@ validator = { version = "0.16", features = ["derive"] }
 chrono = "0.4"
 nom = "7"
 # wit-bindgen = { git = "https://github.com/bytecodealliance/wit-bindgen", version = "0.13.0" }
-x12-types-macros = { version = "0.1" }
+x12-types-macros = { version = "0.2" }
 
 [features]
 default = ["v003030","v004010","v004030","v005010","v005030"]

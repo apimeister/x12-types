@@ -16,6 +16,8 @@ mod segment;
 #[cfg(test)]
 mod test_834;
 #[cfg(test)]
+mod test_835;
+#[cfg(test)]
 mod test_837;
 #[cfg(test)]
 mod test_segments;
@@ -522,6 +524,38 @@ pub struct _834Loop2750 {
     pub n1: N1,
     pub r#ref: REF,
     pub dtp: Option<DTP>,
+}
+
+/// 835 - Health Care Claim Payment/Advice
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
+pub struct _835 {
+    pub st: ST,
+    pub bpr: BPR,
+    pub nte: Vec<NTE>,
+    // pub trn: Option<TRN>,
+    // pub cur: Option<CUR>,
+    // pub r#ref: Vec<REF>,
+    // pub dtm: Vec<DTM>,
+    // pub loop_1000: Vec<_835Loop1000>,
+    // pub loop_2000: Vec<_835Loop2000>,
+    // pub plb: Vec<PLB>,
+    pub se: SE,
+}
+
+impl<'a> Parser<&'a str, _835, nom::error::Error<&'a str>> for _835 {
+    fn parse(input: &'a str) -> IResult<&'a str, _835> {
+        let mut output = _835::default();
+        let (rest, obj) = ST::parse(input)?;
+        output.st = obj;
+        let (rest, obj) = BPR::parse(rest)?;
+        output.bpr = obj;
+        let (rest, obj) = many0(NTE::parse)(rest)?;
+        output.nte = obj;
+        // let (rest, obj) = opt(TRN::parse)(rest)?;
+        // output.trn = obj;
+
+        Ok((rest, output))
+    }
 }
 
 /// 837 - Health Care Claim
