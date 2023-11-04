@@ -2,8 +2,8 @@
 
 use nom::IResult;
 use serde::{Deserialize, Serialize};
-use x12_types_macros::DisplayX12;
 use std::fmt::{Debug, Display};
+use x12_types_macros::DisplayX12;
 mod segment;
 pub use segment::*;
 
