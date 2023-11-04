@@ -1,6 +1,6 @@
 [package]
 name = "x12-types"
-version = "0.8.0"
+version = "0.8.1"
 edition = "2021"
 authors = ["Jens Walter <jens@apimeister.com>"]
 license = "MIT OR Apache-2.0"
@@ -8,9 +8,6 @@ keywords = ["edi","x12"]
 repository = "https://github.com/apimeister/x12-types/"
 documentation = "https://docs.rs/x12-types/"
 description = "Bindings for the ASC X12 EDI definitions"
-
-[lib]
-crate-type = ["cdylib"]
 
 [dependencies]
 serde = { version = "1.0", features = ["derive"] }

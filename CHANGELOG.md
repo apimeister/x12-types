@@ -1,3 +1,7 @@
+# 0.8.1 2023-11.04
+
+* fix broken cargo toml
+
 # 0.8.0 2023-11.04
 
 * implement display trait
