@@ -3276,7 +3276,6 @@ pub struct TS2 {
     pub _19: Option<String>,
 }
 
-
 /// TS3 - Transaction Statistics
 #[derive(
     Serialize,
