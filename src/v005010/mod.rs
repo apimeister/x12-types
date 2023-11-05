@@ -532,13 +532,13 @@ pub struct _835 {
     pub st: ST,
     pub bpr: BPR,
     pub nte: Vec<NTE>,
-    // pub trn: Option<TRN>,
-    // pub cur: Option<CUR>,
-    // pub r#ref: Vec<REF>,
-    // pub dtm: Vec<DTM>,
-    // pub loop_1000: Vec<_835Loop1000>,
-    // pub loop_2000: Vec<_835Loop2000>,
-    // pub plb: Vec<PLB>,
+    pub trn: Option<TRN>,
+    pub cur: Option<CUR>,
+    pub r#ref: Vec<REF>,
+    pub dtm: Vec<DTM>,
+    pub loop_1000: Vec<_835Loop1000>,
+    pub loop_2000: Vec<_835Loop2000>,
+    pub plb: Vec<PLB>,
     pub se: SE,
 }
 
@@ -551,11 +551,156 @@ impl<'a> Parser<&'a str, _835, nom::error::Error<&'a str>> for _835 {
         output.bpr = obj;
         let (rest, obj) = many0(NTE::parse)(rest)?;
         output.nte = obj;
-        // let (rest, obj) = opt(TRN::parse)(rest)?;
-        // output.trn = obj;
-
+        let (rest, obj) = opt(TRN::parse)(rest)?;
+        output.trn = obj;
+        let (rest, obj) = opt(CUR::parse)(rest)?;
+        output.cur = obj;
+        let (rest, obj) = many0(REF::parse)(rest)?;
+        output.r#ref = obj;
+        let (rest, obj) = many0(DTM::parse)(rest)?;
+        output.dtm = obj;
+        // loop 1000
+        let mut loop_1000 = vec![];
+        let mut loop_rest = rest;
+        while peek(opt(N1::parse))(loop_rest)?.1.is_some() {
+            let (rest, n1) = N1::parse(loop_rest)?;
+            let (rest, n2) = many0(N2::parse)(rest)?;
+            let (rest, n3) = many0(N3::parse)(rest)?;
+            let (rest, n4) = opt(N4::parse)(rest)?;
+            let (rest, r#ref) = many0(REF::parse)(rest)?;
+            let (rest, per) = many0(PER::parse)(rest)?;
+            let (rest, rdm) = opt(RDM::parse)(rest)?;
+            let (rest, dtm) = opt(DTM::parse)(rest)?;
+            loop_rest = rest;
+            loop_1000.push(_835Loop1000 {
+                n1,
+                n2,
+                n3,
+                n4,
+                r#ref,
+                per,
+                rdm,
+                dtm,
+            });
+        }
+        output.loop_1000 = loop_1000;
+        // loop 2000
+        let mut loop_2000 = vec![];
+        while peek(opt(LX::parse))(loop_rest)?.1.is_some() {
+            let (rest, lx) = LX::parse(loop_rest)?;
+            let (rest, ts3) = opt(TS3::parse)(rest)?;
+            let (rest, ts2) = opt(TS2::parse)(rest)?;
+            loop_rest = rest;
+            // loop 2100
+            let mut loop_2100 = vec![];
+            while peek(opt(CLP::parse))(loop_rest)?.1.is_some() {
+                let (rest, clp) = CLP::parse(loop_rest)?;
+                let (rest, cas) = many0(CAS::parse)(rest)?;
+                let (rest, nm1) = many0(NM1::parse)(rest)?;
+                let (rest, mia) = opt(MIA::parse)(rest)?;
+                let (rest, moa) = opt(MOA::parse)(rest)?;
+                let (rest, r#ref) = many0(REF::parse)(rest)?;
+                let (rest, dtm) = many0(DTM::parse)(rest)?;
+                let (rest, per) = many0(PER::parse)(rest)?;
+                let (rest, amt) = many0(AMT::parse)(rest)?;
+                let (rest, qty) = many0(QTY::parse)(rest)?;
+                loop_rest = rest;
+                // loop 2110
+                let mut loop_2110 = vec![];
+                while peek(opt(SVC::parse))(loop_rest)?.1.is_some() {
+                    let (rest, svc) = SVC::parse(loop_rest)?;
+                    let (rest, dtm) = many0(DTM::parse)(rest)?;
+                    let (rest, cas) = many0(CAS::parse)(rest)?;
+                    let (rest, r#ref) = many0(REF::parse)(rest)?;
+                    let (rest, amt) = many0(AMT::parse)(rest)?;
+                    let (rest, qty) = many0(QTY::parse)(rest)?;
+                    let (rest, lq) = many0(LQ::parse)(rest)?;
+                    loop_rest = rest;
+                    loop_2110.push(_835Loop2110 {
+                        svc,
+                        dtm,
+                        cas,
+                        r#ref,
+                        amt,
+                        qty,
+                        lq,
+                    });
+                }
+                loop_2100.push(_835Loop2100 {
+                    clp,
+                    cas,
+                    nm1,
+                    mia,
+                    moa,
+                    r#ref,
+                    dtm,
+                    per,
+                    amt,
+                    qty,
+                    loop_2110,
+                });
+            }
+            loop_2000.push(_835Loop2000 {
+                lx,
+                ts3,
+                ts2,
+                loop_2100,
+            });
+        }
+        output.loop_2000 = loop_2000;
+        let rest = loop_rest;
+        let (rest, obj) = many0(PLB::parse)(rest)?;
+        output.plb = obj;
+        let (rest, obj) = SE::parse(rest)?;
+        output.se = obj;
         Ok((rest, output))
     }
+}
+
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
+pub struct _835Loop1000 {
+    n1: N1,
+    n2: Vec<N2>,
+    n3: Vec<N3>,
+    n4: Option<N4>,
+    r#ref: Vec<REF>,
+    per: Vec<PER>,
+    rdm: Option<RDM>,
+    dtm: Option<DTM>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
+pub struct _835Loop2000 {
+    lx: LX,
+    ts3: Option<TS3>,
+    ts2: Option<TS2>,
+    loop_2100: Vec<_835Loop2100>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
+pub struct _835Loop2100 {
+    clp: CLP,
+    cas: Vec<CAS>,
+    nm1: Vec<NM1>,
+    mia: Option<MIA>,
+    moa: Option<MOA>,
+    r#ref: Vec<REF>,
+    dtm: Vec<DTM>,
+    per: Vec<PER>,
+    amt: Vec<AMT>,
+    qty: Vec<QTY>,
+    loop_2110: Vec<_835Loop2110>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
+pub struct _835Loop2110 {
+    svc: SVC,
+    dtm: Vec<DTM>,
+    cas: Vec<CAS>,
+    r#ref: Vec<REF>,
+    amt: Vec<AMT>,
+    qty: Vec<QTY>,
+    lq: Vec<LQ>,
 }
 
 /// 837 - Health Care Claim

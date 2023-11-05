@@ -1,6 +1,7 @@
-# 0.8.2 2023-11-*
+# 0.8.2 2023-11-05
 
 * add parsing for 00303/998
+* added 005010/835 - Health Care Claim Payment/Advice
 * use parser macro
 
 # 0.8.1 2023-11-04

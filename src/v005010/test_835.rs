@@ -1,7 +1,6 @@
 use super::*;
 
 #[test]
-#[should_panic]
 fn parse_835() {
     //source: https://www.1edisource.com/resources/edi-transactions-sets/edi-835/
     let str = r#"ISA*01*0000000000*01*0000000000*ZZ*ABCDEFGHIJKLMNO*ZZ*123456789012345*101127*1719*U*00400*000003438*0*P*>~
