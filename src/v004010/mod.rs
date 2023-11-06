@@ -16,6 +16,8 @@ mod segment;
 #[cfg(test)]
 mod test_204;
 #[cfg(test)]
+mod test_214;
+#[cfg(test)]
 mod test_301;
 #[cfg(test)]
 mod test_309;
@@ -24,7 +26,11 @@ mod test_310;
 #[cfg(test)]
 mod test_315;
 #[cfg(test)]
+mod test_322;
+#[cfg(test)]
 mod test_404;
+#[cfg(test)]
+mod test_997;
 #[cfg(test)]
 mod test_998;
 #[cfg(test)]
@@ -46,11 +52,12 @@ impl<'a, T: Default + Parser<&'a str, T, nom::error::Error<&'a str>>>
         output.isa = obj;
         // functional group
         let (input, gs) = GS::parse(input)?;
-        let (input, t_obj) = T::parse(input)?;
+        let (input, t_obj) = many0(T::parse)(input)?;
+        // let (input, t_obj) = T::parse(input)?;
         let (input, ge) = GE::parse(input)?;
         let fg = FunctionalGroup {
             gs,
-            segments: vec![t_obj],
+            segments: t_obj,
             ge,
         };
         output.functional_group.push(fg);
@@ -584,6 +591,96 @@ pub struct _214 {
     pub se: SE,
 }
 
+impl<'a> Parser<&'a str, _214, nom::error::Error<&'a str>> for _214 {
+    fn parse(input: &'a str) -> IResult<&'a str, _214> {
+        let mut output = _214::default();
+        let (rest, obj) = ST::parse(input)?;
+        output.st = obj;
+        let (rest, obj) = B10::parse(rest)?;
+        output.b10 = obj;
+        let (rest, obj) = many0(L11::parse)(rest)?;
+        output.l11 = obj;
+        let (rest, obj) = many0(MAN::parse)(rest)?;
+        output.man = obj;
+        let (rest, obj) = many0(K1::parse)(rest)?;
+        output.k1 = obj;
+        // loop 100
+        let mut loop_100 = vec![];
+        let mut loop_rest = rest;
+        while peek(opt(N1::parse))(loop_rest)?.1.is_some() {
+            let (rest, n1) = opt(N1::parse)(loop_rest)?;
+            let (rest, n2) = opt(N2::parse)(rest)?;
+            let (rest, n3) = many0(N3::parse)(rest)?;
+            let (rest, n4) = opt(N4::parse)(rest)?;
+            let (rest, g61) = opt(G61::parse)(rest)?;
+            let (rest, g62) = opt(G62::parse)(rest)?;
+            let (rest, l11) = many0(L11::parse)(rest)?;
+            loop_rest = rest;
+            loop_100.push(_214Loop0100 {
+                n1,
+                n2,
+                n3,
+                n4,
+                g61,
+                g62,
+                l11,
+            });
+        }
+        let rest = loop_rest;
+        output.loop_0100 = loop_100;
+        let (rest, obj) = many0(MS3::parse)(rest)?;
+        output.ms3 = obj;
+        // loop 200
+        let mut loop_200 = vec![];
+        loop_rest = rest;
+        while peek(opt(LX::parse))(loop_rest)?.1.is_some() {
+            let (rest, lx) = LX::parse(loop_rest)?;
+            // loop 0205
+            let mut loop_0205 = vec![];
+            loop_rest = rest;
+            while peek(opt(AT7::parse))(loop_rest)?.1.is_some() {
+                let (rest, at7) = AT7::parse(loop_rest)?;
+                let (rest, ms1) = opt(MS1::parse)(rest)?;
+                let (rest, ms2) = opt(MS2::parse)(rest)?;
+                loop_rest = rest;
+                loop_0205.push(_214Loop0205 { at7, ms1, ms2 });
+            }
+            let rest = loop_rest;
+            let (rest, l11) = many0(L11::parse)(rest)?;
+            let (rest, man) = many0(MAN::parse)(rest)?;
+            let (rest, q7) = many0(Q7::parse)(rest)?;
+            let (rest, k1) = many0(K1::parse)(rest)?;
+            let (rest, at5) = many0(AT5::parse)(rest)?;
+            let (rest, at8) = many0(AT8::parse)(rest)?;
+            loop_rest = rest;
+            // loop 0210
+            // loop 0230
+            // loop 0250
+            // loop 0260
+            loop_200.push(_214Loop0200 {
+                lx,
+                loop_0205,
+                l11,
+                man,
+                q7,
+                k1,
+                at5,
+                at8,
+                loop_0210: vec![],
+                loop_0230: vec![],
+                loop_0250: vec![],
+                loop_0260: vec![],
+            });
+        }
+        let rest = loop_rest;
+        output.loop_0200 = loop_200;
+
+        let (rest, obj) = SE::parse(rest)?;
+        output.se = obj;
+        Ok((rest, output))
+    }
+}
+
 #[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
 pub struct _214Loop0100 {
     pub n1: Option<N1>,
@@ -597,83 +694,92 @@ pub struct _214Loop0100 {
 
 #[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
 pub struct _214Loop0200 {
-    pub lx: Option<LX>,
-    pub loop_0205: Vec<_214Loop0200Loop0205>,
+    pub lx: LX,
+    pub loop_0205: Vec<_214Loop0205>,
     pub l11: Vec<L11>,
     pub man: Vec<MAN>,
     pub q7: Vec<Q7>,
     pub k1: Vec<K1>,
     pub at5: Vec<AT5>,
     pub at8: Vec<AT8>,
-    pub loop_0210: Vec<_214Loop0200Loop0210>,
-    pub loop_0230: Vec<_214Loop0200Loop0230>,
-    pub loop_0250: Vec<_214Loop0200Loop0250>,
-    pub loop_0260: Vec<_214Loop0200Loop0260>,
+    pub loop_0210: Vec<_214Loop0210>,
+    pub loop_0230: Vec<_214Loop0230>,
+    pub loop_0250: Vec<_214Loop0250>,
+    pub loop_0260: Vec<_214Loop0260>,
 }
+
 #[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
-pub struct _214Loop0200Loop0205 {
-    pub at7: Option<AT7>,
+pub struct _214Loop0205 {
+    pub at7: AT7,
     pub ms1: Option<MS1>,
     pub ms2: Option<MS2>,
 }
+
 #[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
-pub struct _214Loop0200Loop0210 {
+pub struct _214Loop0210 {
     pub cd3: Option<CD3>,
     pub l11: Vec<L11>,
-    pub loop_0215: Vec<_214Loop0200Loop0210Loop0215>,
+    pub loop_0215: Vec<_214Loop0210Loop0215>,
     pub nm1: Option<NM1>,
     pub q7: Vec<Q7>,
     pub at8: Option<AT8>,
     pub man: Vec<MAN>,
-    pub loop_0220: Vec<_214Loop0200Loop0210Loop0220>,
+    pub loop_0220: Vec<_214Loop0210Loop0220>,
 }
+
 #[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
-pub struct _214Loop0200Loop0210Loop0215 {
+pub struct _214Loop0210Loop0215 {
     pub at7: Option<AT7>,
     pub ms1: Option<MS1>,
     pub ms2: Option<MS2>,
 }
+
 #[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
-pub struct _214Loop0200Loop0210Loop0220 {
+pub struct _214Loop0210Loop0220 {
     pub n1: Option<N1>,
     pub n2: Option<N2>,
     pub n3: Vec<N3>,
     pub n4: Option<N4>,
     pub l11: Vec<L11>,
 }
+
 #[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
-pub struct _214Loop0200Loop0230 {
+pub struct _214Loop0230 {
     pub prf: Option<PRF>,
-    pub loop_0231: Vec<_214Loop0200Loop0230Loop0231>,
-    pub loop_0233: Vec<_214Loop0200Loop0230Loop0233>,
+    pub loop_0231: Vec<_214Loop0231>,
+    pub loop_0233: Vec<_214Loop0233>,
 }
 #[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
-pub struct _214Loop0200Loop0230Loop0231 {
+pub struct _214Loop0231 {
     pub n1: Option<N1>,
     pub n2: Option<N2>,
     pub n3: Vec<N3>,
     pub n4: Option<N4>,
     pub l11: Vec<L11>,
 }
+
 #[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
-pub struct _214Loop0200Loop0230Loop0233 {
+pub struct _214Loop0233 {
     pub cd3: Option<CD3>,
     pub l11: Vec<L11>,
-    pub loop_0240: Vec<_214Loop0200Loop0230Loop0233Loop0240>,
+    pub loop_0240: Vec<_214Loop0240>,
 }
+
 #[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
-pub struct _214Loop0200Loop0230Loop0233Loop0240 {
+pub struct _214Loop0240 {
     pub at7: Option<AT7>,
     pub ms1: Option<MS1>,
     pub ms2: Option<MS2>,
 }
+
 #[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
-pub struct _214Loop0200Loop0250 {
+pub struct _214Loop0250 {
     pub spo: Option<SPO>,
     pub sdq: Option<SDQ>,
 }
+
 #[derive(Debug, Default, Clone, Serialize, Deserialize, DisplayX12)]
-pub struct _214Loop0200Loop0260 {
+pub struct _214Loop0260 {
     pub efi: Option<EFI>,
     pub bin: BIN,
 }
@@ -1554,16 +1660,100 @@ pub struct _322 {
     pub se: SE,
 }
 
+impl<'a> Parser<&'a str, _322, nom::error::Error<&'a str>> for _322 {
+    fn parse(input: &'a str) -> IResult<&'a str, _322> {
+        let mut output = _322::default();
+        println!("before ST");
+        let (rest, obj) = ST::parse(input)?;
+        output.st = obj;
+        println!("after ST");
+        let (rest, obj) = opt(ZC1::parse)(rest)?;
+        output.zc1 = obj;
+        println!("before Q5");
+        let (rest, obj) = Q5::parse(rest)?;
+        output.q5 = obj;
+        println!("after Q5");
+        // loop n7
+        let mut loop_n7 = vec![];
+        let mut loop_rest = rest;
+        while peek(opt(N7::parse))(loop_rest)?.1.is_some() {
+            println!("loop n7");
+            let (rest, n7) = N7::parse(loop_rest)?;
+            let (rest, v4) = opt(V4::parse)(rest)?;
+            let (rest, dtm) = many0(DTM::parse)(rest)?;
+            let (rest, m7) = many0(M7::parse)(rest)?;
+            let (rest, w09) = opt(W09::parse)(rest)?;
+            let (rest, w2) = opt(W2::parse)(rest)?;
+            let (rest, na) = many0(NA::parse)(rest)?;
+            let (rest, gr5) = many0(GR5::parse)(rest)?;
+            let (rest, y7) = opt(Y7::parse)(rest)?;
+            let (rest, v1) = opt(V1::parse)(rest)?;
+            loop_rest = rest;
+            // loop r4
+            let mut loop_r4 = vec![];
+            while peek(opt(R4::parse))(loop_rest)?.1.is_some() {
+                let (rest, r4) = R4::parse(loop_rest)?;
+                let (rest, dtm) = many0(DTM::parse)(rest)?;
+                loop_rest = rest;
+                loop_r4.push(_322LoopR4 { r4, dtm })
+            }
+            let rest = loop_rest;
+            let (rest, h3) = many0(H3::parse)(rest)?;
+            loop_rest = rest;
+            // loop n1
+            let mut loop_n1 = vec![];
+            while peek(opt(N1::parse))(loop_rest)?.1.is_some() {
+                let (rest, n1) = N1::parse(loop_rest)?;
+                let (rest, n3) = many0(N3::parse)(rest)?;
+                let (rest, n4) = opt(N4::parse)(rest)?;
+                loop_rest = rest;
+                loop_n1.push(_322LoopN1 { n1, n3, n4 })
+            }
+            let rest = loop_rest;
+            let (rest, k1) = many0(K1::parse)(rest)?;
+            let (rest, n9) = many0(N9::parse)(rest)?;
+            // loop l0
+            let (rest, l3) = many0(L3::parse)(rest)?;
+            loop_rest = rest;
+            loop_n7.push(_322LoopN7 {
+                n7,
+                v4,
+                dtm,
+                m7,
+                w09,
+                w2,
+                na,
+                gr5,
+                y7,
+                v1,
+                loop_r4: vec![],
+                h3,
+                loop_n1: vec![],
+                k1,
+                n9,
+                loop_l0: vec![],
+                l3,
+            });
+        }
+        let rest = loop_rest;
+        output.loop_n7 = loop_n7;
+        println!("before SE");
+        let (rest, obj) = SE::parse(rest)?;
+        output.se = obj;
+        Ok((rest, output))
+    }
+}
+
 #[derive(Serialize, Deserialize, Clone, Default, Debug, DisplayX12)]
 pub struct _322LoopN7 {
     pub n7: N7,
     pub v4: Option<V4>,
-    pub dtm: Option<DTM>,
-    pub m7: Option<M7>,
+    pub dtm: Vec<DTM>,
+    pub m7: Vec<M7>,
     pub w09: Option<W09>,
     pub w2: Option<W2>,
-    pub na: Option<NA>,
-    pub gr5: Option<GR5>,
+    pub na: Vec<NA>,
+    pub gr5: Vec<GR5>,
     pub y7: Option<Y7>,
     pub v1: Option<V1>,
     pub loop_r4: Vec<_322LoopR4>,
@@ -1583,7 +1773,7 @@ pub struct _322LoopR4 {
 }
 #[derive(Serialize, Deserialize, Clone, Default, Debug, DisplayX12)]
 pub struct _322LoopN1 {
-    n1: Option<N1>,
+    n1: N1,
     n3: Vec<N3>,
     n4: Option<N4>,
 }
@@ -2045,18 +2235,57 @@ pub struct _404LoopRefN1 {
 pub struct _997 {
     pub st: ST,
     pub ak1: AK1,
-    pub loop_ak2: Vec<_997LoopAk2>,
+    pub loop_ak2: Vec<_997LoopAK2>,
     pub ak9: AK9,
     pub se: SE,
 }
-#[derive(Serialize, Deserialize, Clone, Default, Debug, DisplayX12)]
-pub struct _997LoopAk2 {
-    pub ak2: AK2,
-    pub loop_ak3: Vec<_997LoopAk3>,
+
+impl<'a> Parser<&'a str, _997, nom::error::Error<&'a str>> for _997 {
+    fn parse(input: &'a str) -> IResult<&'a str, _997> {
+        let mut output = _997::default();
+        let (rest, obj) = ST::parse(input)?;
+        output.st = obj;
+        let (rest, obj) = AK1::parse(rest)?;
+        output.ak1 = obj;
+        // loop ak2
+        let mut loop_ak2 = vec![];
+        let mut loop_rest = rest;
+        while peek(opt(AK2::parse))(loop_rest)?.1.is_some() {
+            let (rest, ak2) = AK2::parse(loop_rest)?;
+            // loop ak3
+            loop_rest = rest;
+            let mut loop_ak3 = vec![];
+            while peek(opt(AK3::parse))(loop_rest)?.1.is_some() {
+                let (rest, ak3) = AK3::parse(loop_rest)?;
+                let (rest, ak4) = many0(AK4::parse)(rest)?;
+                loop_rest = rest;
+                loop_ak3.push(_997LoopAK3 { ak3, ak4 });
+            }
+            let rest = loop_rest;
+            let (rest, ak5) = AK5::parse(rest)?;
+            loop_rest = rest;
+            loop_ak2.push(_997LoopAK2 { ak2, loop_ak3, ak5 });
+        }
+        output.loop_ak2 = loop_ak2;
+        let rest = loop_rest;
+        let (rest, obj) = AK9::parse(rest)?;
+        output.ak9 = obj;
+        let (rest, obj) = SE::parse(rest)?;
+        output.se = obj;
+        Ok((rest, output))
+    }
 }
+
 #[derive(Serialize, Deserialize, Clone, Default, Debug, DisplayX12)]
-pub struct _997LoopAk3 {
-    pub ak3: Option<AK3>,
+pub struct _997LoopAK2 {
+    pub ak2: AK2,
+    pub loop_ak3: Vec<_997LoopAK3>,
+    pub ak5: AK5,
+}
+
+#[derive(Serialize, Deserialize, Clone, Default, Debug, DisplayX12)]
+pub struct _997LoopAK3 {
+    pub ak3: AK3,
     pub ak4: Vec<AK4>,
 }
 

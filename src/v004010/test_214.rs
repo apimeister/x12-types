@@ -1,0 +1,80 @@
+use crate::util::Parser;
+use crate::v004010::*;
+
+#[test]
+fn parse_214_1() {
+    // source: https://www.1edisource.com/resources/edi-transactions-sets/edi-214/
+    let s = r#"ISA*01*0000000000*01*0000000000*ZZ*ABCDEFGHIJKLMNO*ZZ*123456789012345*101127*1719*U*00400*000003438*0*P*>~
+GS*QM*4405197800*999999999*20111219*1739*2510*X*004010~
+ST*214*0001~
+B10*995551*99948782*XXXX~
+LX*1~
+AT7***AA*NA*20111217*0830*PS~
+AT7*X3*NS***20111217*0930*PS~
+AT7*CP*NS***20111217*0930*PS~
+AT7***AB*NA*20111222*0745*PS~
+AT7*X1*AD***20111222*0745*PS~
+AT7*D1*NS***20111222*0745*PS~
+L11*99997666*DO~
+LX*2~
+AT7***AA*NA*20111217*0830*PS~
+AT7*X3*NS***20111217*0930*PS~
+AT7*CP*NS***20111217*0930*PS~
+AT7***AB*NA*20111218*1100*PS~
+AT7*X1*AD***20111218*1100*PS~
+AT7*D1*NS***20111219*1100*PS~
+L11*99990835*DO~
+LX*3~
+AT7***AA*NA*20111217*0830*PS~
+AT7*X3*NS***20111217*0930*PS~
+AT7*CP*NS***20111217*0930*PS~
+AT7***AB*NA*20111218*0330*PS~
+AT7*X1*AD***20111219*0430*PS~
+AT7*D1*NS***20111219*0430*PS~
+L11*99991280*DO~
+SE*27*0001~
+GE*1*2510~
+IEA*1*000002510~"#;
+    let (rest, obj) = Transmission::<_214>::parse(s).unwrap();
+    println!("{rest}");
+    println!("{obj:?}");
+    assert!(rest.is_empty());
+}
+
+#[test]
+fn parse_214_2() {
+    // source: http://www.agentforfreightforce.com/general/pdfForms/EDI214.pdf
+    let s = r#"ISA*00* *00* *02*SCAC *02*KLSA *060301*0028*U*00401*001*0*P*:~
+GS*QM*SCAC*KLSA *20060301*0028*001*X*004010~
+ST*214*001~
+B10*1234567*1234567*SCAC~
+L11*123456789*2I~
+L11*30011622*CR~
+N1*OT*SFO~
+N1*EY*JOE MARKS~
+G62*17*20060301*X*1700~
+N1*N5* JOE MARKS~
+LX*1~
+AT7*AF*NS***20060301*0800*LT~
+AT8*G*L*320*0*1~
+AT8*A1*L*237.1*0*1~
+SE*13*001 N/L~
+ST*214*002~
+B10*1234567*1234567*SCAC~
+L11*123456789*2I~
+L11*30011622*CR~
+N1*DT*RNO~
+N1*EY*B.BOP~
+N1*N5*SWEENY~
+LX*1~
+AT7*D1*NS***20060301*1630*LT~
+Q7*P*PCS*1~
+AT8*G*L*351*0*1~
+SE*12*002~
+GE*2*001~
+IEA*1*001~"#;
+    let (rest, obj) = Transmission::<_214>::parse(s).unwrap();
+    println!("{rest}");
+    println!("{obj:?}");
+    assert!(rest.is_empty());
+}

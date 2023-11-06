@@ -111,6 +111,12 @@ IEA*1*004075123~"#;
 
 More examples are located in the examples directory. Tests are embedded into each version directory.
 
+## Usage from the CLI
+
+We are also maintaining a CLI-tool for a more accessible way to consume EDIs.
+
+[https://crates.io/crates/edi-cli](https://crates.io/crates/edi-cli)
+
 ## Contributions
 
 Since the X12 is fairly huge, we only implement types on demand. So if you are missing some types, please open an issue or merge request.
