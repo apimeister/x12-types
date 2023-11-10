@@ -30,6 +30,8 @@ mod test_322;
 #[cfg(test)]
 mod test_404;
 #[cfg(test)]
+mod test_810;
+#[cfg(test)]
 mod test_997;
 #[cfg(test)]
 mod test_998;
@@ -58,6 +60,7 @@ impl<'a, T: Default + Parser<&'a str, T, nom::error::Error<&'a str>>>
         let fg = FunctionalGroup {
             gs,
             segments: t_obj,
+            // segments: vec![t_obj],
             ge,
         };
         output.functional_group.push(fg);
@@ -2213,6 +2216,358 @@ pub struct _404LoopRefN1 {
     pub n1: Option<N1>,
     pub n3: Option<N3>,
     pub n4: Option<N4>,
+}
+
+/// 810 - Invoice
+#[derive(Serialize, Deserialize, Clone, Default, Debug, DisplayX12)]
+pub struct _810 {
+    pub st: ST,
+    pub big: BIG,
+    pub nte: Vec<NTE>,
+    pub cur: Option<CUR>,
+    pub r#ref: Vec<REF>,
+    pub ynq: Vec<YNQ>,
+    pub per: Vec<PER>,
+    pub loop_n1: Vec<_810LoopN1>,
+    pub itd: Vec<ITD>,
+    pub dtm: Vec<DTM>,
+    pub fob: Option<FOB>,
+    pub pid: Vec<PID>,
+    pub mea: Vec<MEA>,
+    pub pwk: Vec<PWK>,
+    pub pkg: Vec<PKG>,
+    pub l7: Option<L7>,
+    pub bal: Vec<BAL>,
+    pub inc: Option<INC>,
+    pub pam: Vec<PAM>,
+    pub loop_lm: Vec<_810LoopLM>,
+    pub loop_n9: Vec<_810LoopN9>,
+    pub loop_v1: Vec<_810LoopV1>,
+    pub loop_fa1: Vec<_810LoopFA1>,
+    pub loop_it1: Vec<_810LoopIT1>,
+    pub tds: TDS,
+    pub txi: Vec<TXI>,
+    pub cad: Option<CAD>,
+    pub amt: Vec<AMT>,
+    pub loop_sac: Vec<_810LoopSAC>,
+    pub loop_iss: Vec<_810LoopISS>,
+    pub ctt: Option<CTT>,
+    pub se: SE,
+}
+
+impl<'a> Parser<&'a str, _810, nom::error::Error<&'a str>> for _810 {
+    fn parse(input: &'a str) -> IResult<&'a str, _810> {
+        let mut output = _810::default();
+        let (rest, obj) = ST::parse(input)?;
+        output.st = obj;
+        let (rest, obj) = BIG::parse(rest)?;
+        output.big = obj;
+        let (rest, obj) = many0(NTE::parse)(rest)?;
+        output.nte = obj;
+        let (rest, obj) = opt(CUR::parse)(rest)?;
+        output.cur = obj;
+        let (rest, obj) = many0(REF::parse)(rest)?;
+        output.r#ref = obj;
+        let (rest, obj) = many0(YNQ::parse)(rest)?;
+        output.ynq = obj;
+        let (rest, obj) = many0(PER::parse)(rest)?;
+        output.per = obj;
+        // loop n1
+        let mut loop_n1 = vec![];
+        let mut loop_rest = rest;
+        while peek(opt(N1::parse))(loop_rest)?.1.is_some() {
+            let (rest, n1) = N1::parse(loop_rest)?;
+            let (rest, n2) = many0(N2::parse)(rest)?;
+            let (rest, n3) = many0(N3::parse)(rest)?;
+            let (rest, n4) = opt(N4::parse)(rest)?;
+            let (rest, r#ref) = many0(REF::parse)(rest)?;
+            let (rest, per) = many0(PER::parse)(rest)?;
+            let (rest, dmg) = opt(DMG::parse)(rest)?;
+            loop_rest = rest;
+            loop_n1.push(_810LoopN1 {
+                n1,
+                n2,
+                n3,
+                n4,
+                r#ref,
+                per,
+                dmg,
+            });
+        }
+        let rest = loop_rest;
+        output.loop_n1 = loop_n1;
+        let (rest, obj) = many0(ITD::parse)(rest)?;
+        output.itd = obj;
+        let (rest, obj) = many0(DTM::parse)(rest)?;
+        output.dtm = obj;
+        let (rest, obj) = opt(FOB::parse)(rest)?;
+        output.fob = obj;
+        let (rest, obj) = many0(PID::parse)(rest)?;
+        output.pid = obj;
+        let (rest, obj) = many0(MEA::parse)(rest)?;
+        output.mea = obj;
+        let (rest, obj) = many0(PWK::parse)(rest)?;
+        output.pwk = obj;
+        let (rest, obj) = many0(PKG::parse)(rest)?;
+        output.pkg = obj;
+        let (rest, obj) = opt(L7::parse)(rest)?;
+        output.l7 = obj;
+        let (rest, obj) = many0(BAL::parse)(rest)?;
+        output.bal = obj;
+        let (rest, obj) = opt(INC::parse)(rest)?;
+        output.inc = obj;
+        let (rest, obj) = many0(PAM::parse)(rest)?;
+        output.pam = obj;
+        // loop lm
+        let mut loop_lm = vec![];
+        loop_rest = rest;
+        while peek(opt(LM::parse))(loop_rest)?.1.is_some() {
+            let (rest, lm) = LM::parse(loop_rest)?;
+            let (rest, lq) = LQ::parse(rest)?;
+            loop_rest = rest;
+            loop_lm.push(_810LoopLM { lm, lq });
+        }
+        let rest = loop_rest;
+        output.loop_lm = loop_lm;
+        // loop n9
+        let mut loop_n9 = vec![];
+        loop_rest = rest;
+        while peek(opt(N9::parse))(loop_rest)?.1.is_some() {
+            let (rest, n9) = N9::parse(loop_rest)?;
+            let (rest, msg) = many0(MSG::parse)(rest)?;
+            loop_rest = rest;
+            loop_n9.push(_810LoopN9 { n9, msg });
+        }
+        let rest = loop_rest;
+        output.loop_n9 = loop_n9;
+        // loop v1
+        let mut loop_v1 = vec![];
+        loop_rest = rest;
+        while peek(opt(V1::parse))(loop_rest)?.1.is_some() {
+            let (rest, v1) = V1::parse(loop_rest)?;
+            let (rest, r4) = many0(R4::parse)(rest)?;
+            let (rest, dtm) = many0(DTM::parse)(rest)?;
+            loop_rest = rest;
+            loop_v1.push(_810LoopV1 { v1, r4, dtm });
+        }
+        let rest = loop_rest;
+        output.loop_v1 = loop_v1;
+        // loop fa1
+        let mut loop_fa1 = vec![];
+        loop_rest = rest;
+        while peek(opt(FA1::parse))(loop_rest)?.1.is_some() {
+            let (rest, fa1) = FA1::parse(loop_rest)?;
+            let (rest, fa2) = many0(FA2::parse)(rest)?;
+            loop_rest = rest;
+            loop_fa1.push(_810LoopFA1 { fa1, fa2 });
+        }
+        let rest = loop_rest;
+        output.loop_fa1 = loop_fa1;
+        // loop it1
+        let mut loop_it1 = vec![];
+        loop_rest = rest;
+        while peek(opt(IT1::parse))(loop_rest)?.1.is_some() {
+            let (rest, it1) = IT1::parse(loop_rest)?;
+            let (rest, crc) = opt(CRC::parse)(rest)?;
+            let (rest, qty) = many0(QTY::parse)(rest)?;
+            let (rest, cur) = opt(CUR::parse)(rest)?;
+            let (rest, it3) = many0(IT3::parse)(rest)?;
+            let (rest, txi) = many0(TXI::parse)(rest)?;
+            let (rest, ctp) = many0(CTP::parse)(rest)?;
+            let (rest, pam) = many0(PAM::parse)(rest)?;
+            let (rest, mea) = many0(MEA::parse)(rest)?;
+            // loop_pid
+            let mut loop_pid = vec![];
+            loop_rest = rest;
+            while peek(opt(PID::parse))(loop_rest)?.1.is_some() {
+                let (rest, pid) = PID::parse(loop_rest)?;
+                let (rest, mea) = many0(MEA::parse)(rest)?;
+                loop_rest = rest;
+                loop_pid.push(_810LoopPID { pid, mea });
+            }
+            let rest = loop_rest;
+            let (rest, pwk) = many0(PWK::parse)(rest)?;
+            let (rest, pkg) = many0(PKG::parse)(rest)?;
+            let (rest, po4) = opt(PO4::parse)(rest)?;
+            let (rest, itd) = many0(ITD::parse)(rest)?;
+            let (rest, r#ref) = many0(REF::parse)(rest)?;
+            let (rest, ynq) = many0(YNQ::parse)(rest)?;
+            let (rest, per) = many0(PER::parse)(rest)?;
+            let (rest, sdq) = many0(SDQ::parse)(rest)?;
+            let (rest, dtm) = many0(DTM::parse)(rest)?;
+            let (rest, cad) = many0(CAD::parse)(rest)?;
+            let (rest, l7) = many0(L7::parse)(rest)?;
+            let (rest, sr) = opt(SR::parse)(rest)?;
+            // loop_sln
+            let mut loop_sln = vec![];
+            loop_rest = rest;
+            while peek(opt(SLN::parse))(loop_rest)?.1.is_some() {
+                let (rest, sln) = SLN::parse(loop_rest)?;
+                let (rest, dtm) = opt(DTM::parse)(rest)?;
+                let (rest, r#ref) = many0(REF::parse)(rest)?;
+                let (rest, pid) = many0(PID::parse)(rest)?;
+                let (rest, sac) = many0(SAC::parse)(rest)?;
+                let (rest, tc2) = many0(TC2::parse)(rest)?;
+                let (rest, txi) = many0(TXI::parse)(rest)?;
+                loop_rest = rest;
+                loop_sln.push(_810LoopSLN {
+                    sln,
+                    dtm,
+                    r#ref,
+                    pid,
+                    sac,
+                    tc2,
+                    txi,
+                });
+            }
+            let rest = loop_rest;
+            loop_rest = rest;
+            loop_it1.push(_810LoopIT1 {
+                it1,
+                crc,
+                qty,
+                cur,
+                it3,
+                txi,
+                ctp,
+                pam,
+                mea,
+                loop_pid,
+                pwk,
+                pkg,
+                po4,
+                itd,
+                r#ref,
+                ynq,
+                per,
+                sdq,
+                dtm,
+                cad,
+                l7,
+                sr,
+                loop_sac: vec![],
+                loop_sln,
+                loop_n1: vec![],
+                loop_lm: vec![],
+                loop_v1: vec![],
+                loop_fa1: vec![],
+            });
+        }
+        let rest = loop_rest;
+        output.loop_it1 = loop_it1;
+        let (rest, obj) = TDS::parse(rest)?;
+        output.tds = obj;
+        let (rest, obj) = many0(TXI::parse)(rest)?;
+        output.txi = obj;
+        let (rest, obj) = opt(CAD::parse)(rest)?;
+        output.cad = obj;
+        let (rest, obj) = many0(AMT::parse)(rest)?;
+        output.amt = obj;
+        // loop sac
+        // loop iss
+        let (rest, obj) = opt(CTT::parse)(rest)?;
+        output.ctt = obj;
+        let (rest, obj) = SE::parse(rest)?;
+        output.se = obj;
+        Ok((rest, output))
+    }
+}
+
+#[derive(Serialize, Deserialize, Clone, Default, Debug, DisplayX12)]
+pub struct _810LoopN1 {
+    pub n1: N1,
+    pub n2: Vec<N2>,
+    pub n3: Vec<N3>,
+    pub n4: Option<N4>,
+    pub r#ref: Vec<REF>,
+    pub per: Vec<PER>,
+    pub dmg: Option<DMG>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Default, Debug, DisplayX12)]
+pub struct _810LoopLM {
+    pub lm: LM,
+    pub lq: LQ,
+}
+
+#[derive(Serialize, Deserialize, Clone, Default, Debug, DisplayX12)]
+pub struct _810LoopN9 {
+    pub n9: N9,
+    pub msg: Vec<MSG>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Default, Debug, DisplayX12)]
+pub struct _810LoopV1 {
+    pub v1: V1,
+    pub r4: Vec<R4>,
+    pub dtm: Vec<DTM>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Default, Debug, DisplayX12)]
+pub struct _810LoopFA1 {
+    pub fa1: FA1,
+    pub fa2: Vec<FA2>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Default, Debug, DisplayX12)]
+pub struct _810LoopIT1 {
+    pub it1: IT1,
+    pub crc: Option<CRC>,
+    pub qty: Vec<QTY>,
+    pub cur: Option<CUR>,
+    pub it3: Vec<IT3>,
+    pub txi: Vec<TXI>,
+    pub ctp: Vec<CTP>,
+    pub pam: Vec<PAM>,
+    pub mea: Vec<MEA>,
+    pub loop_pid: Vec<_810LoopPID>,
+    pub pwk: Vec<PWK>,
+    pub pkg: Vec<PKG>,
+    pub po4: Option<PO4>,
+    pub itd: Vec<ITD>,
+    pub r#ref: Vec<REF>,
+    pub ynq: Vec<YNQ>,
+    pub per: Vec<PER>,
+    pub sdq: Vec<SDQ>,
+    pub dtm: Vec<DTM>,
+    pub cad: Vec<CAD>,
+    pub l7: Vec<L7>,
+    pub sr: Option<SR>,
+    pub loop_sac: Vec<_810LoopSAC>,
+    pub loop_sln: Vec<_810LoopSLN>,
+    pub loop_n1: Vec<_810LoopN1>,
+    pub loop_lm: Vec<_810LoopLM>,
+    pub loop_v1: Vec<_810LoopV1>,
+    pub loop_fa1: Vec<_810LoopFA1>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Default, Debug, DisplayX12)]
+pub struct _810LoopPID {
+    pub pid: PID,
+    pub mea: Vec<MEA>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Default, Debug, DisplayX12)]
+pub struct _810LoopSAC {
+    pub sac: SAC,
+    pub txi: Vec<TXI>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Default, Debug, DisplayX12)]
+pub struct _810LoopSLN {
+    pub sln: SLN,
+    pub dtm: Option<DTM>,
+    pub r#ref: Vec<REF>,
+    pub pid: Vec<PID>,
+    pub sac: Vec<SAC>,
+    pub tc2: Vec<TC2>,
+    pub txi: Vec<TXI>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Default, Debug, DisplayX12)]
+pub struct _810LoopISS {
+    pub iss: ISS,
+    pub pid: Option<PID>,
 }
 
 /// 997 - Functional Acknowledgment

@@ -15,6 +15,7 @@ This library provides bindings for the ASC X12 standard.
   * 315 - Status Details (Ocean)
   * 322 - Terminal Operations and Intermodal Ramp Activity
   * 404 - Rail Carrier Shipment Information
+  * 810 - Invoice
   * 997 - Functional Acknowledgment
   * 998 - Set Cancellation
 * 005010

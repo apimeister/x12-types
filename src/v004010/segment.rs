@@ -145,6 +145,21 @@ pub struct AK9 {
     pub _09: Option<String>,
 }
 
+/// AMT - Monetary Amount Information
+///
+/// To indicate the total monetary amount
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct AMT {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: String,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+}
+
 /// AT5 - Bill of Lading Handling Requirements
 ///
 /// To identify Bill of Lading handling and service requirements
@@ -477,6 +492,52 @@ pub struct B10 {
     pub _07: Option<String>,
 }
 
+/// BAL - Balance Detail
+///
+/// To identify the specific monetary balances associated with a particular account
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct BAL {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: String,
+    #[serde(rename = "03")]
+    pub _03: String,
+}
+
+/// BIG - Beginning Segment for Invoice
+///
+/// To indicate the beginning of an invoice transaction set and transmit identifying numbers and dates
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct BIG {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: String,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+    #[serde(rename = "10")]
+    pub _10: Option<String>,
+    #[serde(rename = "11")]
+    pub _11: Option<String>,
+}
+
 /// BIN - Binary Data
 ///
 /// To transfer binary data in a single data segment and allow identification of the end of the data segment through a count; there is no identification of the internal structure of the binary data in this segment
@@ -762,6 +823,33 @@ pub struct C8C {
     pub _03: Option<String>,
 }
 
+/// CAD - Carrier Details
+///
+/// To specify transportation details for the transaction
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct CAD {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+}
+
 /// CD3 - Carton (Package) Detail
 ///
 /// To transmit identifying codes, weights, and other related information related to an individual carton (package)
@@ -903,6 +991,134 @@ pub struct CM {
     pub _17: Option<String>,
 }
 
+/// CRC - Conditions Indicator
+///
+/// To supply information on conditions
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct CRC {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: String,
+    #[serde(rename = "03")]
+    pub _03: String,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+}
+
+/// CTP - Pricing Information
+///
+/// To specify pricing information
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct CTP {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+    #[serde(rename = "10")]
+    pub _10: Option<String>,
+    #[serde(rename = "11")]
+    pub _11: Option<String>,
+}
+
+/// CTT - Transaction Totals
+///
+/// To transmit a hash total for a specific element in the transaction set
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct CTT {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+}
+
+/// CUR - Currency
+///
+/// To specify the currency (dollars, pounds, francs, etc.) used in a transaction
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct CUR {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: String,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+    #[serde(rename = "10")]
+    pub _10: Option<String>,
+    #[serde(rename = "11")]
+    pub _11: Option<String>,
+    #[serde(rename = "12")]
+    pub _12: Option<String>,
+    #[serde(rename = "13")]
+    pub _13: Option<String>,
+    #[serde(rename = "14")]
+    pub _14: Option<String>,
+    #[serde(rename = "15")]
+    pub _15: Option<String>,
+    #[serde(rename = "16")]
+    pub _16: Option<String>,
+    #[serde(rename = "17")]
+    pub _17: Option<String>,
+    #[serde(rename = "18")]
+    pub _18: Option<String>,
+    #[serde(rename = "19")]
+    pub _19: Option<String>,
+    #[serde(rename = "20")]
+    pub _20: Option<String>,
+    #[serde(rename = "21")]
+    pub _21: Option<String>,
+}
+
 /// D9 - Destination Station
 ///
 /// To identify the rail destination of the shipment
@@ -973,6 +1189,33 @@ pub struct D9 {
     /// - MAX=3
     #[serde(rename = "12")]
     pub _12: Option<String>,
+}
+
+/// DMG - Demographic Information
+///
+/// To supply demographic information
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct DMG {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
 }
 
 /// DTM - Date/Time Reference
@@ -1305,6 +1548,61 @@ pub struct F9 {
     /// - MAX=3
     #[serde(rename = "12")]
     pub _12: Option<String>,
+}
+
+/// FA1 - Type of Financial Accounting Data
+///
+/// To specify the organization controlling the content of the accounting citation, and the purpose associated with the accounting citation
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct FA1 {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+}
+
+/// FA2 - Accounting Data
+///
+/// To specify the detailed accounting data
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct FA2 {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: String,
+}
+
+/// FOB - F.O.B. Related Instructions
+///
+/// To specify transportation instructions relating to shipment
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct FOB {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
 }
 
 /// G3 - Compensation Information
@@ -1724,6 +2022,27 @@ pub struct IM {
     pub _03: Option<String>,
 }
 
+/// INC - Installment Information
+///
+/// To specify installment billing arrangement
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct INC {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: String,
+    #[serde(rename = "03")]
+    pub _03: String,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+}
+
 /// IEA - Interchange Control Trailer
 ///
 /// To define the end of an interchange of zero or more functional groups and interchange-related control segments
@@ -1921,6 +2240,123 @@ pub struct ISA {
     /// - MAX=1
     #[serde(rename = "16")]
     pub _16: String,
+}
+
+/// ISS - Invoice Shipment Summary
+///
+/// To specify summary details of total items shipped in terms of quantity, weight, and volume
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct ISS {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+}
+
+/// IT1 - Baseline Item Data (Invoice)
+///
+/// To specify the basic and most frequently used line item data for the invoice and related transactions
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct IT1 {
+    pub _01: Option<String>,
+    pub _02: String,
+    pub _03: Option<String>,
+    pub _04: Option<String>,
+    pub _05: Option<String>,
+    pub _06: Option<String>,
+    pub _07: Option<String>,
+    pub _08: Option<String>,
+    pub _09: Option<String>,
+    pub _10: Option<String>,
+    pub _11: Option<String>,
+    pub _12: Option<String>,
+    pub _13: Option<String>,
+    pub _14: Option<String>,
+    pub _15: Option<String>,
+    pub _16: Option<String>,
+    pub _17: Option<String>,
+    pub _18: Option<String>,
+    pub _19: Option<String>,
+    pub _20: Option<String>,
+    pub _21: Option<String>,
+    pub _22: Option<String>,
+    pub _23: Option<String>,
+    pub _24: Option<String>,
+    pub _25: Option<String>,
+}
+
+/// IT3 - Additional Item Data
+///
+/// To specify additional item details relating to variations between ordered and shipped quantities, or to specify alternate units of measures and quantities
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct IT3 {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+}
+
+/// ITD - Terms of Sale/Deferred Terms of Sale
+///
+/// To specify terms of sale
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct ITD {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+    #[serde(rename = "10")]
+    pub _10: Option<String>,
+    #[serde(rename = "11")]
+    pub _11: Option<String>,
+    #[serde(rename = "12")]
+    pub _12: Option<String>,
+    #[serde(rename = "13")]
+    pub _13: Option<String>,
+    #[serde(rename = "14")]
+    pub _14: Option<String>,
+    #[serde(rename = "15")]
+    pub _15: Option<String>,
 }
 
 /// K1 - Remarks
@@ -2641,6 +3077,32 @@ pub struct LHT {
     pub _03: Option<String>,
 }
 
+/// LM - Code Source Information
+///
+/// To transmit standard code list identification information
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct LM {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+}
+
+/// LQ - Industry Code
+///
+/// Code to transmit standard industry codes
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct LQ {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+}
+
 /// LS - Loop Header
 ///
 /// To indicate that the next segment begins a loop
@@ -3139,6 +3601,21 @@ pub struct MS3 {
     pub _03: Option<String>,
     pub _04: Option<String>,
     pub _05: Option<String>,
+}
+
+/// MSG - Message Text
+///
+/// To provide a free-form format that allows the transmission of text information
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct MSG {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
 }
 
 /// N1 - Name
@@ -3687,6 +4164,45 @@ pub struct P5 {
     pub _03: String,
 }
 
+/// PAM - Period Amount
+///
+/// To indicate a quantity, and/or amount for an identified period
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct PAM {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+    #[serde(rename = "10")]
+    pub _10: Option<String>,
+    #[serde(rename = "11")]
+    pub _11: Option<String>,
+    #[serde(rename = "12")]
+    pub _12: Option<String>,
+    #[serde(rename = "13")]
+    pub _13: Option<String>,
+    #[serde(rename = "14")]
+    pub _14: Option<String>,
+    #[serde(rename = "15")]
+    pub _15: Option<String>,
+}
+
 /// PER - Administrative Communications Contact
 ///
 /// To identify a person or office to whom administrative communications should be directed
@@ -3777,6 +4293,58 @@ pub struct PI {
     pub _15: Option<String>,
 }
 
+/// PID - Product/Item Description
+///
+/// To describe a product or process in coded or free-form format
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct PID {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+    #[serde(rename = "10")]
+    pub _10: Option<String>,
+}
+
+/// PKG - Marking, Packaging, Loading
+///
+/// To describe marking, packaging, loading, and unloading requirements
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct PKG {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+}
+
 /// PLD - Pallet Information NEW
 ///
 /// To specify pallet information including quantity, exchange, and weight
@@ -3799,6 +4367,51 @@ pub struct PLD {
     pub _03: Option<String>,
     #[serde(rename = "04")]
     pub _04: Option<String>,
+}
+
+/// PO4 Item Physical Details
+///
+/// To specify the physical qualities, packaging, weights, and dimensions relating to the item
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct PO4 {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+    #[serde(rename = "10")]
+    pub _10: Option<String>,
+    #[serde(rename = "11")]
+    pub _11: Option<String>,
+    #[serde(rename = "12")]
+    pub _12: Option<String>,
+    #[serde(rename = "13")]
+    pub _13: Option<String>,
+    #[serde(rename = "14")]
+    pub _14: Option<String>,
+    #[serde(rename = "15")]
+    pub _15: Option<String>,
+    #[serde(rename = "16")]
+    pub _16: Option<String>,
+    #[serde(rename = "17")]
+    pub _17: Option<String>,
+    #[serde(rename = "18")]
+    pub _18: Option<String>,
 }
 
 /// PRF - Purchase Order Reference
@@ -4430,6 +5043,112 @@ pub struct S9 {
     pub _08: Option<String>,
 }
 
+/// SAC - Service, Promotion, Allowance, or Charge Information
+///
+/// To request or identify a service, promotion, allowance, or charge; to specify the amount or percentage for the service, promotion, allowance, or charge
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct SAC {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+    #[serde(rename = "10")]
+    pub _10: Option<String>,
+    #[serde(rename = "11")]
+    pub _11: Option<String>,
+    #[serde(rename = "12")]
+    pub _12: Option<String>,
+    #[serde(rename = "13")]
+    pub _13: Option<String>,
+    #[serde(rename = "14")]
+    pub _14: Option<String>,
+    #[serde(rename = "15")]
+    pub _15: Option<String>,
+    #[serde(rename = "16")]
+    pub _16: Option<String>,
+}
+
+/// SLN - Subline Item Detail
+///
+/// To specify product subline detail item data
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct SLN {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+    #[serde(rename = "10")]
+    pub _10: Option<String>,
+    #[serde(rename = "11")]
+    pub _11: Option<String>,
+    #[serde(rename = "12")]
+    pub _12: Option<String>,
+    #[serde(rename = "13")]
+    pub _13: Option<String>,
+    #[serde(rename = "14")]
+    pub _14: Option<String>,
+    #[serde(rename = "15")]
+    pub _15: Option<String>,
+    #[serde(rename = "16")]
+    pub _16: Option<String>,
+    #[serde(rename = "17")]
+    pub _17: Option<String>,
+    #[serde(rename = "18")]
+    pub _18: Option<String>,
+    #[serde(rename = "19")]
+    pub _19: Option<String>,
+    #[serde(rename = "20")]
+    pub _20: Option<String>,
+    #[serde(rename = "21")]
+    pub _21: Option<String>,
+    #[serde(rename = "22")]
+    pub _22: Option<String>,
+    #[serde(rename = "23")]
+    pub _23: Option<String>,
+    #[serde(rename = "24")]
+    pub _24: Option<String>,
+    #[serde(rename = "25")]
+    pub _25: Option<String>,
+    #[serde(rename = "26")]
+    pub _26: Option<String>,
+    #[serde(rename = "27")]
+    pub _27: Option<String>,
+    #[serde(rename = "28")]
+    pub _28: Option<String>,
+}
+
 /// SDQ - Destination Quantity
 ///
 /// To specify destination and quantity detail
@@ -4600,6 +5319,37 @@ pub struct SPO {
     pub _07: Option<String>,
     #[serde(rename = "08")]
     pub _08: Option<String>,
+}
+
+/// SR - Requested Service Schedule
+///
+/// To identify requested service schedules
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct SR {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+    #[serde(rename = "10")]
+    pub _10: Option<String>,
+    #[serde(rename = "11")]
+    pub _11: Option<String>,
 }
 
 /// ST - Transaction Set Header
@@ -4833,6 +5583,71 @@ pub struct T8 {
     pub _01: String,
     #[serde(rename = "02")]
     pub _02: String,
+}
+
+/// TC2 - Commodity
+///
+/// To identify a commodity or a group of commodities or a tariff page commodity
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct TC2 {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: String,
+}
+
+/// TDS - Total Monetary Value Summary
+///
+/// To specify the total invoice discounts and amounts
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct TDS {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+}
+
+/// TXI - Tax Information
+///
+/// To specify tax information
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct TXI {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+    #[serde(rename = "10")]
+    pub _10: Option<String>,
+    #[serde(rename = "11")]
+    pub _11: Option<String>,
+    #[serde(rename = "12")]
+    pub _12: Option<String>,
+    #[serde(rename = "13")]
+    pub _13: Option<String>,
 }
 
 /// V1 - Vessel Identification
@@ -5505,6 +6320,35 @@ pub struct Y7 {
     /// - MAX=8
     #[serde(rename = "05", skip_serializing_if = "Option::is_none")]
     pub _05: Option<String>,
+}
+
+/// YNQ - Yes/No Question
+///
+/// To identify and answer yes and no questions, including the date, time, and comments further qualifying the condition
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct YNQ {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+    #[serde(rename = "10")]
+    pub _10: Option<String>,
 }
 
 /// ZC1 - Beginning Segment For Data Correction Or Change
