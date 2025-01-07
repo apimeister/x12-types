@@ -2397,7 +2397,7 @@ impl<'a> Parser<&'a str, _810, nom::error::Error<&'a str>> for _810 {
             let (rest, dtm) = many0(DTM::parse)(rest)?;
             let (rest, cad) = many0(CAD::parse)(rest)?;
             let (rest, l7) = many0(L7::parse)(rest)?;
-            let (rest, sr) = opt(SR::parse)(rest)?;
+            let (mut rest, sr) = opt(SR::parse)(rest)?;
             // loop_sln
             let mut loop_sln = vec![];
             loop_rest = rest;
@@ -2420,7 +2420,7 @@ impl<'a> Parser<&'a str, _810, nom::error::Error<&'a str>> for _810 {
                     txi,
                 });
             }
-            let rest = loop_rest;
+            std::mem::swap(&mut rest, &mut loop_rest);
             loop_rest = rest;
             loop_it1.push(_810LoopIT1 {
                 it1,

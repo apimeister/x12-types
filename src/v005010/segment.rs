@@ -1971,6 +1971,17 @@ pub struct LIN {
     pub _31: Option<String>,
 }
 
+/// LM - Code Source Information
+#[derive(Debug, Serialize, Deserialize)]
+struct LM {
+    // Agency Qualifier Code
+    #[serde(rename = "001")]
+    _001: Option<String>,
+    // Source Subqualifier
+    #[serde(rename = "002")]
+    _002: Option<String>,
+}
+
 /// LQ - Industry Code Identification
 #[derive(
     Serialize,

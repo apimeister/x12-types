@@ -1,6 +1,6 @@
 [package]
 name = "x12-types"
-version = "0.8.4"
+version = "0.8.5"
 edition = "2021"
 authors = ["Jens Walter <jens@apimeister.com>"]
 license = "MIT OR Apache-2.0"
