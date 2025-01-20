@@ -12,7 +12,7 @@ rust-version = "1.78"
 
 [dependencies]
 serde = { version = "1.0", features = ["derive"] }
-validator = { version = "0.19", features = ["derive"] }
+validator = { version = "0.20", features = ["derive"] }
 chrono = "0.4"
 nom = "7"
 x12-types-macros = { version = "0.2" }
