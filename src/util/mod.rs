@@ -31,7 +31,8 @@ pub fn parse_line<'a>(input: &'a str, segment_name: &str) -> IResult<&'a str, Ve
         take_while(|x: char| {
             x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
         }),
-    ).parse(vars)?;
+    )
+    .parse(vars)?;
     // look for trailing newline
     let (rest, _) = opt(newline).parse(rest)?;
     Ok((rest, vars))
