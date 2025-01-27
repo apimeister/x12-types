@@ -5,6 +5,7 @@ use nom::combinator::opt;
 use nom::combinator::peek;
 use nom::multi::many0;
 use nom::IResult;
+use nom::Parser as _;
 pub use segment::*;
 use serde::{Deserialize, Serialize};
 use std::fmt::Debug;
@@ -54,7 +55,7 @@ impl<'a, T: Default + Parser<&'a str, T, nom::error::Error<&'a str>>>
         output.isa = obj;
         // functional group
         let (input, gs) = GS::parse(input)?;
-        let (input, t_obj) = many0(T::parse)(input)?;
+        let (input, t_obj) = many0(T::parse).parse(input)?;
         // let (input, t_obj) = T::parse(input)?;
         let (input, ge) = GE::parse(input)?;
         let fg = FunctionalGroup {
@@ -222,30 +223,30 @@ impl<'a> Parser<&'a str, _204, nom::error::Error<&'a str>> for _204 {
         output.b2 = obj;
         let (rest, obj) = B2A::parse(rest)?;
         output.b2a = obj;
-        let (rest, obj) = many0(L11::parse)(rest)?;
+        let (rest, obj) = many0(L11::parse).parse(rest)?;
         output.l11 = obj;
-        let (rest, obj) = opt(G62::parse)(rest)?;
+        let (rest, obj) = opt(G62::parse).parse(rest)?;
         output.g62 = obj;
-        let (rest, obj) = opt(MS3::parse)(rest)?;
+        let (rest, obj) = opt(MS3::parse).parse(rest)?;
         output.ms3 = obj;
-        let (rest, obj) = opt(AT5::parse)(rest)?;
+        let (rest, obj) = opt(AT5::parse).parse(rest)?;
         output.at5 = obj;
-        let (rest, obj) = opt(PLD::parse)(rest)?;
+        let (rest, obj) = opt(PLD::parse).parse(rest)?;
         output.pld = obj;
-        let (rest, obj) = many0(LH6::parse)(rest)?;
+        let (rest, obj) = many0(LH6::parse).parse(rest)?;
         output.lh6 = obj;
-        let (rest, obj) = opt(NTE::parse)(rest)?;
+        let (rest, obj) = opt(NTE::parse).parse(rest)?;
         output.nte = obj;
         // loop 100
         let mut loop_100 = vec![];
         let mut loop_rest = rest;
-        while peek(opt(N1::parse))(loop_rest)?.1.is_some() {
-            let (rest, n1) = opt(N1::parse)(loop_rest)?;
-            let (rest, n2) = opt(N2::parse)(rest)?;
-            let (rest, n3) = many0(N3::parse)(rest)?;
-            let (rest, n4) = opt(N4::parse)(rest)?;
-            let (rest, l11) = opt(L11::parse)(rest)?;
-            let (rest, g61) = many0(G61::parse)(rest)?;
+        while peek(opt(N1::parse)).parse(loop_rest)?.1.is_some() {
+            let (rest, n1) = opt(N1::parse).parse(loop_rest)?;
+            let (rest, n2) = opt(N2::parse).parse(rest)?;
+            let (rest, n3) = many0(N3::parse).parse(rest)?;
+            let (rest, n4) = opt(N4::parse).parse(rest)?;
+            let (rest, l11) = opt(L11::parse).parse(rest)?;
+            let (rest, g61) = many0(G61::parse).parse(rest)?;
             loop_rest = rest;
             loop_100.push(_204Loop100 {
                 n1,
@@ -261,12 +262,12 @@ impl<'a> Parser<&'a str, _204, nom::error::Error<&'a str>> for _204 {
         // loop 200
         let mut loop_200 = vec![];
         let mut loop_rest = rest;
-        while peek(opt(N7::parse))(loop_rest)?.1.is_some() {
-            let (rest, n7) = opt(N7::parse)(loop_rest)?;
-            let (rest, n7a) = opt(N7A::parse)(rest)?;
-            let (rest, n7b) = opt(N7B::parse)(rest)?;
-            let (rest, mea) = opt(MEA::parse)(rest)?;
-            let (rest, m7) = opt(M7::parse)(rest)?;
+        while peek(opt(N7::parse)).parse(loop_rest)?.1.is_some() {
+            let (rest, n7) = opt(N7::parse).parse(loop_rest)?;
+            let (rest, n7a) = opt(N7A::parse).parse(rest)?;
+            let (rest, n7b) = opt(N7B::parse).parse(rest)?;
+            let (rest, mea) = opt(MEA::parse).parse(rest)?;
+            let (rest, m7) = opt(M7::parse).parse(rest)?;
             loop_rest = rest;
             loop_200.push(_204Loop200 {
                 n7,
@@ -281,24 +282,24 @@ impl<'a> Parser<&'a str, _204, nom::error::Error<&'a str>> for _204 {
         // loop 300
         let mut loop_300 = vec![];
         let mut loop_rest = rest;
-        while peek(opt(S5::parse))(loop_rest)?.1.is_some() {
+        while peek(opt(S5::parse)).parse(loop_rest)?.1.is_some() {
             let (rest, s5) = S5::parse(loop_rest)?;
-            let (rest, l11) = many0(L11::parse)(rest)?;
-            let (rest, g62) = many0(G62::parse)(rest)?;
-            let (rest, at8) = opt(AT8::parse)(rest)?;
-            let (rest, lad) = many0(LAD::parse)(rest)?;
-            let (rest, at5) = many0(AT5::parse)(rest)?;
-            let (rest, pld) = opt(PLD::parse)(rest)?;
-            let (rest, nte) = many0(NTE::parse)(rest)?;
+            let (rest, l11) = many0(L11::parse).parse(rest)?;
+            let (rest, g62) = many0(G62::parse).parse(rest)?;
+            let (rest, at8) = opt(AT8::parse).parse(rest)?;
+            let (rest, lad) = many0(LAD::parse).parse(rest)?;
+            let (rest, at5) = many0(AT5::parse).parse(rest)?;
+            let (rest, pld) = opt(PLD::parse).parse(rest)?;
+            let (rest, nte) = many0(NTE::parse).parse(rest)?;
             loop_rest = rest;
             // loop 310
             let mut loop_310 = vec![];
-            while peek(opt(N1::parse))(loop_rest)?.1.is_some() {
-                let (rest, n1) = opt(N1::parse)(loop_rest)?;
-                let (rest, n2) = opt(N2::parse)(rest)?;
-                let (rest, n3) = many0(N3::parse)(rest)?;
-                let (rest, n4) = opt(N4::parse)(rest)?;
-                let (rest, g61) = many0(G61::parse)(rest)?;
+            while peek(opt(N1::parse)).parse(loop_rest)?.1.is_some() {
+                let (rest, n1) = opt(N1::parse).parse(loop_rest)?;
+                let (rest, n2) = opt(N2::parse).parse(rest)?;
+                let (rest, n3) = many0(N3::parse).parse(rest)?;
+                let (rest, n4) = opt(N4::parse).parse(rest)?;
+                let (rest, g61) = many0(G61::parse).parse(rest)?;
                 loop_rest = rest;
                 loop_310.push(_204Loop310 {
                     n1,
@@ -310,31 +311,31 @@ impl<'a> Parser<&'a str, _204, nom::error::Error<&'a str>> for _204 {
             }
             // loop 320
             let mut loop_320 = vec![];
-            while peek(opt(L5::parse))(loop_rest)?.1.is_some()
-                || peek(opt(LH1::parse))(loop_rest)?.1.is_some()
+            while peek(opt(L5::parse)).parse(loop_rest)?.1.is_some()
+                || peek(opt(LH1::parse)).parse(loop_rest)?.1.is_some()
             {
-                let (rest, l5) = opt(L5::parse)(loop_rest)?;
-                let (rest, at8) = opt(AT8::parse)(rest)?;
+                let (rest, l5) = opt(L5::parse).parse(loop_rest)?;
+                let (rest, at8) = opt(AT8::parse).parse(rest)?;
                 loop_rest = rest;
                 // loop 325
                 let mut loop_325 = vec![];
-                while peek(opt(G61::parse))(loop_rest)?.1.is_some()
-                    || peek(opt(LH1::parse))(loop_rest)?.1.is_some()
+                while peek(opt(G61::parse)).parse(loop_rest)?.1.is_some()
+                    || peek(opt(LH1::parse)).parse(loop_rest)?.1.is_some()
                 {
-                    let (rest, g61) = opt(G61::parse)(loop_rest)?;
-                    let (rest, l11) = many0(L11::parse)(rest)?;
-                    let (rest, lh6) = opt(LH6::parse)(rest)?;
+                    let (rest, g61) = opt(G61::parse).parse(loop_rest)?;
+                    let (rest, l11) = many0(L11::parse).parse(rest)?;
+                    let (rest, lh6) = opt(LH6::parse).parse(rest)?;
                     loop_rest = rest;
                     // loop 330
                     let mut loop_330 = vec![];
-                    while peek(opt(LH1::parse))(loop_rest)?.1.is_some() {
-                        let (rest, lh1) = opt(LH1::parse)(loop_rest)?;
-                        let (rest, lh2) = many0(LH2::parse)(rest)?;
-                        let (rest, lh3) = many0(LH3::parse)(rest)?;
-                        let (rest, lfh) = many0(LFH::parse)(rest)?;
-                        let (rest, lep) = many0(LEP::parse)(rest)?;
-                        let (rest, lh4) = opt(LH4::parse)(rest)?;
-                        let (rest, lht) = many0(LHT::parse)(rest)?;
+                    while peek(opt(LH1::parse)).parse(loop_rest)?.1.is_some() {
+                        let (rest, lh1) = opt(LH1::parse).parse(loop_rest)?;
+                        let (rest, lh2) = many0(LH2::parse).parse(rest)?;
+                        let (rest, lh3) = many0(LH3::parse).parse(rest)?;
+                        let (rest, lfh) = many0(LFH::parse).parse(rest)?;
+                        let (rest, lep) = many0(LEP::parse).parse(rest)?;
+                        let (rest, lh4) = opt(LH4::parse).parse(rest)?;
+                        let (rest, lht) = many0(LHT::parse).parse(rest)?;
                         loop_rest = rest;
                         loop_330.push(_204Loop330 {
                             lh1,
@@ -357,12 +358,12 @@ impl<'a> Parser<&'a str, _204, nom::error::Error<&'a str>> for _204 {
             }
             // loop 380
             let mut loop_380 = vec![];
-            while peek(opt(N7::parse))(loop_rest)?.1.is_some() {
-                let (rest, n7) = opt(N7::parse)(loop_rest)?;
-                let (rest, n7a) = opt(N7A::parse)(rest)?;
-                let (rest, n7b) = opt(N7B::parse)(rest)?;
-                let (rest, mea) = opt(MEA::parse)(rest)?;
-                let (rest, m7) = opt(M7::parse)(rest)?;
+            while peek(opt(N7::parse)).parse(loop_rest)?.1.is_some() {
+                let (rest, n7) = opt(N7::parse).parse(loop_rest)?;
+                let (rest, n7a) = opt(N7A::parse).parse(rest)?;
+                let (rest, n7b) = opt(N7B::parse).parse(rest)?;
+                let (rest, mea) = opt(MEA::parse).parse(rest)?;
+                let (rest, m7) = opt(M7::parse).parse(rest)?;
                 loop_rest = rest;
                 loop_380.push(_204Loop380 {
                     n7,
@@ -389,7 +390,7 @@ impl<'a> Parser<&'a str, _204, nom::error::Error<&'a str>> for _204 {
         }
         let rest = loop_rest;
         output.loop_300 = loop_300;
-        let (rest, obj) = opt(L3::parse)(rest)?;
+        let (rest, obj) = opt(L3::parse).parse(rest)?;
         output.l3 = obj;
         let (rest, obj) = SE::parse(rest)?;
         output.se = obj;
@@ -601,23 +602,23 @@ impl<'a> Parser<&'a str, _214, nom::error::Error<&'a str>> for _214 {
         output.st = obj;
         let (rest, obj) = B10::parse(rest)?;
         output.b10 = obj;
-        let (rest, obj) = many0(L11::parse)(rest)?;
+        let (rest, obj) = many0(L11::parse).parse(rest)?;
         output.l11 = obj;
-        let (rest, obj) = many0(MAN::parse)(rest)?;
+        let (rest, obj) = many0(MAN::parse).parse(rest)?;
         output.man = obj;
-        let (rest, obj) = many0(K1::parse)(rest)?;
+        let (rest, obj) = many0(K1::parse).parse(rest)?;
         output.k1 = obj;
         // loop 100
         let mut loop_100 = vec![];
         let mut loop_rest = rest;
-        while peek(opt(N1::parse))(loop_rest)?.1.is_some() {
-            let (rest, n1) = opt(N1::parse)(loop_rest)?;
-            let (rest, n2) = opt(N2::parse)(rest)?;
-            let (rest, n3) = many0(N3::parse)(rest)?;
-            let (rest, n4) = opt(N4::parse)(rest)?;
-            let (rest, g61) = opt(G61::parse)(rest)?;
-            let (rest, g62) = opt(G62::parse)(rest)?;
-            let (rest, l11) = many0(L11::parse)(rest)?;
+        while peek(opt(N1::parse)).parse(loop_rest)?.1.is_some() {
+            let (rest, n1) = opt(N1::parse).parse(loop_rest)?;
+            let (rest, n2) = opt(N2::parse).parse(rest)?;
+            let (rest, n3) = many0(N3::parse).parse(rest)?;
+            let (rest, n4) = opt(N4::parse).parse(rest)?;
+            let (rest, g61) = opt(G61::parse).parse(rest)?;
+            let (rest, g62) = opt(G62::parse).parse(rest)?;
+            let (rest, l11) = many0(L11::parse).parse(rest)?;
             loop_rest = rest;
             loop_100.push(_214Loop0100 {
                 n1,
@@ -631,30 +632,30 @@ impl<'a> Parser<&'a str, _214, nom::error::Error<&'a str>> for _214 {
         }
         let rest = loop_rest;
         output.loop_0100 = loop_100;
-        let (rest, obj) = many0(MS3::parse)(rest)?;
+        let (rest, obj) = many0(MS3::parse).parse(rest)?;
         output.ms3 = obj;
         // loop 200
         let mut loop_200 = vec![];
         loop_rest = rest;
-        while peek(opt(LX::parse))(loop_rest)?.1.is_some() {
+        while peek(opt(LX::parse)).parse(loop_rest)?.1.is_some() {
             let (rest, lx) = LX::parse(loop_rest)?;
             // loop 0205
             let mut loop_0205 = vec![];
             loop_rest = rest;
-            while peek(opt(AT7::parse))(loop_rest)?.1.is_some() {
+            while peek(opt(AT7::parse)).parse(loop_rest)?.1.is_some() {
                 let (rest, at7) = AT7::parse(loop_rest)?;
-                let (rest, ms1) = opt(MS1::parse)(rest)?;
-                let (rest, ms2) = opt(MS2::parse)(rest)?;
+                let (rest, ms1) = opt(MS1::parse).parse(rest)?;
+                let (rest, ms2) = opt(MS2::parse).parse(rest)?;
                 loop_rest = rest;
                 loop_0205.push(_214Loop0205 { at7, ms1, ms2 });
             }
             let rest = loop_rest;
-            let (rest, l11) = many0(L11::parse)(rest)?;
-            let (rest, man) = many0(MAN::parse)(rest)?;
-            let (rest, q7) = many0(Q7::parse)(rest)?;
-            let (rest, k1) = many0(K1::parse)(rest)?;
-            let (rest, at5) = many0(AT5::parse)(rest)?;
-            let (rest, at8) = many0(AT8::parse)(rest)?;
+            let (rest, l11) = many0(L11::parse).parse(rest)?;
+            let (rest, man) = many0(MAN::parse).parse(rest)?;
+            let (rest, q7) = many0(Q7::parse).parse(rest)?;
+            let (rest, k1) = many0(K1::parse).parse(rest)?;
+            let (rest, at5) = many0(AT5::parse).parse(rest)?;
+            let (rest, at8) = many0(AT8::parse).parse(rest)?;
             loop_rest = rest;
             // loop 0210
             // loop 0230
@@ -819,30 +820,30 @@ impl<'a> Parser<&'a str, _301, nom::error::Error<&'a str>> for _301 {
         // loop y4
         let mut loop_y4 = vec![];
         let mut loop_rest = rest;
-        while peek(opt(Y4::parse))(loop_rest)?.1.is_some()
-            || peek(opt(W09::parse))(loop_rest)?.1.is_some()
+        while peek(opt(Y4::parse)).parse(loop_rest)?.1.is_some()
+            || peek(opt(W09::parse)).parse(loop_rest)?.1.is_some()
         {
-            let (rest, y4) = opt(Y4::parse)(loop_rest)?;
-            let (rest, w09) = opt(W09::parse)(rest)?;
+            let (rest, y4) = opt(Y4::parse).parse(loop_rest)?;
+            let (rest, w09) = opt(W09::parse).parse(rest)?;
             loop_rest = rest;
             loop_y4.push(_301LoopY4 { y4, w09 });
         }
         let rest = loop_rest;
         output.loop_y4 = loop_y4;
-        let (rest, obj) = many0(N9::parse)(rest)?;
+        let (rest, obj) = many0(N9::parse).parse(rest)?;
         output.n9 = obj;
-        let (rest, obj) = many0(R2A::parse)(rest)?;
+        let (rest, obj) = many0(R2A::parse).parse(rest)?;
         output.r2a = obj;
         // loop n1
         let mut loop_n1 = vec![];
         let mut loop_rest = rest;
-        while peek(opt(N1::parse))(loop_rest)?.1.is_some() {
+        while peek(opt(N1::parse)).parse(loop_rest)?.1.is_some() {
             println!("n1");
-            let (rest, n1) = opt(N1::parse)(loop_rest)?;
-            let (rest, n2) = opt(N2::parse)(rest)?;
-            let (rest, n3) = opt(N3::parse)(rest)?;
-            let (rest, n4) = opt(N4::parse)(rest)?;
-            let (rest, g61) = opt(G61::parse)(rest)?;
+            let (rest, n1) = opt(N1::parse).parse(loop_rest)?;
+            let (rest, n2) = opt(N2::parse).parse(rest)?;
+            let (rest, n3) = opt(N3::parse).parse(rest)?;
+            let (rest, n4) = opt(N4::parse).parse(rest)?;
+            let (rest, g61) = opt(G61::parse).parse(rest)?;
             loop_rest = rest;
             loop_n1.push(_301LoopN1 {
                 n1,
@@ -857,40 +858,40 @@ impl<'a> Parser<&'a str, _301, nom::error::Error<&'a str>> for _301 {
         // loop r4
         let mut loop_r4 = vec![];
         let mut loop_rest = rest;
-        while peek(opt(R4::parse))(loop_rest)?.1.is_some() {
+        while peek(opt(R4::parse)).parse(loop_rest)?.1.is_some() {
             let (rest, r4) = R4::parse(loop_rest)?;
-            let (rest, dtm) = many0(DTM::parse)(rest)?;
+            let (rest, dtm) = many0(DTM::parse).parse(rest)?;
             loop_rest = rest;
             loop_r4.push(_301LoopR4 { r4, dtm });
         }
         let rest = loop_rest;
         output.loop_r4 = loop_r4;
-        let (rest, obj) = opt(W09::parse)(rest)?;
+        let (rest, obj) = opt(W09::parse).parse(rest)?;
         output.w09 = obj;
-        let (rest, obj) = opt(H3::parse)(rest)?;
+        let (rest, obj) = opt(H3::parse).parse(rest)?;
         output.h3 = obj;
-        let (rest, obj) = many0(EA::parse)(rest)?;
+        let (rest, obj) = many0(EA::parse).parse(rest)?;
         output.ea = obj;
         // loop lx
         let mut loop_lx = vec![];
         let mut loop_rest = rest;
-        while peek(opt(LX::parse))(loop_rest)?.1.is_some()
-            || peek(opt(W09::parse))(loop_rest)?.1.is_some()
+        while peek(opt(LX::parse)).parse(loop_rest)?.1.is_some()
+            || peek(opt(W09::parse)).parse(loop_rest)?.1.is_some()
         {
             let (rest, lx) = LX::parse(loop_rest)?;
-            let (rest, n7) = opt(N7::parse)(rest)?;
-            let (rest, w09) = opt(W09::parse)(rest)?;
-            let (rest, k1) = many0(K1::parse)(rest)?;
-            let (rest, l0) = opt(L0::parse)(rest)?;
-            let (rest, l5) = opt(L5::parse)(rest)?;
-            let (rest, l4) = opt(L4::parse)(rest)?;
-            let (rest, l1) = opt(L1::parse)(rest)?;
+            let (rest, n7) = opt(N7::parse).parse(rest)?;
+            let (rest, w09) = opt(W09::parse).parse(rest)?;
+            let (rest, k1) = many0(K1::parse).parse(rest)?;
+            let (rest, l0) = opt(L0::parse).parse(rest)?;
+            let (rest, l5) = opt(L5::parse).parse(rest)?;
+            let (rest, l4) = opt(L4::parse).parse(rest)?;
+            let (rest, l1) = opt(L1::parse).parse(rest)?;
             loop_rest = rest;
             // loop h1
             let mut loop_h1 = vec![];
-            while peek(opt(H1::parse))(loop_rest)?.1.is_some() {
-                let (rest, h1) = opt(H1::parse)(loop_rest)?;
-                let (rest, h2) = many0(H2::parse)(rest)?;
+            while peek(opt(H1::parse)).parse(loop_rest)?.1.is_some() {
+                let (rest, h1) = opt(H1::parse).parse(loop_rest)?;
+                let (rest, h2) = many0(H2::parse).parse(rest)?;
                 loop_rest = rest;
                 loop_h1.push(_301LoopLxLoopH1 { h1, h2 });
             }
@@ -908,9 +909,9 @@ impl<'a> Parser<&'a str, _301, nom::error::Error<&'a str>> for _301 {
         }
         let rest = loop_rest;
         output.loop_lx = loop_lx;
-        let (rest, obj) = many0(V1::parse)(rest)?;
+        let (rest, obj) = many0(V1::parse).parse(rest)?;
         output.v1 = obj;
-        let (rest, obj) = many0(V9::parse)(rest)?;
+        let (rest, obj) = many0(V9::parse).parse(rest)?;
         output.v9 = obj;
         let (rest, obj) = SE::parse(rest)?;
         output.se = obj;
@@ -1010,25 +1011,25 @@ impl<'a> Parser<&'a str, _309, nom::error::Error<&'a str>> for _309 {
         // loop p4
         let mut loop_p4 = vec![];
         let mut loop_rest = rest;
-        while peek(opt(P4::parse))(loop_rest)?.1.is_some() {
+        while peek(opt(P4::parse)).parse(loop_rest)?.1.is_some() {
             let (rest, p4) = P4::parse(loop_rest)?;
             loop_rest = rest;
             // loop lx
             let mut loop_lx = vec![];
-            while peek(opt(LX::parse))(loop_rest)?.1.is_some() {
+            while peek(opt(LX::parse)).parse(loop_rest)?.1.is_some() {
                 let (rest, lx) = LX::parse(loop_rest)?;
-                let (rest, m13) = opt(M13::parse)(rest)?;
-                let (rest, m11) = opt(M11::parse)(rest)?;
-                let (rest, n9) = many0(N9::parse)(rest)?;
+                let (rest, m13) = opt(M13::parse).parse(rest)?;
+                let (rest, m11) = opt(M11::parse).parse(rest)?;
+                let (rest, n9) = many0(N9::parse).parse(rest)?;
                 loop_rest = rest;
                 // loop n1
                 let mut loop_n1 = vec![];
-                while peek(opt(N1::parse))(loop_rest)?.1.is_some() {
-                    let (rest, n1) = opt(N1::parse)(loop_rest)?;
-                    let (rest, n3) = opt(N3::parse)(rest)?;
-                    let (rest, n4) = opt(N4::parse)(rest)?;
-                    let (rest, dtm) = opt(DTM::parse)(rest)?;
-                    let (rest, per) = opt(PER::parse)(rest)?;
+                while peek(opt(N1::parse)).parse(loop_rest)?.1.is_some() {
+                    let (rest, n1) = opt(N1::parse).parse(loop_rest)?;
+                    let (rest, n3) = opt(N3::parse).parse(rest)?;
+                    let (rest, n4) = opt(N4::parse).parse(rest)?;
+                    let (rest, dtm) = opt(DTM::parse).parse(rest)?;
+                    let (rest, per) = opt(PER::parse).parse(rest)?;
                     loop_rest = rest;
                     loop_n1.push(_309LoopN1 {
                         n1,
@@ -1040,29 +1041,29 @@ impl<'a> Parser<&'a str, _309, nom::error::Error<&'a str>> for _309 {
                 }
                 // loop m12
                 let mut loop_m12 = vec![];
-                while peek(opt(M12::parse))(loop_rest)?.1.is_some() {
-                    let (rest, m12) = opt(M12::parse)(loop_rest)?;
-                    let (rest, r4) = many0(R4::parse)(rest)?;
+                while peek(opt(M12::parse)).parse(loop_rest)?.1.is_some() {
+                    let (rest, m12) = opt(M12::parse).parse(loop_rest)?;
+                    let (rest, r4) = many0(R4::parse).parse(rest)?;
                     loop_rest = rest;
                     loop_m12.push(_309LoopM12 { m12, r4 });
                 }
                 // loop vid
                 let mut loop_vid = vec![];
-                while peek(opt(VID::parse))(loop_rest)?.1.is_some() {
-                    let (rest, vid) = opt(VID::parse)(loop_rest)?;
-                    let (rest, m7) = many0(M7::parse)(rest)?;
+                while peek(opt(VID::parse)).parse(loop_rest)?.1.is_some() {
+                    let (rest, vid) = opt(VID::parse).parse(loop_rest)?;
+                    let (rest, m7) = many0(M7::parse).parse(rest)?;
                     loop_rest = rest;
                     // loop n10
                     let mut loop_n10 = vec![];
-                    while peek(opt(N10::parse))(loop_rest)?.1.is_some() {
-                        let (rest, n10) = opt(N10::parse)(loop_rest)?;
-                        let (rest, vc) = many0(VC::parse)(rest)?;
+                    while peek(opt(N10::parse)).parse(loop_rest)?.1.is_some() {
+                        let (rest, n10) = opt(N10::parse).parse(loop_rest)?;
+                        let (rest, vc) = many0(VC::parse).parse(rest)?;
                         loop_rest = rest;
                         // loop h1
                         let mut loop_h1 = vec![];
-                        while peek(opt(H1::parse))(loop_rest)?.1.is_some() {
-                            let (rest, h1) = opt(H1::parse)(loop_rest)?;
-                            let (rest, h2) = many0(H2::parse)(rest)?;
+                        while peek(opt(H1::parse)).parse(loop_rest)?.1.is_some() {
+                            let (rest, h1) = opt(H1::parse).parse(loop_rest)?;
+                            let (rest, h2) = many0(H2::parse).parse(rest)?;
                             loop_rest = rest;
                             loop_h1.push(_309LoopH1 { h1, h2 });
                         }
@@ -1277,50 +1278,50 @@ impl<'a> Parser<&'a str, _310, nom::error::Error<&'a str>> for _310 {
     fn parse(input: &'a str) -> IResult<&'a str, _310> {
         let (rest, st) = ST::parse(input)?;
         let (rest, b3) = B3::parse(rest)?;
-        let (rest, b2a) = opt(B2A::parse)(rest)?;
-        let (rest, y6) = many0(Y6::parse)(rest)?;
-        let (rest, g3) = opt(G3::parse)(rest)?;
-        let (rest, n9) = many0(N9::parse)(rest)?;
-        let (rest, v1) = many0(V1::parse)(rest)?;
-        let (rest, m0) = opt(M0::parse)(rest)?;
-        let (rest, m1) = many0(M1::parse)(rest)?;
-        let (rest, c2) = opt(C2::parse)(rest)?;
-        let (rest, c3) = opt(C3::parse)(rest)?;
-        let (rest, y2) = many0(Y2::parse)(rest)?;
+        let (rest, b2a) = opt(B2A::parse).parse(rest)?;
+        let (rest, y6) = many0(Y6::parse).parse(rest)?;
+        let (rest, g3) = opt(G3::parse).parse(rest)?;
+        let (rest, n9) = many0(N9::parse).parse(rest)?;
+        let (rest, v1) = many0(V1::parse).parse(rest)?;
+        let (rest, m0) = opt(M0::parse).parse(rest)?;
+        let (rest, m1) = many0(M1::parse).parse(rest)?;
+        let (rest, c2) = opt(C2::parse).parse(rest)?;
+        let (rest, c3) = opt(C3::parse).parse(rest)?;
+        let (rest, y2) = many0(Y2::parse).parse(rest)?;
         // n1 loop
         let mut loop_n1 = vec![];
         let mut loop_rest = rest;
-        while peek(opt(N1::parse))(loop_rest)?.1.is_some() {
+        while peek(opt(N1::parse)).parse(loop_rest)?.1.is_some() {
             let (rest, n1) = N1::parse(loop_rest)?;
-            let (rest, n2) = opt(N2::parse)(rest)?;
-            let (rest, n3) = opt(N3::parse)(rest)?;
-            let (rest, n4) = opt(N4::parse)(rest)?;
+            let (rest, n2) = opt(N2::parse).parse(rest)?;
+            let (rest, n3) = opt(N3::parse).parse(rest)?;
+            let (rest, n4) = opt(N4::parse).parse(rest)?;
             loop_rest = rest;
             loop_n1.push(_310LoopN1 { n1, n2, n3, n4 });
         }
         let rest = loop_rest;
-        let (rest, g61) = many0(G61::parse)(rest)?;
+        let (rest, g61) = many0(G61::parse).parse(rest)?;
         // loop r4
         let mut loop_r4 = vec![];
         let mut loop_rest = rest;
-        while peek(opt(R4::parse))(loop_rest)?.1.is_some() {
+        while peek(opt(R4::parse)).parse(loop_rest)?.1.is_some() {
             let (rest, r4) = R4::parse(loop_rest)?;
-            let (rest, dtm) = opt(DTM::parse)(rest)?;
+            let (rest, dtm) = opt(DTM::parse).parse(rest)?;
             loop_rest = rest;
             loop_r4.push(_310LoopR4 { r4, dtm });
         }
         let rest = loop_rest;
-        let (rest, r2a) = many0(R2A::parse)(rest)?;
-        let (rest, r2) = many0(R2::parse)(rest)?;
-        let (rest, k1) = many0(K1::parse)(rest)?;
-        let (rest, h3) = many0(H3::parse)(rest)?;
-        let (rest, l5) = opt(L5::parse)(rest)?;
+        let (rest, r2a) = many0(R2A::parse).parse(rest)?;
+        let (rest, r2) = many0(R2::parse).parse(rest)?;
+        let (rest, k1) = many0(K1::parse).parse(rest)?;
+        let (rest, h3) = many0(H3::parse).parse(rest)?;
+        let (rest, l5) = opt(L5::parse).parse(rest)?;
         // loop c8
         let mut loop_c8 = vec![];
         let mut loop_rest = rest;
-        while peek(opt(C8::parse))(loop_rest)?.1.is_some() {
-            let (rest, c8) = opt(C8::parse)(loop_rest)?;
-            let (rest, c8c) = many0(C8C::parse)(rest)?;
+        while peek(opt(C8::parse)).parse(loop_rest)?.1.is_some() {
+            let (rest, c8) = opt(C8::parse).parse(loop_rest)?;
+            let (rest, c8c) = many0(C8C::parse).parse(rest)?;
             loop_rest = rest;
             loop_c8.push(_310LoopC8 { c8, c8c });
         }
@@ -1328,33 +1329,33 @@ impl<'a> Parser<&'a str, _310, nom::error::Error<&'a str>> for _310 {
         // loop lx
         let mut loop_lx = vec![];
         let mut loop_rest = rest;
-        while peek(opt(LX::parse))(loop_rest)?.1.is_some() {
+        while peek(opt(LX::parse)).parse(loop_rest)?.1.is_some() {
             let (rest, lx) = LX::parse(loop_rest)?;
             loop_rest = rest;
             // loop n7
             let mut loop_n7 = vec![];
-            while peek(opt(N7::parse))(loop_rest)?.1.is_some()
-                || peek(opt(L1::parse))(loop_rest)?.1.is_some()
+            while peek(opt(N7::parse)).parse(loop_rest)?.1.is_some()
+                || peek(opt(L1::parse)).parse(loop_rest)?.1.is_some()
             {
-                let (rest, n7) = opt(N7::parse)(loop_rest)?;
-                let (rest, qty) = opt(QTY::parse)(rest)?;
-                let (rest, v4) = opt(V4::parse)(rest)?;
-                let (rest, n12) = opt(N12::parse)(rest)?;
-                let (rest, m7) = many0(M7::parse)(rest)?;
-                let (rest, w09) = opt(W09::parse)(rest)?;
+                let (rest, n7) = opt(N7::parse).parse(loop_rest)?;
+                let (rest, qty) = opt(QTY::parse).parse(rest)?;
+                let (rest, v4) = opt(V4::parse).parse(rest)?;
+                let (rest, n12) = opt(N12::parse).parse(rest)?;
+                let (rest, m7) = many0(M7::parse).parse(rest)?;
+                let (rest, w09) = opt(W09::parse).parse(rest)?;
                 // loop l1
                 let mut loop_l1 = vec![];
                 loop_rest = rest;
-                while peek(opt(L1::parse))(loop_rest)?.1.is_some() {
-                    let (rest, l1) = opt(L1::parse)(loop_rest)?;
-                    let (rest, c3) = opt(C3::parse)(rest)?;
+                while peek(opt(L1::parse)).parse(loop_rest)?.1.is_some() {
+                    let (rest, l1) = opt(L1::parse).parse(loop_rest)?;
+                    let (rest, c3) = opt(C3::parse).parse(rest)?;
                     loop_rest = rest;
                     loop_l1.push(_310LoopL1 { l1, c3 });
                 }
-                let (rest, l7) = opt(L7::parse)(loop_rest)?;
-                let (rest, x1) = opt(X1::parse)(rest)?;
-                let (rest, x2) = opt(X2::parse)(rest)?;
-                let (rest, n9) = many0(N9::parse)(rest)?;
+                let (rest, l7) = opt(L7::parse).parse(loop_rest)?;
+                let (rest, x1) = opt(X1::parse).parse(rest)?;
+                let (rest, x2) = opt(X2::parse).parse(rest)?;
+                let (rest, n9) = many0(N9::parse).parse(rest)?;
                 loop_rest = rest;
                 loop_n7.push(_310LoopN7 {
                     n7,
@@ -1373,31 +1374,31 @@ impl<'a> Parser<&'a str, _310, nom::error::Error<&'a str>> for _310 {
             }
             // loop l0
             let mut loop_l0 = vec![];
-            while peek(opt(L0::parse))(loop_rest)?.1.is_some() {
-                let (rest, l0) = opt(L0::parse)(loop_rest)?;
-                let (rest, l5) = many0(L5::parse)(rest)?;
+            while peek(opt(L0::parse)).parse(loop_rest)?.1.is_some() {
+                let (rest, l0) = opt(L0::parse).parse(loop_rest)?;
+                let (rest, l5) = many0(L5::parse).parse(rest)?;
                 loop_rest = rest;
                 // loop l1
                 let mut loop_l1 = vec![];
-                while peek(opt(L1::parse))(loop_rest)?.1.is_some() {
-                    let (rest, l1) = opt(L1::parse)(loop_rest)?;
-                    let (rest, c3) = opt(C3::parse)(rest)?;
+                while peek(opt(L1::parse)).parse(loop_rest)?.1.is_some() {
+                    let (rest, l1) = opt(L1::parse).parse(loop_rest)?;
+                    let (rest, c3) = opt(C3::parse).parse(rest)?;
                     loop_rest = rest;
                     loop_l1.push(_310LoopL1 { l1, c3 });
                 }
                 // loop c8
                 let mut loop_c8 = vec![];
-                while peek(opt(C8::parse))(loop_rest)?.1.is_some() {
-                    let (rest, c8) = opt(C8::parse)(loop_rest)?;
-                    let (rest, c8c) = many0(C8C::parse)(rest)?;
+                while peek(opt(C8::parse)).parse(loop_rest)?.1.is_some() {
+                    let (rest, c8) = opt(C8::parse).parse(loop_rest)?;
+                    let (rest, c8c) = many0(C8C::parse).parse(rest)?;
                     loop_rest = rest;
                     loop_c8.push(_310LoopC8 { c8, c8c });
                 }
                 // loop h1
                 let mut loop_h1 = vec![];
-                while peek(opt(H1::parse))(loop_rest)?.1.is_some() {
-                    let (rest, h1) = opt(H1::parse)(loop_rest)?;
-                    let (rest, h2) = many0(H2::parse)(rest)?;
+                while peek(opt(H1::parse)).parse(loop_rest)?.1.is_some() {
+                    let (rest, h1) = opt(H1::parse).parse(loop_rest)?;
+                    let (rest, h2) = many0(H2::parse).parse(rest)?;
                     loop_rest = rest;
                     loop_h1.push(_310LoopH1 { h1, h2 });
                 }
@@ -1420,21 +1421,21 @@ impl<'a> Parser<&'a str, _310, nom::error::Error<&'a str>> for _310 {
         }
         let rest = loop_rest;
         let (rest, l3) = L3::parse(rest)?;
-        let (rest, pwk) = many0(PWK::parse)(rest)?;
+        let (rest, pwk) = many0(PWK::parse).parse(rest)?;
         // loop l1
         let mut loop_l1 = vec![];
         let mut loop_rest = rest;
-        while peek(opt(L1::parse))(loop_rest)?.1.is_some() {
-            let (rest, l1) = opt(L1::parse)(loop_rest)?;
-            let (rest, c3) = opt(C3::parse)(rest)?;
+        while peek(opt(L1::parse)).parse(loop_rest)?.1.is_some() {
+            let (rest, l1) = opt(L1::parse).parse(loop_rest)?;
+            let (rest, c3) = opt(C3::parse).parse(rest)?;
             loop_rest = rest;
             loop_l1.push(_310LoopL1 { l1, c3 });
         }
         let rest = loop_rest;
-        let (rest, v9) = many0(V9::parse)(rest)?;
-        let (rest, c8) = many0(C8::parse)(rest)?;
-        let (rest, k1_2) = many0(K1::parse)(rest)?;
-        let (rest, l11) = opt(L11::parse)(rest)?;
+        let (rest, v9) = many0(V9::parse).parse(rest)?;
+        let (rest, c8) = many0(C8::parse).parse(rest)?;
+        let (rest, k1_2) = many0(K1::parse).parse(rest)?;
+        let (rest, l11) = opt(L11::parse).parse(rest)?;
         let (rest, se) = SE::parse(rest)?;
         let output = _310 {
             st,
@@ -1585,24 +1586,24 @@ impl<'a> Parser<&'a str, _315, nom::error::Error<&'a str>> for _315 {
         output.st = obj;
         let (rest, obj) = B4::parse(rest)?;
         output.b4 = obj;
-        let (rest, obj) = many0(N9::parse)(rest)?;
+        let (rest, obj) = many0(N9::parse).parse(rest)?;
         output.n9 = obj;
-        let (rest, obj) = opt(Q2::parse)(rest)?;
+        let (rest, obj) = opt(Q2::parse).parse(rest)?;
         output.q2 = obj;
-        let (rest, obj) = many0(SG::parse)(rest)?;
+        let (rest, obj) = many0(SG::parse).parse(rest)?;
         output.sg = obj;
         // loop r4
         let mut loop_r4 = vec![];
         let mut loop_rest = rest;
-        while peek(opt(R4::parse))(loop_rest)?.1.is_some() {
+        while peek(opt(R4::parse)).parse(loop_rest)?.1.is_some() {
             let (rest, r4) = R4::parse(loop_rest)?;
-            let (rest, dtm) = many0(DTM::parse)(rest)?;
+            let (rest, dtm) = many0(DTM::parse).parse(rest)?;
             loop_rest = rest;
             loop_r4.push(_315LoopR4 { r4, dtm });
         }
         let rest = loop_rest;
         output.loop_r4 = loop_r4;
-        let (rest, obj) = opt(V9::parse)(rest)?;
+        let (rest, obj) = opt(V9::parse).parse(rest)?;
         output.v9 = obj;
         let (rest, obj) = SE::parse(rest)?;
         output.se = obj;
@@ -1670,7 +1671,7 @@ impl<'a> Parser<&'a str, _322, nom::error::Error<&'a str>> for _322 {
         let (rest, obj) = ST::parse(input)?;
         output.st = obj;
         println!("after ST");
-        let (rest, obj) = opt(ZC1::parse)(rest)?;
+        let (rest, obj) = opt(ZC1::parse).parse(rest)?;
         output.zc1 = obj;
         println!("before Q5");
         let (rest, obj) = Q5::parse(rest)?;
@@ -1679,44 +1680,44 @@ impl<'a> Parser<&'a str, _322, nom::error::Error<&'a str>> for _322 {
         // loop n7
         let mut loop_n7 = vec![];
         let mut loop_rest = rest;
-        while peek(opt(N7::parse))(loop_rest)?.1.is_some() {
+        while peek(opt(N7::parse)).parse(loop_rest)?.1.is_some() {
             println!("loop n7");
             let (rest, n7) = N7::parse(loop_rest)?;
-            let (rest, v4) = opt(V4::parse)(rest)?;
-            let (rest, dtm) = many0(DTM::parse)(rest)?;
-            let (rest, m7) = many0(M7::parse)(rest)?;
-            let (rest, w09) = opt(W09::parse)(rest)?;
-            let (rest, w2) = opt(W2::parse)(rest)?;
-            let (rest, na) = many0(NA::parse)(rest)?;
-            let (rest, gr5) = many0(GR5::parse)(rest)?;
-            let (rest, y7) = opt(Y7::parse)(rest)?;
-            let (rest, v1) = opt(V1::parse)(rest)?;
+            let (rest, v4) = opt(V4::parse).parse(rest)?;
+            let (rest, dtm) = many0(DTM::parse).parse(rest)?;
+            let (rest, m7) = many0(M7::parse).parse(rest)?;
+            let (rest, w09) = opt(W09::parse).parse(rest)?;
+            let (rest, w2) = opt(W2::parse).parse(rest)?;
+            let (rest, na) = many0(NA::parse).parse(rest)?;
+            let (rest, gr5) = many0(GR5::parse).parse(rest)?;
+            let (rest, y7) = opt(Y7::parse).parse(rest)?;
+            let (rest, v1) = opt(V1::parse).parse(rest)?;
             loop_rest = rest;
             // loop r4
             let mut loop_r4 = vec![];
-            while peek(opt(R4::parse))(loop_rest)?.1.is_some() {
+            while peek(opt(R4::parse)).parse(loop_rest)?.1.is_some() {
                 let (rest, r4) = R4::parse(loop_rest)?;
-                let (rest, dtm) = many0(DTM::parse)(rest)?;
+                let (rest, dtm) = many0(DTM::parse).parse(rest)?;
                 loop_rest = rest;
                 loop_r4.push(_322LoopR4 { r4, dtm })
             }
             let rest = loop_rest;
-            let (rest, h3) = many0(H3::parse)(rest)?;
+            let (rest, h3) = many0(H3::parse).parse(rest)?;
             loop_rest = rest;
             // loop n1
             let mut loop_n1 = vec![];
-            while peek(opt(N1::parse))(loop_rest)?.1.is_some() {
+            while peek(opt(N1::parse)).parse(loop_rest)?.1.is_some() {
                 let (rest, n1) = N1::parse(loop_rest)?;
-                let (rest, n3) = many0(N3::parse)(rest)?;
-                let (rest, n4) = opt(N4::parse)(rest)?;
+                let (rest, n3) = many0(N3::parse).parse(rest)?;
+                let (rest, n4) = opt(N4::parse).parse(rest)?;
                 loop_rest = rest;
                 loop_n1.push(_322LoopN1 { n1, n3, n4 })
             }
             let rest = loop_rest;
-            let (rest, k1) = many0(K1::parse)(rest)?;
-            let (rest, n9) = many0(N9::parse)(rest)?;
+            let (rest, k1) = many0(K1::parse).parse(rest)?;
+            let (rest, n9) = many0(N9::parse).parse(rest)?;
             // loop l0
-            let (rest, l3) = many0(L3::parse)(rest)?;
+            let (rest, l3) = many0(L3::parse).parse(rest)?;
             loop_rest = rest;
             loop_n7.push(_322LoopN7 {
                 n7,
@@ -1936,34 +1937,34 @@ impl<'a> Parser<&'a str, _404, nom::error::Error<&'a str>> for _404 {
         let mut output = _404::default();
         let (rest, obj) = ST::parse(input)?;
         output.st = obj;
-        let (rest, obj) = opt(ZC1::parse)(rest)?;
+        let (rest, obj) = opt(ZC1::parse).parse(rest)?;
         output.zc1 = obj;
-        let (rest, obj) = opt(BX::parse)(rest)?;
+        let (rest, obj) = opt(BX::parse).parse(rest)?;
         output.bx = obj;
-        let (rest, obj) = opt(BNX::parse)(rest)?;
+        let (rest, obj) = opt(BNX::parse).parse(rest)?;
         output.bnx = obj;
         let (rest, obj) = M3::parse(rest)?;
         output.m3 = obj;
-        let (rest, obj) = many0(N9::parse)(rest)?;
+        let (rest, obj) = many0(N9::parse).parse(rest)?;
         output.n9 = obj;
-        let (rest, obj) = many0(CM::parse)(rest)?;
+        let (rest, obj) = many0(CM::parse).parse(rest)?;
         output.cm = obj;
-        let (rest, obj) = opt(M1::parse)(rest)?;
+        let (rest, obj) = opt(M1::parse).parse(rest)?;
         output.m1 = obj;
-        let (rest, obj) = opt(DTM::parse)(rest)?;
+        let (rest, obj) = opt(DTM::parse).parse(rest)?;
         output.dtm = obj;
         // loop n7
         let mut loop_n7 = vec![];
         let mut loop_rest = rest;
-        while peek(opt(N7::parse))(loop_rest)?.1.is_some() {
+        while peek(opt(N7::parse)).parse(loop_rest)?.1.is_some() {
             let (rest, n7) = N7::parse(loop_rest)?;
-            let (rest, em) = opt(EM::parse)(rest)?;
-            let (rest, m7) = opt(M7::parse)(rest)?;
-            let (rest, n5) = opt(N5::parse)(rest)?;
-            let (rest, ic) = opt(IC::parse)(rest)?;
-            let (rest, im) = opt(IM::parse)(rest)?;
-            let (rest, m12) = opt(M12::parse)(rest)?;
-            let (rest, ga) = opt(GA::parse)(rest)?;
+            let (rest, em) = opt(EM::parse).parse(rest)?;
+            let (rest, m7) = opt(M7::parse).parse(rest)?;
+            let (rest, n5) = opt(N5::parse).parse(rest)?;
+            let (rest, ic) = opt(IC::parse).parse(rest)?;
+            let (rest, im) = opt(IM::parse).parse(rest)?;
+            let (rest, m12) = opt(M12::parse).parse(rest)?;
+            let (rest, ga) = opt(GA::parse).parse(rest)?;
             loop_rest = rest;
             loop_n7.push(_404LoopN7 {
                 n7,
@@ -1981,7 +1982,7 @@ impl<'a> Parser<&'a str, _404, nom::error::Error<&'a str>> for _404 {
         }
         let rest = loop_rest;
         output.loop_n7 = loop_n7;
-        let (rest, obj) = opt(NA::parse)(rest)?;
+        let (rest, obj) = opt(NA::parse).parse(rest)?;
         output.na = obj;
         let (rest, obj) = F9::parse(rest)?;
         output.f9 = obj;
@@ -1990,14 +1991,14 @@ impl<'a> Parser<&'a str, _404, nom::error::Error<&'a str>> for _404 {
         // loop n1
         let mut loop_n1 = vec![];
         let mut loop_rest = rest;
-        while peek(opt(N1::parse))(loop_rest)?.1.is_some() {
+        while peek(opt(N1::parse)).parse(loop_rest)?.1.is_some() {
             let (rest, n1) = N1::parse(loop_rest)?;
-            let (rest, n2) = opt(N2::parse)(rest)?;
-            let (rest, n3) = opt(N3::parse)(rest)?;
-            let (rest, n4) = opt(N4::parse)(rest)?;
-            let (rest, r#ref) = opt(REF::parse)(rest)?;
-            let (rest, per) = opt(PER::parse)(rest)?;
-            let (rest, bl) = opt(BL::parse)(rest)?;
+            let (rest, n2) = opt(N2::parse).parse(rest)?;
+            let (rest, n3) = opt(N3::parse).parse(rest)?;
+            let (rest, n4) = opt(N4::parse).parse(rest)?;
+            let (rest, r#ref) = opt(REF::parse).parse(rest)?;
+            let (rest, per) = opt(PER::parse).parse(rest)?;
+            let (rest, bl) = opt(BL::parse).parse(rest)?;
             loop_rest = rest;
             loop_n1.push(_404LoopN1 {
                 n1,
@@ -2011,29 +2012,29 @@ impl<'a> Parser<&'a str, _404, nom::error::Error<&'a str>> for _404 {
         }
         let rest = loop_rest;
         output.loop_n1 = loop_n1;
-        let (rest, obj) = many0(R2::parse)(rest)?;
+        let (rest, obj) = many0(R2::parse).parse(rest)?;
         output.r2 = obj;
-        let (rest, obj) = opt(R9::parse)(rest)?;
+        let (rest, obj) = opt(R9::parse).parse(rest)?;
         output.r9 = obj;
-        let (rest, obj) = many0(H3::parse)(rest)?;
+        let (rest, obj) = many0(H3::parse).parse(rest)?;
         output.h3 = obj;
-        let (rest, obj) = many0(PS::parse)(rest)?;
+        let (rest, obj) = many0(PS::parse).parse(rest)?;
         output.ps = obj;
         // loop lx
         let mut loop_lx = vec![];
         let mut loop_rest = rest;
-        while peek(opt(LX::parse))(loop_rest)?.1.is_some() {
+        while peek(opt(LX::parse)).parse(loop_rest)?.1.is_some() {
             let (rest, lx) = LX::parse(loop_rest)?;
             let (rest, l5) = L5::parse(rest)?;
-            let (rest, x1) = opt(X1::parse)(rest)?;
+            let (rest, x1) = opt(X1::parse).parse(rest)?;
             loop_rest = rest;
             // loop l0
             let mut loop_l0 = vec![];
-            while peek(opt(L0::parse))(loop_rest)?.1.is_some() {
-                let (rest, l0) = opt(L0::parse)(loop_rest)?;
-                let (rest, mea) = opt(MEA::parse)(rest)?;
-                let (rest, l1) = opt(L1::parse)(rest)?;
-                let (rest, pi) = opt(PI::parse)(rest)?;
+            while peek(opt(L0::parse)).parse(loop_rest)?.1.is_some() {
+                let (rest, l0) = opt(L0::parse).parse(loop_rest)?;
+                let (rest, mea) = opt(MEA::parse).parse(rest)?;
+                let (rest, l1) = opt(L1::parse).parse(rest)?;
+                let (rest, pi) = opt(PI::parse).parse(rest)?;
                 loop_rest = rest;
                 loop_l0.push(_404LoopL0 { l0, mea, l1, pi });
             }
@@ -2046,23 +2047,23 @@ impl<'a> Parser<&'a str, _404, nom::error::Error<&'a str>> for _404 {
         }
         output.loop_lx = loop_lx;
         let rest = loop_rest;
-        let (rest, obj) = opt(L3::parse)(rest)?;
+        let (rest, obj) = opt(L3::parse).parse(rest)?;
         output.l3 = obj;
-        let (rest, obj) = opt(LS::parse)(rest)?;
+        let (rest, obj) = opt(LS::parse).parse(rest)?;
         output.ls = obj;
         // loop lh1
         let mut loop_lh1 = vec![];
         let mut loop_rest = rest;
-        while peek(opt(LH1::parse))(loop_rest)?.1.is_some() {
-            let (rest, lh1) = opt(LH1::parse)(loop_rest)?;
-            let (rest, lh2) = many0(LH2::parse)(rest)?;
-            let (rest, lh3) = many0(LH3::parse)(rest)?;
-            let (rest, lfh) = many0(LFH::parse)(rest)?;
-            let (rest, lep) = opt(LEP::parse)(rest)?;
-            let (rest, lh4) = opt(LH4::parse)(rest)?;
-            let (rest, lht) = opt(LHT::parse)(rest)?;
-            let (rest, lhr) = opt(LHR::parse)(rest)?;
-            let (rest, per) = opt(PER::parse)(rest)?;
+        while peek(opt(LH1::parse)).parse(loop_rest)?.1.is_some() {
+            let (rest, lh1) = opt(LH1::parse).parse(loop_rest)?;
+            let (rest, lh2) = many0(LH2::parse).parse(rest)?;
+            let (rest, lh3) = many0(LH3::parse).parse(rest)?;
+            let (rest, lfh) = many0(LFH::parse).parse(rest)?;
+            let (rest, lep) = opt(LEP::parse).parse(rest)?;
+            let (rest, lh4) = opt(LH4::parse).parse(rest)?;
+            let (rest, lht) = opt(LHT::parse).parse(rest)?;
+            let (rest, lhr) = opt(LHR::parse).parse(rest)?;
+            let (rest, per) = opt(PER::parse).parse(rest)?;
             loop_rest = rest;
             loop_lh1.push(_404LoopLH1 {
                 lh1,
@@ -2078,19 +2079,19 @@ impl<'a> Parser<&'a str, _404, nom::error::Error<&'a str>> for _404 {
         }
         output.loop_lh1 = loop_lh1;
         let rest = loop_rest;
-        let (rest, obj) = opt(LE::parse)(rest)?;
+        let (rest, obj) = opt(LE::parse).parse(rest)?;
         output.le = obj;
-        let (rest, obj) = opt(PER::parse)(rest)?;
+        let (rest, obj) = opt(PER::parse).parse(rest)?;
         output.per = obj;
-        let (rest, obj) = opt(LH2::parse)(rest)?;
+        let (rest, obj) = opt(LH2::parse).parse(rest)?;
         output.lh2 = obj;
-        let (rest, obj) = opt(LHR::parse)(rest)?;
+        let (rest, obj) = opt(LHR::parse).parse(rest)?;
         output.lhr = obj;
-        let (rest, obj) = opt(LH6::parse)(rest)?;
+        let (rest, obj) = opt(LH6::parse).parse(rest)?;
         output.lh6 = obj;
-        let (rest, obj) = opt(XH::parse)(rest)?;
+        let (rest, obj) = opt(XH::parse).parse(rest)?;
         output.xh = obj;
-        let (rest, obj) = opt(X7::parse)(rest)?;
+        let (rest, obj) = opt(X7::parse).parse(rest)?;
         output.x7 = obj;
         let (rest, obj) = SE::parse(rest)?;
         output.se = obj;
@@ -2262,27 +2263,27 @@ impl<'a> Parser<&'a str, _810, nom::error::Error<&'a str>> for _810 {
         output.st = obj;
         let (rest, obj) = BIG::parse(rest)?;
         output.big = obj;
-        let (rest, obj) = many0(NTE::parse)(rest)?;
+        let (rest, obj) = many0(NTE::parse).parse(rest)?;
         output.nte = obj;
-        let (rest, obj) = opt(CUR::parse)(rest)?;
+        let (rest, obj) = opt(CUR::parse).parse(rest)?;
         output.cur = obj;
-        let (rest, obj) = many0(REF::parse)(rest)?;
+        let (rest, obj) = many0(REF::parse).parse(rest)?;
         output.r#ref = obj;
-        let (rest, obj) = many0(YNQ::parse)(rest)?;
+        let (rest, obj) = many0(YNQ::parse).parse(rest)?;
         output.ynq = obj;
-        let (rest, obj) = many0(PER::parse)(rest)?;
+        let (rest, obj) = many0(PER::parse).parse(rest)?;
         output.per = obj;
         // loop n1
         let mut loop_n1 = vec![];
         let mut loop_rest = rest;
-        while peek(opt(N1::parse))(loop_rest)?.1.is_some() {
+        while peek(opt(N1::parse)).parse(loop_rest)?.1.is_some() {
             let (rest, n1) = N1::parse(loop_rest)?;
-            let (rest, n2) = many0(N2::parse)(rest)?;
-            let (rest, n3) = many0(N3::parse)(rest)?;
-            let (rest, n4) = opt(N4::parse)(rest)?;
-            let (rest, r#ref) = many0(REF::parse)(rest)?;
-            let (rest, per) = many0(PER::parse)(rest)?;
-            let (rest, dmg) = opt(DMG::parse)(rest)?;
+            let (rest, n2) = many0(N2::parse).parse(rest)?;
+            let (rest, n3) = many0(N3::parse).parse(rest)?;
+            let (rest, n4) = opt(N4::parse).parse(rest)?;
+            let (rest, r#ref) = many0(REF::parse).parse(rest)?;
+            let (rest, per) = many0(PER::parse).parse(rest)?;
+            let (rest, dmg) = opt(DMG::parse).parse(rest)?;
             loop_rest = rest;
             loop_n1.push(_810LoopN1 {
                 n1,
@@ -2296,32 +2297,32 @@ impl<'a> Parser<&'a str, _810, nom::error::Error<&'a str>> for _810 {
         }
         let rest = loop_rest;
         output.loop_n1 = loop_n1;
-        let (rest, obj) = many0(ITD::parse)(rest)?;
+        let (rest, obj) = many0(ITD::parse).parse(rest)?;
         output.itd = obj;
-        let (rest, obj) = many0(DTM::parse)(rest)?;
+        let (rest, obj) = many0(DTM::parse).parse(rest)?;
         output.dtm = obj;
-        let (rest, obj) = opt(FOB::parse)(rest)?;
+        let (rest, obj) = opt(FOB::parse).parse(rest)?;
         output.fob = obj;
-        let (rest, obj) = many0(PID::parse)(rest)?;
+        let (rest, obj) = many0(PID::parse).parse(rest)?;
         output.pid = obj;
-        let (rest, obj) = many0(MEA::parse)(rest)?;
+        let (rest, obj) = many0(MEA::parse).parse(rest)?;
         output.mea = obj;
-        let (rest, obj) = many0(PWK::parse)(rest)?;
+        let (rest, obj) = many0(PWK::parse).parse(rest)?;
         output.pwk = obj;
-        let (rest, obj) = many0(PKG::parse)(rest)?;
+        let (rest, obj) = many0(PKG::parse).parse(rest)?;
         output.pkg = obj;
-        let (rest, obj) = opt(L7::parse)(rest)?;
+        let (rest, obj) = opt(L7::parse).parse(rest)?;
         output.l7 = obj;
-        let (rest, obj) = many0(BAL::parse)(rest)?;
+        let (rest, obj) = many0(BAL::parse).parse(rest)?;
         output.bal = obj;
-        let (rest, obj) = opt(INC::parse)(rest)?;
+        let (rest, obj) = opt(INC::parse).parse(rest)?;
         output.inc = obj;
-        let (rest, obj) = many0(PAM::parse)(rest)?;
+        let (rest, obj) = many0(PAM::parse).parse(rest)?;
         output.pam = obj;
         // loop lm
         let mut loop_lm = vec![];
         loop_rest = rest;
-        while peek(opt(LM::parse))(loop_rest)?.1.is_some() {
+        while peek(opt(LM::parse)).parse(loop_rest)?.1.is_some() {
             let (rest, lm) = LM::parse(loop_rest)?;
             let (rest, lq) = LQ::parse(rest)?;
             loop_rest = rest;
@@ -2332,9 +2333,9 @@ impl<'a> Parser<&'a str, _810, nom::error::Error<&'a str>> for _810 {
         // loop n9
         let mut loop_n9 = vec![];
         loop_rest = rest;
-        while peek(opt(N9::parse))(loop_rest)?.1.is_some() {
+        while peek(opt(N9::parse)).parse(loop_rest)?.1.is_some() {
             let (rest, n9) = N9::parse(loop_rest)?;
-            let (rest, msg) = many0(MSG::parse)(rest)?;
+            let (rest, msg) = many0(MSG::parse).parse(rest)?;
             loop_rest = rest;
             loop_n9.push(_810LoopN9 { n9, msg });
         }
@@ -2343,10 +2344,10 @@ impl<'a> Parser<&'a str, _810, nom::error::Error<&'a str>> for _810 {
         // loop v1
         let mut loop_v1 = vec![];
         loop_rest = rest;
-        while peek(opt(V1::parse))(loop_rest)?.1.is_some() {
+        while peek(opt(V1::parse)).parse(loop_rest)?.1.is_some() {
             let (rest, v1) = V1::parse(loop_rest)?;
-            let (rest, r4) = many0(R4::parse)(rest)?;
-            let (rest, dtm) = many0(DTM::parse)(rest)?;
+            let (rest, r4) = many0(R4::parse).parse(rest)?;
+            let (rest, dtm) = many0(DTM::parse).parse(rest)?;
             loop_rest = rest;
             loop_v1.push(_810LoopV1 { v1, r4, dtm });
         }
@@ -2355,9 +2356,9 @@ impl<'a> Parser<&'a str, _810, nom::error::Error<&'a str>> for _810 {
         // loop fa1
         let mut loop_fa1 = vec![];
         loop_rest = rest;
-        while peek(opt(FA1::parse))(loop_rest)?.1.is_some() {
+        while peek(opt(FA1::parse)).parse(loop_rest)?.1.is_some() {
             let (rest, fa1) = FA1::parse(loop_rest)?;
-            let (rest, fa2) = many0(FA2::parse)(rest)?;
+            let (rest, fa2) = many0(FA2::parse).parse(rest)?;
             loop_rest = rest;
             loop_fa1.push(_810LoopFA1 { fa1, fa2 });
         }
@@ -2366,49 +2367,49 @@ impl<'a> Parser<&'a str, _810, nom::error::Error<&'a str>> for _810 {
         // loop it1
         let mut loop_it1 = vec![];
         loop_rest = rest;
-        while peek(opt(IT1::parse))(loop_rest)?.1.is_some() {
+        while peek(opt(IT1::parse)).parse(loop_rest)?.1.is_some() {
             let (rest, it1) = IT1::parse(loop_rest)?;
-            let (rest, crc) = opt(CRC::parse)(rest)?;
-            let (rest, qty) = many0(QTY::parse)(rest)?;
-            let (rest, cur) = opt(CUR::parse)(rest)?;
-            let (rest, it3) = many0(IT3::parse)(rest)?;
-            let (rest, txi) = many0(TXI::parse)(rest)?;
-            let (rest, ctp) = many0(CTP::parse)(rest)?;
-            let (rest, pam) = many0(PAM::parse)(rest)?;
-            let (rest, mea) = many0(MEA::parse)(rest)?;
+            let (rest, crc) = opt(CRC::parse).parse(rest)?;
+            let (rest, qty) = many0(QTY::parse).parse(rest)?;
+            let (rest, cur) = opt(CUR::parse).parse(rest)?;
+            let (rest, it3) = many0(IT3::parse).parse(rest)?;
+            let (rest, txi) = many0(TXI::parse).parse(rest)?;
+            let (rest, ctp) = many0(CTP::parse).parse(rest)?;
+            let (rest, pam) = many0(PAM::parse).parse(rest)?;
+            let (rest, mea) = many0(MEA::parse).parse(rest)?;
             // loop_pid
             let mut loop_pid = vec![];
             loop_rest = rest;
-            while peek(opt(PID::parse))(loop_rest)?.1.is_some() {
+            while peek(opt(PID::parse)).parse(loop_rest)?.1.is_some() {
                 let (rest, pid) = PID::parse(loop_rest)?;
-                let (rest, mea) = many0(MEA::parse)(rest)?;
+                let (rest, mea) = many0(MEA::parse).parse(rest)?;
                 loop_rest = rest;
                 loop_pid.push(_810LoopPID { pid, mea });
             }
             let rest = loop_rest;
-            let (rest, pwk) = many0(PWK::parse)(rest)?;
-            let (rest, pkg) = many0(PKG::parse)(rest)?;
-            let (rest, po4) = opt(PO4::parse)(rest)?;
-            let (rest, itd) = many0(ITD::parse)(rest)?;
-            let (rest, r#ref) = many0(REF::parse)(rest)?;
-            let (rest, ynq) = many0(YNQ::parse)(rest)?;
-            let (rest, per) = many0(PER::parse)(rest)?;
-            let (rest, sdq) = many0(SDQ::parse)(rest)?;
-            let (rest, dtm) = many0(DTM::parse)(rest)?;
-            let (rest, cad) = many0(CAD::parse)(rest)?;
-            let (rest, l7) = many0(L7::parse)(rest)?;
-            let (mut rest, sr) = opt(SR::parse)(rest)?;
+            let (rest, pwk) = many0(PWK::parse).parse(rest)?;
+            let (rest, pkg) = many0(PKG::parse).parse(rest)?;
+            let (rest, po4) = opt(PO4::parse).parse(rest)?;
+            let (rest, itd) = many0(ITD::parse).parse(rest)?;
+            let (rest, r#ref) = many0(REF::parse).parse(rest)?;
+            let (rest, ynq) = many0(YNQ::parse).parse(rest)?;
+            let (rest, per) = many0(PER::parse).parse(rest)?;
+            let (rest, sdq) = many0(SDQ::parse).parse(rest)?;
+            let (rest, dtm) = many0(DTM::parse).parse(rest)?;
+            let (rest, cad) = many0(CAD::parse).parse(rest)?;
+            let (rest, l7) = many0(L7::parse).parse(rest)?;
+            let (mut rest, sr) = opt(SR::parse).parse(rest)?;
             // loop_sln
             let mut loop_sln = vec![];
             loop_rest = rest;
-            while peek(opt(SLN::parse))(loop_rest)?.1.is_some() {
+            while peek(opt(SLN::parse)).parse(loop_rest)?.1.is_some() {
                 let (rest, sln) = SLN::parse(loop_rest)?;
-                let (rest, dtm) = opt(DTM::parse)(rest)?;
-                let (rest, r#ref) = many0(REF::parse)(rest)?;
-                let (rest, pid) = many0(PID::parse)(rest)?;
-                let (rest, sac) = many0(SAC::parse)(rest)?;
-                let (rest, tc2) = many0(TC2::parse)(rest)?;
-                let (rest, txi) = many0(TXI::parse)(rest)?;
+                let (rest, dtm) = opt(DTM::parse).parse(rest)?;
+                let (rest, r#ref) = many0(REF::parse).parse(rest)?;
+                let (rest, pid) = many0(PID::parse).parse(rest)?;
+                let (rest, sac) = many0(SAC::parse).parse(rest)?;
+                let (rest, tc2) = many0(TC2::parse).parse(rest)?;
+                let (rest, txi) = many0(TXI::parse).parse(rest)?;
                 loop_rest = rest;
                 loop_sln.push(_810LoopSLN {
                     sln,
@@ -2457,15 +2458,15 @@ impl<'a> Parser<&'a str, _810, nom::error::Error<&'a str>> for _810 {
         output.loop_it1 = loop_it1;
         let (rest, obj) = TDS::parse(rest)?;
         output.tds = obj;
-        let (rest, obj) = many0(TXI::parse)(rest)?;
+        let (rest, obj) = many0(TXI::parse).parse(rest)?;
         output.txi = obj;
-        let (rest, obj) = opt(CAD::parse)(rest)?;
+        let (rest, obj) = opt(CAD::parse).parse(rest)?;
         output.cad = obj;
-        let (rest, obj) = many0(AMT::parse)(rest)?;
+        let (rest, obj) = many0(AMT::parse).parse(rest)?;
         output.amt = obj;
         // loop sac
         // loop iss
-        let (rest, obj) = opt(CTT::parse)(rest)?;
+        let (rest, obj) = opt(CTT::parse).parse(rest)?;
         output.ctt = obj;
         let (rest, obj) = SE::parse(rest)?;
         output.se = obj;
@@ -2605,14 +2606,14 @@ impl<'a> Parser<&'a str, _997, nom::error::Error<&'a str>> for _997 {
         // loop ak2
         let mut loop_ak2 = vec![];
         let mut loop_rest = rest;
-        while peek(opt(AK2::parse))(loop_rest)?.1.is_some() {
+        while peek(opt(AK2::parse)).parse(loop_rest)?.1.is_some() {
             let (rest, ak2) = AK2::parse(loop_rest)?;
             // loop ak3
             loop_rest = rest;
             let mut loop_ak3 = vec![];
-            while peek(opt(AK3::parse))(loop_rest)?.1.is_some() {
+            while peek(opt(AK3::parse)).parse(loop_rest)?.1.is_some() {
                 let (rest, ak3) = AK3::parse(loop_rest)?;
-                let (rest, ak4) = many0(AK4::parse)(rest)?;
+                let (rest, ak4) = many0(AK4::parse).parse(rest)?;
                 loop_rest = rest;
                 loop_ak3.push(_997LoopAK3 { ak3, ak4 });
             }

@@ -1,4 +1,5 @@
 use nom::multi::many0;
+use nom::Parser as _;
 
 use crate::util::Parser;
 use crate::v004010::_997;
@@ -54,7 +55,7 @@ ST*997*0002~
 AK1*SH*3~
 AK9*A*0*0*0~
 SE*4*0002~"#;
-    let (rest, obj) = many0(_997::parse)(s).unwrap();
+    let (rest, obj) = many0(_997::parse).parse(s).unwrap();
     println!("{rest}");
     println!("{obj:?}");
     assert!(rest.is_empty());
