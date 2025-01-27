@@ -1,3 +1,7 @@
+# 0.8.6 2025-*-*
+
+* update to nom 8
+
 # 0.8.5 2025-01-07
 
 * dependencies

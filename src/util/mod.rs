@@ -7,6 +7,7 @@ use nom::combinator::opt;
 use nom::multi::separated_list0;
 use nom::sequence::delimited;
 use nom::IResult;
+use nom::Parser as _;
 
 pub mod dt;
 pub mod tm;
@@ -24,15 +25,16 @@ pub fn is_equal_payload<T: PartialEq>(src: &Transmission<T>, target: &Transmissi
 
 pub fn parse_line<'a>(input: &'a str, segment_name: &str) -> IResult<&'a str, Vec<&'a str>> {
     let tag_name = format!("{segment_name}*");
-    let (rest, vars) = delimited(tag(tag_name.as_str()), take_until("~"), tag("~"))(input)?;
+    let (rest, vars) = delimited(tag(tag_name.as_str()), take_until("~"), tag("~")).parse(input)?;
     let (_, vars) = separated_list0(
         tag("*"),
         take_while(|x: char| {
             x != '*' && (x.is_alphanumeric() || x.is_whitespace() || x.is_ascii_punctuation())
         }),
-    )(vars)?;
+    )
+    .parse(vars)?;
     // look for trailing newline
-    let (rest, _) = opt(newline)(rest)?;
+    let (rest, _) = opt(newline).parse(rest)?;
     Ok((rest, vars))
 }
 
