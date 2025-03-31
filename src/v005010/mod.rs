@@ -11,6 +11,9 @@ use serde::{Deserialize, Serialize};
 use std::fmt::Display;
 use x12_types_macros::DisplayX12;
 
+mod _276_claim_status;
+pub use _276_claim_status::*;
+
 mod segment;
 
 #[cfg(test)]
