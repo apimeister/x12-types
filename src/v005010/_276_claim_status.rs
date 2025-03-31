@@ -21,6 +21,36 @@ pub struct _276 {
     pub se: SE,
 }
 
+// Helper functions to manage the SE segment count. The caller is going to
+// have a hard time calculating this, so the library should help out.
+// It'd be good if all of the doc types had something like this, and better
+// if it could be maintained automatically.
+impl _276 {
+    // Need a better way to do this. This is a hokey implementation for now.
+    // It'd be better if we could calculate this without doing so much work.
+    pub fn get_segment_count(&self) -> usize {
+        let str_276 = self.to_string();
+        let segments: Vec<&str> = dbg!(str_276
+            .split("~")
+            .filter(|seg| seg.trim().len() > 0)
+            .collect());
+        segments.len()
+    }
+
+    /// Set the SE01 segment count. Normally pass None for count
+    /// to allow counting automatically and setting to calculated count.
+    /// If the count is failing for some reason, you can pass one in.
+    pub fn set_se_segment_count(&mut self, count: Option<usize>) {
+        let count = if let Some(cnt) = count {
+            cnt
+        } else {
+            self.get_segment_count()
+        };
+
+        self.se._01 = count.to_string()
+    }
+}
+
 /// Payer Information
 #[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
 pub struct _276Loop2100A {
