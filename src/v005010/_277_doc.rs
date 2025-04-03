@@ -1,3 +1,4 @@
+use log::trace;
 use serde::{Deserialize, Serialize};
 use x12_types_macros::DisplayX12;
 
@@ -184,7 +185,7 @@ pub struct _277Loop2100C {
 
 /// 2200C - Service Provider Claim Status
 ///
-/// Typical segment order: TRN, STC, REF, DTP, etc.  
+/// Typical segment order: TRN, STC, REF, DTP, etc.
 #[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
 pub struct _277Loop2200C {
     /// TRN - Tracking Number
@@ -346,7 +347,7 @@ pub struct _277Loop2200E {
 
 /// 2220E - Dependent Service Line Information
 ///
-/// Typical ordering: SVC, STC, REF, DTP.  
+/// Typical ordering: SVC, STC, REF, DTP.
 #[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
 pub struct _277Loop2220E {
     /// SVC - Service Line(s)
@@ -440,7 +441,7 @@ fn parse_2000_any(input: &str) -> IResult<&str, Generic2000Loop> {
     // parse the HL segment
 
     let (rest, hl_seg) = HL::parse(input)?;
-    println!("Parsed HL: {}", hl_seg.to_string());
+    trace!("Parsed HL: {}", hl_seg.to_string());
     match hl_seg._03.as_str() {
         "20" => parse_loop_2000A(hl_seg, rest),
         "21" => parse_loop_2000B(hl_seg, rest),
@@ -448,7 +449,7 @@ fn parse_2000_any(input: &str) -> IResult<&str, Generic2000Loop> {
         "22" | "PT" => parse_loop_2000D(hl_seg, rest),
         "23" => parse_loop_2000E(hl_seg, rest),
         _ => {
-            println!("No recognized 2000 loops");
+            trace!("No recognized 2000 loops");
             Err(nom::Err::Error(nom::error::Error::new(
                 input,
                 nom::error::ErrorKind::NoneOf,
@@ -464,7 +465,7 @@ fn parse_2000_any(input: &str) -> IResult<&str, Generic2000Loop> {
 pub fn parse_loop_2000A(hl: HL, input: &str) -> IResult<&str, Generic2000Loop> {
     let mut output = _277Loop2000A::default();
 
-    println!("--> 2000A");
+    trace!("--> 2000A");
 
     // HL
     //let (rest, hl) = HL::parse(input)?;
@@ -474,13 +475,13 @@ pub fn parse_loop_2000A(hl: HL, input: &str) -> IResult<&str, Generic2000Loop> {
     let (rest, loop_2100a) = parse_loop_2100A(input)?;
     output.loop_2100a = loop_2100a;
 
-    println!("<-- 2000A");
+    trace!("<-- 2000A");
     Ok((rest, Generic2000Loop::A(output)))
 }
 
 pub fn parse_loop_2100A(input: &str) -> IResult<&str, _277Loop2100A> {
     let mut output = _277Loop2100A::default();
-    println!("--> 2100A");
+    trace!("--> 2100A");
 
     // NM1
     let (rest, nm1) = NM1::parse(input)?;
@@ -509,7 +510,7 @@ pub fn parse_loop_2100A(input: &str) -> IResult<&str, _277Loop2100A> {
     // PER (0+)
     let (rest, per_vec) = many0(PER::parse).parse(rest)?;
     output.per = per_vec;
-    println!("<-- 2100A");
+    trace!("<-- 2100A");
 
     Ok((rest, output))
 }
@@ -637,46 +638,46 @@ pub fn parse_loop_2000C(hl: HL, input: &str) -> IResult<&str, Generic2000Loop> {
 }
 
 pub fn parse_loop_2100C(input: &str) -> IResult<&str, _277Loop2100C> {
-    println!("--> 2100C");
+    trace!("--> 2100C");
     let mut output = _277Loop2100C::default();
 
-    println!("nm1");
+    trace!("nm1");
     let (rest, nm1) = NM1::parse(input)?;
     output.nm1 = nm1;
 
-    println!("n3");
+    trace!("n3");
     let (rest, n3) = opt(N3::parse).parse(rest)?;
     output.n3 = n3;
 
-    println!("n4");
+    trace!("n4");
     let (rest, n4) = opt(N4::parse).parse(rest)?;
     output.n4 = n4;
 
-    println!("trn");
+    trace!("trn");
     let (rest, trn) = many0(TRN::parse).parse(rest)?;
     output.trn = trn;
 
-    println!("stc");
+    trace!("stc");
     let (rest, stc) = many0(STC::parse).parse(rest)?;
     output.stc = stc;
 
-    println!("qty");
+    trace!("qty");
     let (rest, qty) = many0(QTY::parse).parse(rest)?;
     output.qty = qty;
 
-    println!("amt");
+    trace!("amt");
     let (rest, amt) = many0(AMT::parse).parse(rest)?;
     output.amt = amt;
 
-    println!("rrefs");
+    trace!("rrefs");
     let (rest, rrefs) = many0(REF::parse).parse(rest)?;
     output.r#ref = rrefs;
 
-    println!("pers");
+    trace!("pers");
     let (rest, pers) = many0(PER::parse).parse(rest)?;
     output.per = pers;
 
-    println!("<-- 2100C");
+    trace!("<-- 2100C");
 
     Ok((rest, output))
 }
@@ -684,40 +685,40 @@ pub fn parse_loop_2100C(input: &str) -> IResult<&str, _277Loop2100C> {
 pub fn parse_loop_2200C(input: &str) -> IResult<&str, _277Loop2200C> {
     let mut output = _277Loop2200C::default();
 
-    println!("--> 2200C");
+    trace!("--> 2200C");
 
     // TRN (optional in some 277 usage)
-    println!("trn");
+    trace!("trn");
     let (rest, trn_opt) = opt(TRN::parse).parse(input)?;
     output.trn = trn_opt;
 
     // STC (0+)
-    println!("stc");
+    trace!("stc");
     let (rest, stcs) = many0(STC::parse).parse(rest)?;
     output.stc = stcs;
 
     // QTY/AMT are non-standard in this loop, but show up sometimes
 
     /// QTY
-    println!("qty");
+    trace!("qty");
     let (rest, qty) = many0(QTY::parse).parse(rest)?;
     output.qty = qty;
     /// AMT
-    println!("amt");
+    trace!("amt");
     let (rest, amt) = many0(AMT::parse).parse(rest)?;
     output.amt = amt;
 
     // REF (0+)
-    println!("ref");
+    trace!("ref");
     let (rest, rrefs) = many0(REF::parse).parse(rest)?;
     output.r#ref = rrefs;
 
     // DTP (0+)
-    println!("dtp");
+    trace!("dtp");
     let (rest, dtps) = many0(DTP::parse).parse(rest)?;
     output.dtp = dtps;
 
-    println!("<-- 2200C");
+    trace!("<-- 2200C");
     Ok((rest, output))
 }
 
@@ -759,86 +760,86 @@ pub fn parse_loop_2000D(hl: HL, input: &str) -> IResult<&str, Generic2000Loop> {
 pub fn parse_loop_2100D(input: &str) -> IResult<&str, _277Loop2100D> {
     let mut output = _277Loop2100D::default();
 
-    println!("--> 2100D");
+    trace!("--> 2100D");
 
-    println!("nm1");
+    trace!("nm1");
     let (rest, nm1) = NM1::parse(input)?;
     output.nm1 = nm1;
 
-    println!("n3");
+    trace!("n3");
     let (rest, n3) = opt(N3::parse).parse(rest)?;
     output.n3 = n3;
 
-    println!("n4");
+    trace!("n4");
     let (rest, n4) = opt(N4::parse).parse(rest)?;
     output.n4 = n4;
 
-    println!("rrefs");
+    trace!("rrefs");
     let (rest, rrefs) = many0(REF::parse).parse(rest)?;
     output.r#ref = rrefs;
 
-    println!("pers");
+    trace!("pers");
     let (rest, pers) = many0(PER::parse).parse(rest)?;
     output.per = pers;
 
-    println!("<-- 2100D");
+    trace!("<-- 2100D");
 
     Ok((rest, output))
 }
 
 pub fn parse_loop_2200D(input: &str) -> IResult<&str, _277Loop2200D> {
     let mut output = _277Loop2200D::default();
-    println!("--> 2200D");
+    trace!("--> 2200D");
 
-    println!("trn");
+    trace!("trn");
     let (rest, trn) = many0(TRN::parse).parse(input)?;
     output.trn = trn;
 
-    println!("stc");
+    trace!("stc");
     let (rest, stc_vec) = many0(STC::parse).parse(rest)?;
     output.stc = stc_vec;
 
-    println!("ref");
+    trace!("ref");
     let (rest, ref_vec) = many0(REF::parse).parse(rest)?;
     output.r#ref = ref_vec;
 
-    println!("dtp");
+    trace!("dtp");
     let (rest, dtp_vec) = many0(DTP::parse).parse(rest)?;
     output.dtp = dtp_vec;
 
-    println!("svc");
+    trace!("svc");
     let (rest, svc_vec) = many0(parse_loop_2220D).parse(rest)?;
     output.svc = svc_vec;
 
-    println!("<-- 2200D");
+    trace!("<-- 2200D");
     Ok((rest, output))
 }
 
 pub fn parse_loop_2220D(input: &str) -> IResult<&str, _277Loop2220D> {
     let mut output = _277Loop2220D::default();
-    println!("--> 2220D");
+    trace!("--> 2220D");
 
     // SVC (1+)
-    println!("svc");
+    trace!("svc");
     let (rest, svc_list) = many1(SVC::parse).parse(input)?;
     output.svc = svc_list;
 
     // STC (0+)
-    println!("stc");
+    trace!("stc");
     let (rest, stc_list) = many0(STC::parse).parse(rest)?;
     output.stc = stc_list;
 
     // REF (0+)
-    println!("ref");
+    trace!("ref");
     let (rest, ref_list) = many0(REF::parse).parse(rest)?;
     output.r#ref = ref_list;
 
     // DTP (0+)
-    println!("dtp");
+    trace!("dtp");
     let (rest, dtp_list) = many0(DTP::parse).parse(rest)?;
     output.dtp = dtp_list;
 
-    println!("<-- 2220D");
+    trace!("<-- 2220D");
     Ok((rest, output))
 }
 
