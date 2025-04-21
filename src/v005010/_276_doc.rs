@@ -1,188 +1,82 @@
 pub use super::segment::*;
+use log::trace;
 use serde::{Deserialize, Serialize};
 use x12_types_macros::DisplayX12;
 
 use crate::util::Parser;
 use nom::{
-    combinator::{opt, peek},
-    multi::{many0, many1},
-    IResult, Parser as _,
+    combinator::opt,
+    multi::many0,
+    IResult,
+    Parser as _,
 };
 
 /// 276 - Health Claim Status Request
 #[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
 pub struct _276 {
-    /// Transaction set header
     pub st: ST,
-    /// Beginning of hierarchical transaction
     pub bht: BHT,
-    /// Information Source loops (2000A)
     pub loop_2000a: Vec<_276Loop2000A>,
-    /// Information Receiver loops (2000B)
     pub loop_2000b: Vec<_276Loop2000B>,
-    /// Subscriber loops (2000C)
     pub loop_2000c: Vec<_276Loop2000C>,
-    /// Dependent loops (2000D)
     pub loop_2000d: Vec<_276Loop2000D>,
-    /// Service Provider loops (2000E)
     pub loop_2000e: Vec<_276Loop2000E>,
-    /// Transaction set trailer
     pub se: SE,
 }
 
-// Helper functions to manage the SE segment count. The caller is going to
-// have a hard time calculating this, so the library should help out.
-// It'd be good if all of the doc types had something like this, and better
-// if it could be maintained automatically.
 impl _276 {
-    // Need a better way to do this. This is a hokey implementation for now.
-    // It'd be better if we could calculate this without doing so much work.
     pub fn get_segment_count(&self) -> usize {
-        let str_276 = self.to_string();
-        let segments: Vec<&str> = dbg!(str_276
-            .split("~")
-            .filter(|seg| seg.trim().len() > 0)
-            .collect());
-        segments.len()
+        self.to_string().split('~').filter(|s| !s.is_empty()).count()
     }
-
-    /// Set the SE01 segment count. Normally pass None for count
-    /// to allow counting automatically and setting to calculated count.
-    /// If the count is failing for some reason, you can pass one in.
     pub fn set_se_segment_count(&mut self, count: Option<usize>) {
-        let count = if let Some(cnt) = count {
-            cnt
-        } else {
-            self.get_segment_count()
-        };
-
-        self.se._01 = count.to_string()
+        let cnt = count.unwrap_or_else(|| self.get_segment_count());
+        self.se._01 = cnt.to_string();
     }
 }
 
-/// Loop 2000A - Information Source (Payer)
+// Loop structs
 #[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
-pub struct _276Loop2000A {
-    pub hl: HL,
-    pub loop_2100a: _276Loop2100A,
-    pub loop_2200a: Vec<_276Loop2200A>,
-}
+pub struct _276Loop2000A { pub hl: HL, pub loop_2100a: _276Loop2100A, pub loop_2200a: Vec<_276Loop2200A> }
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
+pub struct _276Loop2100A { pub nm1: NM1, pub per: Option<PER> }
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
+pub struct _276Loop2200A { pub trn: TRN, pub r#ref: Vec<REF>, pub dtp: Vec<DTP> }
 
 #[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
-pub struct _276Loop2100A {
-    pub nm1: NM1,
-    pub per: Option<PER>,
-}
+pub struct _276Loop2000B { pub hl: HL, pub loop_2100b: _276Loop2100B, pub loop_2200b: Vec<_276Loop2200B> }
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
+pub struct _276Loop2100B { pub nm1: NM1, pub per: Option<PER> }
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
+pub struct _276Loop2200B { pub trn: TRN, pub r#ref: Vec<REF>, pub dtp: Vec<DTP> }
 
 #[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
-pub struct _276Loop2200A {
-    pub trn: TRN,
-    pub r#ref: Vec<REF>,
-    pub dtp: Vec<DTP>,
-}
-
-/// Loop 2000B - Information Receiver
+pub struct _276Loop2000C { pub hl: HL, pub loop_2100c: _276Loop2100C, pub loop_2200c: Vec<_276Loop2200C> }
 #[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
-pub struct _276Loop2000B {
-    pub hl: HL,
-    pub loop_2100b: _276Loop2100B,
-    pub loop_2200b: Vec<_276Loop2200B>,
-}
-
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
-pub struct _276Loop2100B {
-    pub nm1: NM1,
-    pub per: Option<PER>,
-}
-
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
-pub struct _276Loop2200B {
-    pub trn: TRN,
-    pub r#ref: Vec<REF>,
-    pub dtp: Vec<DTP>,
-}
-
-/// Loop 2000C - Subscriber
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
-pub struct _276Loop2000C {
-    pub hl: HL,
-    pub loop_2100c: _276Loop2100C,
-    pub loop_2200c: Vec<_276Loop2200C>,
-}
-
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
-pub struct _276Loop2100C {
-    pub nm1: NM1,
-    pub dmg: DMG,
-    pub r#ref: Vec<REF>,
-}
-
+pub struct _276Loop2100C { pub nm1: NM1, pub dmg: Option<DMG>, pub r#ref: Vec<REF> }
 #[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
 pub struct _276Loop2200C {
-    pub trn: TRN,
+    pub trn: Option<TRN>,
     pub r#ref: Vec<REF>,
+    pub amt: Vec<AMT>,
     pub dtp: Vec<DTP>,
     pub svc: Option<SVC>,
-}
-
-/// Loop 2000D - Dependent
+} 
 #[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
-pub struct _276Loop2000D {
-    pub hl: HL,
-    pub loop_2100d: _276Loop2100D,
-    pub loop_2200d: Vec<_276Loop2200D>,
-}
+pub struct _276Loop2000D { pub hl: HL, pub dmg: DMG, pub loop_2100d: _276Loop2100D, pub loop_2200d: Vec<_276Loop2200D> }
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
+pub struct _276Loop2100D { pub nm1: NM1, pub r#ref: Vec<REF> }
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
+pub struct _276Loop2200D { pub trn: TRN, pub r#ref: Vec<REF>, pub amt: Vec<AMT>, pub dtp: Vec<DTP>, pub svc: Option<SVC> }
 
 #[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
-pub struct _276Loop2100D {
-    pub nm1: NM1,
-    pub dmg: DMG,
-    pub r#ref: Vec<REF>,
-}
-
+pub struct _276Loop2000E { pub hl: HL, pub dmg: DMG, pub loop_2100e: _276Loop2100E, pub loop_2200e: Vec<_276Loop2200E> }
 #[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
-pub struct _276Loop2200D {
-    pub trn: TRN,
-    pub r#ref: Vec<REF>,
-    pub dtp: Vec<DTP>,
-    pub svc: Option<SVC>,
-}
-
-/// Loop 2000E - Service Provider
+pub struct _276Loop2100E { pub nm1: NM1, pub per: Option<PER>, pub r#ref: Vec<REF>, pub dtp: Vec<DTP>, pub svc: SVC }
 #[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
-pub struct _276Loop2000E {
-    pub hl: HL,
-    pub loop_2100e: _276Loop2100E,
-    pub loop_2200e: Vec<_276Loop2200E>,
-}
+pub struct _276Loop2200E { pub trn: TRN, pub r#ref: Vec<REF>, pub dtp: Vec<DTP>, pub svc: Option<SVC> }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
-pub struct _276Loop2100E {
-    pub nm1: NM1,
-    pub per: Option<PER>,
-    pub r#ref: Vec<REF>,
-    pub dtp: Vec<DTP>,
-    pub svc: SVC,
-}
-
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
-pub struct _276Loop2200E {
-    pub trn: TRN,
-    pub r#ref: Vec<REF>,
-    pub dtp: Vec<DTP>,
-    pub svc: Option<SVC>,
-}
-
-
-
-
-pub enum Generic2000Loop {
-    A(_276Loop2000A),
-    B(_276Loop2000B),
-    C(_276Loop2000C),
-    D(_276Loop2000D),
-    E(_276Loop2000E),
-}
+// Enum for dynamic dispatch
+pub enum Generic2000Loop { A(_276Loop2000A), B(_276Loop2000B), C(_276Loop2000C), D(_276Loop2000D), E(_276Loop2000E) }
 
 impl<'a> Parser<&'a str, _276, nom::error::Error<&'a str>> for _276 {
     fn parse(input: &'a str) -> IResult<&'a str, _276> {
@@ -190,7 +84,9 @@ impl<'a> Parser<&'a str, _276, nom::error::Error<&'a str>> for _276 {
     }
 }
 
+// Top-level 276 parser
 pub fn parse_276(input: &str) -> IResult<&str, _276> {
+    trace!("enter parse_276");
     let (rest, st) = ST::parse(input)?;
     let (rest, bht) = BHT::parse(rest)?;
 
@@ -199,161 +95,257 @@ pub fn parse_276(input: &str) -> IResult<&str, _276> {
     doc.bht = bht;
 
     let mut rest = rest;
-    loop {
-        if peek(opt(ST::parse)).parse(rest)?.1.is_some() {
-            break;
+    while let Ok((r_hl, hl)) = HL::parse(rest) {
+        let (r, loop_result) = match hl._03.as_str() {
+            "20" => parse_loop_2000A(hl, r_hl),
+            "21" => parse_loop_2000B(hl, r_hl),
+            "19" => parse_loop_2000C(hl, r_hl),
+            "22" => parse_loop_2000D(hl, r_hl),
+            "23" => parse_loop_2000E(hl, r_hl),
+            _ => { trace!("Unknown HL03 value: {}", hl._03); break; }
+        }?;
+
+        match loop_result {
+            Generic2000Loop::A(l) => doc.loop_2000a.push(l),
+            Generic2000Loop::B(l) => doc.loop_2000b.push(l),
+            Generic2000Loop::C(l) => doc.loop_2000c.push(l),
+            Generic2000Loop::D(l) => doc.loop_2000d.push(l),
+            Generic2000Loop::E(l) => doc.loop_2000e.push(l),
         }
-        match parse_2000_any(rest) {
-            Ok((next, loop_obj)) => {
-                match loop_obj {
-                    Generic2000Loop::A(a) => doc.loop_2000a.push(a),
-                    Generic2000Loop::B(b) => doc.loop_2000b.push(b),
-                    Generic2000Loop::C(c) => doc.loop_2000c.push(c),
-                    Generic2000Loop::D(d) => doc.loop_2000d.push(d),
-                    Generic2000Loop::E(e) => doc.loop_2000e.push(e),
-                }
-                rest = next;
-            }
-            Err(_) => break,
-        }
+
+        rest = r;
     }
 
     let (rest, se) = SE::parse(rest)?;
     doc.se = se;
+    trace!("exit parse_276");
     Ok((rest, doc))
 }
 
-fn parse_2000_any(input: &str) -> IResult<&str, Generic2000Loop> {
-    let (rest, hl) = HL::parse(input)?;
-    match hl._03.as_str() {
-        "20" => parse_loop_2000A(hl, rest),
-        "21" => parse_loop_2000B(hl, rest),
-        "22" => parse_loop_2000C(hl, rest),
-        "23" => parse_loop_2000D(hl, rest),
-        "24" => parse_loop_2000E(hl, rest),
-        _ => Err(nom::Err::Error(nom::error::Error::new(input, nom::error::ErrorKind::NoneOf))),
-    }
-}
-
-fn parse_loop_2000A(hl: HL, input: &str) -> IResult<&str, Generic2000Loop> {
-    let mut output = _276Loop2000A::default();
-    output.hl = hl;
+// Parse Loop 2000A
+pub fn parse_loop_2000A(hl: HL, input: &str) -> IResult<&str, Generic2000Loop> {
+    trace!("enter parse_loop_2000A input: \"{input}\"");
+    let mut output = _276Loop2000A { hl, ..Default::default() };
     let (rest, loop_2100a) = parse_loop_2100A(input)?;
     output.loop_2100a = loop_2100a;
     let (rest, loop_2200a) = many0(parse_loop_2200A).parse(rest)?;
     output.loop_2200a = loop_2200a;
-    Ok((rest, Generic2000Loop::A(output)))
+    let res = Ok((rest, Generic2000Loop::A(output)));
+    trace!("exit parse_loop_2000A");
+    res
 }
 
-fn parse_loop_2100A(input: &str) -> IResult<&str, _276Loop2100A> {
+pub fn parse_loop_2100A(input: &str) -> IResult<&str, _276Loop2100A> {
+    trace!("enter parse_loop_2100A input: \"{input}\"");
     let (rest, nm1) = NM1::parse(input)?;
     let (rest, per) = opt(PER::parse).parse(rest)?;
-    Ok((rest, _276Loop2100A { nm1, per }))
+    let res = Ok((rest, _276Loop2100A { nm1, per }));
+    trace!("exit parse_loop_2100A");
+    res
 }
 
-fn parse_loop_2200A(input: &str) -> IResult<&str, _276Loop2200A> {
+pub fn parse_loop_2200A(input: &str) -> IResult<&str, _276Loop2200A> {
+    trace!("enter parse_loop_2200A input: \"{input}\"");
     let (rest, trn) = TRN::parse(input)?;
     let (rest, rref) = many0(REF::parse).parse(rest)?;
     let (rest, dtp) = many0(DTP::parse).parse(rest)?;
-    Ok((rest, _276Loop2200A { trn, r#ref: rref, dtp }))
+    let res = Ok((rest, _276Loop2200A { trn, r#ref: rref, dtp }));
+    trace!("exit parse_loop_2200A");
+    res
 }
 
-fn parse_loop_2000B(hl: HL, input: &str) -> IResult<&str, Generic2000Loop> {
-    let mut output = _276Loop2000B::default();
-    output.hl = hl;
+// Parse Loop 2000B
+pub fn parse_loop_2000B(hl: HL, input: &str) -> IResult<&str, Generic2000Loop> {
+    trace!("enter parse_loop_2000B input: \"{input}\"");
+    let mut output = _276Loop2000B { hl, ..Default::default() };
     let (rest, loop_2100b) = parse_loop_2100B(input)?;
     output.loop_2100b = loop_2100b;
     let (rest, loop_2200b) = many0(parse_loop_2200B).parse(rest)?;
     output.loop_2200b = loop_2200b;
-    Ok((rest, Generic2000Loop::B(output)))
+    let res = Ok((rest, Generic2000Loop::B(output)));
+    trace!("exit parse_loop_2000B");
+    res
 }
 
-fn parse_loop_2100B(input: &str) -> IResult<&str, _276Loop2100B> {
+pub fn parse_loop_2100B(input: &str) -> IResult<&str, _276Loop2100B> {
+    trace!("enter parse_loop_2100B input: \"{input}\"");
     let (rest, nm1) = NM1::parse(input)?;
     let (rest, per) = opt(PER::parse).parse(rest)?;
-    Ok((rest, _276Loop2100B { nm1, per }))
+    let res = Ok((rest, _276Loop2100B { nm1, per }));
+    trace!("exit parse_loop_2100B");
+    res
 }
 
-fn parse_loop_2200B(input: &str) -> IResult<&str, _276Loop2200B> {
+pub fn parse_loop_2200B(input: &str) -> IResult<&str, _276Loop2200B> {
+    trace!("enter parse_loop_2200B input: \"{input}\"");
     let (rest, trn) = TRN::parse(input)?;
     let (rest, rref) = many0(REF::parse).parse(rest)?;
     let (rest, dtp) = many0(DTP::parse).parse(rest)?;
-    Ok((rest, _276Loop2200B { trn, r#ref: rref, dtp }))
+    let res = Ok((rest, _276Loop2200B { trn, r#ref: rref, dtp }));
+    trace!("exit parse_loop_2200B");
+    res
 }
 
-fn parse_loop_2000C(hl: HL, input: &str) -> IResult<&str, Generic2000Loop> {
-    let mut output = _276Loop2000C::default();
-    output.hl = hl;
+// Parse Loop 2000C
+pub fn parse_loop_2000C(hl: HL, input: &str) -> IResult<&str, Generic2000Loop> {
+    trace!("enter parse_loop_2000C input: \"{input}\"");
+    let mut output = _276Loop2000C { hl, ..Default::default() };
     let (rest, loop_2100c) = parse_loop_2100C(input)?;
     output.loop_2100c = loop_2100c;
     let (rest, loop_2200c) = many0(parse_loop_2200C).parse(rest)?;
     output.loop_2200c = loop_2200c;
-    Ok((rest, Generic2000Loop::C(output)))
+    let res = Ok((rest, Generic2000Loop::C(output)));
+    trace!("exit parse_loop_2000C");
+    res
 }
 
-fn parse_loop_2100C(input: &str) -> IResult<&str, _276Loop2100C> {
+pub fn parse_loop_2100C(input: &str) -> IResult<&str, _276Loop2100C> {
+    trace!("enter parse_loop_2100C input: \"{input}\"");
     let (rest, nm1) = NM1::parse(input)?;
-    let (rest, dmg) = DMG::parse.parse(rest)?;
+    let (rest, dmg) = opt(DMG::parse).parse(rest)?;
     let (rest, rref) = many0(REF::parse).parse(rest)?;
-    Ok((rest, _276Loop2100C { nm1, dmg, r#ref: rref }))
+    let res = Ok((rest, _276Loop2100C { nm1, dmg, r#ref: rref }));
+    trace!("exit parse_loop_2100C");
+    res
 }
 
-fn parse_loop_2200C(input: &str) -> IResult<&str, _276Loop2200C> {
-    let (rest, trn) = TRN::parse(input)?;
-    let (rest, rref) = many0(REF::parse).parse(rest)?;
-    let (rest, dtp) = many0(DTP::parse).parse(rest)?;
-    let (rest, svc) = opt(SVC::parse).parse(rest)?;
-    Ok((rest, _276Loop2200C { trn, r#ref: rref, dtp, svc }))
+pub fn parse_loop_2200C(input: &str) -> IResult<&str, _276Loop2200C> {
+    trace!("enter parse_loop_2200C input: \"{input}\"");
+    // Only attempt 2200C loop when the next segment is one of TRN, REF, AMT, DTP, or SVC
+    if input.starts_with("TRN*") || input.starts_with("REF*") || input.starts_with("AMT*") || input.starts_with("DTP*") || input.starts_with("SVC*") {
+        let (after_trn, trn_opt) = opt(TRN::parse).parse(input)?;
+        let (rest, rref) = many0(REF::parse).parse(after_trn)?;
+        let (rest, amt)  = many0(AMT::parse).parse(rest)?;
+        let (rest, dtp)  = many0(DTP::parse).parse(rest)?;
+        let (rest, svc)  = opt(SVC::parse).parse(rest)?;
+        trace!("exit parse_loop_2200C");
+        Ok((rest, _276Loop2200C { trn: trn_opt, r#ref: rref, amt, dtp, svc }))
+    } else {
+        Err(nom::Err::Error(nom::error::Error::new(input, nom::error::ErrorKind::Tag)))
+    }
 }
 
-fn parse_loop_2000D(hl: HL, input: &str) -> IResult<&str, Generic2000Loop> {
-    let mut output = _276Loop2000D::default();
-    output.hl = hl;
-    let (rest, loop_2100d) = parse_loop_2100D(input)?;
+// Parse Loop 2000D
+pub fn parse_loop_2000D(hl: HL, input: &str) -> IResult<&str, Generic2000Loop> {
+    trace!("enter parse_loop_2000D input: \"{input}\"");
+    let mut output = _276Loop2000D { hl, ..Default::default() };
+    // Make DMG optional to allow provider-level entries without a DMG segment
+    let (rest, dmg_opt) = opt(DMG::parse).parse(input)?;
+    output.dmg = dmg_opt.unwrap_or_default();
+    let (rest, loop_2100d) = parse_loop_2100D(rest)?;
     output.loop_2100d = loop_2100d;
     let (rest, loop_2200d) = many0(parse_loop_2200D).parse(rest)?;
     output.loop_2200d = loop_2200d;
-    Ok((rest, Generic2000Loop::D(output)))
+    let res = Ok((rest, Generic2000Loop::D(output)));
+    trace!("exit parse_loop_2000D");
+    res
 }
 
-fn parse_loop_2100D(input: &str) -> IResult<&str, _276Loop2100D> {
+pub fn parse_loop_2100D(input: &str) -> IResult<&str, _276Loop2100D> {
+    trace!("enter parse_loop_2100D input: \"{input}\"");
     let (rest, nm1) = NM1::parse(input)?;
-    let (rest, dmg) = DMG::parse.parse(rest)?;
     let (rest, rref) = many0(REF::parse).parse(rest)?;
-    Ok((rest, _276Loop2100D { nm1, dmg, r#ref: rref }))
+    let res = Ok((rest, _276Loop2100D { nm1, r#ref: rref }));
+    trace!("exit parse_loop_2100D");
+    res
 }
 
-fn parse_loop_2200D(input: &str) -> IResult<&str, _276Loop2200D> {
-    let (rest, trn) = TRN::parse(input)?;
+pub fn parse_loop_2200D(input: &str) -> IResult<&str, _276Loop2200D> {
+    trace!("enter parse_loop_2200D input: \"{input}\"");
+    let (rest, trn)  = TRN::parse(input)?;
     let (rest, rref) = many0(REF::parse).parse(rest)?;
-    let (rest, dtp) = many0(DTP::parse).parse(rest)?;
-    let (rest, svc) = opt(SVC::parse).parse(rest)?;
-    Ok((rest, _276Loop2200D { trn, r#ref: rref, dtp, svc }))
+    let (rest, amt)  = many0(AMT::parse).parse(rest)?;
+    let (rest, dtp)  = many0(DTP::parse).parse(rest)?;
+    let (rest, svc)  = opt(SVC::parse).parse(rest)?;
+    trace!("exit parse_loop_2200D");
+    Ok((rest, _276Loop2200D { trn, r#ref: rref, amt, dtp, svc }))
 }
 
-fn parse_loop_2000E(hl: HL, input: &str) -> IResult<&str, Generic2000Loop> {
-    let mut output = _276Loop2000E::default();
-    output.hl = hl;
-    let (rest, loop_2100e) = parse_loop_2100E(input)?;
+// Parse Loop 2000E
+pub fn parse_loop_2000E(hl: HL, input: &str) -> IResult<&str, Generic2000Loop> {
+    trace!("enter parse_loop_2000E input: \"{input}\"");
+    let mut output = _276Loop2000E { hl, ..Default::default() };
+    let (rest, dmg) = DMG::parse(input)?;
+    output.dmg = dmg;
+    let (rest, loop_2100e) = parse_loop_2100E(rest)?;
     output.loop_2100e = loop_2100e;
     let (rest, loop_2200e) = many0(parse_loop_2200E).parse(rest)?;
     output.loop_2200e = loop_2200e;
-    Ok((rest, Generic2000Loop::E(output)))
+    let res = Ok((rest, Generic2000Loop::E(output)));
+    trace!("exit parse_loop_2000E");
+    res
 }
 
-fn parse_loop_2100E(input: &str) -> IResult<&str, _276Loop2100E> {
+pub fn parse_loop_2100E(input: &str) -> IResult<&str, _276Loop2100E> {
+    trace!("enter parse_loop_2100E input: \"{input}\"");
     let (rest, nm1) = NM1::parse(input)?;
     let (rest, per) = opt(PER::parse).parse(rest)?;
     let (rest, rref) = many0(REF::parse).parse(rest)?;
     let (rest, dtp) = many0(DTP::parse).parse(rest)?;
-    let (rest, svc) = SVC::parse.parse(rest)?;
-    Ok((rest, _276Loop2100E { nm1, per, r#ref: rref, dtp, svc }))
+    let (rest, svc_opt) = opt(SVC::parse).parse(rest)?;
+    let svc = svc_opt.unwrap_or_default();
+    let res = Ok((rest, _276Loop2100E { nm1, per, r#ref: rref, dtp, svc }));
+    trace!("exit parse_loop_2100E");
+    res
 }
 
-fn parse_loop_2200E(input: &str) -> IResult<&str, _276Loop2200E> {
+pub fn parse_loop_2200E(input: &str) -> IResult<&str, _276Loop2200E> {
+    trace!("enter parse_loop_2200E input: \"{input}\"");
     let (rest, trn) = TRN::parse(input)?;
     let (rest, rref) = many0(REF::parse).parse(rest)?;
-    let (rest, dtp) = many0(DTP::parse).parse(rest)?;
-    let (rest, svc) = opt(SVC::parse).parse(rest)?;
-    Ok((rest, _276Loop2200E { trn, r#ref: rref, dtp, svc }))
+    let (rest, svc)  = opt(SVC::parse).parse(rest)?;
+    let (rest, dtp)  = many0(DTP::parse).parse(rest)?;
+    let res = Ok((rest, _276Loop2200E { trn, r#ref: rref, dtp, svc }));
+    trace!("exit parse_loop_2200E");
+    res
+}
+
+#[cfg(test)]
+mod tests {
+
+    use std::sync::Once;
+
+    static INIT: Once = Once::new();
+
+    pub fn initialize() {
+        INIT.call_once(|| {
+            pretty_env_logger::init();
+        });
+    }
+
+    use super::*;
+    const CLAIM_REQUEST: &str = "ST*276*0001*005010X212~BHT*0010*13*ABC276XXX*20050915*1425~HL*1**20*1~NM1*PR*2*ABC INSURANCE*****PI*12345~HL*2*1*21*1~NM1*41*2*XYZ SERVICE*****46*X67E~HL*3*2*19*1~NM1*1P*2*HOME HOSPITAL*****XX*1666666661~HL*4*3*22*0~DMG*D8*19301210*M~NM1*IL*1*SMITH*FRED****MI*123456789A~TRN*1*ABCXYZ1~REF*BLT*111~REF*EJ*SM123456~AMT*T3*8513.88~DTP*472*RD8*20050831-20050906~HL*5*3*22*0~DMG*D8*19301115*F~NM1*IL*1*JONES*MARY****MI*234567890A~TRN*1*ABCXYZ2~REF*BLT*111~REF*EJ*JO234567~AMT*T3*7599~DTP*472*RD8*20050731-20050809~HL*6*2*19*1~NM1*1P*2*HOME HOSPITAL PHYSICIANS*****XX*1666666666~HL*7*6*22*1~NM1*IL*1*MANN*JOHN****MI*345678901~HL*8*7*23~DMG*D8*19951101*M~NM1*QC*1*MANN*JOSEPH~TRN*1*ABCXYZ3~REF*EJ*MA345678~SVC*HC:99203*150*****1~DTP*472*D8*20050501~SE*36*0001~GE*1*20213~IEA*1*000010216~";
+    const CLAIM_NCPDP_REQUEST: &str = "ST*276*0001*005010X212~BHT*0010*13*ABC276XXX*20060415*1425~HL*1**20*1~NM1*PR*2*ABC INSURANCE*****PI*12345~HL*2*1*21*1~NM1*41*2*XYZ SERVICE*****46*X67E~HL*3*2*19*1~NM1*1P*2*HOME HOSPITAL PHARMACY*****XX*1666666662~HL*4*3*22*0~DMG*D8*19301210*M~NM1*IL*1*SMITH*FRED****MI*123456789012~TRN*1*ABCXYZ1~REF*XZ*7654321~AMT*T3*85~DTP*472*D8*20060301~SE*16*0001~GE*1*20213~IEA*1*000010216~";
+    const INFO_RECEIVER_REQUEST: &str = "ST*276*0001*005010X212~BHT*0010*13*ABC276XXX*20050915*1425~HL*1**20*1~NM1*PR*2*ABC INSURANCE*****PI*12345~HL*2*1*21*1~NM1*41*2*XYZ SERVICE*****46*X67E~HL*3*2*19*1~NM1*1P*2*HOME HOSPITAL*****XX*1666666661~HL*4*3*22*0~DMG*D8*19301210*M~NM1*IL*1*SMITH*FRED****MI*123456789A~TRN*1*ABCXYZ1~REF*BLT*111~REF*EJ*SM123456~AMT*T3*8513.88~DTP*472*RD8*20050831-20050906~SE*17*0001~GE*1*20213~IEA*1*000010216~";
+    const PROVIDER_REQUEST: &str = "ST*276*0001*005010X212~BHT*0010*13*ABC276XXX*20050915*1425~HL*1**20*1~NM1*PR*2*ABC INSURANCE*****PI*12345~HL*2*1*21*1~NM1*41*2*XYZ SERVICE*****46*X67E~HL*3*2*19*1~NM1*1P*2*HOME HOSPITAL*****XX*1666666661~HL*4*3*22*0~DMG*D8*19301210*M~NM1*IL*1*SMITH*FRED****MI*123456789A~TRN*1*ABCXYZ1~REF*BLT*111~REF*EJ*SM123456~AMT*T3*8513.88~DTP*472*RD8*20050831-20050906~HL*5*2*19*1~NM1*1P*2*HOME HOSPITAL PHYSICIANS*****XX*6166666666~HL*6*5*22*1~NM1*IL*1*MANN*JOHN****MI*345678901~HL*7*6*23~DMG*D8*19951101*M~NM1*QC*1*MANN*JOSEPH~TRN*1*ABCXYZ3~REF*EJ*MA345678~SVC*HC:99203*150*****1~DTP*472*D8*20050501~SE*28*0001~GE*1*20213~IEA*1*000010216~";
+
+    #[test]
+    fn parse_claim_request() {
+        initialize();
+        let (_, doc) = parse_276(CLAIM_REQUEST).expect("failed to parse claim-request");
+        assert_eq!(doc.st._01, "276");
+
+    }
+
+    #[test]
+    fn parse_claim_ncpdp_request() {
+        initialize();
+        let (_, doc) = parse_276(CLAIM_NCPDP_REQUEST).expect("failed to parse claim-ncpdp-request");
+        assert_eq!(doc.st._01, "276");
+    }
+
+    #[test]
+    fn parse_info_receiver_request() {
+        initialize();
+        let (_, doc) =
+            parse_276(INFO_RECEIVER_REQUEST).expect("failed to parse info-receiver-request");
+        assert_eq!(doc.st._01, "276");
+    }
+
+    #[test]
+    fn parse_provider_request() {
+        initialize();
+        let (_, doc) = parse_276(PROVIDER_REQUEST).expect("failed to parse provider-request");
+        assert_eq!(doc.st._01, "276");
+    }
 }
