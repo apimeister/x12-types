@@ -1,4 +1,4 @@
-use log::trace;
+use log::{error, trace};
 use serde::{Deserialize, Serialize};
 use x12_types_macros::DisplayX12;
 
@@ -386,6 +386,12 @@ pub enum Generic2000Loop {
 fn parse_277(input: &str) -> IResult<&str, _277> {
     // parse ST, BHT first
     let (rest, st) = ST::parse(input)?;
+
+    if st._01 != "277" {
+        error!("ST segment declares {} document instead of expected 277", st._01);
+        return Err(nom::Err::Failure(nom::error::Error::new("ST segment does not declare an EDI 277", nom::error::ErrorKind::Fail)));
+    }
+
     let (rest, bht) = BHT::parse(rest)?;
 
     let mut doc = _277::default();
