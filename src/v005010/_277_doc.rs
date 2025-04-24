@@ -9,7 +9,6 @@ use nom::{
     IResult, Parser as _,
 };
 
-// These imports assume you have them defined elsewhere. If not, create placeholders or remove them.
 use super::{AMT, BHT, DTP, HL, N3, N4, NM1, PER, QTY, REF, SE, ST, STC, SVC, TRN};
 
 /// 277 - Health Care Claim Status
