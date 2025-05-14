@@ -1,4 +1,3 @@
-
 pub use super::segment::*;
 use log::{error, trace};
 use serde::{Deserialize, Serialize};
@@ -135,7 +134,8 @@ pub struct _276Loop2200E {
 }
 
 // Enum for dynamic dispatch
-pub enum Generic2000Loop {
+#[allow(clippy::large_enum_variant)]
+pub enum _276Generic2000Loop {
     A(_276Loop2000A),
     B(_276Loop2000B),
     C(_276Loop2000C),
@@ -155,15 +155,23 @@ pub fn parse_276(input: &str) -> IResult<&str, _276> {
     let (rest, st) = ST::parse(input)?;
 
     if st._01 != "276" {
-        error!("ST segment declares {} document instead of expected 276", st._01);
-        return Err(nom::Err::Failure(nom::error::Error::new("ST segment does not declare an EDI 276", nom::error::ErrorKind::Fail)));
+        error!(
+            "ST segment declares {} document instead of expected 276",
+            st._01
+        );
+        return Err(nom::Err::Failure(nom::error::Error::new(
+            "ST segment does not declare an EDI 276",
+            nom::error::ErrorKind::Fail,
+        )));
     }
 
     let (rest, bht) = BHT::parse(rest)?;
 
-    let mut doc = _276::default();
-    doc.st = st;
-    doc.bht = bht;
+    let mut doc = _276 {
+        st,
+        bht,
+        ..Default::default()
+    };
 
     let mut rest = rest;
     while let Ok((r_hl, hl)) = HL::parse(rest) {
@@ -180,11 +188,11 @@ pub fn parse_276(input: &str) -> IResult<&str, _276> {
         }?;
 
         match loop_result {
-            Generic2000Loop::A(l) => doc.loop_2000a.push(l),
-            Generic2000Loop::B(l) => doc.loop_2000b.push(l),
-            Generic2000Loop::C(l) => doc.loop_2000c.push(l),
-            Generic2000Loop::D(l) => doc.loop_2000d.push(l),
-            Generic2000Loop::E(l) => doc.loop_2000e.push(l),
+            _276Generic2000Loop::A(l) => doc.loop_2000a.push(l),
+            _276Generic2000Loop::B(l) => doc.loop_2000b.push(l),
+            _276Generic2000Loop::C(l) => doc.loop_2000c.push(l),
+            _276Generic2000Loop::D(l) => doc.loop_2000d.push(l),
+            _276Generic2000Loop::E(l) => doc.loop_2000e.push(l),
         }
 
         rest = r;
@@ -197,7 +205,7 @@ pub fn parse_276(input: &str) -> IResult<&str, _276> {
 }
 
 // Parse Loop 2000A
-pub fn parse_loop_2000_a(hl: HL, input: &str) -> IResult<&str, Generic2000Loop> {
+fn parse_loop_2000_a(hl: HL, input: &str) -> IResult<&str, _276Generic2000Loop> {
     trace!("enter parse_loop_2000A input: \"{input}\"");
     let mut output = _276Loop2000A {
         hl,
@@ -207,12 +215,12 @@ pub fn parse_loop_2000_a(hl: HL, input: &str) -> IResult<&str, Generic2000Loop> 
     output.loop_2100a = loop_2100a;
     let (rest, loop_2200a) = many0(parse_loop_2200_a).parse(rest)?;
     output.loop_2200a = loop_2200a;
-    let res = Ok((rest, Generic2000Loop::A(output)));
+    let res = Ok((rest, _276Generic2000Loop::A(output)));
     trace!("exit parse_loop_2000A");
     res
 }
 
-pub fn parse_loop_2100_a(input: &str) -> IResult<&str, _276Loop2100A> {
+fn parse_loop_2100_a(input: &str) -> IResult<&str, _276Loop2100A> {
     trace!("enter parse_loop_2100A input: \"{input}\"");
     let (rest, nm1) = NM1::parse(input)?;
     let (rest, per) = opt(PER::parse).parse(rest)?;
@@ -221,7 +229,7 @@ pub fn parse_loop_2100_a(input: &str) -> IResult<&str, _276Loop2100A> {
     res
 }
 
-pub fn parse_loop_2200_a(input: &str) -> IResult<&str, _276Loop2200A> {
+fn parse_loop_2200_a(input: &str) -> IResult<&str, _276Loop2200A> {
     trace!("enter parse_loop_2200A input: \"{input}\"");
     let (rest, trn) = TRN::parse(input)?;
     let (rest, rref) = many0(REF::parse).parse(rest)?;
@@ -239,7 +247,7 @@ pub fn parse_loop_2200_a(input: &str) -> IResult<&str, _276Loop2200A> {
 }
 
 // Parse Loop 2000B
-pub fn parse_loop_2000_b(hl: HL, input: &str) -> IResult<&str, Generic2000Loop> {
+fn parse_loop_2000_b(hl: HL, input: &str) -> IResult<&str, _276Generic2000Loop> {
     trace!("enter parse_loop_2000B input: \"{input}\"");
     let mut output = _276Loop2000B {
         hl,
@@ -249,12 +257,12 @@ pub fn parse_loop_2000_b(hl: HL, input: &str) -> IResult<&str, Generic2000Loop> 
     output.loop_2100b = loop_2100b;
     let (rest, loop_2200b) = many0(parse_loop_2200_b).parse(rest)?;
     output.loop_2200b = loop_2200b;
-    let res = Ok((rest, Generic2000Loop::B(output)));
+    let res = Ok((rest, _276Generic2000Loop::B(output)));
     trace!("exit parse_loop_2000B");
     res
 }
 
-pub fn parse_loop_2100_b(input: &str) -> IResult<&str, _276Loop2100B> {
+fn parse_loop_2100_b(input: &str) -> IResult<&str, _276Loop2100B> {
     trace!("enter parse_loop_2100B input: \"{input}\"");
     let (rest, nm1) = NM1::parse(input)?;
     let (rest, per) = opt(PER::parse).parse(rest)?;
@@ -263,7 +271,7 @@ pub fn parse_loop_2100_b(input: &str) -> IResult<&str, _276Loop2100B> {
     res
 }
 
-pub fn parse_loop_2200_b(input: &str) -> IResult<&str, _276Loop2200B> {
+fn parse_loop_2200_b(input: &str) -> IResult<&str, _276Loop2200B> {
     trace!("enter parse_loop_2200B input: \"{input}\"");
     let (rest, trn) = TRN::parse(input)?;
     let (rest, rref) = many0(REF::parse).parse(rest)?;
@@ -281,7 +289,7 @@ pub fn parse_loop_2200_b(input: &str) -> IResult<&str, _276Loop2200B> {
 }
 
 // Parse Loop 2000C
-pub fn parse_loop_2000_c(hl: HL, input: &str) -> IResult<&str, Generic2000Loop> {
+fn parse_loop_2000_c(hl: HL, input: &str) -> IResult<&str, _276Generic2000Loop> {
     trace!("enter parse_loop_2000C input: \"{input}\"");
     let mut output = _276Loop2000C {
         hl,
@@ -291,12 +299,12 @@ pub fn parse_loop_2000_c(hl: HL, input: &str) -> IResult<&str, Generic2000Loop> 
     output.loop_2100c = loop_2100c;
     let (rest, loop_2200c) = many0(parse_loop_2200_c).parse(rest)?;
     output.loop_2200c = loop_2200c;
-    let res = Ok((rest, Generic2000Loop::C(output)));
+    let res = Ok((rest, _276Generic2000Loop::C(output)));
     trace!("exit parse_loop_2000C");
     res
 }
 
-pub fn parse_loop_2100_c(input: &str) -> IResult<&str, _276Loop2100C> {
+fn parse_loop_2100_c(input: &str) -> IResult<&str, _276Loop2100C> {
     trace!("enter parse_loop_2100C input: \"{input}\"");
     let (rest, nm1) = NM1::parse(input)?;
     let (rest, dmg) = opt(DMG::parse).parse(rest)?;
@@ -313,7 +321,7 @@ pub fn parse_loop_2100_c(input: &str) -> IResult<&str, _276Loop2100C> {
     res
 }
 
-pub fn parse_loop_2200_c(input: &str) -> IResult<&str, _276Loop2200C> {
+fn parse_loop_2200_c(input: &str) -> IResult<&str, _276Loop2200C> {
     trace!("enter parse_loop_2200C input: \"{input}\"");
     // Only attempt 2200C loop when the next segment is one of TRN, REF, AMT, DTP, or SVC
     if input.starts_with("TRN*")
@@ -347,7 +355,7 @@ pub fn parse_loop_2200_c(input: &str) -> IResult<&str, _276Loop2200C> {
 }
 
 // Parse Loop 2000D
-pub fn parse_loop_2000_d(hl: HL, input: &str) -> IResult<&str, Generic2000Loop> {
+fn parse_loop_2000_d(hl: HL, input: &str) -> IResult<&str, _276Generic2000Loop> {
     trace!("enter parse_loop_2000D input: \"{input}\"");
     let mut output = _276Loop2000D {
         hl,
@@ -360,12 +368,12 @@ pub fn parse_loop_2000_d(hl: HL, input: &str) -> IResult<&str, Generic2000Loop> 
     output.loop_2100d = loop_2100d;
     let (rest, loop_2200d) = many0(parse_loop_2200_d).parse(rest)?;
     output.loop_2200d = loop_2200d;
-    let res = Ok((rest, Generic2000Loop::D(output)));
+    let res = Ok((rest, _276Generic2000Loop::D(output)));
     trace!("exit parse_loop_2000D");
     res
 }
 
-pub fn parse_loop_2100_d(input: &str) -> IResult<&str, _276Loop2100D> {
+fn parse_loop_2100_d(input: &str) -> IResult<&str, _276Loop2100D> {
     trace!("enter parse_loop_2100D input: \"{input}\"");
     let (rest, nm1) = NM1::parse(input)?;
     let (rest, rref) = many0(REF::parse).parse(rest)?;
@@ -374,7 +382,7 @@ pub fn parse_loop_2100_d(input: &str) -> IResult<&str, _276Loop2100D> {
     res
 }
 
-pub fn parse_loop_2200_d(input: &str) -> IResult<&str, _276Loop2200D> {
+fn parse_loop_2200_d(input: &str) -> IResult<&str, _276Loop2200D> {
     trace!("enter parse_loop_2200D input: \"{input}\"");
     let (rest, trn) = TRN::parse(input)?;
     let (rest, rref) = many0(REF::parse).parse(rest)?;
@@ -395,7 +403,7 @@ pub fn parse_loop_2200_d(input: &str) -> IResult<&str, _276Loop2200D> {
 }
 
 // Parse Loop 2000E
-pub fn parse_loop_2000_e(hl: HL, input: &str) -> IResult<&str, Generic2000Loop> {
+fn parse_loop_2000_e(hl: HL, input: &str) -> IResult<&str, _276Generic2000Loop> {
     trace!("enter parse_loop_2000E input: \"{input}\"");
     let mut output = _276Loop2000E {
         hl,
@@ -407,12 +415,12 @@ pub fn parse_loop_2000_e(hl: HL, input: &str) -> IResult<&str, Generic2000Loop> 
     output.loop_2100e = loop_2100e;
     let (rest, loop_2200e) = many0(parse_loop_2200_e).parse(rest)?;
     output.loop_2200e = loop_2200e;
-    let res = Ok((rest, Generic2000Loop::E(output)));
+    let res = Ok((rest, _276Generic2000Loop::E(output)));
     trace!("exit parse_loop_2000E");
     res
 }
 
-pub fn parse_loop_2100_e(input: &str) -> IResult<&str, _276Loop2100E> {
+fn parse_loop_2100_e(input: &str) -> IResult<&str, _276Loop2100E> {
     trace!("enter parse_loop_2100E input: \"{input}\"");
     let (rest, nm1) = NM1::parse(input)?;
     let (rest, per) = opt(PER::parse).parse(rest)?;
@@ -434,7 +442,7 @@ pub fn parse_loop_2100_e(input: &str) -> IResult<&str, _276Loop2100E> {
     res
 }
 
-pub fn parse_loop_2200_e(input: &str) -> IResult<&str, _276Loop2200E> {
+fn parse_loop_2200_e(input: &str) -> IResult<&str, _276Loop2200E> {
     trace!("enter parse_loop_2200E input: \"{input}\"");
     let (rest, trn) = TRN::parse(input)?;
     let (rest, rref) = many0(REF::parse).parse(rest)?;
@@ -496,7 +504,10 @@ mod tests {
         assert!(sp1.loop_2200c.is_empty());
         let sp2 = &doc.loop_2000c[1];
         assert!(sp2.loop_2100c.dmg.is_none());
-        assert_eq!(sp2.loop_2100c.nm1._03.as_deref(), Some("HOME HOSPITAL PHYSICIANS"));
+        assert_eq!(
+            sp2.loop_2100c.nm1._03.as_deref(),
+            Some("HOME HOSPITAL PHYSICIANS")
+        );
         assert!(sp2.loop_2200c.is_empty());
         // 2000D - Subscriber
         let sub = &doc.loop_2000d[0];
@@ -515,7 +526,10 @@ mod tests {
     fn parse_claim_ncpdp_request() {
         initialize();
         let (_, doc) = parse_276(CLAIM_NCPDP_REQUEST).unwrap();
-        assert_eq!(doc.loop_2000c[0].loop_2100c.nm1._03.as_deref(), Some("HOME HOSPITAL PHARMACY"));
+        assert_eq!(
+            doc.loop_2000c[0].loop_2100c.nm1._03.as_deref(),
+            Some("HOME HOSPITAL PHARMACY")
+        );
         let sub = &doc.loop_2000d[0];
         assert_eq!(sub.dmg._01.as_deref(), Some("D8"));
         assert_eq!(sub.loop_2100d.nm1._03.as_deref(), Some("SMITH"));
@@ -539,12 +553,11 @@ mod tests {
         let (_, doc) = parse_276(PROVIDER_REQUEST).unwrap();
         assert_eq!(doc.loop_2000d.len(), 2);
         assert_eq!(doc.loop_2000d[1].dmg._01.as_deref(), None);
-         // verify there is exactly one dependent loop with service details
-         assert_eq!(doc.loop_2000e.len(), 1);
-         // 2000E – Dependent Service Details
-         let dep = &doc.loop_2000e[0];
-         let svc = dep.loop_2200e[0].svc.as_ref().unwrap();
-         assert_eq!(svc._01, "HC:99203");
+        // verify there is exactly one dependent loop with service details
+        assert_eq!(doc.loop_2000e.len(), 1);
+        // 2000E – Dependent Service Details
+        let dep = &doc.loop_2000e[0];
+        let svc = dep.loop_2200e[0].svc.as_ref().unwrap();
+        assert_eq!(svc._01, "HC:99203");
     }
-
 }

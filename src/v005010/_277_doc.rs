@@ -372,7 +372,7 @@ impl<'a> Parser<&'a str, _277, nom::error::Error<&'a str>> for _277 {
     }
 }
 /// A generic enum for any 2000-level loop we parse.
-pub enum Generic2000Loop {
+pub enum _277Generic2000Loop {
     A(_277Loop2000A),
     B(_277Loop2000B),
     C(_277Loop2000C),
@@ -387,15 +387,23 @@ fn parse_277(input: &str) -> IResult<&str, _277> {
     let (rest, st) = ST::parse(input)?;
 
     if st._01 != "277" {
-        error!("ST segment declares {} document instead of expected 277", st._01);
-        return Err(nom::Err::Failure(nom::error::Error::new("ST segment does not declare an EDI 277", nom::error::ErrorKind::Fail)));
+        error!(
+            "ST segment declares {} document instead of expected 277",
+            st._01
+        );
+        return Err(nom::Err::Failure(nom::error::Error::new(
+            "ST segment does not declare an EDI 277",
+            nom::error::ErrorKind::Fail,
+        )));
     }
 
     let (rest, bht) = BHT::parse(rest)?;
 
-    let mut doc = _277::default();
-    doc.st = st;
-    doc.bht = bht;
+    let mut doc = _277 {
+        st,
+        bht,
+        ..Default::default()
+    };
 
     // Now parse as many 2000-level loops as we find
     let mut rest = rest;
@@ -408,20 +416,20 @@ fn parse_277(input: &str) -> IResult<&str, _277> {
         match parse_2000_any(rest) {
             Ok((rest2, loop_obj)) => {
                 match loop_obj {
-                    Generic2000Loop::A(a) => {
+                    _277Generic2000Loop::A(a) => {
                         // if we haven't assigned loop_2000a yet, store it
                         doc.loop_2000a = a;
                     }
-                    Generic2000Loop::B(b) => {
+                    _277Generic2000Loop::B(b) => {
                         doc.loop_2000b.push(b);
                     }
-                    Generic2000Loop::C(c) => {
+                    _277Generic2000Loop::C(c) => {
                         doc.loop_2000c.push(c);
                     }
-                    Generic2000Loop::D(d) => {
+                    _277Generic2000Loop::D(d) => {
                         doc.loop_2000d.push(d);
                     }
-                    Generic2000Loop::E(e) => {
+                    _277Generic2000Loop::E(e) => {
                         doc.loop_2000e.push(e);
                     }
                 }
@@ -442,7 +450,7 @@ fn parse_277(input: &str) -> IResult<&str, _277> {
 }
 
 /// Parse exactly one 2000-level loop, by reading HL03, then dispatching.
-fn parse_2000_any(input: &str) -> IResult<&str, Generic2000Loop> {
+fn parse_2000_any(input: &str) -> IResult<&str, _277Generic2000Loop> {
     // parse the HL segment
 
     let (rest, hl_seg) = HL::parse(input)?;
@@ -467,7 +475,7 @@ fn parse_2000_any(input: &str) -> IResult<&str, Generic2000Loop> {
 // 2000A - Info Source
 ///////////////////////////////////////////////////////////
 
-pub fn parse_loop_2000_a(hl: HL, input: &str) -> IResult<&str, Generic2000Loop> {
+fn parse_loop_2000_a(hl: HL, input: &str) -> IResult<&str, _277Generic2000Loop> {
     let mut output = _277Loop2000A::default();
 
     trace!("--> 2000A");
@@ -481,10 +489,10 @@ pub fn parse_loop_2000_a(hl: HL, input: &str) -> IResult<&str, Generic2000Loop> 
     output.loop_2100a = loop_2100a;
 
     trace!("<-- 2000A");
-    Ok((rest, Generic2000Loop::A(output)))
+    Ok((rest, _277Generic2000Loop::A(output)))
 }
 
-pub fn parse_loop_2100_a(input: &str) -> IResult<&str, _277Loop2100A> {
+fn parse_loop_2100_a(input: &str) -> IResult<&str, _277Loop2100A> {
     let mut output = _277Loop2100A::default();
     trace!("--> 2100A");
 
@@ -524,10 +532,11 @@ pub fn parse_loop_2100_a(input: &str) -> IResult<&str, _277Loop2100A> {
 // 2000B - Info Receiver
 ///////////////////////////////////////////////////////////
 
-pub fn parse_loop_2000_b(hl: HL, input: &str) -> IResult<&str, Generic2000Loop> {
-    let mut output = _277Loop2000B::default();
-
-    output.hl = hl;
+fn parse_loop_2000_b(hl: HL, input: &str) -> IResult<&str, _277Generic2000Loop> {
+    let mut output = _277Loop2000B {
+        hl,
+        ..Default::default()
+    };
 
     // parse single 2100B
     let (rest, loop_2100b) = parse_loop_2100_b(input)?;
@@ -553,10 +562,10 @@ pub fn parse_loop_2000_b(hl: HL, input: &str) -> IResult<&str, Generic2000Loop> 
     }
     output.loop_2200b = list_2200b;
 
-    Ok((rest2, Generic2000Loop::B(output)))
+    Ok((rest2, _277Generic2000Loop::B(output)))
 }
 
-pub fn parse_loop_2100_b(input: &str) -> IResult<&str, _277Loop2100B> {
+fn parse_loop_2100_b(input: &str) -> IResult<&str, _277Loop2100B> {
     let mut output = _277Loop2100B::default();
 
     let (rest, nm1) = NM1::parse(input)?;
@@ -577,7 +586,7 @@ pub fn parse_loop_2100_b(input: &str) -> IResult<&str, _277Loop2100B> {
     Ok((rest, output))
 }
 
-pub fn parse_loop_2200_b(input: &str) -> IResult<&str, _277Loop2200B> {
+fn parse_loop_2200_b(input: &str) -> IResult<&str, _277Loop2200B> {
     let mut output = _277Loop2200B::default();
 
     // TRN
@@ -611,9 +620,11 @@ pub fn parse_loop_2200_b(input: &str) -> IResult<&str, _277Loop2200B> {
 // 2000C - Service Provider
 ///////////////////////////////////////////////////////////
 
-pub fn parse_loop_2000_c(hl: HL, input: &str) -> IResult<&str, Generic2000Loop> {
-    let mut output = _277Loop2000C::default();
-    output.hl = hl;
+fn parse_loop_2000_c(hl: HL, input: &str) -> IResult<&str, _277Generic2000Loop> {
+    let mut output = _277Loop2000C {
+        hl,
+        ..Default::default()
+    };
 
     // parse single 2100C
     let (rest, loop_2100c) = parse_loop_2100_c(input)?;
@@ -639,10 +650,10 @@ pub fn parse_loop_2000_c(hl: HL, input: &str) -> IResult<&str, Generic2000Loop> 
     }
     output.loop_2200c = list_2200c;
 
-    Ok((rest2, Generic2000Loop::C(output)))
+    Ok((rest2, _277Generic2000Loop::C(output)))
 }
 
-pub fn parse_loop_2100_c(input: &str) -> IResult<&str, _277Loop2100C> {
+fn parse_loop_2100_c(input: &str) -> IResult<&str, _277Loop2100C> {
     trace!("--> 2100C");
     let mut output = _277Loop2100C::default();
 
@@ -687,7 +698,7 @@ pub fn parse_loop_2100_c(input: &str) -> IResult<&str, _277Loop2100C> {
     Ok((rest, output))
 }
 
-pub fn parse_loop_2200_c(input: &str) -> IResult<&str, _277Loop2200C> {
+fn parse_loop_2200_c(input: &str) -> IResult<&str, _277Loop2200C> {
     let mut output = _277Loop2200C::default();
 
     trace!("--> 2200C");
@@ -704,11 +715,11 @@ pub fn parse_loop_2200_c(input: &str) -> IResult<&str, _277Loop2200C> {
 
     // QTY/AMT are non-standard in this loop, but show up sometimes
 
-    /// QTY
+    // QTY
     trace!("qty");
     let (rest, qty) = many0(QTY::parse).parse(rest)?;
     output.qty = qty;
-    /// AMT
+    // AMT
     trace!("amt");
     let (rest, amt) = many0(AMT::parse).parse(rest)?;
     output.amt = amt;
@@ -731,9 +742,11 @@ pub fn parse_loop_2200_c(input: &str) -> IResult<&str, _277Loop2200C> {
 // 2000D - Subscriber
 ///////////////////////////////////////////////////////////
 
-pub fn parse_loop_2000_d(hl: HL, input: &str) -> IResult<&str, Generic2000Loop> {
-    let mut output = _277Loop2000D::default();
-    output.hl = hl;
+fn parse_loop_2000_d(hl: HL, input: &str) -> IResult<&str, _277Generic2000Loop> {
+    let mut output = _277Loop2000D {
+        hl,
+        ..Default::default()
+    };
 
     // parse single 2100D
     let (rest, loop_2100d) = parse_loop_2100_d(input)?;
@@ -759,10 +772,10 @@ pub fn parse_loop_2000_d(hl: HL, input: &str) -> IResult<&str, Generic2000Loop> 
     }
     output.loop_2200d = list_2200d;
 
-    Ok((rest2, Generic2000Loop::D(output)))
+    Ok((rest2, _277Generic2000Loop::D(output)))
 }
 
-pub fn parse_loop_2100_d(input: &str) -> IResult<&str, _277Loop2100D> {
+fn parse_loop_2100_d(input: &str) -> IResult<&str, _277Loop2100D> {
     let mut output = _277Loop2100D::default();
 
     trace!("--> 2100D");
@@ -792,7 +805,7 @@ pub fn parse_loop_2100_d(input: &str) -> IResult<&str, _277Loop2100D> {
     Ok((rest, output))
 }
 
-pub fn parse_loop_2200_d(input: &str) -> IResult<&str, _277Loop2200D> {
+fn parse_loop_2200_d(input: &str) -> IResult<&str, _277Loop2200D> {
     let mut output = _277Loop2200D::default();
     trace!("--> 2200D");
 
@@ -820,7 +833,7 @@ pub fn parse_loop_2200_d(input: &str) -> IResult<&str, _277Loop2200D> {
     Ok((rest, output))
 }
 
-pub fn parse_loop_2220_d(input: &str) -> IResult<&str, _277Loop2220D> {
+fn parse_loop_2220_d(input: &str) -> IResult<&str, _277Loop2220D> {
     let mut output = _277Loop2220D::default();
     trace!("--> 2220D");
 
@@ -852,9 +865,11 @@ pub fn parse_loop_2220_d(input: &str) -> IResult<&str, _277Loop2220D> {
 // 2000E - Dependent
 ///////////////////////////////////////////////////////////
 
-pub fn parse_loop_2000_e(hl: HL, input: &str) -> IResult<&str, Generic2000Loop> {
-    let mut output = _277Loop2000E::default();
-    output.hl = hl;
+fn parse_loop_2000_e(hl: HL, input: &str) -> IResult<&str, _277Generic2000Loop> {
+    let mut output = _277Loop2000E {
+        hl,
+        ..Default::default()
+    };
 
     // parse single 2100E
     let (rest, loop_2100e) = parse_loop_2100_e(input)?;
@@ -880,10 +895,10 @@ pub fn parse_loop_2000_e(hl: HL, input: &str) -> IResult<&str, Generic2000Loop> 
     }
     output.loop_2200e = list_2200e;
 
-    Ok((rest2, Generic2000Loop::E(output)))
+    Ok((rest2, _277Generic2000Loop::E(output)))
 }
 
-pub fn parse_loop_2100_e(input: &str) -> IResult<&str, _277Loop2100E> {
+fn parse_loop_2100_e(input: &str) -> IResult<&str, _277Loop2100E> {
     let mut output = _277Loop2100E::default();
 
     let (rest, nm1) = NM1::parse(input)?;
@@ -904,7 +919,7 @@ pub fn parse_loop_2100_e(input: &str) -> IResult<&str, _277Loop2100E> {
     Ok((rest, output))
 }
 
-pub fn parse_loop_2200_e(input: &str) -> IResult<&str, _277Loop2200E> {
+fn parse_loop_2200_e(input: &str) -> IResult<&str, _277Loop2200E> {
     let mut output = _277Loop2200E::default();
 
     let (rest, trn) = TRN::parse(input)?;
@@ -925,7 +940,7 @@ pub fn parse_loop_2200_e(input: &str) -> IResult<&str, _277Loop2200E> {
     Ok((rest, output))
 }
 
-pub fn parse_loop_2220_e(input: &str) -> IResult<&str, _277Loop2220E> {
+fn parse_loop_2220_e(input: &str) -> IResult<&str, _277Loop2220E> {
     let mut output = _277Loop2220E::default();
 
     // SVC (1+)
@@ -946,5 +961,3 @@ pub fn parse_loop_2220_e(input: &str) -> IResult<&str, _277Loop2220E> {
 
     Ok((rest, output))
 }
-
-
