@@ -23,22 +23,12 @@ jobs:
           /usr/local/cargo
           target/
         key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-    - name: Install rust
-      uses: actions-rs/toolchain@v1
-      with:
-        toolchain: stable
-        components: clippy
+    - uses: actions-rust-lang/setup-rust-toolchain@v1
     - name: Run rustfmt
-      uses: actions-rs/cargo@v1
+    - uses: actions-rust-lang/setup-rust-toolchain@v1
       with:
-        command: fmt
-        args: --all -- --check
+        components: rustfmt
     - name: Run clippy
-      uses: actions-rs/clippy@master
-      with:
-        args: --all -- -D warnings
+      run: cargo clippy --all -- -D warnings
     - name: Cargo Test
-      uses: actions-rs/cargo@v1
-      with:
-        command: test
-        args: -q
+      run: cargo test
