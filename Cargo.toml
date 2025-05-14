@@ -18,7 +18,7 @@ chrono = "0.4"
 nom = "8"
 x12-types-macros = { version = "0.2" }
 
-[dev_dependencies]
+[dev-dependencies]
 pretty_env_logger = "0.5"
 
 [features]
