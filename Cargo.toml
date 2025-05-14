@@ -4,21 +4,25 @@ version = "0.8.6"
 edition = "2021"
 authors = ["Jens Walter <jens@apimeister.com>"]
 license = "MIT OR Apache-2.0"
-keywords = ["edi","x12"]
+keywords = ["edi", "x12"]
 repository = "https://github.com/apimeister/x12-types/"
 documentation = "https://docs.rs/x12-types/"
 description = "Bindings for the ASC X12 EDI definitions"
 rust-version = "1.78"
 
 [dependencies]
+log = { version = "0.4", features = ["release_max_level_warn"] }
 serde = { version = "1.0", features = ["derive"] }
 validator = { version = "0.20", features = ["derive"] }
 chrono = "0.4"
 nom = "8"
 x12-types-macros = { version = "0.2" }
 
+[dev_dependencies]
+pretty_env_logger = "0.5"
+
 [features]
-default = ["v003030","v004010","v004030","v005010","v005030"]
+default = ["v003030", "v004010", "v004030", "v005010", "v005030"]
 v003030 = []
 v004010 = []
 v004030 = []

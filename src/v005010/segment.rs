@@ -2859,6 +2859,61 @@ pub struct ST {
     pub _03: Option<String>,
 }
 
+/// STC - Claim or Service Line Status information
+#[derive(
+    Serialize,
+    Deserialize,
+    Clone,
+    Default,
+    Debug,
+    Validate,
+    PartialEq,
+    Eq,
+    DisplaySegment,
+    ParseSegment,
+)]
+pub struct STC {
+    /// STC01 - Composite data (e.g., "A2:21:65")
+    #[serde(rename = "01")]
+    pub _01: String,
+
+    /// STC02 - Status Information Effective Date (CCYYMMDD)
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+
+    /// STC03 - Action Code (e.g., "IA", "I2", etc.)
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+
+    /// STC04 - Monetary Amount (e.g., total claim amount or allowed amount)
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+
+    /// STC05 - Monetary Amount (e.g., claim payment amount)
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+
+    /// STC06 - Appeal Reason Code or additional status info
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+
+    /// STC07 - Payment Method Code or additional status info
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+
+    /// STC08 - Remittance Date or other date (CCYYMMDD)
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+
+    /// STC09 - Remaining patient liability or additional monetary info
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+
+    /// STC10 - Free-form message text or additional info
+    #[serde(rename = "10")]
+    pub _10: Option<String>,
+}
+
 /// SV1 - Professional Service
 #[derive(
     Serialize,
