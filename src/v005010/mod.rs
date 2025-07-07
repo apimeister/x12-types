@@ -17,6 +17,9 @@ pub use _276_doc::*;
 mod _277_doc;
 pub use _277_doc::*;
 
+mod _278_doc;
+pub use _278_doc::*;
+
 mod segment;
 
 #[cfg(test)]
