@@ -1,7 +1,7 @@
 # 0.9.0 2025-07-07
 
 * update to nom 8
-* add support for 005010/277 (thanks, ([Dave Spadea](https://github.com/dspadea))), 005010/278
+* add support for 005010/277 (thanks, [Dave Spadea](https://github.com/dspadea)), 005010/278
 
 # 0.8.5 2025-01-07
 
