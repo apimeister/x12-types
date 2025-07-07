@@ -3,3 +3,4 @@
 .DS_Store
 /test-data/*nocheckin*
 build_rs_cov.profraw
+specs/*

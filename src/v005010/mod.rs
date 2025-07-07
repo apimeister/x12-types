@@ -17,8 +17,13 @@ pub use _276_doc::*;
 mod _277_doc;
 pub use _277_doc::*;
 
+mod _278_doc;
+pub use _278_doc::*;
+
 mod segment;
 
+#[cfg(test)]
+mod test_278;
 #[cfg(test)]
 mod test_834;
 #[cfg(test)]
@@ -72,7 +77,7 @@ impl<T: Display> Display for Transmission<T> {
         for fg in &self.functional_group {
             lines.push(format!("{}", fg.gs));
             for segment in &fg.segments {
-                lines.push(format!("{}", segment));
+                lines.push(format!("{segment}"));
             }
             lines.push(format!("{}", fg.ge));
         }

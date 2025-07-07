@@ -5,7 +5,7 @@ fn test_310_transmission() {
     // TODO transmission does not work yet
     let edi = r#"ISA*00*          *00*          *ZZ*SOURCE         *02*TARGET         *220101*1449*U*00401*000011566*0*P*>~GS*IO*SOURCE*TARGET*20220101*1449*61716*X*004010~ST*310*35353~B3*3*IDENTIFIER123*IDENTIFIER123*MX**20220830*00****WHT*20220830*PP~B2A*00*BL~N9*BN*1XXX011114*BOOKING NUMBER~N9*BM*IDENTIFIER123*BILL OF LADING NUMBER~N9*R1*MSK-BL-1.0*INTERNAL GUIDELINE VERSION NUMBER~N9*VT*9V8896*VESSEL CALL-SIGN~V1*9786774*POLAR ECUADOR*SG*234N****L~Y2*1***45G1~N1*SH*MADERAS ARAUCO S.A.*25*940924821~N3*EL GOLF 150~N4*LAS CONDES**7550107*CL~N1*CN*ARAUCO NORTH AMERICA INC*25*100992847~N3*PERIMETER CENTER TER NE 400~N4*ATLANTA*GA*30346*US~N1*N1*GEODIS USA INC*25*12323242~N3*LACROSS RD 4995~N4*NORTH CHARLESTON*SC*29406*US~N1*CA*WHATEVER*2*WHT~N3*ESPLANADEN 50~N4*COPENHAGEN K**1098*DK~R4*L*UN*CLSVE*SAN VICENTE*CL***BI~DTM*140*20220830*003000*LT~R4*D*UN*USBAL*BALTIMORE*US***MD~DTM*140*20220101*120000*LT~R4*T*UN*PAMIT*MANZANILLO*PA~DTM*140*20220101*130000*LT~C8***WHT CODE: 4411.1400~C8***EMISION SWB.~C8***CHARGE_TYPE-BASIC FREIGHT; PAYER-SHIPPER; TERM-PREPAID;~LX*1~N7*TCNU*6849731*17007*G*3810*28690**31.32*X*S*CN*****M*K*1****45G1~M7*MLCL0008628~L0*1***17007*G*31.32*X*36*PKG**K~L5*1*1 X 40'HC 21 PACKAGES WITH 31.320 MCUB AND 16.837*2313432*Z~L5*1*NET WEIGHT . MOULDINGS OF MEDIUM DENSITY FIBERBO~L5*1*ARD ( MECHANICALLY WORKED (WITH SURFACED COVER ED~L5*1*) . REF.INT: 111111 . ALSO CONSIGNEE: ATTN: AW~L3*17007*G*******42.42*X*1*K~L1*1*3371*FR*316100****COF***P******1*NR~C3*USD~L1*2*875*FR*87900****BUA***P******1*NR~C3*USD~L1*3*29*FR*2800*******P******1*NR~C3*USD~SE*49*32353~GE*1*61916~IEA*1*000061216~"#;
     let (rest, obj) = Transmission::<_310>::parse(edi).unwrap();
-    println!("{:?}", obj);
+    println!("{obj:?}");
     assert!(rest.is_empty())
 }
 
@@ -70,7 +70,7 @@ L1*3*29*FR*2800*******P******1*NR~
 C3*USD~
 SE*49*32353~"#;
     let obj = _310::parse(edi).unwrap();
-    println!("{:?}", obj);
+    println!("{obj:?}");
     assert_eq!(obj.1.st._01, "310");
     assert_eq!(obj.1.st._02, "35353");
     assert_eq!(obj.1.se._01, "49");
@@ -126,7 +126,7 @@ IEA*1*000000015~
     let (rest, obj) = Transmission::<_310>::parse(edi).unwrap();
     assert!(rest.is_empty());
     assert_eq!(obj.iea._02, "000000015");
-    println!("{:?}", obj);
+    println!("{obj:?}");
 }
 
 #[test]
@@ -190,5 +190,5 @@ IEA*1*000145269~
     let (rest, obj) = Transmission::<_310>::parse(edi).unwrap();
     assert!(rest.is_empty());
     assert_eq!(obj.iea._02, "000145269");
-    println!("{:?}", obj);
+    println!("{obj:?}");
 }

@@ -28,7 +28,7 @@ DTP*348*D8*19960601~
 SE*21*12345~
 GE*1*000012345~
 IEA*1*000012345~"#;
-    let (rest, obj) = Transmission::<_834>::parse(&str).unwrap();
+    let (rest, obj) = Transmission::<_834>::parse(str).unwrap();
     println!("{rest}");
     println!("{obj:?}");
 }
@@ -808,7 +808,7 @@ LE*2700~
 SE*99*193290007~
 GE*7*193290002~
 IEA*1*193290002~"#;
-    let (rest, obj) = Transmission::<_834>::parse(&str).unwrap();
+    let (rest, obj) = Transmission::<_834>::parse(str).unwrap();
     println!("{rest}");
     println!("{obj:?}");
 }
@@ -1065,7 +1065,7 @@ LE*2700~
 SE*68*193230003~
 GE*3*193230001~
 IEA*1*193230001~"#;
-    let (rest, obj) = Transmission::<_834>::parse(&str).unwrap();
+    let (rest, obj) = Transmission::<_834>::parse(str).unwrap();
     println!("{rest}");
     println!("{obj:?}");
 }

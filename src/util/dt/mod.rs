@@ -1,6 +1,6 @@
 pub fn now_as_dt() -> String {
     let t = chrono::Local::now().format("%Y-%m-%d");
-    format!("{}", t)
+    format!("{t}")
 }
 
 // pub fn datetime_as_dt<Tz: TimeZone>(dt: DateTime<Tz>) -> String {

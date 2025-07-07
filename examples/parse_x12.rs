@@ -102,7 +102,7 @@ LQ*HE*MA92~
 SE*93*07504123~
 GE*1*1~
 IEA*1*004075123~"#;
-    let (rest, obj) = Transmission::<_835>::parse(&str).unwrap();
+    let (rest, obj) = Transmission::<_835>::parse(str).unwrap();
     println!("{rest}");
     println!("{obj:?}");
 }

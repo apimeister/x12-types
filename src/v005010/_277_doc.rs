@@ -454,7 +454,7 @@ fn parse_2000_any(input: &str) -> IResult<&str, _277Generic2000Loop> {
     // parse the HL segment
 
     let (rest, hl_seg) = HL::parse(input)?;
-    trace!("Parsed HL: {}", hl_seg);
+    trace!("Parsed HL: {hl_seg}");
     match hl_seg._03.as_str() {
         "20" => parse_loop_2000_a(hl_seg, rest),
         "21" => parse_loop_2000_b(hl_seg, rest),

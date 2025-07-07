@@ -210,7 +210,7 @@ fn render_204() {
         ..Default::default()
     };
     let obj = format!("{obj}");
-    println!("{}", obj);
+    println!("{obj}");
 }
 
 #[test]
@@ -245,7 +245,7 @@ N4*OAKLAND*CA*94607*US*ZZ*USOAKSSAM~
 G61*IC*N/A*TE*NOT AVAILABLE~
 SE*37*18711~"#;
     let (str, obj) = _204::parse(str).unwrap();
-    println!("{:?}", obj);
+    println!("{obj:?}");
     assert!(str.is_empty());
     assert_eq!(obj.se._01, "37");
     assert_eq!(obj.se._02, "18711");
