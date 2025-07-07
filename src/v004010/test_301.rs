@@ -135,7 +135,7 @@ fn test_301() {
         ..Default::default()
     };
     let obj = format!("{obj}");
-    println!("{}", obj);
+    println!("{obj}");
 }
 
 #[test]
@@ -157,8 +157,8 @@ L0*1***14000*G***1*CNT**K*HP~
 L5*1*VEHICLES:PARTS~
 V1*3465322*CAP SAN ANTONIO*DK*456S****L~
 SE*17*33233~"#;
-    let obj = _301::parse(&str).unwrap();
-    println!("{:?}", obj);
+    let obj = _301::parse(str).unwrap();
+    println!("{obj:?}");
     assert!(obj.0.is_empty());
     let obj = obj.1;
     assert_eq!(obj.st._01, "301");

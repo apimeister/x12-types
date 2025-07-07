@@ -32,7 +32,7 @@ REF*0B*TM00000*TX~
 SE*23*1001~
 GE*1*10001~
 IEA*1*100000001~"#;
-    let parsed = Transmission::<_278>::parse(&str).unwrap();
+    let parsed = Transmission::<_278>::parse(str).unwrap();
     println!("{parsed:?}");
 }
 
@@ -121,8 +121,8 @@ PER*IC*TEST NAME*TE*9999999999*FX*9999999999~
 SE*76*10002~
 GE*1*183242501~
 IEA*1*183242501~"#;
-let parsed = Transmission::<_278>::parse(&str).unwrap();
-println!("{parsed:?}");
+    let parsed = Transmission::<_278>::parse(str).unwrap();
+    println!("{parsed:?}");
 }
 
 #[test]
@@ -158,10 +158,9 @@ PER*IC**TE*9155551212*FX*9155551212~
 SE*24*0001~
 GE*1*1~
 IEA*1*183242501~"#;
-let parsed = Transmission::<_278>::parse(&str).unwrap();
-println!("{parsed:?}");
+    let parsed = Transmission::<_278>::parse(str).unwrap();
+    println!("{parsed:?}");
 }
-
 
 #[test]
 fn parse_278_4() {
@@ -205,14 +204,14 @@ REF*0B*R0000*TX~
 SE*32*1001~
 GE*1*1000001~
 IEA*1*100000001~"#;
-let parsed = Transmission::<_278>::parse(&str).unwrap();
-println!("{parsed:?}");
+    let parsed = Transmission::<_278>::parse(str).unwrap();
+    println!("{parsed:?}");
 }
 
 #[test]
 fn parse_278_5() {
     //source: https://www.tmhp.com/sites/default/files/file-library/edi/278_COMPANION_GUIDE_NFSS.pdf
-    //Speech Therapy 278 Recertification Request 
+    //Speech Therapy 278 Recertification Request
     let str = r#"ISA*00* *00* *ZZ*146111111 *ZZ*617591011LTCPP
 *170406*1611*|*00501*183242501*0*P*:~
 GS*HI*146111111*617591011LTCPP*20170406*1611*183242501*X*005010X217~
@@ -252,10 +251,9 @@ PER*IC**TE*9155551212~
 SE*34*183242501~
 GE*1*183242501~
 IEA*1*183242501~"#;
-let parsed = Transmission::<_278>::parse(&str).unwrap();
-println!("{parsed:?}");
+    let parsed = Transmission::<_278>::parse(str).unwrap();
+    println!("{parsed:?}");
 }
-
 
 #[test]
 fn parse_278_6() {
@@ -299,8 +297,8 @@ REF*0B*R0000*TX~
 SE*29*1001~
 GE*1*1000001~
 IEA*1*100000001~"#;
-let parsed = Transmission::<_278>::parse(&str).unwrap();
-println!("{parsed:?}");
+    let parsed = Transmission::<_278>::parse(str).unwrap();
+    println!("{parsed:?}");
 }
 
 #[test]
@@ -338,11 +336,9 @@ REF*0B*R0000*TX ~
 SE*22*183242501~
 GE*1*183242501~
 IEA*1*183242501~"#;
-let parsed = Transmission::<_278>::parse(&str).unwrap();
-println!("{parsed:?}");
+    let parsed = Transmission::<_278>::parse(str).unwrap();
+    println!("{parsed:?}");
 }
-
-
 
 #[test]
 fn parse_278_8() {
@@ -372,8 +368,8 @@ PWK*03*FT*AC*AA~
 SE*21*0001~
 GE*1*1~
 IEA*1*000000905~"#;
-let parsed = Transmission::<_278>::parse(&str).unwrap();
-println!("{parsed:?}");
+    let parsed = Transmission::<_278>::parse(str).unwrap();
+    println!("{parsed:?}");
 }
 
 #[test]
@@ -415,6 +411,6 @@ BIN*4896*ABCDEFG
 SE*12*1234
 GE*1*17
 IEA*2*000000017"#;
-let parsed = Transmission::<_278>::parse(&str).unwrap();
-println!("{parsed:?}");
+    let parsed = Transmission::<_278>::parse(str).unwrap();
+    println!("{parsed:?}");
 }

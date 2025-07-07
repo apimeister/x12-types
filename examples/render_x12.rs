@@ -209,5 +209,5 @@ fn main() {
         ..Default::default()
     };
     let obj = format!("{obj}");
-    println!("{}", obj);
+    println!("{obj}");
 }

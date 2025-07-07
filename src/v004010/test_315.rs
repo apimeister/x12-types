@@ -118,7 +118,7 @@ fn parse_315() {
         },
     };
     let str = format!("{x}");
-    println!("{}", str);
+    println!("{str}");
     // let obj: Transmission<_315> = serde_x12::from_str(&new_input).unwrap();
     // println!("{:?}", obj);
     // assert_eq!(x, obj);

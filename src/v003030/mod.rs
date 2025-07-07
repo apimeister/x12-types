@@ -23,7 +23,7 @@ impl<T: Display> Display for Transmission<T> {
         for fg in &self.functional_group {
             lines.push(format!("{}", fg.gs));
             for segment in &fg.segments {
-                lines.push(format!("{}", segment));
+                lines.push(format!("{segment}"));
             }
             lines.push(format!("{}", fg.ge));
         }
