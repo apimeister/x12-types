@@ -491,7 +491,6 @@ fn parse_278_20() {
     println!("{parsed:?}");
 }
 
-
 #[test]
 fn parse_278_21() {
     //source: https://github.com/Project-Herophilus/Project-Herophilus-Assets/blob/main/Testing/TestData/samples-edi/278DVSResponseSample.txt
@@ -507,7 +506,6 @@ fn parse_278_22() {
     let parsed = Transmission::<_278>::parse(str).unwrap();
     println!("{parsed:?}");
 }
-
 
 #[test]
 fn parse_278_23() {
