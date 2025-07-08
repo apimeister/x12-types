@@ -1,14 +1,12 @@
 use log::{error, trace};
 use serde::{Deserialize, Serialize};
 use x12_types_macros::DisplayX12;
-
 use crate::util::Parser;
 use nom::{
     combinator::{opt, peek},
     multi::many0,
     IResult, Parser as _,
 };
-
 use super::{
     AAA, BHT, CL1, CR1, CR2, CR4, CR5, CR6, CR7, CR8, CRC, DMG, DTP, HCR, HI, HL, HSD, INS, MSG,
     N2, N3, N4, NM1, PER, PRV, PWK, REF, SE, ST, SV1, SV2, SV3, TOO, TRN, UM,

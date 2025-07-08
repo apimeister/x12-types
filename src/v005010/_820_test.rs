@@ -1,4 +1,5 @@
 use super::*;
+use crate::util::Parser;
 
 #[test]
 fn parse_820_01() {
