@@ -3535,3 +3535,1514 @@ pub struct UR {
     #[serde(rename = "02")]
     pub _02: Option<String>,
 }
+
+/// EQ - Eligibility or Benefit Inquiry
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct EQ {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+}
+
+/// MPI - Military Personnel Information
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct MPI {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+}
+
+/// VEH - Vehicle Information
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct VEH {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+    #[serde(rename = "10")]
+    pub _10: Option<String>,
+    #[serde(rename = "11")]
+    pub _11: Option<String>,
+    #[serde(rename = "12")]
+    pub _12: Option<String>,
+    #[serde(rename = "13")]
+    pub _13: Option<String>,
+    #[serde(rename = "14")]
+    pub _14: Option<String>,
+    #[serde(rename = "15")]
+    pub _15: Option<String>,
+    #[serde(rename = "16")]
+    pub _16: Option<String>,
+    #[serde(rename = "17")]
+    pub _17: Option<String>,
+    #[serde(rename = "18")]
+    pub _18: Option<String>,
+    #[serde(rename = "19")]
+    pub _19: Option<String>,
+    #[serde(rename = "20")]
+    pub _20: Option<String>,
+    #[serde(rename = "21")]
+    pub _21: Option<String>,
+    #[serde(rename = "22")]
+    pub _22: Option<String>,
+    #[serde(rename = "23")]
+    pub _23: Option<String>,
+    #[serde(rename = "24")]
+    pub _24: Option<String>,
+    #[serde(rename = "25")]
+    pub _25: Option<String>,
+}
+
+/// PDR - Property Description - Real
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct PDR {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+    #[serde(rename = "10")]
+    pub _10: Option<String>,
+    #[serde(rename = "11")]
+    pub _11: Option<String>,
+    #[serde(rename = "12")]
+    pub _12: Option<String>,
+    #[serde(rename = "13")]
+    pub _13: Option<String>,
+    #[serde(rename = "14")]
+    pub _14: Option<String>,
+    #[serde(rename = "15")]
+    pub _15: Option<String>,
+    #[serde(rename = "16")]
+    pub _16: Option<String>,
+    #[serde(rename = "17")]
+    pub _17: Option<String>,
+    #[serde(rename = "18")]
+    pub _18: Option<String>,
+    #[serde(rename = "19")]
+    pub _19: Option<String>,
+    #[serde(rename = "20")]
+    pub _20: Option<String>,
+    #[serde(rename = "21")]
+    pub _21: Option<String>,
+    #[serde(rename = "22")]
+    pub _22: Option<String>,
+    #[serde(rename = "23")]
+    pub _23: Option<String>,
+    #[serde(rename = "24")]
+    pub _24: Option<String>,
+    #[serde(rename = "25")]
+    pub _25: Option<String>,
+    #[serde(rename = "26")]
+    pub _26: Option<String>,
+    #[serde(rename = "27")]
+    pub _27: Option<String>,
+    #[serde(rename = "28")]
+    pub _28: Option<String>,
+    #[serde(rename = "29")]
+    pub _29: Option<String>,
+    #[serde(rename = "30")]
+    pub _30: Option<String>,
+    #[serde(rename = "31")]
+    pub _31: Option<String>,
+    #[serde(rename = "32")]
+    pub _32: Option<String>,
+    #[serde(rename = "33")]
+    pub _33: Option<String>,
+    #[serde(rename = "34")]
+    pub _34: Option<String>,
+    #[serde(rename = "35")]
+    pub _35: Option<String>,
+    #[serde(rename = "36")]
+    pub _36: Option<String>,
+    #[serde(rename = "37")]
+    pub _37: Option<String>,
+    #[serde(rename = "38")]
+    pub _38: Option<String>,
+    #[serde(rename = "39")]
+    pub _39: Option<String>,
+    #[serde(rename = "40")]
+    pub _40: Option<String>,
+    #[serde(rename = "41")]
+    pub _41: Option<String>,
+    #[serde(rename = "42")]
+    pub _42: Option<String>,
+    #[serde(rename = "43")]
+    pub _43: Option<String>,
+    #[serde(rename = "44")]
+    pub _44: Option<String>,
+    #[serde(rename = "45")]
+    pub _45: Option<String>,
+    #[serde(rename = "46")]
+    pub _46: Option<String>,
+    #[serde(rename = "47")]
+    pub _47: Option<String>,
+    #[serde(rename = "48")]
+    pub _48: Option<String>,
+    #[serde(rename = "49")]
+    pub _49: Option<String>,
+    #[serde(rename = "50")]
+    pub _50: Option<String>,
+}
+
+/// PDP - Property Description - Personal
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct PDP {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+    #[serde(rename = "10")]
+    pub _10: Option<String>,
+    #[serde(rename = "11")]
+    pub _11: Option<String>,
+    #[serde(rename = "12")]
+    pub _12: Option<String>,
+    #[serde(rename = "13")]
+    pub _13: Option<String>,
+    #[serde(rename = "14")]
+    pub _14: Option<String>,
+    #[serde(rename = "15")]
+    pub _15: Option<String>,
+    #[serde(rename = "16")]
+    pub _16: Option<String>,
+    #[serde(rename = "17")]
+    pub _17: Option<String>,
+    #[serde(rename = "18")]
+    pub _18: Option<String>,
+    #[serde(rename = "19")]
+    pub _19: Option<String>,
+    #[serde(rename = "20")]
+    pub _20: Option<String>,
+    #[serde(rename = "21")]
+    pub _21: Option<String>,
+    #[serde(rename = "22")]
+    pub _22: Option<String>,
+    #[serde(rename = "23")]
+    pub _23: Option<String>,
+    #[serde(rename = "24")]
+    pub _24: Option<String>,
+    #[serde(rename = "25")]
+    pub _25: Option<String>,
+    #[serde(rename = "26")]
+    pub _26: Option<String>,
+    #[serde(rename = "27")]
+    pub _27: Option<String>,
+    #[serde(rename = "28")]
+    pub _28: Option<String>,
+    #[serde(rename = "29")]
+    pub _29: Option<String>,
+    #[serde(rename = "30")]
+    pub _30: Option<String>,
+    #[serde(rename = "31")]
+    pub _31: Option<String>,
+    #[serde(rename = "32")]
+    pub _32: Option<String>,
+    #[serde(rename = "33")]
+    pub _33: Option<String>,
+    #[serde(rename = "34")]
+    pub _34: Option<String>,
+    #[serde(rename = "35")]
+    pub _35: Option<String>,
+    #[serde(rename = "36")]
+    pub _36: Option<String>,
+    #[serde(rename = "37")]
+    pub _37: Option<String>,
+    #[serde(rename = "38")]
+    pub _38: Option<String>,
+    #[serde(rename = "39")]
+    pub _39: Option<String>,
+    #[serde(rename = "40")]
+    pub _40: Option<String>,
+    #[serde(rename = "41")]
+    pub _41: Option<String>,
+    #[serde(rename = "42")]
+    pub _42: Option<String>,
+    #[serde(rename = "43")]
+    pub _43: Option<String>,
+    #[serde(rename = "44")]
+    pub _44: Option<String>,
+    #[serde(rename = "45")]
+    pub _45: Option<String>,
+    #[serde(rename = "46")]
+    pub _46: Option<String>,
+    #[serde(rename = "47")]
+    pub _47: Option<String>,
+    #[serde(rename = "48")]
+    pub _48: Option<String>,
+    #[serde(rename = "49")]
+    pub _49: Option<String>,
+    #[serde(rename = "50")]
+    pub _50: Option<String>,
+}
+
+/// III - Information
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct III {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+}
+
+/// AK1 - Functional Group Response Header
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+pub struct AK1 {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+}
+
+/// AK2 - Transaction Set Response Header
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+pub struct AK2 {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+}
+
+/// IK3 - Implementation Data Segment Note
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+pub struct IK3 {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+}
+
+/// IK4 - Implementation Data Element Note
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+pub struct IK4 {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+}
+
+/// IK5 - Implementation Transaction Set Response Trailer
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+pub struct IK5 {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+}
+
+/// AK9 - Functional Group Response Trailer
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+pub struct AK9 {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+}
+
+/// CTX - Context
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+pub struct CTX {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+    #[serde(rename = "10")]
+    pub _10: Option<String>,
+}
+
+/// FA1 - Type of Financial Accounting Data
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+pub struct FA1 {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+}
+
+/// FA2 - Accounting Data
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+pub struct FA2 {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+}
+
+/// ADX - Adjustment
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+pub struct ADX {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+}
+
+/// RMR - Remittance Advice Accounts Receivable Open Item Reference
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+pub struct RMR {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+}
+
+/// TXP - Tax Payment
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+pub struct TXP {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+}
+
+/// DED - Deductions
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+pub struct DED {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+    #[serde(rename = "10")]
+    pub _10: Option<String>,
+    #[serde(rename = "11")]
+    pub _11: Option<String>,
+    #[serde(rename = "12")]
+    pub _12: Option<String>,
+    #[serde(rename = "13")]
+    pub _13: Option<String>,
+    #[serde(rename = "14")]
+    pub _14: Option<String>,
+    #[serde(rename = "15")]
+    pub _15: Option<String>,
+    #[serde(rename = "16")]
+    pub _16: Option<String>,
+    #[serde(rename = "17")]
+    pub _17: Option<String>,
+    #[serde(rename = "18")]
+    pub _18: Option<String>,
+    #[serde(rename = "19")]
+    pub _19: Option<String>,
+    #[serde(rename = "20")]
+    pub _20: Option<String>,
+    #[serde(rename = "21")]
+    pub _21: Option<String>,
+    #[serde(rename = "22")]
+    pub _22: Option<String>,
+    #[serde(rename = "23")]
+    pub _23: Option<String>,
+    #[serde(rename = "24")]
+    pub _24: Option<String>,
+    #[serde(rename = "25")]
+    pub _25: Option<String>,
+}
+
+/// N9 - Extended Reference Information
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+pub struct N9 {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+}
+
+/// RYL - Royalty Payment
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+pub struct RYL {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+    #[serde(rename = "10")]
+    pub _10: Option<String>,
+    #[serde(rename = "11")]
+    pub _11: Option<String>,
+    #[serde(rename = "12")]
+    pub _12: Option<String>,
+    #[serde(rename = "13")]
+    pub _13: Option<String>,
+    #[serde(rename = "14")]
+    pub _14: Option<String>,
+    #[serde(rename = "15")]
+    pub _15: Option<String>,
+    #[serde(rename = "16")]
+    pub _16: Option<String>,
+    #[serde(rename = "17")]
+    pub _17: Option<String>,
+    #[serde(rename = "18")]
+    pub _18: Option<String>,
+    #[serde(rename = "19")]
+    pub _19: Option<String>,
+    #[serde(rename = "20")]
+    pub _20: Option<String>,
+    #[serde(rename = "21")]
+    pub _21: Option<String>,
+    #[serde(rename = "22")]
+    pub _22: Option<String>,
+    #[serde(rename = "23")]
+    pub _23: Option<String>,
+    #[serde(rename = "24")]
+    pub _24: Option<String>,
+    #[serde(rename = "25")]
+    pub _25: Option<String>,
+}
+
+/// LOC - Location
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+pub struct LOC {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+    #[serde(rename = "10")]
+    pub _10: Option<String>,
+    #[serde(rename = "11")]
+    pub _11: Option<String>,
+    #[serde(rename = "12")]
+    pub _12: Option<String>,
+    #[serde(rename = "13")]
+    pub _13: Option<String>,
+    #[serde(rename = "14")]
+    pub _14: Option<String>,
+    #[serde(rename = "15")]
+    pub _15: Option<String>,
+    #[serde(rename = "16")]
+    pub _16: Option<String>,
+    #[serde(rename = "17")]
+    pub _17: Option<String>,
+    #[serde(rename = "18")]
+    pub _18: Option<String>,
+    #[serde(rename = "19")]
+    pub _19: Option<String>,
+    #[serde(rename = "20")]
+    pub _20: Option<String>,
+    #[serde(rename = "21")]
+    pub _21: Option<String>,
+    #[serde(rename = "22")]
+    pub _22: Option<String>,
+    #[serde(rename = "23")]
+    pub _23: Option<String>,
+    #[serde(rename = "24")]
+    pub _24: Option<String>,
+    #[serde(rename = "25")]
+    pub _25: Option<String>,
+}
+
+/// PID - Product/Item Description
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+pub struct PID {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+}
+
+/// PCT - Percent Amounts
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+pub struct PCT {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+}
+
+/// ASM - Amount and Settlement Method
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+pub struct ASM {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+    #[serde(rename = "10")]
+    pub _10: Option<String>,
+    #[serde(rename = "11")]
+    pub _11: Option<String>,
+    #[serde(rename = "12")]
+    pub _12: Option<String>,
+    #[serde(rename = "13")]
+    pub _13: Option<String>,
+    #[serde(rename = "14")]
+    pub _14: Option<String>,
+    #[serde(rename = "15")]
+    pub _15: Option<String>,
+    #[serde(rename = "16")]
+    pub _16: Option<String>,
+    #[serde(rename = "17")]
+    pub _17: Option<String>,
+    #[serde(rename = "18")]
+    pub _18: Option<String>,
+    #[serde(rename = "19")]
+    pub _19: Option<String>,
+    #[serde(rename = "20")]
+    pub _20: Option<String>,
+    #[serde(rename = "21")]
+    pub _21: Option<String>,
+    #[serde(rename = "22")]
+    pub _22: Option<String>,
+    #[serde(rename = "23")]
+    pub _23: Option<String>,
+    #[serde(rename = "24")]
+    pub _24: Option<String>,
+    #[serde(rename = "25")]
+    pub _25: Option<String>,
+}
+
+/// IT1 - Baseline Item Data (Invoice)
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+pub struct IT1 {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+    #[serde(rename = "10")]
+    pub _10: Option<String>,
+    #[serde(rename = "11")]
+    pub _11: Option<String>,
+    #[serde(rename = "12")]
+    pub _12: Option<String>,
+    #[serde(rename = "13")]
+    pub _13: Option<String>,
+    #[serde(rename = "14")]
+    pub _14: Option<String>,
+    #[serde(rename = "15")]
+    pub _15: Option<String>,
+    #[serde(rename = "16")]
+    pub _16: Option<String>,
+    #[serde(rename = "17")]
+    pub _17: Option<String>,
+    #[serde(rename = "18")]
+    pub _18: Option<String>,
+    #[serde(rename = "19")]
+    pub _19: Option<String>,
+    #[serde(rename = "20")]
+    pub _20: Option<String>,
+    #[serde(rename = "21")]
+    pub _21: Option<String>,
+    #[serde(rename = "22")]
+    pub _22: Option<String>,
+    #[serde(rename = "23")]
+    pub _23: Option<String>,
+    #[serde(rename = "24")]
+    pub _24: Option<String>,
+    #[serde(rename = "25")]
+    pub _25: Option<String>,
+}
+
+/// RPA - Rate Amounts or Percents
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+pub struct RPA {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+}
+
+/// SAC - Service, Promotion, Allowance, or Charge Information
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+pub struct SAC {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+    #[serde(rename = "10")]
+    pub _10: Option<String>,
+    #[serde(rename = "11")]
+    pub _11: Option<String>,
+    #[serde(rename = "12")]
+    pub _12: Option<String>,
+    #[serde(rename = "13")]
+    pub _13: Option<String>,
+    #[serde(rename = "14")]
+    pub _14: Option<String>,
+    #[serde(rename = "15")]
+    pub _15: Option<String>,
+    #[serde(rename = "16")]
+    pub _16: Option<String>,
+    #[serde(rename = "17")]
+    pub _17: Option<String>,
+    #[serde(rename = "18")]
+    pub _18: Option<String>,
+    #[serde(rename = "19")]
+    pub _19: Option<String>,
+    #[serde(rename = "20")]
+    pub _20: Option<String>,
+    #[serde(rename = "21")]
+    pub _21: Option<String>,
+    #[serde(rename = "22")]
+    pub _22: Option<String>,
+    #[serde(rename = "23")]
+    pub _23: Option<String>,
+    #[serde(rename = "24")]
+    pub _24: Option<String>,
+    #[serde(rename = "25")]
+    pub _25: Option<String>,
+}
+
+/// TXI - Tax Information
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+pub struct TXI {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+    #[serde(rename = "10")]
+    pub _10: Option<String>,
+    #[serde(rename = "11")]
+    pub _11: Option<String>,
+    #[serde(rename = "12")]
+    pub _12: Option<String>,
+    #[serde(rename = "13")]
+    pub _13: Option<String>,
+    #[serde(rename = "14")]
+    pub _14: Option<String>,
+    #[serde(rename = "15")]
+    pub _15: Option<String>,
+    #[serde(rename = "16")]
+    pub _16: Option<String>,
+    #[serde(rename = "17")]
+    pub _17: Option<String>,
+    #[serde(rename = "18")]
+    pub _18: Option<String>,
+    #[serde(rename = "19")]
+    pub _19: Option<String>,
+    #[serde(rename = "20")]
+    pub _20: Option<String>,
+    #[serde(rename = "21")]
+    pub _21: Option<String>,
+    #[serde(rename = "22")]
+    pub _22: Option<String>,
+    #[serde(rename = "23")]
+    pub _23: Option<String>,
+    #[serde(rename = "24")]
+    pub _24: Option<String>,
+    #[serde(rename = "25")]
+    pub _25: Option<String>,
+}
+
+/// EB - Eligibility or Benefit Information
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+pub struct EB {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+    #[serde(rename = "10")]
+    pub _10: Option<String>,
+    #[serde(rename = "11")]
+    pub _11: Option<String>,
+    #[serde(rename = "12")]
+    pub _12: Option<String>,
+    #[serde(rename = "13")]
+    pub _13: Option<String>,
+    #[serde(rename = "14")]
+    pub _14: Option<String>,
+    #[serde(rename = "15")]
+    pub _15: Option<String>,
+    #[serde(rename = "16")]
+    pub _16: Option<String>,
+    #[serde(rename = "17")]
+    pub _17: Option<String>,
+    #[serde(rename = "18")]
+    pub _18: Option<String>,
+    #[serde(rename = "19")]
+    pub _19: Option<String>,
+    #[serde(rename = "20")]
+    pub _20: Option<String>,
+    #[serde(rename = "21")]
+    pub _21: Option<String>,
+    #[serde(rename = "22")]
+    pub _22: Option<String>,
+    #[serde(rename = "23")]
+    pub _23: Option<String>,
+    #[serde(rename = "24")]
+    pub _24: Option<String>,
+    #[serde(rename = "25")]
+    pub _25: Option<String>,
+}
+
+/// PKD - Packaging Description
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+pub struct PKD {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+    #[serde(rename = "10")]
+    pub _10: Option<String>,
+    #[serde(rename = "11")]
+    pub _11: Option<String>,
+    #[serde(rename = "12")]
+    pub _12: Option<String>,
+    #[serde(rename = "13")]
+    pub _13: Option<String>,
+    #[serde(rename = "14")]
+    pub _14: Option<String>,
+    #[serde(rename = "15")]
+    pub _15: Option<String>,
+    #[serde(rename = "16")]
+    pub _16: Option<String>,
+    #[serde(rename = "17")]
+    pub _17: Option<String>,
+    #[serde(rename = "18")]
+    pub _18: Option<String>,
+    #[serde(rename = "19")]
+    pub _19: Option<String>,
+    #[serde(rename = "20")]
+    pub _20: Option<String>,
+    #[serde(rename = "21")]
+    pub _21: Option<String>,
+    #[serde(rename = "22")]
+    pub _22: Option<String>,
+    #[serde(rename = "23")]
+    pub _23: Option<String>,
+    #[serde(rename = "24")]
+    pub _24: Option<String>,
+    #[serde(rename = "25")]
+    pub _25: Option<String>,
+}
+
+/// EM - Equipment Characteristics
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+pub struct EM {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+    #[serde(rename = "10")]
+    pub _10: Option<String>,
+    #[serde(rename = "11")]
+    pub _11: Option<String>,
+    #[serde(rename = "12")]
+    pub _12: Option<String>,
+    #[serde(rename = "13")]
+    pub _13: Option<String>,
+    #[serde(rename = "14")]
+    pub _14: Option<String>,
+    #[serde(rename = "15")]
+    pub _15: Option<String>,
+    #[serde(rename = "16")]
+    pub _16: Option<String>,
+    #[serde(rename = "17")]
+    pub _17: Option<String>,
+    #[serde(rename = "18")]
+    pub _18: Option<String>,
+    #[serde(rename = "19")]
+    pub _19: Option<String>,
+    #[serde(rename = "20")]
+    pub _20: Option<String>,
+    #[serde(rename = "21")]
+    pub _21: Option<String>,
+    #[serde(rename = "22")]
+    pub _22: Option<String>,
+    #[serde(rename = "23")]
+    pub _23: Option<String>,
+    #[serde(rename = "24")]
+    pub _24: Option<String>,
+    #[serde(rename = "25")]
+    pub _25: Option<String>,
+}
+
+/// SD1 - Safety Data
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+pub struct SD1 {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+    #[serde(rename = "10")]
+    pub _10: Option<String>,
+    #[serde(rename = "11")]
+    pub _11: Option<String>,
+    #[serde(rename = "12")]
+    pub _12: Option<String>,
+    #[serde(rename = "13")]
+    pub _13: Option<String>,
+    #[serde(rename = "14")]
+    pub _14: Option<String>,
+    #[serde(rename = "15")]
+    pub _15: Option<String>,
+    #[serde(rename = "16")]
+    pub _16: Option<String>,
+    #[serde(rename = "17")]
+    pub _17: Option<String>,
+    #[serde(rename = "18")]
+    pub _18: Option<String>,
+    #[serde(rename = "19")]
+    pub _19: Option<String>,
+    #[serde(rename = "20")]
+    pub _20: Option<String>,
+    #[serde(rename = "21")]
+    pub _21: Option<String>,
+    #[serde(rename = "22")]
+    pub _22: Option<String>,
+    #[serde(rename = "23")]
+    pub _23: Option<String>,
+    #[serde(rename = "24")]
+    pub _24: Option<String>,
+    #[serde(rename = "25")]
+    pub _25: Option<String>,
+}
+
+/// SLN - Subline Item Detail
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+pub struct SLN {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+    #[serde(rename = "10")]
+    pub _10: Option<String>,
+    #[serde(rename = "11")]
+    pub _11: Option<String>,
+    #[serde(rename = "12")]
+    pub _12: Option<String>,
+    #[serde(rename = "13")]
+    pub _13: Option<String>,
+    #[serde(rename = "14")]
+    pub _14: Option<String>,
+    #[serde(rename = "15")]
+    pub _15: Option<String>,
+    #[serde(rename = "16")]
+    pub _16: Option<String>,
+    #[serde(rename = "17")]
+    pub _17: Option<String>,
+    #[serde(rename = "18")]
+    pub _18: Option<String>,
+    #[serde(rename = "19")]
+    pub _19: Option<String>,
+    #[serde(rename = "20")]
+    pub _20: Option<String>,
+    #[serde(rename = "21")]
+    pub _21: Option<String>,
+    #[serde(rename = "22")]
+    pub _22: Option<String>,
+    #[serde(rename = "23")]
+    pub _23: Option<String>,
+    #[serde(rename = "24")]
+    pub _24: Option<String>,
+    #[serde(rename = "25")]
+    pub _25: Option<String>,
+    #[serde(rename = "26")]
+    pub _26: Option<String>,
+    #[serde(rename = "27")]
+    pub _27: Option<String>,
+    #[serde(rename = "28")]
+    pub _28: Option<String>,
+}
+
+/// G53 - Maintenance Type
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+pub struct G53 {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+    #[serde(rename = "10")]
+    pub _10: Option<String>,
+    #[serde(rename = "11")]
+    pub _11: Option<String>,
+    #[serde(rename = "12")]
+    pub _12: Option<String>,
+    #[serde(rename = "13")]
+    pub _13: Option<String>,
+    #[serde(rename = "14")]
+    pub _14: Option<String>,
+    #[serde(rename = "15")]
+    pub _15: Option<String>,
+    #[serde(rename = "16")]
+    pub _16: Option<String>,
+    #[serde(rename = "17")]
+    pub _17: Option<String>,
+    #[serde(rename = "18")]
+    pub _18: Option<String>,
+    #[serde(rename = "19")]
+    pub _19: Option<String>,
+    #[serde(rename = "20")]
+    pub _20: Option<String>,
+    #[serde(rename = "21")]
+    pub _21: Option<String>,
+    #[serde(rename = "22")]
+    pub _22: Option<String>,
+    #[serde(rename = "23")]
+    pub _23: Option<String>,
+    #[serde(rename = "24")]
+    pub _24: Option<String>,
+    #[serde(rename = "25")]
+    pub _25: Option<String>,
+}
+
+/// PEN - Pension Information
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+pub struct PEN {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+    #[serde(rename = "10")]
+    pub _10: Option<String>,
+    #[serde(rename = "11")]
+    pub _11: Option<String>,
+    #[serde(rename = "12")]
+    pub _12: Option<String>,
+    #[serde(rename = "13")]
+    pub _13: Option<String>,
+    #[serde(rename = "14")]
+    pub _14: Option<String>,
+    #[serde(rename = "15")]
+    pub _15: Option<String>,
+    #[serde(rename = "16")]
+    pub _16: Option<String>,
+    #[serde(rename = "17")]
+    pub _17: Option<String>,
+    #[serde(rename = "18")]
+    pub _18: Option<String>,
+    #[serde(rename = "19")]
+    pub _19: Option<String>,
+    #[serde(rename = "20")]
+    pub _20: Option<String>,
+    #[serde(rename = "21")]
+    pub _21: Option<String>,
+    #[serde(rename = "22")]
+    pub _22: Option<String>,
+    #[serde(rename = "23")]
+    pub _23: Option<String>,
+    #[serde(rename = "24")]
+    pub _24: Option<String>,
+    #[serde(rename = "25")]
+    pub _25: Option<String>,
+}
+
+/// ATN - Attendance
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+pub struct ATN {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+    #[serde(rename = "10")]
+    pub _10: Option<String>,
+    #[serde(rename = "11")]
+    pub _11: Option<String>,
+    #[serde(rename = "12")]
+    pub _12: Option<String>,
+    #[serde(rename = "13")]
+    pub _13: Option<String>,
+    #[serde(rename = "14")]
+    pub _14: Option<String>,
+    #[serde(rename = "15")]
+    pub _15: Option<String>,
+    #[serde(rename = "16")]
+    pub _16: Option<String>,
+    #[serde(rename = "17")]
+    pub _17: Option<String>,
+    #[serde(rename = "18")]
+    pub _18: Option<String>,
+    #[serde(rename = "19")]
+    pub _19: Option<String>,
+    #[serde(rename = "20")]
+    pub _20: Option<String>,
+    #[serde(rename = "21")]
+    pub _21: Option<String>,
+    #[serde(rename = "22")]
+    pub _22: Option<String>,
+    #[serde(rename = "23")]
+    pub _23: Option<String>,
+    #[serde(rename = "24")]
+    pub _24: Option<String>,
+    #[serde(rename = "25")]
+    pub _25: Option<String>,
+}
+
+/// PYD - Payroll Deduction
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+pub struct PYD {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+    #[serde(rename = "10")]
+    pub _10: Option<String>,
+    #[serde(rename = "11")]
+    pub _11: Option<String>,
+    #[serde(rename = "12")]
+    pub _12: Option<String>,
+    #[serde(rename = "13")]
+    pub _13: Option<String>,
+    #[serde(rename = "14")]
+    pub _14: Option<String>,
+    #[serde(rename = "15")]
+    pub _15: Option<String>,
+    #[serde(rename = "16")]
+    pub _16: Option<String>,
+    #[serde(rename = "17")]
+    pub _17: Option<String>,
+    #[serde(rename = "18")]
+    pub _18: Option<String>,
+    #[serde(rename = "19")]
+    pub _19: Option<String>,
+    #[serde(rename = "20")]
+    pub _20: Option<String>,
+    #[serde(rename = "21")]
+    pub _21: Option<String>,
+    #[serde(rename = "22")]
+    pub _22: Option<String>,
+    #[serde(rename = "23")]
+    pub _23: Option<String>,
+    #[serde(rename = "24")]
+    pub _24: Option<String>,
+    #[serde(rename = "25")]
+    pub _25: Option<String>,
+}
+
+/// EMS - Employment Position
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+pub struct EMS {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+    #[serde(rename = "10")]
+    pub _10: Option<String>,
+    #[serde(rename = "11")]
+    pub _11: Option<String>,
+    #[serde(rename = "12")]
+    pub _12: Option<String>,
+    #[serde(rename = "13")]
+    pub _13: Option<String>,
+    #[serde(rename = "14")]
+    pub _14: Option<String>,
+    #[serde(rename = "15")]
+    pub _15: Option<String>,
+    #[serde(rename = "16")]
+    pub _16: Option<String>,
+    #[serde(rename = "17")]
+    pub _17: Option<String>,
+    #[serde(rename = "18")]
+    pub _18: Option<String>,
+    #[serde(rename = "19")]
+    pub _19: Option<String>,
+    #[serde(rename = "20")]
+    pub _20: Option<String>,
+    #[serde(rename = "21")]
+    pub _21: Option<String>,
+    #[serde(rename = "22")]
+    pub _22: Option<String>,
+    #[serde(rename = "23")]
+    pub _23: Option<String>,
+    #[serde(rename = "24")]
+    pub _24: Option<String>,
+    #[serde(rename = "25")]
+    pub _25: Option<String>,
+}
