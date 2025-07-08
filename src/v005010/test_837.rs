@@ -320,7 +320,6 @@ IEA*1*000000101~"#;
     println!("{obj:?}");
 }
 
-
 #[test]
 fn parse_837_7() {
     //source: https://github.com/EdiFabric/X12.NET/blob/master/Files/HIPAA/ClaimPaymentEVV.txt
@@ -374,7 +373,6 @@ IEA*1*000000101~"#;
     println!("{obj:?}");
 }
 
-
 #[test]
 fn parse_837_8() {
     //source: https://github.com/EdiFabric/X12.NET/blob/master/Files/HIPAA/DentalClaim.txt
@@ -417,8 +415,6 @@ IEA*1*000000101~"#;
     println!("{rest}");
     println!("{obj:?}");
 }
-
-
 
 #[test]
 fn parse_837_9() {

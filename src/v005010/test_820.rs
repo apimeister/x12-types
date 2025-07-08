@@ -28,7 +28,6 @@ IEA*1*000000101~"#;
     assert!(rest.is_empty());
 }
 
-
 #[test]
 fn parse_820_02() {
     //source: https://github.com/EdiFabric/X12.NET/blob/master/Files/HIPAA/PaymentOrderRemittanceAdvice.txt
@@ -79,7 +78,6 @@ IEA*1*000000101~"#;
     assert!(rest.is_empty());
 }
 
-
 #[test]
 fn parse_820_03() {
     //source: https://github.com/Project-Herophilus/Project-Herophilus-Assets/blob/main/Testing/TestData/samples-edi/820%20Child%20Health%20Plus%20Payment%20(EFT).txt
@@ -90,7 +88,6 @@ fn parse_820_03() {
     assert!(rest.is_empty());
 }
 
-
 #[test]
 fn parse_820_04() {
     //source: https://github.com/Project-Herophilus/Project-Herophilus-Assets/blob/main/Testing/TestData/samples-edi/820%20Essentail%20Health%20Plan.txt
@@ -100,7 +97,6 @@ fn parse_820_04() {
     println!("{obj:?}");
     assert!(rest.is_empty());
 }
-
 
 #[test]
 fn parse_820_05() {

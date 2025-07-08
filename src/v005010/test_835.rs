@@ -106,7 +106,6 @@ IEA*1*004075123~"#;
     assert!(rest.is_empty());
 }
 
-
 #[test]
 fn parse_835_02() {
     //source: https://github.com/EdiFabric/X12.NET/blob/master/Files/HIPAA/Payment.txt
@@ -146,8 +145,6 @@ IEA*1*000000101~"#;
     assert!(rest.is_empty());
 }
 
-
-
 #[test]
 fn parse_835_03() {
     //source: https://github.com/Project-Herophilus/Project-Herophilus-Assets/blob/main/Testing/TestData/samples-edi/835%20Inst%20Sample(Inpatient%20DRG%20Retro).txt
@@ -158,7 +155,6 @@ fn parse_835_03() {
     assert!(rest.is_empty());
 }
 
-
 #[test]
 fn parse_835_04() {
     //source: https://github.com/Project-Herophilus/Project-Herophilus-Assets/blob/main/Testing/TestData/samples-edi/835%20Sample%20(Institutional%20Claims%20only).2014.txt
@@ -168,7 +164,6 @@ fn parse_835_04() {
     println!("{obj:?}");
     assert!(rest.is_empty());
 }
-
 
 #[test]
 fn parse_835_05() {
@@ -243,10 +238,9 @@ IEA*1*111111123~"#;
     assert!(rest.is_empty());
 }
 
-
 #[test]
 fn parse_835_09() {
-    //source: 
+    //source:
     let str = r#""#;
     let (rest, obj) = Transmission::<_835>::parse(str).unwrap();
     println!("{rest}");
