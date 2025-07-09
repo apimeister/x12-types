@@ -471,7 +471,6 @@ IEA*1*000000101~"#;
 //     println!("{obj:?}");
 // }
 
-
 #[test]
 fn parse_837_10() {
     //source: https://github.com/dwai1714/edi_parser/blob/main/spike/data_based_on_type/837/X291-home-infusion-therapy-pharmacy-adjudicated-with-NDC-in-loop-2410.edi

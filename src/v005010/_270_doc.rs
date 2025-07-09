@@ -24,14 +24,14 @@ impl<'a> Parser<&'a str, _270, nom::error::Error<&'a str>> for _270 {
         output.st = obj;
         let (rest, obj) = BHT::parse(rest)?;
         output.bht = obj;
-        
+
         // loop 2000 - Information Source Level
         let mut loop_2000 = vec![];
         let mut loop_rest = rest;
         while peek(opt(HL::parse)).parse(loop_rest)?.1.is_some() {
             let (rest, hl) = HL::parse(loop_rest)?;
             let (rest, trn) = many0(TRN::parse).parse(rest)?;
-            
+
             // loop 2100 - Information Receiver Level
             let mut loop_2100 = vec![];
             let mut loop_2100_rest = rest;
@@ -48,7 +48,7 @@ impl<'a> Parser<&'a str, _270, nom::error::Error<&'a str>> for _270 {
                 let (rest, hi) = opt(HI::parse).parse(rest)?;
                 let (rest, dtp) = many0(DTP::parse).parse(rest)?;
                 let (rest, mpi) = many0(MPI::parse).parse(rest)?;
-                
+
                 // loop 2110 - Subscriber Level
                 let mut loop_2110 = vec![];
                 let mut loop_2110_rest = rest;
@@ -91,15 +91,11 @@ impl<'a> Parser<&'a str, _270, nom::error::Error<&'a str>> for _270 {
                 });
             }
             loop_rest = loop_2100_rest;
-            loop_2000.push(_270Loop2000 {
-                hl,
-                trn,
-                loop_2100,
-            });
+            loop_2000.push(_270Loop2000 { hl, trn, loop_2100 });
         }
         let rest = loop_rest;
         output.loop_2000 = loop_2000;
-        
+
         let (rest, obj) = SE::parse(rest)?;
         output.se = obj;
         Ok((rest, output))

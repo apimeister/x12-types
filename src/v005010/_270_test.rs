@@ -38,31 +38,31 @@ SE*13*1234~
 GE*1*101~
 IEA*1*000000101~"#;
     let (_, parsed) = Transmission::<_270>::parse(str).unwrap();
-    
+
     // Verify basic structure
     assert_eq!(parsed.functional_group.len(), 1);
     let fg = &parsed.functional_group[0];
     assert_eq!(fg.segments.len(), 1);
     let transaction = &fg.segments[0];
-    
+
     // Verify ST segment
     assert_eq!(transaction.st._01, "270");
     assert_eq!(transaction.st._02, "1234");
-    
+
     // Verify BHT segment
     assert_eq!(transaction.bht._01, "0022");
     assert_eq!(transaction.bht._02, "13");
-    
+
     // Verify SE segment
     assert_eq!(transaction.se._01, "13");
     assert_eq!(transaction.se._02, "1234");
-    
+
     // Verify loop structure
     assert_eq!(transaction.loop_2000.len(), 1);
     let loop_2000 = &transaction.loop_2000[0];
     assert_eq!(loop_2000.hl._01, "1");
     assert_eq!(loop_2000.hl._03, "20");
-    
+
     assert_eq!(loop_2000.loop_2100.len(), 1);
     let loop_2100 = &loop_2000.loop_2100[0];
     assert_eq!(loop_2100.nm1._01, "PR");

@@ -123,4 +123,3 @@ pub struct FunctionalGroup<T> {
     pub segments: Vec<T>,
     pub ge: GE,
 }
-

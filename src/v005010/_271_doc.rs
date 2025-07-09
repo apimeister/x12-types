@@ -24,7 +24,7 @@ impl<'a> Parser<&'a str, _271, nom::error::Error<&'a str>> for _271 {
         output.st = obj;
         let (rest, obj) = BHT::parse(rest)?;
         output.bht = obj;
-        
+
         // loop 2000 - Information Source Level
         let mut loop_2000 = vec![];
         let mut loop_rest = rest;
@@ -32,7 +32,7 @@ impl<'a> Parser<&'a str, _271, nom::error::Error<&'a str>> for _271 {
             let (rest, hl) = HL::parse(loop_rest)?;
             let (rest, trn) = many0(TRN::parse).parse(rest)?;
             let (rest, aaa) = many0(AAA::parse).parse(rest)?;
-            
+
             // loop 2100 - Information Receiver Level
             let mut loop_2100 = vec![];
             let mut loop_2100_rest = rest;
@@ -51,7 +51,7 @@ impl<'a> Parser<&'a str, _271, nom::error::Error<&'a str>> for _271 {
                 let (rest, dtp) = many0(DTP::parse).parse(rest)?;
                 let (rest, lui) = many0(LUI::parse).parse(rest)?;
                 let (rest, mpi) = many0(MPI::parse).parse(rest)?;
-                
+
                 // loop 2110 - Subscriber Level
                 let mut loop_2110 = vec![];
                 let mut loop_2110_rest = rest;
@@ -70,7 +70,7 @@ impl<'a> Parser<&'a str, _271, nom::error::Error<&'a str>> for _271 {
                     let (rest, sd1) = opt(SD1::parse).parse(rest)?;
                     let (rest, pkd) = opt(PKD::parse).parse(rest)?;
                     let (rest, msg) = many0(MSG::parse).parse(rest)?;
-                    
+
                     // loop 2115 - Information
                     let mut loop_2115 = vec![];
                     let mut loop_2115_rest = rest;
@@ -79,7 +79,7 @@ impl<'a> Parser<&'a str, _271, nom::error::Error<&'a str>> for _271 {
                         let (rest, dtp) = many0(DTP::parse).parse(rest)?;
                         let (rest, amt) = many0(AMT::parse).parse(rest)?;
                         let (rest, pct) = many0(PCT::parse).parse(rest)?;
-                        
+
                         // loop 2117 - Industry Code
                         let mut loop_2117 = vec![];
                         let mut loop_2117_rest = rest;
@@ -88,11 +88,7 @@ impl<'a> Parser<&'a str, _271, nom::error::Error<&'a str>> for _271 {
                             let (rest, amt) = many0(AMT::parse).parse(rest)?;
                             let (rest, pct) = many0(PCT::parse).parse(rest)?;
                             loop_2117_rest = rest;
-                            loop_2117.push(_271Loop2117 {
-                                lq,
-                                amt,
-                                pct,
-                            });
+                            loop_2117.push(_271Loop2117 { lq, amt, pct });
                         }
                         loop_2115_rest = loop_2117_rest;
                         loop_2115.push(_271Loop2115 {
@@ -103,7 +99,7 @@ impl<'a> Parser<&'a str, _271, nom::error::Error<&'a str>> for _271 {
                             loop_2117,
                         });
                     }
-                    
+
                     // loop 2120 - Additional Information
                     let mut loop_2120 = vec![];
                     let mut loop_2120_rest = loop_2115_rest;
@@ -111,7 +107,11 @@ impl<'a> Parser<&'a str, _271, nom::error::Error<&'a str>> for _271 {
                         let (rest, ls) = LS::parse(loop_2120_rest)?;
                         let mut loop_2120_content = vec![];
                         let mut loop_2120_content_rest = rest;
-                        while peek(opt(NM1::parse)).parse(loop_2120_content_rest)?.1.is_some() {
+                        while peek(opt(NM1::parse))
+                            .parse(loop_2120_content_rest)?
+                            .1
+                            .is_some()
+                        {
                             let (rest, nm1) = NM1::parse(loop_2120_content_rest)?;
                             let (rest, n2) = opt(N2::parse).parse(rest)?;
                             let (rest, n3) = opt(N3::parse).parse(rest)?;
@@ -136,7 +136,7 @@ impl<'a> Parser<&'a str, _271, nom::error::Error<&'a str>> for _271 {
                             le,
                         });
                     }
-                    
+
                     loop_2110_rest = loop_2120_rest;
                     loop_2110.push(_271Loop2110 {
                         eb,
@@ -186,7 +186,7 @@ impl<'a> Parser<&'a str, _271, nom::error::Error<&'a str>> for _271 {
         }
         let rest = loop_rest;
         output.loop_2000 = loop_2000;
-        
+
         let (rest, obj) = SE::parse(rest)?;
         output.se = obj;
         Ok((rest, output))
