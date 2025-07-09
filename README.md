@@ -19,9 +19,14 @@ This library provides bindings for the ASC X12 standard.
   * 997 - Functional Acknowledgment
   * 998 - Set Cancellation
 * 005010
+  * 270 - Eligibility, Coverage or Benefit Inquiry
+  * 271 - Eligibility, Coverage or Benefit Information
+  * 276 - Health Claim Status Request
+  * 820 - Payment Order/Remittance Advice
   * 834 - Benefit Enrollment and Maintenance (005010X220A1)
   * 835 - Health Care Claim Payment/Advice
   * 837 - Health Care Claim
+  * 999 - Implementation Acknowledgment
 * 005030
   * 404 - Rail Carrier Shipment Information
 
