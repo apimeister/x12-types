@@ -1,18 +1,16 @@
-use log::{error, trace};
-use serde::{Deserialize, Serialize};
-use x12_types_macros::DisplayX12;
-
+use super::{
+    AAA, BHT, CL1, CR1, CR2, CR4, CR5, CR6, CR7, CR8, CRC, DMG, DTP, HCR, HI, HL, HSD, INS, MSG,
+    N2, N3, N4, NM1, PER, PRV, PWK, REF, SE, ST, SV1, SV2, SV3, TOO, TRN, UM,
+};
 use crate::util::Parser;
+use log::{error, trace};
 use nom::{
     combinator::{opt, peek},
     multi::many0,
     IResult, Parser as _,
 };
-
-use super::{
-    AAA, BHT, CL1, CR1, CR2, CR4, CR5, CR6, CR7, CR8, CRC, DMG, DTP, HCR, HI, HL, HSD, INS, MSG,
-    N2, N3, N4, NM1, PER, PRV, PWK, REF, SE, ST, SV1, SV2, SV3, TOO, TRN, UM,
-};
+use serde::{Deserialize, Serialize};
+use x12_types_macros::DisplayX12;
 
 /// 278 - Health Care Services Review Information
 #[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
