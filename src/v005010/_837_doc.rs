@@ -110,6 +110,14 @@ impl<'a> Parser<&'a str, _837, nom::error::Error<&'a str>> for _837 {
                 let (rest, qty) = opt(QTY::parse).parse(rest)?;
                 let (rest, hcp) = opt(HCP::parse).parse(rest)?;
                 loop_rest = rest;
+                // loop 2305
+                let mut loop_2305 = vec![];
+                while peek(opt(CR7::parse)).parse(loop_rest)?.1.is_some() {
+                    let (rest, cr7) = CR7::parse(loop_rest)?;
+                    let (rest, hsd) = many0(HSD::parse).parse(rest)?;
+                    loop_rest = rest;
+                    loop_2305.push(_837Loop2305 { cr7, hsd });
+                }
                 // loop 2310
                 let mut loop_2310 = vec![];
                 while peek(opt(NM1::parse)).parse(loop_rest)?.1.is_some() {
@@ -316,7 +324,7 @@ impl<'a> Parser<&'a str, _837, nom::error::Error<&'a str>> for _837 {
                     hi,
                     qty,
                     hcp,
-                    loop_2305: vec![],
+                    loop_2305,
                     loop_2310,
                     loop_2320,
                     loop_2400,
