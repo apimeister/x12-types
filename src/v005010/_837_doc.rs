@@ -69,7 +69,7 @@ impl<'a> Parser<&'a str, _837, nom::error::Error<&'a str>> for _837 {
                 let (rest, n3) = opt(N3::parse).parse(rest)?;
                 let (rest, n4) = opt(N4::parse).parse(rest)?;
                 let (rest, dmg) = opt(DMG::parse).parse(rest)?;
-                let (rest, r#ref) = opt(REF::parse).parse(rest)?;
+                let (rest, r#ref) = many0(REF::parse).parse(rest)?;
                 let (rest, per) = opt(PER::parse).parse(rest)?;
                 loop_rest = rest;
                 loop_2010.push(_837Loop2010 {
@@ -86,7 +86,7 @@ impl<'a> Parser<&'a str, _837, nom::error::Error<&'a str>> for _837 {
             let mut loop_2300 = vec![];
             while peek(opt(CLM::parse)).parse(loop_rest)?.1.is_some() {
                 let (rest, clm) = CLM::parse(loop_rest)?;
-                let (rest, dtp) = opt(DTP::parse).parse(rest)?;
+                let (rest, dtp) = many0(DTP::parse).parse(rest)?;
                 let (rest, cl1) = opt(CL1::parse).parse(rest)?;
                 let (rest, dn1) = opt(DN1::parse).parse(rest)?;
                 let (rest, dn2) = opt(DN2::parse).parse(rest)?;
@@ -95,7 +95,7 @@ impl<'a> Parser<&'a str, _837, nom::error::Error<&'a str>> for _837 {
                 let (rest, dsb) = opt(DSB::parse).parse(rest)?;
                 let (rest, ur) = opt(UR::parse).parse(rest)?;
                 let (rest, amt) = opt(AMT::parse).parse(rest)?;
-                let (rest, r#ref) = opt(REF::parse).parse(rest)?;
+                let (rest, r#ref) = many0(REF::parse).parse(rest)?;
                 let (rest, k3) = opt(K3::parse).parse(rest)?;
                 let (rest, nte) = opt(NTE::parse).parse(rest)?;
                 let (rest, cr1) = opt(CR1::parse).parse(rest)?;
@@ -106,7 +106,7 @@ impl<'a> Parser<&'a str, _837, nom::error::Error<&'a str>> for _837 {
                 let (rest, cr6) = opt(CR6::parse).parse(rest)?;
                 let (rest, cr8) = opt(CR8::parse).parse(rest)?;
                 let (rest, crc) = opt(CRC::parse).parse(rest)?;
-                let (rest, hi) = opt(HI::parse).parse(rest)?;
+                let (rest, hi) = many0(HI::parse).parse(rest)?;
                 let (rest, qty) = opt(QTY::parse).parse(rest)?;
                 let (rest, hcp) = opt(HCP::parse).parse(rest)?;
                 loop_rest = rest;
@@ -194,7 +194,7 @@ impl<'a> Parser<&'a str, _837, nom::error::Error<&'a str>> for _837 {
                     let (rest, cr4) = opt(CR4::parse).parse(rest)?;
                     let (rest, cr5) = opt(CR5::parse).parse(rest)?;
                     let (rest, crc) = opt(CRC::parse).parse(rest)?;
-                    let (rest, dtp) = opt(DTP::parse).parse(rest)?;
+                    let (rest, dtp) = many0(DTP::parse).parse(rest)?;
                     let (rest, qty) = opt(QTY::parse).parse(rest)?;
                     let (rest, mea) = opt(MEA::parse).parse(rest)?;
                     let (rest, cn1) = opt(CN1::parse).parse(rest)?;
@@ -207,6 +207,15 @@ impl<'a> Parser<&'a str, _837, nom::error::Error<&'a str>> for _837 {
                     let (rest, hsd) = opt(HSD::parse).parse(rest)?;
                     let (rest, hcp) = opt(HCP::parse).parse(rest)?;
                     loop_rest = rest;
+                    // loop 2410
+                    let mut loop_2410 = vec![];
+                    while peek(opt(LIN::parse)).parse(loop_rest)?.1.is_some() {
+                        let (rest, lin) = LIN::parse(loop_rest)?;
+                        let (rest, ctp) = opt(CTP::parse).parse(rest)?;
+                        let (rest, r#ref) = opt(REF::parse).parse(rest)?;
+                        loop_rest = rest;
+                        loop_2410.push(_837Loop2410 { lin, ctp, r#ref });
+                    }
                     // loop 2420
                     let mut loop_2420 = vec![];
                     while peek(opt(NM1::parse)).parse(loop_rest)?.1.is_some() {
@@ -238,6 +247,14 @@ impl<'a> Parser<&'a str, _837, nom::error::Error<&'a str>> for _837 {
                         loop_rest = rest;
                         loop_2430.push(_837Loop2430 { svd, cas, dtp, amt });
                     }
+                    // loop 2440
+                    let mut loop_2440 = vec![];
+                    while peek(opt(LQ::parse)).parse(loop_rest)?.1.is_some() {
+                        let (rest, lq) = LQ::parse(loop_rest)?;
+                        let (rest, frm) = many0(FRM::parse).parse(rest)?;
+                        loop_rest = rest;
+                        loop_2440.push(_837Loop2440 { lq, frm });
+                    }
                     loop_2400.push(_837Loop2400 {
                         lx,
                         sv1,
@@ -268,10 +285,10 @@ impl<'a> Parser<&'a str, _837, nom::error::Error<&'a str>> for _837 {
                         imm,
                         hsd,
                         hcp,
-                        loop_2410: vec![],
+                        loop_2410,
                         loop_2420,
-                        loop_2430: vec![],
-                        loop_2440: vec![],
+                        loop_2430,
+                        loop_2440,
                     });
                 }
                 loop_2300.push(_837Loop2300 {
@@ -353,14 +370,14 @@ pub struct _837Loop2010 {
     pub n3: Option<N3>,
     pub n4: Option<N4>,
     pub dmg: Option<DMG>,
-    pub r#ref: Option<REF>,
+    pub r#ref: Vec<REF>,
     pub per: Option<PER>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
 pub struct _837Loop2300 {
     pub clm: CLM,
-    pub dtp: Option<DTP>,
+    pub dtp: Vec<DTP>,
     pub cl1: Option<CL1>,
     pub dn1: Option<DN1>,
     pub dn2: Option<DN2>,
@@ -369,7 +386,7 @@ pub struct _837Loop2300 {
     pub dsb: Option<DSB>,
     pub ur: Option<UR>,
     pub amt: Option<AMT>,
-    pub r#ref: Option<REF>,
+    pub r#ref: Vec<REF>,
     pub k3: Option<K3>,
     pub nte: Option<NTE>,
     pub cr1: Option<CR1>,
@@ -380,7 +397,7 @@ pub struct _837Loop2300 {
     pub cr6: Option<CR6>,
     pub cr8: Option<CR8>,
     pub crc: Option<CRC>,
-    pub hi: Option<HI>,
+    pub hi: Vec<HI>,
     pub qty: Option<QTY>,
     pub hcp: Option<HCP>,
     pub loop_2305: Vec<_837Loop2305>,
@@ -448,7 +465,7 @@ pub struct _837Loop2400 {
     pub cr4: Option<CR4>,
     pub cr5: Option<CR5>,
     pub crc: Option<CRC>,
-    pub dtp: Option<DTP>,
+    pub dtp: Vec<DTP>,
     pub qty: Option<QTY>,
     pub mea: Option<MEA>,
     pub cn1: Option<CN1>,
@@ -495,5 +512,5 @@ pub struct _837Loop2430 {
 #[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
 pub struct _837Loop2440 {
     pub lq: LQ,
-    pub frm: FRM,
+    pub frm: Vec<FRM>,
 }

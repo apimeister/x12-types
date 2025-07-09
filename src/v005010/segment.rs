@@ -2834,6 +2834,15 @@ pub struct RDM {
 }
 
 /// REF - Reference Information
+///
+/// To specify identifying information
+///
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 128 | Reference Identification Qualifier | 1 | M | ID | 2/3
+/// 02 | 127 | Reference Identification | 1 | M | AN | 1/50
+/// 03 | 352 | Description | 1 | O | AN | 1/80
+/// 04 | C040 | Reference Identifier | 1 | O | C | 1/1
 #[derive(
     Serialize,
     Deserialize,
@@ -2847,12 +2856,39 @@ pub struct RDM {
     ParseSegment,
 )]
 pub struct REF {
+    /// 128 - Reference Identification Qualifier
+    ///
+    /// Code qualifying the Reference Identification
+    /// - TYPE=ID
+    /// - MIN=2
+    /// - MAX=3
+    #[validate(length(min = 2, max = 3))]
     #[serde(rename = "01")]
     pub _01: String,
+    /// 127 - Reference Identification
+    ///
+    /// Reference information as defined for a particular Transaction Set or as specified by the Reference Identification Qualifier
+    /// - TYPE=AN
+    /// - MIN=1
+    /// - MAX=50
+    #[validate(length(min = 1, max = 50))]
     #[serde(rename = "02")]
     pub _02: Option<String>,
+    /// 352 - Description
+    ///
+    /// A free-form description to clarify the related data elements and their content
+    /// - TYPE=AN
+    /// - MIN=1
+    /// - MAX=80
+    #[validate(length(min = 1, max = 80))]
     #[serde(rename = "03")]
     pub _03: Option<String>,
+    /// C040 - Reference Identifier
+    ///
+    /// To identify one or more areas of the Reference Identifier
+    /// - TYPE=C
+    /// - MIN=1
+    /// - MAX=1
     #[serde(rename = "04")]
     pub _04: Option<String>,
 }
@@ -3857,7 +3893,9 @@ pub struct III {
 }
 
 /// AK1 - Functional Group Response Header
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
 pub struct AK1 {
     #[serde(rename = "01")]
     pub _01: Option<String>,
@@ -3866,7 +3904,9 @@ pub struct AK1 {
 }
 
 /// AK2 - Transaction Set Response Header
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
 pub struct AK2 {
     #[serde(rename = "01")]
     pub _01: Option<String>,
@@ -3875,7 +3915,9 @@ pub struct AK2 {
 }
 
 /// IK3 - Implementation Data Segment Note
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
 pub struct IK3 {
     #[serde(rename = "01")]
     pub _01: Option<String>,
@@ -3888,7 +3930,9 @@ pub struct IK3 {
 }
 
 /// IK4 - Implementation Data Element Note
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
 pub struct IK4 {
     #[serde(rename = "01")]
     pub _01: Option<String>,
@@ -3901,7 +3945,9 @@ pub struct IK4 {
 }
 
 /// IK5 - Implementation Transaction Set Response Trailer
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
 pub struct IK5 {
     #[serde(rename = "01")]
     pub _01: Option<String>,
@@ -3918,7 +3964,9 @@ pub struct IK5 {
 }
 
 /// AK9 - Functional Group Response Trailer
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
 pub struct AK9 {
     #[serde(rename = "01")]
     pub _01: Option<String>,
@@ -3937,7 +3985,9 @@ pub struct AK9 {
 }
 
 /// CTX - Context
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
 pub struct CTX {
     #[serde(rename = "01")]
     pub _01: Option<String>,
@@ -3962,7 +4012,9 @@ pub struct CTX {
 }
 
 /// FA1 - Type of Financial Accounting Data
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
 pub struct FA1 {
     #[serde(rename = "01")]
     pub _01: Option<String>,
@@ -3971,7 +4023,9 @@ pub struct FA1 {
 }
 
 /// FA2 - Accounting Data
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
 pub struct FA2 {
     #[serde(rename = "01")]
     pub _01: Option<String>,
@@ -3980,7 +4034,9 @@ pub struct FA2 {
 }
 
 /// ADX - Adjustment
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
 pub struct ADX {
     #[serde(rename = "01")]
     pub _01: Option<String>,
@@ -3993,7 +4049,9 @@ pub struct ADX {
 }
 
 /// RMR - Remittance Advice Accounts Receivable Open Item Reference
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
 pub struct RMR {
     #[serde(rename = "01")]
     pub _01: Option<String>,
@@ -4014,7 +4072,9 @@ pub struct RMR {
 }
 
 /// TXP - Tax Payment
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
 pub struct TXP {
     #[serde(rename = "01")]
     pub _01: Option<String>,
@@ -4037,7 +4097,9 @@ pub struct TXP {
 }
 
 /// DED - Deductions
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
 pub struct DED {
     #[serde(rename = "01")]
     pub _01: Option<String>,
@@ -4092,7 +4154,9 @@ pub struct DED {
 }
 
 /// N9 - Extended Reference Information
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
 pub struct N9 {
     #[serde(rename = "01")]
     pub _01: Option<String>,
@@ -4109,7 +4173,9 @@ pub struct N9 {
 }
 
 /// RYL - Royalty Payment
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
 pub struct RYL {
     #[serde(rename = "01")]
     pub _01: Option<String>,
@@ -4164,7 +4230,9 @@ pub struct RYL {
 }
 
 /// LOC - Location
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
 pub struct LOC {
     #[serde(rename = "01")]
     pub _01: Option<String>,
@@ -4219,7 +4287,9 @@ pub struct LOC {
 }
 
 /// PID - Product/Item Description
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
 pub struct PID {
     #[serde(rename = "01")]
     pub _01: Option<String>,
@@ -4242,7 +4312,9 @@ pub struct PID {
 }
 
 /// PCT - Percent Amounts
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
 pub struct PCT {
     #[serde(rename = "01")]
     pub _01: Option<String>,
@@ -4257,7 +4329,9 @@ pub struct PCT {
 }
 
 /// ASM - Amount and Settlement Method
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
 pub struct ASM {
     #[serde(rename = "01")]
     pub _01: Option<String>,
@@ -4312,7 +4386,9 @@ pub struct ASM {
 }
 
 /// IT1 - Baseline Item Data (Invoice)
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
 pub struct IT1 {
     #[serde(rename = "01")]
     pub _01: Option<String>,
@@ -4367,7 +4443,9 @@ pub struct IT1 {
 }
 
 /// RPA - Rate Amounts or Percents
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
 pub struct RPA {
     #[serde(rename = "01")]
     pub _01: Option<String>,
@@ -4382,7 +4460,9 @@ pub struct RPA {
 }
 
 /// SAC - Service, Promotion, Allowance, or Charge Information
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
 pub struct SAC {
     #[serde(rename = "01")]
     pub _01: Option<String>,
@@ -4437,7 +4517,9 @@ pub struct SAC {
 }
 
 /// TXI - Tax Information
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
 pub struct TXI {
     #[serde(rename = "01")]
     pub _01: Option<String>,
@@ -4492,7 +4574,9 @@ pub struct TXI {
 }
 
 /// EB - Eligibility or Benefit Information
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
 pub struct EB {
     #[serde(rename = "01")]
     pub _01: Option<String>,
@@ -4547,7 +4631,9 @@ pub struct EB {
 }
 
 /// PKD - Packaging Description
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
 pub struct PKD {
     #[serde(rename = "01")]
     pub _01: Option<String>,
@@ -4602,7 +4688,9 @@ pub struct PKD {
 }
 
 /// EM - Equipment Characteristics
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
 pub struct EM {
     #[serde(rename = "01")]
     pub _01: Option<String>,
@@ -4657,7 +4745,9 @@ pub struct EM {
 }
 
 /// SD1 - Safety Data
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
 pub struct SD1 {
     #[serde(rename = "01")]
     pub _01: Option<String>,
@@ -4712,7 +4802,9 @@ pub struct SD1 {
 }
 
 /// SLN - Subline Item Detail
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
 pub struct SLN {
     #[serde(rename = "01")]
     pub _01: Option<String>,
@@ -4773,7 +4865,9 @@ pub struct SLN {
 }
 
 /// G53 - Maintenance Type
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
 pub struct G53 {
     #[serde(rename = "01")]
     pub _01: Option<String>,
@@ -4828,7 +4922,9 @@ pub struct G53 {
 }
 
 /// PEN - Pension Information
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
 pub struct PEN {
     #[serde(rename = "01")]
     pub _01: Option<String>,
@@ -4883,7 +4979,9 @@ pub struct PEN {
 }
 
 /// ATN - Attendance
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
 pub struct ATN {
     #[serde(rename = "01")]
     pub _01: Option<String>,
@@ -4938,7 +5036,9 @@ pub struct ATN {
 }
 
 /// PYD - Payroll Deduction
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
 pub struct PYD {
     #[serde(rename = "01")]
     pub _01: Option<String>,
@@ -4993,7 +5093,9 @@ pub struct PYD {
 }
 
 /// EMS - Employment Position
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
 pub struct EMS {
     #[serde(rename = "01")]
     pub _01: Option<String>,
