@@ -5,6 +5,7 @@ edition = "2021"
 authors = ["Jens Walter <jens@apimeister.com>"]
 license = "MIT OR Apache-2.0"
 keywords = ["edi", "x12"]
+categories = ["data-structures", "parser-implementations"]
 repository = "https://github.com/apimeister/x12-types/"
 documentation = "https://docs.rs/x12-types/"
 description = "Bindings for the ASC X12 EDI definitions"
