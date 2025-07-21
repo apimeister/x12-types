@@ -1,3 +1,8 @@
+# Unreleased
+
+* add support for 
+  * 004010/945 - Warehouse Shipping Advice (complete implementation with W03, W06, W12, W27 segments)
+
 # 0.9.1 2025-07-09
 
 * add support for 

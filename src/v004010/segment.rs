@@ -1477,7 +1477,6 @@ pub struct EM {
     #[serde(rename = "07")]
     pub _07: Option<String>,
 }
-
 /// F9 - Origin Station
 ///
 /// To identify the rail origin of the shipment
@@ -1964,7 +1963,6 @@ pub struct H3 {
     #[serde(rename = "05")]
     pub _05: Option<String>,
 }
-
 /// IC - Intermodal Chassis Equipment
 ///
 /// To specify the chassis equipment details in terms of identifying numbers, weights, and ownership
@@ -2952,7 +2950,6 @@ pub struct LH3 {
     #[serde(rename = "04")]
     pub _04: Option<String>,
 }
-
 /// LH4 - Canadian Dangerous Requirements
 ///
 /// To specify additional Transport Canada requirements covering transportation of dangerous goods in Canada
@@ -3936,7 +3933,6 @@ pub struct N9 {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub _07: Option<String>,
 }
-
 /// N10 - Quantity and Description
 ///
 /// To indicate line item quantity, description, marks and numbers, commodity code, weight, and customs value
@@ -4917,7 +4913,6 @@ pub struct REF {
     #[serde(rename = "04")]
     pub _04: Option<String>,
 }
-
 /// S1 - Stop-off Name
 ///
 /// To identify a stop-off party
@@ -6356,7 +6351,7 @@ pub struct YNQ {
 /// To transmit identifying numbers, dates, and other basic data relating to the transaction set
 ///
 /// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
-/// ----|----|-------|--------|----|------|-------
+/// ----|----|------|--------|----|------|-------
 /// 01 | 145 | Shipment Identification Number | 1 | O | AN | 1/30
 /// 02 | 206 | Equipment Initial | 1 | O | AN | 1/4
 /// 03 | 207 | Equipment Number | 1 | M | AN | 1/10
@@ -6433,4 +6428,232 @@ pub struct ZD {
     pub _07: String,
     #[serde(rename = "08")]
     pub _08: Option<String>,
+}
+
+/// W03 - Total Shipment Information
+///
+/// To specify the total shipment in terms of weight, volume, rates, charges, advances, and prepaid amounts applicable to one or more line items
+///
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|------|--------|----|------|-------
+/// 01 | 380 | Quantity | 1 | M | R | 1/15
+/// 02 | 81 | Weight | 1 | O | R | 1/10
+/// 03 | 355 | Unit or Basis for Measurement Code | 1 | X | ID | 2/2
+/// 04 | 183 | Volume | 1 | O | R | 1/8
+/// 05 | 355 | Unit or Basis for Measurement Code | 1 | X | ID | 2/2
+/// 06 | 220 | Lading Quantity | 1 | O | N0 | 1/7
+/// 07 | 355 | Unit or Basis for Measurement Code | 1 | X | ID | 2/2
+/// 08 | 610 | Amount | 1 | O | N2 | 1/15
+/// 09 | 610 | Amount | 1 | O | N2 | 1/15
+/// 10 | 610 | Amount | 1 | O | N2 | 1/15
+/// 11 | 610 | Amount | 1 | O | N2 | 1/15
+/// 12 | 610 | Amount | 1 | O | N2 | 1/15
+/// 13 | 610 | Amount | 1 | O | N2 | 1/15
+/// 14 | 610 | Amount | 1 | O | N2 | 1/15
+/// 15 | 610 | Amount | 1 | O | N2 | 1/15
+/// 16 | 610 | Amount | 1 | O | N2 | 1/15
+/// 17 | 610 | Amount | 1 | O | N2 | 1/15
+/// 18 | 610 | Amount | 1 | O | N2 | 1/15
+/// 19 | 610 | Amount | 1 | O | N2 | 1/15
+/// 20 | 610 | Amount | 1 | O | N2 | 1/15
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct W03 {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+    #[serde(rename = "10")]
+    pub _10: Option<String>,
+    #[serde(rename = "11")]
+    pub _11: Option<String>,
+    #[serde(rename = "12")]
+    pub _12: Option<String>,
+    #[serde(rename = "13")]
+    pub _13: Option<String>,
+    #[serde(rename = "14")]
+    pub _14: Option<String>,
+    #[serde(rename = "15")]
+    pub _15: Option<String>,
+    #[serde(rename = "16")]
+    pub _16: Option<String>,
+    #[serde(rename = "17")]
+    pub _17: Option<String>,
+    #[serde(rename = "18")]
+    pub _18: Option<String>,
+    #[serde(rename = "19")]
+    pub _19: Option<String>,
+    #[serde(rename = "20")]
+    pub _20: Option<String>,
+}
+
+/// W06 - Warehouse Shipment Identification
+///
+/// To specify basic data about the warehouse shipment
+///
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|------|--------|----|------|-------
+/// 01 | 640 | Reporting Code | 1 | M | ID | 1/1
+/// 02 | 76 | Depositor Order Number | 1 | O | AN | 1/22
+/// 03 | 373 | Date | 1 | O | DT | 8/8
+/// 04 | 337 | Time | 1 | O | TM | 4/8
+/// 05 | 76 | Depositor Order Number | 1 | O | AN | 1/22
+/// 06 | 350 | Shipment Identification Number | 1 | O | AN | 1/30
+/// 07 | 76 | Depositor Order Number | 1 | O | AN | 1/22
+/// 08 | 76 | Depositor Order Number | 1 | O | AN | 1/22
+/// 09 | 76 | Depositor Order Number | 1 | O | AN | 1/22
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct W06 {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    /// 373 - Date
+    ///
+    /// Date expressed as CCYYMMDD where CC represents the first two digits of the calendar year
+    /// - TYPE=DT
+    /// - MIN=8
+    /// - MAX=8
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+}
+
+/// W12 - Warehouse Item Detail
+///
+/// To specify line item detail for the warehouse shipment
+///
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|------|--------|----|------|-------
+/// 01 | 640 | Reporting Code | 1 | M | ID | 1/1
+/// 02 | 380 | Quantity | 1 | O | R | 1/15
+/// 03 | 355 | Unit or Basis for Measurement Code | 1 | X | ID | 2/2
+/// 04 | 380 | Quantity | 1 | O | R | 1/15
+/// 05 | 355 | Unit or Basis for Measurement Code | 1 | X | ID | 2/2
+/// 06 | 355 | Unit or Basis for Measurement Code | 1 | O | ID | 2/2
+/// 07 | 235 | Product/Service ID Qualifier | 1 | X | ID | 2/2
+/// 08 | 234 | Product/Service ID | 1 | X | AN | 1/48
+/// 09 | 235 | Product/Service ID Qualifier | 1 | X | ID | 2/2
+/// 10 | 234 | Product/Service ID | 1 | X | AN | 1/48
+/// 11 | 235 | Product/Service ID Qualifier | 1 | X | ID | 2/2
+/// 12 | 234 | Product/Service ID | 1 | X | AN | 1/48
+/// 13 | 235 | Product/Service ID Qualifier | 1 | X | ID | 2/2
+/// 14 | 234 | Product/Service ID | 1 | X | AN | 1/48
+/// 15 | 235 | Product/Service ID Qualifier | 1 | X | ID | 2/2
+/// 16 | 234 | Product/Service ID | 1 | X | AN | 1/48
+/// 17 | 235 | Product/Service ID Qualifier | 1 | X | ID | 2/2
+/// 18 | 234 | Product/Service ID | 1 | X | AN | 1/48
+/// 19 | 81 | Weight | 1 | O | R | 1/10
+/// 20 | 355 | Unit or Basis for Measurement Code | 1 | X | ID | 2/2
+/// 21 | 183 | Volume | 1 | O | R | 1/8
+/// 22 | 355 | Unit or Basis for Measurement Code | 1 | X | ID | 2/2
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct W12 {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+    #[serde(rename = "10")]
+    pub _10: Option<String>,
+    #[serde(rename = "11")]
+    pub _11: Option<String>,
+    #[serde(rename = "12")]
+    pub _12: Option<String>,
+    #[serde(rename = "13")]
+    pub _13: Option<String>,
+    #[serde(rename = "14")]
+    pub _14: Option<String>,
+    #[serde(rename = "15")]
+    pub _15: Option<String>,
+    #[serde(rename = "16")]
+    pub _16: Option<String>,
+    #[serde(rename = "17")]
+    pub _17: Option<String>,
+    #[serde(rename = "18")]
+    pub _18: Option<String>,
+    #[serde(rename = "19")]
+    pub _19: Option<String>,
+    #[serde(rename = "20")]
+    pub _20: Option<String>,
+    #[serde(rename = "21")]
+    pub _21: Option<String>,
+    #[serde(rename = "22")]
+    pub _22: Option<String>,
+}
+
+/// W27 - Carrier Detail
+///
+/// To specify the carrier and sequence of routing and to provide transit time information
+///
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|------|--------|----|------|-------
+/// 01 | 91 | Transportation Method/Type Code | 1 | M | ID | 1/2
+/// 02 | 140 | Standard Carrier Alpha Code | 1 | O | ID | 2/4
+/// 03 | 19 | Routing | 1 | O | AN | 1/35
+/// 04 | 368 | Shipment Method of Payment | 1 | O | ID | 2/2
+/// 05 | 146 | Equipment Description Code | 1 | O | ID | 2/2
+/// 06 | 207 | Equipment Initial | 1 | O | AN | 1/4
+/// 07 | 206 | Equipment Number | 1 | O | AN | 1/15
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct W27 {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
 }
