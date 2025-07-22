@@ -6351,6 +6351,360 @@ pub struct YNQ {
     pub _10: Option<String>,
 }
 
+/// BSN - Beginning Segment for Ship Notice
+///
+/// To transmit identifying numbers, dates, and other basic data relating to the transaction set
+///
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|------|--------|----|------|-------
+/// 01 | 353 | Transaction Set Purpose Code | 1 | M | ID | 2/2
+/// 02 | 396 | Shipment Identification | 1 | M | AN | 1/30
+/// 03 | 373 | Date | 1 | M | DT | 8/8
+/// 04 | 337 | Time | 1 | O | TM | 4/8
+/// 05 | 1005 | Hierarchical Structure Code | 1 | O | ID | 4/4
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct BSN {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: String,
+    #[serde(rename = "03")]
+    pub _03: String,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+}
+
+/// HL - Hierarchical Level
+///
+/// To identify dependencies among and the content of hierarchically related groups of data segments
+///
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|------|--------|----|------|-------
+/// 01 | 628 | Hierarchical ID Number | 1 | M | AN | 1/12
+/// 02 | 734 | Hierarchical Parent ID Number | 1 | O | AN | 1/12
+/// 03 | 735 | Hierarchical Level Code | 1 | M | ID | 1/2
+/// 04 | 736 | Hierarchical Child Code | 1 | O | ID | 1/1
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct HL {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: String,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+}
+
+/// TD1 - Carrier Details (Routing Sequence/Transit Time)
+///
+/// To specify the transportation details relative to commodity, weight, and quantity
+///
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|------|--------|----|------|-------
+/// 01 | 103 | Packaging Code | 1 | O | ID | 3/5
+/// 02 | 80 | Lading Quantity | 1 | O | N0 | 1/7
+/// 03 | 23 | Commodity Code Qualifier | 1 | O | ID | 1/1
+/// 04 | 22 | Commodity Code | 1 | O | AN | 1/30
+/// 05 | 79 | Lading Description | 1 | O | AN | 1/80
+/// 06 | 187 | Weight Qualifier | 1 | O | ID | 1/2
+/// 07 | 81 | Weight | 1 | O | R | 1/10
+/// 08 | 355 | Unit or Basis for Measurement Code | 1 | O | ID | 2/2
+/// 09 | 183 | Volume | 1 | O | R | 1/8
+/// 10 | 355 | Unit or Basis for Measurement Code | 1 | O | ID | 2/2
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct TD1 {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+    #[serde(rename = "10")]
+    pub _10: Option<String>,
+}
+
+/// TD5 - Carrier Details (Routing Sequence/Transit Time)
+///
+/// To specify the carrier and sequence of routing and provide transit time information
+///
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|------|--------|----|------|-------
+/// 01 | 133 | Routing Sequence Code | 1 | M | ID | 1/2
+/// 02 | 66 | Identification Code Qualifier | 1 | M | ID | 2/2
+/// 03 | 67 | Identification Code | 1 | M | AN | 2/80
+/// 04 | 91 | Transportation Method/Type Code | 1 | O | ID | 1/2
+/// 05 | 387 | Routing | 1 | O | AN | 1/35
+/// 06 | 368 | Shipment/Order Status Code | 1 | O | ID | 2/2
+/// 07 | 309 | Location Qualifier | 1 | O | ID | 2/2
+/// 08 | 310 | Description | 1 | O | AN | 1/35
+/// 09 | 732 | Service Level Code | 1 | O | ID | 2/2
+/// 10 | 733 | Service Level Code | 1 | O | ID | 2/2
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct TD5 {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: String,
+    #[serde(rename = "03")]
+    pub _03: String,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+    #[serde(rename = "10")]
+    pub _10: Option<String>,
+}
+
+/// LIN - Line Item Identification
+///
+/// To specify basic item identification data
+///
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|------|--------|----|------|-------
+/// 01 | 350 | Assigned Identification | 1 | O | AN | 1/20
+/// 02 | 235 | Product/Service ID Qualifier | 1 | M | ID | 2/2
+/// 03 | 234 | Product/Service ID | 1 | M | AN | 1/48
+/// 04 | 235 | Product/Service ID Qualifier | 1 | O | ID | 2/2
+/// 05 | 234 | Product/Service ID | 1 | O | AN | 1/48
+/// 06 | 235 | Product/Service ID Qualifier | 1 | O | ID | 2/2
+/// 07 | 234 | Product/Service ID | 1 | O | AN | 1/48
+/// 08 | 235 | Product/Service ID Qualifier | 1 | O | ID | 2/2
+/// 09 | 234 | Product/Service ID | 1 | O | AN | 1/48
+/// 10 | 235 | Product/Service ID Qualifier | 1 | O | ID | 2/2
+/// 11 | 234 | Product/Service ID | 1 | O | AN | 1/48
+/// 12 | 235 | Product/Service ID Qualifier | 1 | O | ID | 2/2
+/// 13 | 234 | Product/Service ID | 1 | O | AN | 1/48
+/// 14 | 235 | Product/Service ID Qualifier | 1 | O | ID | 2/2
+/// 15 | 234 | Product/Service ID | 1 | O | AN | 1/48
+/// 16 | 235 | Product/Service ID Qualifier | 1 | O | ID | 2/2
+/// 17 | 234 | Product/Service ID | 1 | O | AN | 1/48
+/// 18 | 235 | Product/Service ID Qualifier | 1 | O | ID | 2/2
+/// 19 | 234 | Product/Service ID | 1 | O | AN | 1/48
+/// 20 | 235 | Product/Service ID Qualifier | 1 | O | ID | 2/2
+/// 21 | 234 | Product/Service ID | 1 | O | AN | 1/48
+/// 22 | 235 | Product/Service ID Qualifier | 1 | O | ID | 2/2
+/// 23 | 234 | Product/Service ID | 1 | O | AN | 1/48
+/// 24 | 235 | Product/Service ID Qualifier | 1 | O | ID | 2/2
+/// 25 | 234 | Product/Service ID | 1 | O | AN | 1/48
+/// 26 | 235 | Product/Service ID Qualifier | 1 | O | ID | 2/2
+/// 27 | 234 | Product/Service ID | 1 | O | AN | 1/48
+/// 28 | 235 | Product/Service ID Qualifier | 1 | O | ID | 2/2
+/// 29 | 234 | Product/Service ID | 1 | O | AN | 1/48
+/// 30 | 235 | Product/Service ID Qualifier | 1 | O | ID | 2/2
+/// 31 | 234 | Product/Service ID | 1 | O | AN | 1/48
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct LIN {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: String,
+    #[serde(rename = "03")]
+    pub _03: String,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+    #[serde(rename = "10")]
+    pub _10: Option<String>,
+    #[serde(rename = "11")]
+    pub _11: Option<String>,
+    #[serde(rename = "12")]
+    pub _12: Option<String>,
+    #[serde(rename = "13")]
+    pub _13: Option<String>,
+    #[serde(rename = "14")]
+    pub _14: Option<String>,
+    #[serde(rename = "15")]
+    pub _15: Option<String>,
+    #[serde(rename = "16")]
+    pub _16: Option<String>,
+    #[serde(rename = "17")]
+    pub _17: Option<String>,
+    #[serde(rename = "18")]
+    pub _18: Option<String>,
+    #[serde(rename = "19")]
+    pub _19: Option<String>,
+    #[serde(rename = "20")]
+    pub _20: Option<String>,
+    #[serde(rename = "21")]
+    pub _21: Option<String>,
+    #[serde(rename = "22")]
+    pub _22: Option<String>,
+    #[serde(rename = "23")]
+    pub _23: Option<String>,
+    #[serde(rename = "24")]
+    pub _24: Option<String>,
+    #[serde(rename = "25")]
+    pub _25: Option<String>,
+    #[serde(rename = "26")]
+    pub _26: Option<String>,
+    #[serde(rename = "27")]
+    pub _27: Option<String>,
+    #[serde(rename = "28")]
+    pub _28: Option<String>,
+    #[serde(rename = "29")]
+    pub _29: Option<String>,
+    #[serde(rename = "30")]
+    pub _30: Option<String>,
+    #[serde(rename = "31")]
+    pub _31: Option<String>,
+}
+
+/// SN1 - Item Detail (Shipment)
+///
+/// To specify line-item detail relative to shipment
+///
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|------|--------|----|------|-------
+/// 01 | 350 | Assigned Identification | 1 | O | AN | 1/20
+/// 02 | 382 | Number of Units Shipped | 1 | M | R | 1/10
+/// 03 | 355 | Unit or Basis for Measurement Code | 1 | M | ID | 2/2
+/// 04 | 646 | Number of Units Shipped | 1 | O | R | 1/10
+/// 05 | 355 | Unit or Basis for Measurement Code | 1 | O | ID | 2/2
+/// 06 | 330 | Quantity Shipped to Date | 1 | O | R | 1/10
+/// 07 | 355 | Unit or Basis for Measurement Code | 1 | O | ID | 2/2
+/// 08 | 355 | Unit or Basis for Measurement Code | 1 | O | ID | 2/2
+/// 09 | 368 | Shipment/Order Status Code | 1 | O | ID | 2/2
+/// 10 | 352 | Description | 1 | O | AN | 1/80
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct SN1 {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: String,
+    #[serde(rename = "03")]
+    pub _03: String,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+    #[serde(rename = "10")]
+    pub _10: Option<String>,
+}
+
+/// TD3 - Carrier Details (Equipment)
+///
+/// To specify transportation equipment details
+///
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|------|--------|----|------|-------
+/// 01 | 206 | Equipment Description Code | 1 | M | ID | 2/2
+/// 02 | 207 | Equipment Initial | 1 | M | AN | 1/4
+/// 03 | 208 | Equipment Number | 1 | M | AN | 1/10
+/// 04 | 209 | Location Qualifier | 1 | O | ID | 2/2
+/// 05 | 210 | Description | 1 | O | AN | 1/30
+/// 06 | 211 | Equipment Number Check Digit | 1 | O | N0 | 1/1
+/// 07 | 212 | Equipment Type | 1 | O | AN | 4/4
+/// 08 | 213 | Location Identifier | 1 | O | AN | 1/30
+/// 09 | 214 | Equipment Length | 1 | O | R | 1/6
+/// 10 | 215 | Tare Weight | 1 | O | R | 1/8
+/// 11 | 216 | Tare Qualifier | 1 | O | ID | 1/1
+/// 12 | 217 | Weight Unit Code | 1 | O | ID | 1/1
+/// 13 | 218 | Equipment Number | 1 | O | AN | 1/10
+/// 14 | 219 | Equipment Number Check Digit | 1 | O | N0 | 1/1
+/// 15 | 220 | Equipment Type | 1 | O | AN | 4/4
+/// 16 | 221 | Location Identifier | 1 | O | AN | 1/30
+/// 17 | 222 | Equipment Length | 1 | O | R | 1/6
+/// 18 | 223 | Tare Weight | 1 | O | R | 1/8
+/// 19 | 224 | Tare Qualifier | 1 | O | ID | 1/1
+/// 20 | 225 | Weight Unit Code | 1 | O | ID | 1/1
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct TD3 {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: String,
+    #[serde(rename = "03")]
+    pub _03: String,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+    #[serde(rename = "10")]
+    pub _10: Option<String>,
+    #[serde(rename = "11")]
+    pub _11: Option<String>,
+    #[serde(rename = "12")]
+    pub _12: Option<String>,
+    #[serde(rename = "13")]
+    pub _13: Option<String>,
+    #[serde(rename = "14")]
+    pub _14: Option<String>,
+    #[serde(rename = "15")]
+    pub _15: Option<String>,
+    #[serde(rename = "16")]
+    pub _16: Option<String>,
+    #[serde(rename = "17")]
+    pub _17: Option<String>,
+    #[serde(rename = "18")]
+    pub _18: Option<String>,
+    #[serde(rename = "19")]
+    pub _19: Option<String>,
+    #[serde(rename = "20")]
+    pub _20: Option<String>,
+}
+
 /// ZC1 - Beginning Segment For Data Correction Or Change
 ///
 /// To transmit identifying numbers, dates, and other basic data relating to the transaction set
