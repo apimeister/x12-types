@@ -1,9 +1,10 @@
 use crate::v004010::*;
+use validator::Validate;
 
 #[test]
 fn test_940_1() {
     // Test data from https://www.1edisource.com/resources/edi-transactions-sets/edi-940/
-    let str = r#"ISA*01*0000000000*01*0000000000*ZZ*ABCDEFGHIJKLMNO*ZZ*123456789012345*101127*1719*U*00400*000003438*0*P*~
+    let str = r#"ISA*01*0000000000*01*0000000000*ZZ*ABCDEFGHIJKLMNO*ZZ*123456789012345*101127*1719*U*00400*000003438*0*P*\~
 GS*OW*7705551212*3111350000*20000128*0557*3317*T*004010UCS~
 ST*940*0001~
 W05*N*538686**001001*538686~
@@ -35,17 +36,18 @@ N9*PC*JAN0100~
 W76*56*500*LB*24*CF~
 SE*29*0001~
 GE*1*575103~
-IEA*1*3317~
+IEA*1*3317     ~
 "#;
     let (rest, obj) = Transmission::<_940>::parse(str).unwrap();
     println!("{obj:?}");
+    obj.validate().unwrap();
     assert!(rest.is_empty());
 }
 
 #[test]
 fn test_940_2() {
     // Test data from https://www.babelway.com/edi-transaction-code/edi-940/
-    let str = r#"ISA*00*          *00*          *01*BIGETP         *01*035230000      *180327*0131*U*00401*000575103*0*P*~
+    let str = r#"ISA*00*          *00*          *01*BIGETP         *01*035230000      *180327*0131*U*00401*000575103*0*P*\~
 GS*OW*053980000*035230000*20180327*013134*575103*X*004010~
 ST*940*0001~
 W05*N*0080215659*4000207344~
@@ -86,6 +88,7 @@ IEA*1*000575103~
 "#;
     let (rest, obj) = Transmission::<_940>::parse(str).unwrap();
     println!("{obj:?}");
+    obj.validate().unwrap();
     assert!(rest.is_empty());
 }
 
@@ -93,7 +96,7 @@ IEA*1*000575103~
 fn test_940_3() {
     // Test data from https://www.generalmills.com/-/media/Project/GMI/corporate/corporate-master/Files/About-Us/Sourcing/Trading-Partners/AllGMIEDISCTransactionSetRawDataExamples.pdf?rev=b94986a50aa24e3a966d5d531fc35901&hash=4579B057A2DB1C8D800ADC7D060A947D
     // 940 – Order to Ship (V4010) New
-    let str = r#"ISA*00* *00* *08*925119TEST *ZZ*TESTTPLEDI*111201*1108*U*00401*000000007*0*P*\~
+    let str = r#"ISA*00*          *00*          *08*925119TEST     *ZZ*TESTTPLEDI     *111201*1108*U*00401*000000007*0*P*\~
 GS*OW*6125404455*TESTTPLEDI*20111201*1108*4311*T*004010UCS~
 ST*940*43110001~
 W05*N*18061923*Test Order 1*001001*52947945~
@@ -121,6 +124,7 @@ GE*1*4311~
 IEA*1*000000007~"#;
     let (rest, obj) = Transmission::<_940>::parse(str).unwrap();
     println!("{obj:?}");
+    obj.validate().unwrap();
     assert!(rest.is_empty());
 }
 
@@ -128,7 +132,7 @@ IEA*1*000000007~"#;
 fn test_940_4() {
     // Test data from https://www.generalmills.com/-/media/Project/GMI/corporate/corporate-master/Files/About-Us/Sourcing/Trading-Partners/AllGMIEDISCTransactionSetRawDataExamples.pdf?rev=b94986a50aa24e3a966d5d531fc35901&hash=4579B057A2DB1C8D800ADC7D060A947D
     // 940 – Order to Ship (V4010) Change
-    let str = r#"ISA*00* *00* *08*925119TEST *ZZ*TESTTPLEDI*111223*0938*U*00401*000000028*0*P*~
+    let str = r#"ISA*00*          *00*          *08*925119TEST     *ZZ*TESTTPLEDI     *111223*0938*U*00401*000000028*0*P*~
 GS*OW*6125404455*TESTTPLEDI*20111223*0938*4332*T*004010UCS~
 ST*940*43320001~
 W05*R*18061930*18061930*001001*52947955~
@@ -153,6 +157,7 @@ GE*1*4332~
 IEA*1*000000028~"#;
     let (rest, obj) = Transmission::<_940>::parse(str).unwrap();
     println!("{obj:?}");
+    obj.validate().unwrap();
     assert!(rest.is_empty());
 }
 
@@ -160,7 +165,7 @@ IEA*1*000000028~"#;
 fn test_940_5() {
     // Test data from https://www.generalmills.com/-/media/Project/GMI/corporate/corporate-master/Files/About-Us/Sourcing/Trading-Partners/AllGMIEDISCTransactionSetRawDataExamples.pdf?rev=b94986a50aa24e3a966d5d531fc35901&hash=4579B057A2DB1C8D800ADC7D060A947D
     // 940 – Order to Ship (V4010) Delete
-    let str = r#"ISA*00* *00* *08*925119TEST *ZZ*TESTTPLEDI*111201*1108*U*00401*000000009*0*P*~
+    let str = r#"ISA*00*          *00*          *08*925119TEST     *ZZ*TESTTPLEDI     *111201*1108*U*00401*000000009*0*P*~
 GS*OW*6125404455*TESTTPLEDI*20111201*1108*4313*T*004010UCS~
 ST*940*43130001~
 W05*F*18061923*Test Order 1~
@@ -180,5 +185,6 @@ GE*1*4313~
 IEA*1*000000009~"#;
     let (rest, obj) = Transmission::<_940>::parse(str).unwrap();
     println!("{obj:?}");
+    obj.validate().unwrap();
     assert!(rest.is_empty());
 }

@@ -8,6 +8,7 @@ use nom::IResult;
 use nom::Parser as _;
 pub use segment::*;
 use serde::{Deserialize, Serialize};
+use validator::Validate;
 use std::fmt::Debug;
 use std::fmt::Display;
 use x12_types_macros::DisplayX12;
@@ -41,10 +42,12 @@ mod test_998;
 #[cfg(test)]
 mod test_segments;
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, Validate)]
 pub struct Transmission<T> {
+    #[validate(nested)]
     pub isa: ISA,
     pub functional_group: Vec<FunctionalGroup<T>>,
+    #[validate(nested)]
     pub iea: IEA,
 }
 
@@ -90,10 +93,12 @@ impl<T: Display> Display for Transmission<T> {
     }
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, Validate )]
 pub struct FunctionalGroup<T> {
+    #[validate(nested)]
     pub gs: GS,
     pub segments: Vec<T>,
+    #[validate(nested)]
     pub ge: GE,
 }
 
