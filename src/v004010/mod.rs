@@ -6,13 +6,13 @@ use nom::combinator::peek;
 use nom::multi::many0;
 use nom::IResult;
 use nom::Parser as _;
-pub use segment::*;
+pub use segments::*;
 use serde::{Deserialize, Serialize};
 use std::fmt::Debug;
 use std::fmt::Display;
 use x12_types_macros::DisplayX12;
 
-mod segment;
+mod segments;
 
 #[cfg(test)]
 mod test_204;
@@ -2756,6 +2756,8 @@ impl<'a> Parser<&'a str, _856, nom::error::Error<&'a str>> for _856 {
             let (rest, n4) = many0(N4::parse).parse(rest)?;
             let (rest, per) = many0(PER::parse).parse(rest)?;
             let (rest, man) = many0(MAN::parse).parse(rest)?;
+            let (rest, mea) = many0(MEA::parse).parse(rest)?;
+            let (rest, cld) = many0(CLD::parse).parse(rest)?;
             let (rest, lin) = many0(LIN::parse).parse(rest)?;
             let (rest, sn1) = many0(SN1::parse).parse(rest)?;
             let (rest, ctt) = opt(CTT::parse).parse(rest)?;
@@ -2775,6 +2777,8 @@ impl<'a> Parser<&'a str, _856, nom::error::Error<&'a str>> for _856 {
                 n4,
                 per,
                 man,
+                mea,
+                cld,
                 lin,
                 sn1,
                 ctt,
@@ -2803,6 +2807,8 @@ pub struct _856LoopHL {
     pub n4: Vec<N4>,
     pub per: Vec<PER>,
     pub man: Vec<MAN>,
+    pub mea: Vec<MEA>,
+    pub cld: Vec<CLD>,
     pub lin: Vec<LIN>,
     pub sn1: Vec<SN1>,
     pub ctt: Option<CTT>,
