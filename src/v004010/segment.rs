@@ -2123,7 +2123,7 @@ pub struct ISA {
     /// - TYPE=AN
     /// - MIN=10
     /// - MAX=10
-    #[validate(length(equal = 10, message = "I04 must be 10 characters long"))]
+    #[validate(length(equal = 10, message = "I02 must be 10 characters long"))]
     #[serde(rename = "02")]
     pub _02: String,
     /// I03 - Security Information Qualifier
