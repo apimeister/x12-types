@@ -9,9 +9,9 @@ use nom::Parser as _;
 mod segment;
 pub use segment::*;
 use serde::{Deserialize, Serialize};
-use validator::Validate;
 use std::fmt::Debug;
 use std::fmt::Display;
+use validator::Validate;
 use x12_types_macros::DisplayX12;
 
 #[cfg(test)]
@@ -32,9 +32,9 @@ mod test_322;
 mod test_404;
 #[cfg(test)]
 mod test_810;
+mod test_856;
 #[cfg(test)]
 mod test_940;
-mod test_856;
 #[cfg(test)]
 mod test_997;
 #[cfg(test)]
@@ -96,7 +96,7 @@ impl<T: Display> Display for Transmission<T> {
     }
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, Validate )]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, Validate)]
 pub struct FunctionalGroup<T> {
     #[validate(nested)]
     pub gs: GS,

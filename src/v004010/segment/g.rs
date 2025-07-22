@@ -182,7 +182,16 @@ pub struct GA {
 /// 01 | 97 | Number of Transaction Sets Included | 1 | M | N0 | 1/6
 /// 02 | 28 | Group Control Number | 1 | M/Z | N0 | 1/9
 #[derive(
-    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment, Validate,
+    Serialize,
+    Deserialize,
+    Clone,
+    Default,
+    Debug,
+    PartialEq,
+    Eq,
+    DisplaySegment,
+    ParseSegment,
+    Validate,
 )]
 pub struct GE {
     /// 97 - Number of Transaction Sets Included
@@ -247,7 +256,16 @@ pub struct GR5 {
 /// 07 | 455 | Responsible Agency Code | 1 | M | ID | 1/2
 /// 08 | 480 | Version / Release / Industry Identifier Code | 1 | M | AN | 1/12
 #[derive(
-    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment, Validate,
+    Serialize,
+    Deserialize,
+    Clone,
+    Default,
+    Debug,
+    PartialEq,
+    Eq,
+    DisplaySegment,
+    ParseSegment,
+    Validate,
 )]
 pub struct GS {
     #[serde(rename = "01")]

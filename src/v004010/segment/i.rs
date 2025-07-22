@@ -89,7 +89,16 @@ pub struct INC {
 /// 01 | I16 | Number of Included Functional Groups | 1 | M | N0 | 1/5
 /// 02 | I12 | Interchange Control Number | 1 | M | N0 | 9/9
 #[derive(
-    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment, Validate,
+    Serialize,
+    Deserialize,
+    Clone,
+    Default,
+    Debug,
+    PartialEq,
+    Eq,
+    DisplaySegment,
+    ParseSegment,
+    Validate,
 )]
 pub struct IEA {
     /// I16 - Number of Included Functional Groups
@@ -135,7 +144,16 @@ pub struct IEA {
 /// 15 | I14 | Usage Indicator | 1 | M | ID | 1/1
 /// 16 | I15 | Component Element Separator | 1 | M |  | 1/1
 #[derive(
-    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment, Validate,
+    Serialize,
+    Deserialize,
+    Clone,
+    Default,
+    Debug,
+    PartialEq,
+    Eq,
+    DisplaySegment,
+    ParseSegment,
+    Validate,
 )]
 pub struct ISA {
     /// I01 - Authorization Information Qualifier
@@ -283,8 +301,6 @@ pub struct ISA {
     #[serde(rename = "16")]
     pub _16: String,
 }
-
-
 
 /// ISS - Invoice Shipment Summary
 ///
