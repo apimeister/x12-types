@@ -515,4 +515,4 @@ pub struct BSN {
     pub _04: Option<String>,
     #[serde(rename = "05")]
     pub _05: Option<String>,
-} 
+}

@@ -285,8 +285,6 @@ pub struct ST {
     pub _02: String,
 }
 
-
-
 /// S1 - Equipment Details
 ///
 /// To specify the equipment details

@@ -6789,7 +6789,6 @@ pub struct ZD {
     pub _08: Option<String>,
 }
 
-
 /// CLD - Carrier Load Details
 ///
 /// To specify the number of units and the type of packaging for the shipment

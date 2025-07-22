@@ -1,5 +1,5 @@
 //! Segments module for X12 version 004010
-//! 
+//!
 //! This module organizes segments by their starting character for better maintainability.
 
 pub mod a;
@@ -55,4 +55,4 @@ pub use v::*;
 pub use w::*;
 pub use x::*;
 pub use y::*;
-pub use z::*; 
+pub use z::*;

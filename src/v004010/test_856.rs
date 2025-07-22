@@ -329,9 +329,8 @@ IEA*1*000000263~"#;
     println!("{obj:?}");
 }
 
-
 #[test]
-fn test_856_xx(){
+fn test_856_xx() {
     // source https://www.fishersci.com/content/dam/fishersci/en_US/documents/programs/scientific/brochures-and-catalogs/guides/fisher-scientific-edi-specifications-856-advance-ship-notice-supplier-guide.pdf
     let str = r#"ISA*00* *00* *ZZ*7777777777 *14*004321519IBMP*070920*0849*U*00401*000012152*0*P*>~
 GS*SH*7777777777*004321519*20070920*0849*12467*X*004010~

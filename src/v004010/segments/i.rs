@@ -132,15 +132,7 @@ pub struct IEA {
 /// 15 | I14 | Usage Indicator | 1 | M | ID | 1/1
 /// 16 | I15 | Component Element Separator | 1 | M |  | 1/1
 #[derive(
-    Serialize,
-    Deserialize,
-    Clone,
-    Default,
-    Debug,
-    PartialEq,
-    Eq,
-    DisplaySegment,
-    ParseSegment,
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
 )]
 pub struct ISA {
     /// I01 - Authorization Information Qualifier
