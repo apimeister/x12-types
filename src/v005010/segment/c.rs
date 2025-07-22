@@ -683,3 +683,23 @@ pub struct CTX {
     #[serde(rename = "10")]
     pub _10: Option<String>,
 }
+
+/// CTT - Transaction Totals
+#[derive(
+    Serialize,
+    Deserialize,
+    Clone,
+    Default,
+    Debug,
+    Validate,
+    PartialEq,
+    Eq,
+    DisplaySegment,
+    ParseSegment,
+)]
+pub struct CTT {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+}

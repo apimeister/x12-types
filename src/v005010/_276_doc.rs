@@ -1,4 +1,4 @@
-pub use super::segment::*;
+use super::segment::*;
 use log::{error, trace};
 use serde::{Deserialize, Serialize};
 use x12_types_macros::DisplayX12;

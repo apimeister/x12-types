@@ -33,8 +33,6 @@ IEA*1*000086518^"#;
     println!("{obj:?}");
 }
 
-
-
 #[test]
 fn parse_850_2() {
     //source: https://community.spscommerce.com/wp-content/uploads/2020/04/GPC-NAPA-EDI-850x12v5010-Purchase-Order-Implementation-Guide-v2.4-1.pdf
