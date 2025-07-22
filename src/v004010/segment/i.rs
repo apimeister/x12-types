@@ -1,4 +1,5 @@
 use serde::{Deserialize, Serialize};
+use validator::Validate;
 use x12_types_macros::{DisplaySegment, ParseSegment};
 
 /// IC - Intermodal Chassis Equipment
@@ -88,7 +89,7 @@ pub struct INC {
 /// 01 | I16 | Number of Included Functional Groups | 1 | M | N0 | 1/5
 /// 02 | I12 | Interchange Control Number | 1 | M | N0 | 9/9
 #[derive(
-    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment, Validate,
 )]
 pub struct IEA {
     /// I16 - Number of Included Functional Groups
@@ -97,6 +98,7 @@ pub struct IEA {
     /// - TYPE=N0
     /// - MIN=1
     /// - MAX=5
+    #[validate(length(min = 1, max = 5, message = "IEA 01 (I16) must be 1-5 characters long"))]
     #[serde(rename = "01")]
     pub _01: String,
     /// I12 - Interchange Control Number
@@ -105,6 +107,7 @@ pub struct IEA {
     /// - TYPE=N0
     /// - MIN=9
     /// - MAX=9
+    #[validate(length(min = 9, max = 9, message = "IEA 02 (I12) must be 9 characters long"))]
     #[serde(rename = "02")]
     pub _02: String,
 }
@@ -132,7 +135,7 @@ pub struct IEA {
 /// 15 | I14 | Usage Indicator | 1 | M | ID | 1/1
 /// 16 | I15 | Component Element Separator | 1 | M |  | 1/1
 #[derive(
-    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment, Validate,
 )]
 pub struct ISA {
     /// I01 - Authorization Information Qualifier
@@ -141,6 +144,7 @@ pub struct ISA {
     /// - TYPE=ID
     /// - MIN=2
     /// - MAX=2
+    #[validate(length(equal = 2, message = "ISA 01 (I01) must be 2 characters long"))]
     #[serde(rename = "01")]
     pub _01: String,
     /// I02 - Authorization Information
@@ -149,6 +153,7 @@ pub struct ISA {
     /// - TYPE=AN
     /// - MIN=10
     /// - MAX=10
+    #[validate(length(equal = 10, message = "ISA 02 (I02) must be 10 characters long"))]
     #[serde(rename = "02")]
     pub _02: String,
     /// I03 - Security Information Qualifier
@@ -157,6 +162,7 @@ pub struct ISA {
     /// - TYPE=ID
     /// - MIN=2
     /// - MAX=2
+    #[validate(length(equal = 2, message = "ISA 03 (I03) must be 2 characters long"))]
     #[serde(rename = "03")]
     pub _03: String,
     /// I04 - Security Information
@@ -165,6 +171,7 @@ pub struct ISA {
     /// - TYPE=AN
     /// - MIN=10
     /// - MAX=10
+    #[validate(length(equal = 10, message = "ISA 04 (I04) must be 10 characters long"))]
     #[serde(rename = "04")]
     pub _04: String,
     /// I05 - Interchange ID Qualifier
@@ -173,6 +180,7 @@ pub struct ISA {
     /// - TYPE=ID
     /// - MIN=2
     /// - MAX=2
+    #[validate(length(equal = 2, message = "ISA 05 (I05) must be 2 characters long"))]
     #[serde(rename = "05")]
     pub _05: String,
     /// I06 - Interchange Sender ID
@@ -181,6 +189,7 @@ pub struct ISA {
     /// - TYPE=AN
     /// - MIN=15
     /// - MAX=15
+    #[validate(length(equal = 15, message = "ISA 06 (I06) must be 15 characters long"))]
     #[serde(rename = "06")]
     pub _06: String,
     /// I05 - Interchange ID Qualifier
@@ -189,6 +198,7 @@ pub struct ISA {
     /// - TYPE=ID
     /// - MIN=2
     /// - MAX=2
+    #[validate(length(equal = 2, message = "ISA 07 (I05) must be 2 characters long"))]
     #[serde(rename = "07")]
     pub _07: String,
     /// I07 - Interchange Receiver ID
@@ -197,6 +207,7 @@ pub struct ISA {
     /// - TYPE=AN
     /// - MIN=15
     /// - MAX=15
+    #[validate(length(equal = 15, message = "ISA 08 (I07) must be 15 characters long"))]
     #[serde(rename = "08")]
     pub _08: String,
     /// I08 - Interchange Date
@@ -205,6 +216,7 @@ pub struct ISA {
     /// - TYPE=DT
     /// - MIN=6
     /// - MAX=6
+    #[validate(length(equal = 6, message = "ISA 09 (I08) must be 6 characters long"))]
     #[serde(rename = "09")]
     pub _09: String,
     /// I09 - Interchange Time
@@ -213,6 +225,7 @@ pub struct ISA {
     /// - TYPE=TM
     /// - MIN=4
     /// - MAX=4
+    #[validate(length(equal = 4, message = "ISA 10 (I09) must be 4 characters long"))]
     #[serde(rename = "10")]
     pub _10: String,
     /// I10 - Interchange Control Standards Identifier
@@ -221,6 +234,7 @@ pub struct ISA {
     /// - TYPE=ID
     /// - MIN=1
     /// - MAX=1
+    #[validate(length(equal = 1, message = "ISA 11 (I10) must be 1 characters long"))]
     #[serde(rename = "11")]
     pub _11: String,
     /// I11 - Interchange Control Version Number
@@ -229,6 +243,7 @@ pub struct ISA {
     /// - TYPE=ID
     /// - MIN=5
     /// - MAX=5
+    #[validate(length(equal = 5, message = "ISA 12 (I11) must be 5 characters long"))]
     #[serde(rename = "12")]
     pub _12: String,
     /// I12 - Interchange Control Number
@@ -237,6 +252,7 @@ pub struct ISA {
     /// - TYPE=N0
     /// - MIN=9
     /// - MAX=9
+    #[validate(length(equal = 9, message = "ISA 13 (I12) must be 9 characters long"))]
     #[serde(rename = "13")]
     pub _13: String,
     /// I13 - Acknowledgment Requested
@@ -245,6 +261,7 @@ pub struct ISA {
     /// - TYPE=ID
     /// - MIN=1
     /// - MAX=1
+    #[validate(length(equal = 1, message = "ISA 14 (I13) must be 1 characters long"))]
     #[serde(rename = "14")]
     pub _14: String,
     /// I14 - Usage Indicator
@@ -253,6 +270,7 @@ pub struct ISA {
     /// - TYPE=ID
     /// - MIN=1
     /// - MAX=1
+    #[validate(length(equal = 1, message = "ISA 15 (I14) must be 1 characters long"))]
     #[serde(rename = "15")]
     pub _15: String,
     /// I15 - Component Element Separator
@@ -261,9 +279,12 @@ pub struct ISA {
     /// - TYPE=
     /// - MIN=1
     /// - MAX=1
+    #[validate(length(equal = 1, message = "ISA 16 (I15) must be 1 characters long"))]
     #[serde(rename = "16")]
     pub _16: String,
 }
+
+
 
 /// ISS - Invoice Shipment Summary
 ///

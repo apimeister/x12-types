@@ -5,6 +5,8 @@ use nom::multi::many0;
 use nom::IResult;
 use serde::{Deserialize, Serialize};
 
+pub use segment::*;
+
 /// 940 - Warehouse Shipping Order
 ///
 /// This Draft Standard for Trial Use contains the format and establishes the data contents of the Warehouse Shipping Order Transaction Set (940) for use within the context of an Electronic Data Interchange (EDI) environment. This transaction set can be used to enable the depositor to advise a warehouse to make a shipment, confirm a shipment, or modify or cancel a previously submitted shipping order, or to report the status of the current shipping order to the depositor.

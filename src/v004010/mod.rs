@@ -6,14 +6,13 @@ use nom::combinator::peek;
 use nom::multi::many0;
 use nom::IResult;
 use nom::Parser as _;
+mod segment;
 pub use segment::*;
 use serde::{Deserialize, Serialize};
 use validator::Validate;
 use std::fmt::Debug;
 use std::fmt::Display;
 use x12_types_macros::DisplayX12;
-
-mod segment;
 
 #[cfg(test)]
 mod test_204;

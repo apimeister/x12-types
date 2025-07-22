@@ -1,4 +1,5 @@
 use serde::{Deserialize, Serialize};
+use validator::Validate;
 use x12_types_macros::{DisplaySegment, ParseSegment};
 
 /// G3 - Compensation Information
@@ -181,7 +182,7 @@ pub struct GA {
 /// 01 | 97 | Number of Transaction Sets Included | 1 | M | N0 | 1/6
 /// 02 | 28 | Group Control Number | 1 | M/Z | N0 | 1/9
 #[derive(
-    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment, Validate,
 )]
 pub struct GE {
     /// 97 - Number of Transaction Sets Included
@@ -190,6 +191,7 @@ pub struct GE {
     /// - TYPE=N0
     /// - MIN=1
     /// - MAX=6
+    #[validate(length(min = 1, max = 6, message = "GE01 must be 1-6 characters long"))]
     #[serde(rename = "01")]
     pub _01: String,
     /// 28 - Group Control Number
@@ -198,6 +200,7 @@ pub struct GE {
     /// - TYPE=N0
     /// - MIN=1
     /// - MAX=9
+    #[validate(length(min = 1, max = 9, message = "GE02 must be 1-9 characters long"))]
     #[serde(rename = "02")]
     pub _02: String,
 }
@@ -244,7 +247,7 @@ pub struct GR5 {
 /// 07 | 455 | Responsible Agency Code | 1 | M | ID | 1/2
 /// 08 | 480 | Version / Release / Industry Identifier Code | 1 | M | AN | 1/12
 #[derive(
-    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment, Validate,
 )]
 pub struct GS {
     #[serde(rename = "01")]
@@ -364,4 +367,38 @@ pub struct GF {
     pub _39: Option<String>,
     #[serde(rename = "40")]
     pub _40: Option<String>,
+}
+
+/// G66 - Transportation Instructions
+///
+/// To specify transportation instructions relating to shipment
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct G66 {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+}
+
+/// G69 - Line Item Detail - Description
+///
+/// To describe an item in industry terminology
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct G69 {
+    #[serde(rename = "01")]
+    pub _01: String,
 }
