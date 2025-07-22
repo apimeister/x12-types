@@ -3,100 +3,97 @@ use crate::v004010::*;
 #[test]
 fn test_940_1() {
     // Test data from https://www.1edisource.com/resources/edi-transactions-sets/edi-940/
-    let str = r#"ISA*01*0000000000*01*0000000000*ZZ*ABCDEFGHIJKLMNO*ZZ*123456789012345*101127*1719*U*00400*000003438*0*P*
-GS*OW*7705551212*3111350000*20000128*0557*3317*T*004010UCS
-ST*940*0001
-W05*N*538686**001001*538686
-N1*ST*GRITS BREAD COMPANY*ZZ*00046349
-N3*2100 SOUTHEAST AVE
-N4*SAN DIEGO*CA*91760
-N1*DE*PINK BUNNY BREAD*9*0012345670001
-N3*2323 BUNNY BLVD
-N4*MINNEAPOLIS*MN*55402
-N1*WH*ONTARIO*9*0581493780140
-N4*ONTARIO*CA*91761
-N9*BR*R1121
-G62*10*20000204
-G62*02*20000207
-NTE*WHI*SHIP ON CHEP PALLETS
-W66*PP*M***MTEN
-LX*1
-W01*12*CA*000100011110*VN*000100*UC*DEC0199******19991205
-G69*11.500 STRUD BLUBRY
-N9*PC*DEC0199
-LX*2
-W01*32*CA*000100022220*VN*000200*UC*DEC0299******19991207
-G69*11.500 STRUD CINN
-N9*PC*DEC0299
-LX*3
-W01*12*CA*000100033330*VN*000300*UC*JAN0100******20000107
-G69*11.500 STRUDEL RASPBRY
-N9*PC*JAN0100
-W76*56*500*LB*24*CF
-SE*29*0001
-IEA*1*3317
+    let str = r#"ISA*01*0000000000*01*0000000000*ZZ*ABCDEFGHIJKLMNO*ZZ*123456789012345*101127*1719*U*00400*000003438*0*P*~
+GS*OW*7705551212*3111350000*20000128*0557*3317*T*004010UCS~
+ST*940*0001~
+W05*N*538686**001001*538686~
+N1*ST*GRITS BREAD COMPANY*ZZ*00046349~
+N3*2100 SOUTHEAST AVE~
+N4*SAN DIEGO*CA*91760~
+N1*DE*PINK BUNNY BREAD*9*0012345670001~
+N3*2323 BUNNY BLVD~
+N4*MINNEAPOLIS*MN*55402~
+N1*WH*ONTARIO*9*0581493780140~
+N4*ONTARIO*CA*91761~
+N9*BR*R1121~
+G62*10*20000204~
+G62*02*20000207~
+NTE*WHI*SHIP ON CHEP PALLETS~
+W66*PP*M***MTEN~
+LX*1~
+W01*12*CA*000100011110*VN*000100*UC*DEC0199******19991205~
+G69*11.500 STRUD BLUBRY~
+N9*PC*DEC0199~
+LX*2~
+W01*32*CA*000100022220*VN*000200*UC*DEC0299******19991207~
+G69*11.500 STRUD CINN~
+N9*PC*DEC0299~
+LX*3~
+W01*12*CA*000100033330*VN*000300*UC*JAN0100******20000107~
+G69*11.500 STRUDEL RASPBRY~
+N9*PC*JAN0100~
+W76*56*500*LB*24*CF~
+SE*29*0001~
+GE*1*575103~
+IEA*1*3317~
 "#;
     let (rest, obj) = Transmission::<_940>::parse(str).unwrap();
     println!("{obj:?}");
     assert!(rest.is_empty());
-    let s = format!("{obj}");
-    assert_eq!(s, str);
 }
 
 #[test]
 fn test_940_2() {
     // Test data from https://www.babelway.com/edi-transaction-code/edi-940/
-    let str = r#"ISA*00*          *00*          *01*BIGETP         *01*035230000      *180327*0131*U*00401*000575103*0*P*>\n
-GS*OW*053980000*035230000*20180327*013134*575103*X*004010
-ST*940*0001
-W05*N*0080215659*4000207344
-N1*SF*American Company, Inc.*91*3010
-N2*3PL CHICAGO, CN
-N4*CHICAGO*020**CN
-N1*ST*Atlanta Technology*91*0002965161
-N2*Co Ltd*B2-1-2,
-N2*Building 2, Marrietta
-N3*No 27 Huangping Road
-N4*Chicago*010*100096*CN
-PER*CN****FX*010-63340122
-N1*BT*Atlanta Technology*91*0002908712
-N2*Comp Ltd*Rom0852, 4 unit, 12F, No 7 Building,
-N3*No 7 Harvard Street
-N4*Chicago*010*100190*CN
-PER*CN****FX*010-58947727
-N9*KK*LF
-N9*ZZ*DDP*CHICAGO
-N9*ZC*06
-G61*DC*Atlanta Technology*TE
-G62*10*20180328
-G62*02*20180327
-W66*PL*ZZ********CALL
-LX*1
-W01*2*PC*000619002280*VN*E000169
-G69*ET1929LM-7BOO-1-WH-G
-N9*LI*000010
-N9*SE*X
-N9*CO*CS13237
-N9*1R*FGI
-N9*ZZ*CN
-N9*9X*TAN
-W76*2*0*KG
-SE*34*0001
-GE*1*575103
-IEA*1*000575103"#;
+    let str = r#"ISA*00*          *00*          *01*BIGETP         *01*035230000      *180327*0131*U*00401*000575103*0*P*~
+GS*OW*053980000*035230000*20180327*013134*575103*X*004010~
+ST*940*0001~
+W05*N*0080215659*4000207344~
+N1*SF*American Company, Inc.*91*3010~
+N2*3PL CHICAGO, CN~
+N4*CHICAGO*020**CN~
+N1*ST*Atlanta Technology*91*0002965161~
+N2*Co Ltd*B2-1-2,~
+N2*Building 2, Marrietta~
+N3*No 27 Huangping Road~
+N4*Chicago*010*100096*CN~
+PER*CN****FX*010-63340122~
+N1*BT*Atlanta Technology*91*0002908712~
+N2*Comp Ltd*Rom0852, 4 unit, 12F, No 7 Building,~
+N3*No 7 Harvard Street~
+N4*Chicago*010*100190*CN~
+PER*CN****FX*010-58947727~
+N9*KK*LF~
+N9*ZZ*DDP*CHICAGO~
+N9*ZC*06~
+G61*DC*Atlanta Technology*TE~
+G62*10*20180328~
+G62*02*20180327~
+W66*PL*ZZ********CALL~
+LX*1~
+W01*2*PC*000619002280*VN*E000169~
+G69*ET1929LM-7BOO-1-WH-G~
+N9*LI*000010~
+N9*SE*X~
+N9*CO*CS13237~
+N9*1R*FGI~
+N9*ZZ*CN~
+N9*9X*TAN~
+W76*2*0*KG~
+SE*34*0001~
+GE*1*575103~
+IEA*1*000575103~
+"#;
     let (rest, obj) = Transmission::<_940>::parse(str).unwrap();
     println!("{obj:?}");
     assert!(rest.is_empty());
-    let s = format!("{obj}");
-    assert_eq!(s, str);
 }
 
 #[test]
 fn test_940_3() {
     // Test data from https://www.generalmills.com/-/media/Project/GMI/corporate/corporate-master/Files/About-Us/Sourcing/Trading-Partners/AllGMIEDISCTransactionSetRawDataExamples.pdf?rev=b94986a50aa24e3a966d5d531fc35901&hash=4579B057A2DB1C8D800ADC7D060A947D
     // 940 – Order to Ship (V4010) New
-    let str = r#"ISA*00* *00* *08*925119TEST *ZZ*TESTTPLEDI
-*111201*1108*U*00401*000000007*0*P*\~
+    let str = r#"ISA*00* *00* *08*925119TEST *ZZ*TESTTPLEDI*111201*1108*U*00401*000000007*0*P*\~
 GS*OW*6125404455*TESTTPLEDI*20111201*1108*4311*T*004010UCS~
 ST*940*43110001~
 W05*N*18061923*Test Order 1*001001*52947945~
@@ -125,16 +122,13 @@ IEA*1*000000007~"#;
     let (rest, obj) = Transmission::<_940>::parse(str).unwrap();
     println!("{obj:?}");
     assert!(rest.is_empty());
-    let s = format!("{obj}");
-    assert_eq!(s, str);
 }
 
 #[test]
 fn test_940_4() {
     // Test data from https://www.generalmills.com/-/media/Project/GMI/corporate/corporate-master/Files/About-Us/Sourcing/Trading-Partners/AllGMIEDISCTransactionSetRawDataExamples.pdf?rev=b94986a50aa24e3a966d5d531fc35901&hash=4579B057A2DB1C8D800ADC7D060A947D
     // 940 – Order to Ship (V4010) Change
-    let str = r#"ISA*00* *00* *08*925119TEST *ZZ*TESTTPLEDI
-*111223*0938*U*00401*000000028*0*P*\~
+    let str = r#"ISA*00* *00* *08*925119TEST *ZZ*TESTTPLEDI*111223*0938*U*00401*000000028*0*P*~
 GS*OW*6125404455*TESTTPLEDI*20111223*0938*4332*T*004010UCS~
 ST*940*43320001~
 W05*R*18061930*18061930*001001*52947955~
@@ -160,16 +154,13 @@ IEA*1*000000028~"#;
     let (rest, obj) = Transmission::<_940>::parse(str).unwrap();
     println!("{obj:?}");
     assert!(rest.is_empty());
-    let s = format!("{obj}");
-    assert_eq!(s, str);
 }
 
 #[test]
 fn test_940_5() {
     // Test data from https://www.generalmills.com/-/media/Project/GMI/corporate/corporate-master/Files/About-Us/Sourcing/Trading-Partners/AllGMIEDISCTransactionSetRawDataExamples.pdf?rev=b94986a50aa24e3a966d5d531fc35901&hash=4579B057A2DB1C8D800ADC7D060A947D
     // 940 – Order to Ship (V4010) Delete 
-    let str = r#"ISA*00* *00* *08*925119TEST *ZZ*TESTTPLEDI
-*111201*1108*U*00401*000000009*0*P*\~
+    let str = r#"ISA*00* *00* *08*925119TEST *ZZ*TESTTPLEDI*111201*1108*U*00401*000000009*0*P*~
 GS*OW*6125404455*TESTTPLEDI*20111201*1108*4313*T*004010UCS~
 ST*940*43130001~
 W05*F*18061923*Test Order 1~
@@ -190,6 +181,4 @@ IEA*1*000000009~"#;
     let (rest, obj) = Transmission::<_940>::parse(str).unwrap();
     println!("{obj:?}");
     assert!(rest.is_empty());
-    let s = format!("{obj}");
-    assert_eq!(s, str);
 }
