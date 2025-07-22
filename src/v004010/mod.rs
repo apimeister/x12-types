@@ -165,7 +165,7 @@ pub struct FunctionalGroup<T> {
 /// 0300 -> 0350 -> 0360 -> LOOP ID - 0365 | 99 |   |   |  
 /// 0300 -> 0350 -> 0360 -> 0365 -> 0200 | G61 | Contact | O | 1
 /// 0300 -> 0350 -> 0360 -> 0365 -> 0201 | L11 | Business Instructions and Reference Number | O | 5
-/// 0300 -> 0360 -> 0365 -> 0202 | LH6 | Hazardous Certification | O | 6
+/// 0300 -> 0350 -> 0360 -> 0365 -> 0202 | LH6 | Hazardous Certification | O | 6
 /// 0300 -> 0350 -> 0360 -> 0365 -> LOOP ID - 0370 | 25 |   |   |   |  
 /// 0300 -> 0350 -> 0360 -> 0365 -> 0370 -> 0203 | LH1 | Hazardous Identification Information | O | 1
 /// 0300 -> 0350 -> 0360 -> 0365 -> 0370 -> 0204 | LH2 | Hazardous Classification Information | O | 4
