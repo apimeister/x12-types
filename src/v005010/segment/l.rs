@@ -129,7 +129,18 @@ pub struct LIN {
 }
 
 /// LM - Code Source Information
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(
+    Serialize,
+    Deserialize,
+    Clone,
+    Default,
+    Debug,
+    Validate,
+    PartialEq,
+    Eq,
+    DisplaySegment,
+    ParseSegment,
+)]
 pub struct LM {
     // Agency Qualifier Code
     #[serde(rename = "01")]
