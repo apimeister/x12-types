@@ -703,3 +703,40 @@ pub struct CTT {
     #[serde(rename = "02")]
     pub _02: Option<String>,
 }
+
+/// CTB - Restrictions/Conditions
+#[derive(
+    Serialize,
+    Deserialize,
+    Clone,
+    Default,
+    Debug,
+    Validate,
+    PartialEq,
+    Eq,
+    DisplaySegment,
+    ParseSegment,
+)]
+pub struct CTB {
+    /// 688 - Restrictions/Conditions Qualifier
+    #[serde(rename = "01")]
+    pub _01: String,
+    /// 65 - Description
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    /// 673 - Quantity Qualifier
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    /// 380 - Quantity
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    /// 355 - Unit or Basis for Measurement Code
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    /// 782 - Monetary Amount
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    /// C001 - Composite Unit of Measure
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+}
