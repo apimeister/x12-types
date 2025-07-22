@@ -56,7 +56,10 @@ impl<'a, T: Default + Parser<&'a str, T, nom::error::Error<&'a str>>>
 {
     fn parse(input: &'a str) -> IResult<&'a str, Transmission<T>> {
         let mut output = Transmission::default();
-        let (input, obj) = ISA::parse(input)?;
+        let (input, mut obj) = ISA::parse(input)?;
+        if obj._16.is_empty() {
+            obj._16 = "~".to_string();
+        }
         output.isa = obj;
         // functional group
         let (input, gs) = GS::parse(input)?;
