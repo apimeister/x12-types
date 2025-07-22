@@ -300,6 +300,7 @@ pub struct ISA {
     pub _16: String,
 }
 
+#[allow(clippy::just_underscores_and_digits)]
 impl<'a> Parser<&'a str, ISA, nom::error::Error<&'a str>> for ISA {
     fn parse(input: &'a str) -> IResult<&'a str, ISA> {
         // The ISA segment has 16 fields separated by the element separator.
@@ -323,79 +324,68 @@ impl<'a> Parser<&'a str, ISA, nom::error::Error<&'a str>> for ISA {
             .strip_prefix(element_sep)
             .ok_or_else(|| nom::Err::Error(nom::error::Error::new(input, ErrorKind::Char)))?;
 
-        // 4. Now, parse the 16 fields, separated by the element separator
-        let mut rest = input;
+        // 4. Parse the 15 fields (ISA01-ISA15), separated by the element separator
+        let mut remaining_input = input;
+        let mut fields = Vec::with_capacity(15);
 
-        // Helper function to parse a field up to the next element separator
-        let mut parse_field = || -> IResult<&'a str, String> {
-            let mut field_end = 0;
-            for (i, ch) in rest.char_indices() {
-                if ch == element_sep {
-                    field_end = i;
-                    break;
-                }
+        // Parse fields 1-15
+        for field_num in 1..=15 {
+            let field_end = remaining_input.find(element_sep).ok_or_else(|| {
+                nom::Err::Error(nom::error::Error::new(remaining_input, ErrorKind::Char))
+            })?;
+
+            if field_end == 0 && field_num > 1 {
+                // Empty field is only allowed for certain fields, but we'll be permissive
+                fields.push(String::new());
+            } else {
+                let field_value = remaining_input[..field_end].to_string();
+                fields.push(field_value);
             }
-            if field_end == 0 {
-                return Err(nom::Err::Error(nom::error::Error::new(
-                    rest,
-                    ErrorKind::Char,
-                )));
-            }
-            let field = &rest[..field_end];
-            rest = &rest[field_end + 1..];
-            Ok((rest, field.to_string()))
-        };
 
-        // Parse all 16 fields
-        let (_, _01) = parse_field()?;
-        let (_, _02) = parse_field()?;
-        let (_, _03) = parse_field()?;
-        let (_, _04) = parse_field()?;
-        let (_, _05) = parse_field()?;
-        let (_, _06) = parse_field()?;
-        let (_, _07) = parse_field()?;
-        let (_, _08) = parse_field()?;
-        let (_, _09) = parse_field()?;
-        let (_, _10) = parse_field()?;
-        let (_, _11) = parse_field()?;
-        let (_, _12) = parse_field()?;
-        let (_, _13) = parse_field()?;
-        let (_, _14) = parse_field()?;
-        let (_, _15) = parse_field()?;
+            remaining_input = &remaining_input[field_end + 1..];
+        }
 
-        // ISA16 - Component Element Separator (1 character, followed by segment terminator)
-        let (r, _16) = take(1usize)(rest)?;
-        let mut rest = r;
+        // 5. Parse ISA16 - Component Element Separator (1 character, followed by segment terminator)
+        let (remaining_input, component_separator) = take(1usize)(remaining_input)?;
 
-        // 5. Now we need to find the segment terminator and consume it
-        let _segment_terminator = rest
-            .chars()
-            .next()
-            .ok_or_else(|| nom::Err::Error(nom::error::Error::new(rest, ErrorKind::Char)))?;
-        rest = &rest[1..];
+        // 6. Find and consume the segment terminator
+        let _segment_terminator = remaining_input.chars().next().ok_or_else(|| {
+            nom::Err::Error(nom::error::Error::new(remaining_input, ErrorKind::Char))
+        })?;
 
-        // 6. Look for optional newline
-        let (rest, _) = opt(newline).parse(rest)?;
+        let remaining_input = &remaining_input[1..];
 
+        // 7. Look for optional newline
+        let (remaining_input, _) = opt(newline).parse(remaining_input)?;
+
+        // 8. Validate we have exactly 15 fields
+        if fields.len() != 15 {
+            return Err(nom::Err::Error(nom::error::Error::new(
+                input,
+                ErrorKind::Count,
+            )));
+        }
+
+        // 9. Build the ISA struct with proper field assignment
         Ok((
-            rest,
+            remaining_input,
             ISA {
-                _01,
-                _02,
-                _03,
-                _04,
-                _05,
-                _06,
-                _07,
-                _08,
-                _09,
-                _10,
-                _11,
-                _12,
-                _13,
-                _14,
-                _15,
-                _16: _16.to_string(),
+                _01: fields[0].clone(),
+                _02: fields[1].clone(),
+                _03: fields[2].clone(),
+                _04: fields[3].clone(),
+                _05: fields[4].clone(),
+                _06: fields[5].clone(),
+                _07: fields[6].clone(),
+                _08: fields[7].clone(),
+                _09: fields[8].clone(),
+                _10: fields[9].clone(),
+                _11: fields[10].clone(),
+                _12: fields[11].clone(),
+                _13: fields[12].clone(),
+                _14: fields[13].clone(),
+                _15: fields[14].clone(),
+                _16: component_separator.to_string(),
             },
         ))
     }
