@@ -17,8 +17,8 @@ fn main() {
             _12: "00401".to_string(),
             _13: "000000001".to_string(),
             _14: "0".to_string(),
-            _15: "P".to_string(),
-            _16: ">".to_string(),
+            _15: UsageIndicator::Production,
+            _16: "~".to_string(),
         },
         functional_group: vec![FunctionalGroup {
             gs: GS {

@@ -6,13 +6,16 @@ use nom::combinator::peek;
 use nom::multi::many0;
 use nom::IResult;
 use nom::Parser as _;
+pub mod segment;
 pub use segment::*;
 use serde::{Deserialize, Serialize};
 use std::fmt::Debug;
 use std::fmt::Display;
+use validator::Validate;
 use x12_types_macros::DisplayX12;
 
-mod segment;
+mod _940_doc;
+pub use _940_doc::*;
 
 #[cfg(test)]
 mod test_204;
@@ -35,16 +38,20 @@ mod test_810;
 #[cfg(test)]
 mod test_856;
 #[cfg(test)]
+mod test_940;
+#[cfg(test)]
 mod test_997;
 #[cfg(test)]
 mod test_998;
 #[cfg(test)]
 mod test_segments;
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, Validate)]
 pub struct Transmission<T> {
+    #[validate(nested)]
     pub isa: ISA,
     pub functional_group: Vec<FunctionalGroup<T>>,
+    #[validate(nested)]
     pub iea: IEA,
 }
 
@@ -90,10 +97,12 @@ impl<T: Display> Display for Transmission<T> {
     }
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, Validate)]
 pub struct FunctionalGroup<T> {
+    #[validate(nested)]
     pub gs: GS,
     pub segments: Vec<T>,
+    #[validate(nested)]
     pub ge: GE,
 }
 
