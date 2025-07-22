@@ -388,23 +388,23 @@ impl<'a> Parser<&'a str, _850, nom::error::Error<&'a str>> for _850 {
             }
             let rest = loop_n1_rest;
 
-            // loop_sln
-            let mut loop_sln = vec![];
+            // loop_sln_detail
+            let mut loop_sln_detail = vec![];
             let mut loop_sln_rest = rest;
             while peek(opt(SLN::parse)).parse(loop_sln_rest)?.1.is_some() {
                 let (rest, obj) = _850LoopSln::parse(loop_sln_rest)?;
                 loop_sln_rest = rest;
-                loop_sln.push(obj);
+                loop_sln_detail.push(obj);
             }
             let rest = loop_sln_rest;
 
-            // loop_amt
-            let mut loop_adv = vec![];
+            // loop_adv_detail
+            let mut loop_adv_detail = vec![];
             let mut loop_adv_rest = rest;
             while peek(opt(ADV::parse)).parse(loop_adv_rest)?.1.is_some() {
                 let (rest, obj) = _850LoopAdv::parse(loop_adv_rest)?;
                 loop_adv_rest = rest;
-                loop_adv.push(obj);
+                loop_adv_detail.push(obj);
             }
             let rest = loop_adv_rest;
 
@@ -509,10 +509,10 @@ impl<'a> Parser<&'a str, _850, nom::error::Error<&'a str>> for _850 {
                 loop_pkg,
                 loop_n9,
                 loop_n1,
-                loop_lm,
                 loop_spi,
-                loop_adv,
-                loop_sln,
+                loop_adv: loop_adv_detail,
+                loop_lm,
+                loop_sln: loop_sln_detail,
             });
         }
         let rest = loop_rest;
