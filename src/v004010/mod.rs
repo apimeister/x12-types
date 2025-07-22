@@ -2675,5 +2675,5 @@ impl<'a> Parser<&'a str, _998, nom::error::Error<&'a str>> for _998 {
     }
 }
 
-pub mod _940;
-pub use _940::*;
+mod _940_doc;
+pub use _940_doc::_940;
