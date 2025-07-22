@@ -36,6 +36,7 @@ mod test_810;
 mod test_856;
 #[cfg(test)]
 mod test_997;
+#[cfg(test)]
 mod test_998;
 #[cfg(test)]
 mod test_segments;
