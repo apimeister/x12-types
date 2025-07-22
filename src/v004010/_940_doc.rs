@@ -68,7 +68,27 @@ impl<'a> Parser<&'a str, _940, nom::error::Error<&'a str>> for _940 {
         let (rest_w76, w76) = opt(W76::parse).parse(rest_loop300)?;
         let (rest_se, se) = SE::parse(rest_w76)?;
         rest = rest_se;
-        Ok((rest, _940 { _010: st, _020: w05, _0100: loop100, _090: n9, _100: g61, _110: g62, _120: nte, _130: w09, _140: w66, _150: w6, _153: r2, _156: bnx, _0200_loop: loop200, _0300_loop: loop300, _0400: w76, _0500: se }))
+        Ok((
+            rest,
+            _940 {
+                _010: st,
+                _020: w05,
+                _0100: loop100,
+                _090: n9,
+                _100: g61,
+                _110: g62,
+                _120: nte,
+                _130: w09,
+                _140: w66,
+                _150: w6,
+                _153: r2,
+                _156: bnx,
+                _0200_loop: loop200,
+                _0300_loop: loop300,
+                _0400: w76,
+                _0500: se,
+            },
+        ))
     }
 }
 
@@ -86,7 +106,7 @@ pub struct _940Loop100 {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub _070: Option<N4>,
     #[serde(default)]
-    #[serde(skip_serializing_if = "Vec::is_empty")] 
+    #[serde(skip_serializing_if = "Vec::is_empty")]
     pub _080: Vec<PER>,
 }
 
@@ -142,7 +162,7 @@ pub struct _940Loop300 {
     pub _017: Vec<G62>,
     #[serde(default)]
     #[serde(skip_serializing_if = "Vec::is_empty")]
-    pub _0310_loop: Vec<_940Loop310>,    
+    pub _0310_loop: Vec<_940Loop310>,
 }
 
 impl<'a> Parser<&'a str, _940Loop300, nom::error::Error<&'a str>> for _940Loop300 {
@@ -166,8 +186,6 @@ impl<'a> Parser<&'a str, _940Loop300, nom::error::Error<&'a str>> for _940Loop30
                 _0310_loop: loop_0310,
             },
         ))
-
-   
     }
 }
 
@@ -236,7 +254,26 @@ impl<'a> Parser<&'a str, _940Loop310, nom::error::Error<&'a str>> for _940Loop31
         let (rest_lh6, lh6) = many0(LH6::parse).parse(rest_lhr)?;
         let (rest_loop, loop320) = many0(_940Loop320::parse).parse(rest_lh6)?;
         rest = rest_loop;
-        Ok((rest, _940Loop310 { _020: w01, _030: g69, _040: n9, _045: nte, _050: w20, _070: qty, _080: amt, _090: g62, _100: g66, _110: n1, _112: per, _114: lh2, _116: lhr, _118: lh6, _0320_loop: loop320 }))
+        Ok((
+            rest,
+            _940Loop310 {
+                _020: w01,
+                _030: g69,
+                _040: n9,
+                _045: nte,
+                _050: w20,
+                _070: qty,
+                _080: amt,
+                _090: g62,
+                _100: g66,
+                _110: n1,
+                _112: per,
+                _114: lh2,
+                _116: lhr,
+                _118: lh6,
+                _0320_loop: loop320,
+            },
+        ))
     }
 }
 
@@ -260,7 +297,15 @@ impl<'a> Parser<&'a str, _940Loop320, nom::error::Error<&'a str>> for _940Loop32
         let (rest_ls, ls) = opt(LS::parse).parse(rest_lq)?;
         let (rest_loop, loop330) = many0(_940Loop330::parse).parse(rest_ls)?;
         rest = rest_loop;
-        Ok((rest, _940Loop320 { _120: lm, _130: lq, _135: ls, _0330_loop: loop330 }))
+        Ok((
+            rest,
+            _940Loop320 {
+                _120: lm,
+                _130: lq,
+                _135: ls,
+                _0330_loop: loop330,
+            },
+        ))
     }
 }
 
@@ -293,7 +338,17 @@ impl<'a> Parser<&'a str, _940Loop330, nom::error::Error<&'a str>> for _940Loop33
         let (rest_sdq, sdq) = many0(SDQ::parse).parse(rest_n1)?;
         let (rest_loop, loop331) = many0(_940Loop331::parse).parse(rest_sdq)?;
         rest = rest_loop;
-        Ok((rest, _940Loop330 { _140: lx, _150: n9, _160: g62, _170: n1, _175: sdq, _0331_loop: loop331 }))
+        Ok((
+            rest,
+            _940Loop330 {
+                _140: lx,
+                _150: n9,
+                _160: g62,
+                _170: n1,
+                _175: sdq,
+                _0331_loop: loop331,
+            },
+        ))
     }
 }
 
@@ -314,7 +369,14 @@ impl<'a> Parser<&'a str, _940Loop331, nom::error::Error<&'a str>> for _940Loop33
         let (rest_lq, lq) = many0(LQ::parse).parse(rest)?;
         let (rest_loop, loop332) = many0(_940Loop332::parse).parse(rest_lq)?;
         rest = rest_loop;
-        Ok((rest, _940Loop331 { _180: lm, _190: lq, _0332_loop: loop332 }))
+        Ok((
+            rest,
+            _940Loop331 {
+                _180: lm,
+                _190: lq,
+                _0332_loop: loop332,
+            },
+        ))
     }
 }
 
@@ -366,7 +428,22 @@ impl<'a> Parser<&'a str, _940Loop332, nom::error::Error<&'a str>> for _940Loop33
         let (rest_le, le) = opt(LE::parse).parse(rest_per)?;
         let (rest_loop, loop340) = many0(_940Loop340::parse).parse(rest_le)?;
         rest = rest_loop;
-        Ok((rest, _940Loop332 { _200: lh1, _210: lh2, _220: lh3, _230: lfh, _240: lep, _250: lh4, _260: lht, _270: lhr, _280: per, _285: le, _340_loop: loop340 }))
+        Ok((
+            rest,
+            _940Loop332 {
+                _200: lh1,
+                _210: lh2,
+                _220: lh3,
+                _230: lfh,
+                _240: lep,
+                _250: lh4,
+                _260: lht,
+                _270: lhr,
+                _280: per,
+                _285: le,
+                _340_loop: loop340,
+            },
+        ))
     }
 }
 
@@ -381,6 +458,12 @@ impl<'a> Parser<&'a str, _940Loop340, nom::error::Error<&'a str>> for _940Loop34
         let (mut rest, fa1) = FA1::parse(input)?;
         let (rest_fa2, fa2) = many0(FA2::parse).parse(rest)?;
         rest = rest_fa2;
-        Ok((rest, _940Loop340 { _290: fa1, _300: fa2 }))
+        Ok((
+            rest,
+            _940Loop340 {
+                _290: fa1,
+                _300: fa2,
+            },
+        ))
     }
 }

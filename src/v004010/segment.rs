@@ -6597,7 +6597,9 @@ pub struct W76 {
 /// W20 - Line Item Detail - Product
 ///
 /// To specify the product details
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
 pub struct W20 {
     #[serde(rename = "01")]
     pub _01: String,
@@ -6616,7 +6618,9 @@ pub struct W20 {
 /// G66 - Transportation Instructions
 ///
 /// To specify transportation instructions relating to shipment
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
 pub struct G66 {
     #[serde(rename = "01")]
     pub _01: String,
@@ -6636,7 +6640,9 @@ pub struct G66 {
 /// W6 - Warehouse Information
 ///
 /// To transmit warehouse facility and special handling information
-#[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment)]
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
 pub struct W6 {
     #[serde(rename = "01")]
     pub _01: Option<String>,

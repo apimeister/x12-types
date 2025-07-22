@@ -159,7 +159,7 @@ IEA*1*000000028~"#;
 #[test]
 fn test_940_5() {
     // Test data from https://www.generalmills.com/-/media/Project/GMI/corporate/corporate-master/Files/About-Us/Sourcing/Trading-Partners/AllGMIEDISCTransactionSetRawDataExamples.pdf?rev=b94986a50aa24e3a966d5d531fc35901&hash=4579B057A2DB1C8D800ADC7D060A947D
-    // 940 – Order to Ship (V4010) Delete 
+    // 940 – Order to Ship (V4010) Delete
     let str = r#"ISA*00* *00* *08*925119TEST *ZZ*TESTTPLEDI*111201*1108*U*00401*000000009*0*P*~
 GS*OW*6125404455*TESTTPLEDI*20111201*1108*4313*T*004010UCS~
 ST*940*43130001~
