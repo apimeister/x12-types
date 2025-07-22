@@ -150,3 +150,15 @@ fn test_iea() {
     assert!(rest.is_empty());
     assert_eq!(obj._01, "1");
 }
+
+#[test]
+fn test_spi() {
+    let s = "SPI*01*AB*12345*Entity Title*Entity Purpose~";
+    let (rest, obj) = SPI::parse(s).unwrap();
+    assert!(rest.is_empty());
+    assert_eq!(obj._01, "01");
+    assert_eq!(obj._02, Some("AB".to_string()));
+    assert_eq!(obj._03, Some("12345".to_string()));
+    assert_eq!(obj._04, Some("Entity Title".to_string()));
+    assert_eq!(obj._05, Some("Entity Purpose".to_string()));
+}

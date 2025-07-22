@@ -1,0 +1,428 @@
+use super::*;
+
+#[test]
+fn parse_850_1() {
+    //source: https://community.spscommerce.com/wp-content/uploads/2020/04/GPC-NAPA-EDI-850x12v5010-Purchase-Order-Implementation-Guideline-v2.4-1.pdf
+    let str = r#"ISA*00* *00* *ZZ*NAPA *nn*partnerid *110913*2201*|*00501*000086518*0*P*:~GS*PO*NAPA*partnerid*20110913*220112*865180001*X*005010~
+ST*850*105832797~
+BEG*00*SA*05832797OD000ZZZ04269**20110823~
+REF*PT*SC~
+REF*CG*1600109528~
+DTM*002*20110913~
+SI*AX*ZZ*FD054~
+TD5**ZZ*44~
+N9*ACD*JD~
+MTX*GSI*RECEIVING HOURS 7 00 A M TO 3 00 P M~
+N1*SU*NAPANETID~
+N1*BY*NAPA DC*92*ATL00069~
+N1*ST*NAPA AUTO PARTS ATL069*92*ATL00069~
+N3*1504 ALEXANDERSTREET~
+N4*COLUMBUS*GA*31904~
+PO1*00001*2*EA***BP*AD7574*BL*ADO~
+PO1*00002*10*EA***BP*AD7594*BL*ADO~
+PO1*00003*5*EA***BP*AD7784*BL*ADO~
+PO1*00004*1*EA***BP*AD7822*BL*ADO~
+CTP**DIS*96.00~
+PID*F****Detail Level Remarks~
+CTT*4*18~
+SE*22*105832797~
+GE*1*865180001~
+IEA*1*000086518~"#;
+    let (rest, obj) = Transmission::<_850>::parse(str).unwrap();
+    println!("{rest}");
+    println!("{obj:?}");
+}
+
+#[test]
+fn parse_850_2() {
+    //source: https://community.spscommerce.com/wp-content/uploads/2020/04/GPC-NAPA-EDI-850x12v5010-Purchase-Order-Implementation-Guide-v2.4-1.pdf
+    let str = r#"ISA*00* *00* *ZZ*NAPA *nn*partnerid *180308*1259*|*00501*000056896*0*P*>~GS*PO*NAPA*partnerid*20180308*12590000*56896*X*005010~
+ST*850*117148217~
+BEG*00*SA*17148217OD000BIN16484**20180308~
+REF*PT*SC~
+DTM*002*20180310~
+SI*AX*ZZ*JOEI~
+TD5**ZZ*44~
+N9*ACD*SJD~
+MTX*GSI*REGULAR UPS 1 TO 4 DAY DELIVERY, NO SPECIAL HANDLING (COMMERCIAL GROUNDCARRIER , NOT LTL)~
+N1*SU*BALKCENT*92*BIN~
+N1*BY*AUTO PARTS OF CHICAGO*92*CHI00123~
+N1*ST*AUTO PARTS OF CHICAGO*92*CHI00123~
+N3*1904 S ELK STREET~
+N4*CHICAGO*IL*61530~
+PER*OC**TE*3094676273 4~
+PO1*00001*1*EA***BP*6552528*BL*BK~
+CTP**DIS*37.93~
+PID*F****BLOWER MOTOR ASSY~
+CTT*1*1~
+SE*19*117148217~
+GE*1*56896~
+IEA*1*000056896~"#;
+    let (rest, obj) = Transmission::<_850>::parse(str).unwrap();
+    println!("{rest}");
+    println!("{obj:?}");
+}
+
+#[test]
+fn parse_850_3() {
+    //source: https://community.spscommerce.com/wp-content/uploads/2020/04/GPC-NAPA-EDI-850x12v5010-Purchase-Order-Implementation-Guide-v2.4-1.pdf
+    let str = r#"ISA*00* *00* *ZZ*NAPA *nn*partnerid *110913*1926*|*00501*000086477*0*P*:~GS*PO*DCNAPANETID*partnerid*20110913*192647*864770001*X*005010~
+ST*850*001422073~
+BEG*00*SA*01422073OP000**20110822~
+REF*PT*SC~
+DTM*002*20110913~
+SI*AX*ZZ*00765~
+N9*ACD*DC~
+N1*BY*NAPA DC*92*ATL00999~
+REF*ZZ*ATL~
+N1*ST*NAPA ATLANTA DC*92*ATL00999~
+N3*5420 PEACHTREE INDUSTRIAL BOULEVARD~
+N4*NORCROSS*GA*30071~
+PO1*00001*1*EA***BP*21001*BL*CRB~
+PO1*00002*1*EA***BP*21289*BL*CRB~
+PO1*00003*3*EA***BP*212069*BL*CRB~
+CTT*3*5~
+SE*16*001422073~
+GE*1*864770001~
+IEA*1*000086477~"#;
+    let (rest, obj) = Transmission::<_850>::parse(str).unwrap();
+    println!("{rest}");
+    println!("{obj:?}");
+}
+
+#[test]
+fn parse_850_4() {
+    //source: https://community.spscommerce.com/wp-content/uploads/2020/04/GPC-NAPA-EDI-850x12v5010-Purchase-Order-Implementation-Guide-v2.4-1.pdf
+    let str = r#"ISA*00* *00* *ZZ*NAPA *nn*partnerID *190709*1228*|*00501*000002567*0*T*~
+GS*PO*NAPA*partnerID*20190709*12280000*2567*X*005010~
+ST*850*003095725~
+BEG*00*SA*03095725OP000**20190709~
+REF*PT*SC~
+REF*AN*8675309~
+DTM*002*20190729~
+SI*AX*ZZ*00561~
+N9*ACD*CD~
+N1*SU*NapaAssignedSupplierID~
+N1*BY*NAPA TAMPA DC*92*TAM00999~
+N1*ST*RMDS ATLANTA*92*TAM00999~
+N3*2704 Bouldercrest Road Southeast~
+N4*ATLANTA*GA*33016~
+PO1*00001*3*EA***BP*3626*BL*NR~
+CTP**DIS*83.41~
+PID*F****NAPA RADIATOR~
+PO1*00002*2*EA***BP*73239*BL*MO~
+CTP**DIS*96.88~
+PID*F****A/C CONDENSER~
+PO1*00003*3*EA***BP*73599*BL*MO~
+CTP**DIS*68.36~
+PID*F****A/C CONDENSER~
+PO1*00004*1*EA***BP*20011710*BL*HNC~
+CTP**DIS*561.88~
+PID*F****HEAVY DUTY RADIATOR~
+PO1*00005*1*EA***BP*20011720*BL*HNC~
+CTP**DIS*419.13~
+PID*F****RADIATOR~
+CTT*5*10~
+SE*28*003095725~
+GE*1*2567~
+IEA*1*000002567~"#;
+    let (rest, obj) = Transmission::<_850>::parse(str).unwrap();
+    println!("{rest}");
+    println!("{obj:?}");
+}
+
+#[test]
+fn parse_850_5() {
+    // source: https://www.rkvendor.com/supplier_portal/documents/PboD20rW.pdf
+    let str = r#"ST*850*000000001~
+BEG*00*NE*260001**20200923~
+CUR*BY*USD~
+REF*IA*28897~
+ITD************60~
+DTM*037*20200923~
+DTM*038*20200923~
+N1*SF*Ship From Name*92*2889700001~
+N1*ST*Store# 65*92*65~
+PO1*1*2100*EA*195.50**CB*27120018~
+PID*F****LED MOTION LIGHT 2000 LUM WHT~
+CTT*1*2100~
+SE*13*000000001~"#;
+    let (rest, obj) = _850::parse(str).unwrap();
+    println!("{rest}");
+    println!("{obj:?}");
+}
+
+#[test]
+fn parse_850_6() {
+    // source: https://www.rkvendor.com/supplier_portal/documents/PboD20rW.pdf
+    let str = r#"ST*850*000000001~
+BEG*00*NE*325010**20200923~
+CUR*BY*USD~
+REF*IA*2889700001~
+ITD************60~
+DTM*037*20200923~
+DTM*038*20200923~
+N1*SF*Ship From Name*92*2889700001~
+PO1*1*36*EA*17.01**CB*27120100~
+PID*F****LED ACCENT STRING LIGHTS 2400L~
+SDQ*EA*92*06*24*65*12~
+SE*12*000000001~"#;
+    let (rest, obj) = _850::parse(str).unwrap();
+    println!("{rest}");
+    println!("{obj:?}");
+}
+
+#[test]
+fn parse_850_7() {
+    // source: https://www.rkvendor.com/supplier_portal/documents/PboD20rW.pdf
+    let str = r#"ST*850*000000001~
+BEG*00*NE*265002**20200923~
+CUR*BY*USD~
+REF*IA*2889700001~
+ITD************60~
+DTM*037*20200923~
+DTM*038*20200923~
+N1*SF*Ship From Name*92*2889700001~
+N1*ST*Warehouse# 899*92*899~
+PO1*1*330*EA*195.50**CB*27120018~
+PID*F****LED MOTION LIGHT 2000 LUM WHT~
+PO1*1*660*EA*195.50**CB*27120017~
+PID*F****LED MOTION LIGHT 2000 LUM BRZ~
+CTT*2*1980~
+SE*15*000000001~"#;
+    let (rest, obj) = _850::parse(str).unwrap();
+    println!("{rest}");
+    println!("{obj:?}");
+}
+
+#[test]
+fn parse_850_8() {
+    // source: https://www.rkvendor.com/supplier_portal/documents/PboD20rW.pdf
+    let str = r#"ST*850*000000001~
+BEG*00*NE*26000A-899**20200923~
+CUR*BY*USD~
+REF*IA*2889700001~
+ITD************60~
+DTM*037*20200923~
+DTM*038*20200923~
+N1*SF*Ship From Name*92*2889700001~
+PO1*1*330*EA*195.50**CB*27120018~
+PID*F****LED MOTION LIGHT 2000 LUM WHT~
+SDQ*EA*92*899*110*910*110*1080*110~
+PO1*1*660*EA*195.50**CB*27120017~
+PID*F****LED MOTION LIGHT 2000 LUM BRZ~
+SDQ*EA*92*899*220*910*220*1080*220~
+CTT*2*1980~
+SE*16*000000001~"#;
+    let (rest, obj) = _850::parse(str).unwrap();
+    println!("{rest}");
+    println!("{obj:?}");
+}
+
+#[test]
+fn parse_850_9() {
+    // source: https://www.rkvendor.com/supplier_portal/documents/PboD20rW.pdf
+    let str = r#"ST*850*000000001~
+BEG*00*NE*26000A-899**20200923~
+CUR*BY*USD~
+REF*IA*28897~
+ITD************60~
+DTM*037*20200923~
+DTM*038*20200923~
+N1*SF*Ship From Name*92*2889700001~
+PO1*1*330*EA*195.50**CB*27120018~
+PID*F****LED MOTION LIGHT 2000 LUM WHT~
+SDQ*EA*92*65*110*899*110*05*110~
+CTT*2*1980~
+SE*13*000000001~"#;
+    let (rest, obj) = _850::parse(str).unwrap();
+    println!("{rest}");
+    println!("{obj:?}");
+}
+
+#[test]
+fn parse_850_10() {
+    // source: https://www.rkvendor.com/supplier_portal/documents/PboD20rW.pdf
+    let str = r#"ST*850*000000001~
+BEG*00*NE*260001**20200923~
+CUR*BY*USD~
+REF*IA*28897~
+ITD************60~
+DTM*037*20200923~
+DTM*038*20200923~
+N9*L1*LETTERS OR NOTES~
+MTX**THIS IS A PASS THROUGH ORDER. PLEASE SHIP TO THE HEADER LEVEL N1 ST SHIP TO
+N1-04 ELEMENT DC LOCATION. PLEASE ADD THE STORE NUMBERS FROM THE SDQ LINE ITEM
+SEGMENTS TO THE CARTON LABELS.~
+N1*SF*Ship From Name*92*2889700001~
+N1*ST*Warehouse# 899*92*899~
+PO1*1*2100*EA*195.50**CB*27120018~
+SDQ*EA*92*65*2100~
+SLN*BY*2889700001*65*2100~
+PID*F****LED MOTION LIGHT 2000 LUM WHT~
+CTT*1*2100~
+SE*16*000000001~"#;
+    let (rest, obj) = _850::parse(str).unwrap();
+    println!("{rest}");
+    println!("{obj:?}");
+}
+
+#[test]
+fn parse_850_11() {
+    // source: https://www.rkvendor.com/supplier_portal/documents/PboD20rW.pdf
+    let str = r#"ST*850*000000001~
+BEG*00*NE*260001**20200923~
+CUR*BY*USD~
+REF*IA*28897~
+ITD************60~
+DTM*037*20200923~
+DTM*038*20200923~
+N9*L1*LETTERS OR NOTES~
+MTX**THIS IS A PASS THROUGH ORDER. PLEASE SHIP TO THE HEADER LEVEL N1 ST SHIP TO N1-04 ELEMENT DC LOCATION. PLEASE ADD THE STORE NUMBERS FROM THE SDQ LINE ITEM SEGMENTS TO THE CARTON LABELS.~
+N1*SF*Ship From Name*92*2889700001~
+N1*ST*Warehouse# 899*92*899~
+PO1*1*2100*EA*195.50**CB*27120018~
+SDQ*EA*92*65*1000*66*1000*67*100~
+SLN*BY*2889700001*65*1000~
+PID*F****LED MOTION LIGHT 2000 LUM WHT~
+CTT*1*2100~
+SE*16*000000001~"#;
+    let (rest, obj) = _850::parse(str).unwrap();
+    println!("{rest}");
+    println!("{obj:?}");
+}
+
+#[test]
+fn parse_850_12() {
+    // source: https://www.rkvendor.com/supplier_portal/documents/PboD20rW.pdf
+    let str = r#"ST*850*000000001~
+BEG*00*NE*325010**20200923~
+CUR*BY*USD~
+REF*IA*28897~
+ITD************60~
+DTM*037*20200923~
+DTM*038*20200923~
+N9*L1*LETTERS OR NOTES~
+MTX**THIS IS A CROSS DOCK ORDER. PLEASE SHIP TO THE HEADER LEVEL N1 ST SHIP TO
+N1-04 ELEMENT DC LOCATION. PLEASE ADD THE STORE NUMBERS FROM THE SDQ LINE
+ITEM SEGMENTS TO THE CARTON LABELS.~
+N1*SF*Ship From Name*92*2889700001~
+N1*ST*Warehouse# 899*92*899~
+PO1*1*36*EA*195.50**CB*27120100~
+PID*F****LED ACCENT STRING LIGHTS 2400L ~
+SDQ*EA*92*06*24*65*12~
+CTT*2*1980~
+SE*16*000000001~"#;
+    let (rest, obj) = _850::parse(str).unwrap();
+    println!("{rest}");
+    println!("{obj:?}");
+}
+
+#[test]
+fn parse_850_13() {
+    // source: https://www.rkvendor.com/supplier_portal/documents/PboD20rW.pdf
+    let str = r#"ST*850*000000001~
+BEG*00*NE*325011**20200923~
+CUR*BY*USD~
+REF*IA*28897~
+ITD************60~
+DTM*037*20200923~
+DTM*038*20200923~
+N1*SF*Ship From Name*92*2889700001~
+PO1*1*18*EA*17.01**CB*27120100~
+PID*F****LED ACCENT STRING LIGHTS 2400L ~
+SDQ*EA*92*898*9*899*9~
+CTT*2*1980~
+SE*13*000000001~"#;
+    let (rest, obj) = _850::parse(str).unwrap();
+    println!("{rest}");
+    println!("{obj:?}");
+}
+
+#[test]
+fn parse_850_14() {
+    // source: https://www.aafes.com/images/doingbusiness/5010_850_v5.pdf
+    let str = r#"ST*850*16241~
+BEG*00*SA*0012345678**20150924~
+REF*IA*87654321~
+PER*BD* CONTRACTING OFFICER*TE*XXXXXXXXXX~
+FOB*CC*OR*SOMERSET NJ~
+CSH*N~
+ITD*01******60*****NET060~
+DTM*010*20151008~
+DTM*002*20151014~
+TD5*****PARTNERS.AAFES.COM~
+N9*AH*AAFES T&C/RTL BUS AGRMT~
+MTX**ARBA/ARA~
+MTX**SHIPMENT AGAINST THIS ORDER IS ACCEPTANCE OF EXCHANGE RETAIL TERMS &
+CONDITIONS & SUPPLIER REQUIREMENTS FOUND IN THESE URLS:
+HTTP://WWW.AAFES.COM/IMAGES/DOINGBUSINESS/TERMSCONRETAIL.PDF AND
+HTTP://WWW.AAFES.COM/IMAGES/DOINGBUSINESS/SUPPLY.PDF~
+N1*VN*VENDOR NAME*9*VENDOR DUNS# + 4-DIGIT SUFFIX~
+N3*DIAPER BAGS*20 W 33RD ST~
+N3*2ND FL~
+N4*NEW YORK*NY*100010000~
+N1*BY*HOLLOMAN MAIN STORE*92*1012201~
+N3*551 4TH STREET~
+N4*HOLLOMAN AFB*NM*883300000~
+N1*BT*HQ - ARMY/AIR FORCE EXCH SVC*92*1018542~
+N3*ATTN: FA-A*PO BOX 660261~
+N4*DALLAS*TX*75266~
+PO1*00001*24*EA*3.5*WE*UP*XXXXXXXXXXXX***VA*10132*SK*3611268*OT*1576~
+CTP**RTL*4.5~
+PID*F****5PK GRL SCRNED BI~
+PO4*24~
+CTT*1**3*LB~
+SE*29*16241~"#;
+    let (rest, obj) = _850::parse(str).unwrap();
+    println!("{rest}");
+    println!("{obj:?}");
+}
+
+#[test]
+fn parse_850_15() {
+    // source: https://www.aafes.com/images/doingbusiness/5010_850_v5.pdf
+    let str = r#"ST*850*16241~
+BEG*00*SA*0012345678**20150924~
+REF*IA*87654321~
+PER*BD* CONTRACTING OFFICER*TE*XXXXXXXXXX~
+FOB*CC*OR*SOMERSET NJ~
+CSH*N~
+ITD*01******60*****NET060~
+DTM*010*20151008~
+DTM*002*20151014~
+TD5*****PARTNERS.AAFES.COM~
+N9*AH*AAFES T&C/RTL BUS AGRMT~
+MTX**ARBA/ARA~
+MTX**SHIPMENT AGAINST THIS ORDER IS ACCEPTANCE OF EXCHANGE RETAIL TERMS &
+CONDITIONS & SUPPLIER REQUIREMENTS FOUND IN THESE URLS:
+HTTP://WWW.AAFES.COM/IMAGES/DOINGBUSINESS/TERMSCONRETAIL.PDF AND
+HTTP://WWW.AAFES.COM/IMAGES/DOINGBUSINESS/SUPPLY.PDF~
+MTX**CARRIER MUST CALL AAFES WEST COAST DC FOR DELIVERY APPT. ~
+MTX**(209) 234-3735. ~
+N1*VN*VENDOR NAME*9*VENDOR DUNS# + 4-DIGIT SUFFIX~
+N3*DIAPER BAGS*20 W 33RD ST~
+N3*2ND FL~
+N4*NEW YORK*NY*100010000~
+N1*ST*WCDC FLOW MANAGER*92*1059967~
+N3*WCDC XD/TS*DOOR 54~
+N3*BLDG 550A 700 E ROTH RD~
+N4*FRENCH CAMP*CA*952310000~
+N1*BY*OKI KADENA MSTORE*92*1771052~
+N1*BT*HQ - ARMY/AIR FORCE EXCH SVC*92*1018542~
+N3*ATTN: FA-A*PO BOX 660261~
+N4*DALLAS*TX*75266~
+PO1*00001*12*EA*3.5*WE*UP*XXXXXXXXXXXX***VA*10256*SK*6381035*OT*1676~
+CTP**RTL*5.99~
+PID*F****MONSTER 2PK WIPE CLEAN BIBS~
+PO4*12~
+PO1*00002*12*EA*4*WE*UP*XXXXXXXXXXXX***VA*10164*SK*6828337*OT*1676~
+CTP**RTL*7~
+PID*F****MINNIE AND PRINCESS 6PK BIBS~
+PO4*12~
+CTT*2**16*LB~
+SE*37*16246~"#;
+    let (rest, obj) = _850::parse(str).unwrap();
+    println!("{rest}");
+    println!("{obj:?}");
+}
