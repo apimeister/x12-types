@@ -320,7 +320,7 @@ pub struct ATN {
 /// ADV - Advertising Demographic Information
 ///
 /// ### Relational Conditions
-/// 
+///
 /// - P0607 - If either ADV06 or ADV07 is present, then the other is required.
 #[derive(
     Serialize,

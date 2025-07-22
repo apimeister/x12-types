@@ -1,5 +1,4 @@
 use serde::{Deserialize, Serialize};
-use validator::Validate;
 use x12_types_macros::{DisplaySegment, ParseSegment};
 
 /// VEH - Vehicle Information

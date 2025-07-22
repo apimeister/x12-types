@@ -1,13 +1,13 @@
-use log::{error, trace};
-use serde::{Deserialize, Serialize};
-use x12_types_macros::DisplayX12;
+use super::{AMT, BHT, DTP, HL, N3, N4, NM1, PER, QTY, REF, SE, ST, STC, SVC, TRN};
 use crate::util::Parser;
+use log::{error, trace};
 use nom::{
     combinator::{opt, peek},
     multi::{many0, many1},
     IResult, Parser as _,
 };
-use super::{AMT, BHT, DTP, HL, N3, N4, NM1, PER, QTY, REF, SE, ST, STC, SVC, TRN};
+use serde::{Deserialize, Serialize};
+use x12_types_macros::DisplayX12;
 
 /// 277 - Health Care Claim Status
 ///
