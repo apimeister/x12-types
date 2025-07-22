@@ -33,13 +33,13 @@ mod test_404;
 #[cfg(test)]
 mod test_810;
 #[cfg(test)]
+mod test_945;
+#[cfg(test)]
 mod test_997;
 #[cfg(test)]
 mod test_998;
 #[cfg(test)]
 mod test_segments;
-#[cfg(test)]
-mod test_945;
 
 #[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq)]
 pub struct Transmission<T> {
@@ -2678,7 +2678,7 @@ impl<'a> Parser<&'a str, _998, nom::error::Error<&'a str>> for _998 {
 /// 945 - Warehouse Shipping Advice
 ///
 /// This X12 Transaction Set contains the format and establishes the data contents of the Warehouse Shipping Advice Transaction Set (945) for use within the context of an Electronic Data Interchange (EDI) environment. The transaction set can be used by the warehouse to advise the depositor that shipment was made. It is used to reconcile order quantities with shipment quantities.
-/// 
+///
 /// POS | ID | NAME | REQ | MAX | REPEAT
 /// ----|----|------|-----|-----|-------
 /// 0100 | ST | Transaction Set Header | M | 1
@@ -2723,7 +2723,7 @@ impl<'a> Parser<&'a str, _945, nom::error::Error<&'a str>> for _945 {
         output.st = obj;
         let (rest, obj) = W06::parse(rest)?;
         output.w06 = obj;
-        
+
         // loop n1 (name/address information)
         let mut loop_n1 = vec![];
         let mut loop_rest = rest;
@@ -2737,14 +2737,14 @@ impl<'a> Parser<&'a str, _945, nom::error::Error<&'a str>> for _945 {
         }
         output.loop_n1 = loop_n1;
         let rest = loop_rest;
-        
+
         let (rest, obj) = many0(N9::parse).parse(rest)?;
         output.n9 = obj;
         let (rest, obj) = many0(G62::parse).parse(rest)?;
         output.g62 = obj;
         let (rest, obj) = opt(W27::parse).parse(rest)?;
         output.w27 = obj;
-        
+
         // loop lx (line item details)
         let mut loop_lx = vec![];
         let mut loop_rest = rest;
@@ -2757,7 +2757,7 @@ impl<'a> Parser<&'a str, _945, nom::error::Error<&'a str>> for _945 {
         }
         output.loop_lx = loop_lx;
         let rest = loop_rest;
-        
+
         let (rest, obj) = opt(W03::parse).parse(rest)?;
         output.w03 = obj;
         let (rest, obj) = SE::parse(rest)?;

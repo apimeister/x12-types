@@ -1,5 +1,5 @@
-use x12_types::v004010::*;
 use x12_types::util::Parser;
+use x12_types::v004010::*;
 
 fn main() {
     // Create a simple 945 Warehouse Shipping Advice
@@ -9,11 +9,11 @@ fn main() {
             _02: "0001".to_string(),
         },
         w06: W06 {
-            _01: "F".to_string(), // Full shipment
+            _01: "F".to_string(),              // Full shipment
             _02: Some("WH001234".to_string()), // Warehouse order number
             _03: Some("20231215".to_string()), // Ship date
-            _04: Some("1430".to_string()), // Ship time
-            _06: Some("SHIP001".to_string()), // Shipment ID
+            _04: Some("1430".to_string()),     // Ship time
+            _06: Some("SHIP001".to_string()),  // Shipment ID
             ..Default::default()
         },
         loop_n1: vec![
@@ -38,7 +38,7 @@ fn main() {
                     ..Default::default()
                 }),
             },
-            // Ship-from (warehouse) information  
+            // Ship-from (warehouse) information
             _945LoopN1 {
                 n1: N1 {
                     _01: "SF".to_string(), // Ship-from
@@ -52,62 +52,56 @@ fn main() {
                 n4: None,
             },
         ],
-        n9: vec![
-            N9 {
-                _01: "BM".to_string(), // Bill of lading number
-                _02: "BOL123456".to_string(),
-                ..Default::default()
-            },
-        ],
-        g62: vec![
-            G62 {
-                _01: Some("11".to_string()), // Ship date
-                _02: Some("20231215".to_string()),
-                ..Default::default()
-            },
-        ],
+        n9: vec![N9 {
+            _01: "BM".to_string(), // Bill of lading number
+            _02: "BOL123456".to_string(),
+            ..Default::default()
+        }],
+        g62: vec![G62 {
+            _01: Some("11".to_string()), // Ship date
+            _02: Some("20231215".to_string()),
+            ..Default::default()
+        }],
         w27: Some(W27 {
-            _01: "M".to_string(), // Motor (truck)
+            _01: "M".to_string(),          // Motor (truck)
             _02: Some("FEDX".to_string()), // FedEx
             _03: Some("GROUND".to_string()),
             _04: Some("PP".to_string()), // Prepaid
             ..Default::default()
         }),
-        loop_lx: vec![
-            _945LoopLX {
-                lx: LX {
-                    _01: "1".to_string(), // Line item 1
-                },
-                w12: W12 {
-                    _01: "CC".to_string(), // Complete shipment
-                    _02: Some("10".to_string()), // Quantity ordered
-                    _03: Some("10".to_string()), // Quantity shipped
-                    _04: Some("EA".to_string()), // Each
-                    _05: Some("EA".to_string()), // Each
-                    _07: Some("UP".to_string()), // UPC
-                    _08: Some("123456789012".to_string()), // UPC code
-                    _09: Some("VN".to_string()), // Vendor part number
-                    _10: Some("WIDGET001".to_string()),
+        loop_lx: vec![_945LoopLX {
+            lx: LX {
+                _01: "1".to_string(), // Line item 1
+            },
+            w12: W12 {
+                _01: "CC".to_string(),                 // Complete shipment
+                _02: Some("10".to_string()),           // Quantity ordered
+                _03: Some("10".to_string()),           // Quantity shipped
+                _04: Some("EA".to_string()),           // Each
+                _05: Some("EA".to_string()),           // Each
+                _07: Some("UP".to_string()),           // UPC
+                _08: Some("123456789012".to_string()), // UPC code
+                _09: Some("VN".to_string()),           // Vendor part number
+                _10: Some("WIDGET001".to_string()),
+                ..Default::default()
+            },
+            n9: vec![
+                N9 {
+                    _01: "LI".to_string(), // Line item
+                    _02: "1".to_string(),
                     ..Default::default()
                 },
-                n9: vec![
-                    N9 {
-                        _01: "LI".to_string(), // Line item
-                        _02: "1".to_string(),
-                        ..Default::default()
-                    },
-                    N9 {
-                        _01: "PO".to_string(), // Purchase order
-                        _02: "PO123456".to_string(),
-                        ..Default::default()
-                    },
-                ],
-            },
-        ],
+                N9 {
+                    _01: "PO".to_string(), // Purchase order
+                    _02: "PO123456".to_string(),
+                    ..Default::default()
+                },
+            ],
+        }],
         w03: Some(W03 {
-            _01: "1".to_string(), // Total quantity
+            _01: "1".to_string(),          // Total quantity
             _02: Some("25.5".to_string()), // Total weight
-            _03: Some("LB".to_string()), // Pounds
+            _03: Some("LB".to_string()),   // Pounds
             ..Default::default()
         }),
         se: SE {
@@ -167,10 +161,22 @@ fn main() {
     // Parse it back to verify
     let (remaining, parsed) = Transmission::<_945>::parse(&x12_output).unwrap();
     assert!(remaining.is_empty());
-    
+
     println!("\nParsed successfully!");
-    println!("Transaction type: {}", parsed.functional_group[0].segments[0].st._01);
-    println!("Shipment ID: {:?}", parsed.functional_group[0].segments[0].w06._06);
-    println!("Ship-to: {:?}", parsed.functional_group[0].segments[0].loop_n1[0].n1._02);
-    println!("Number of line items: {}", parsed.functional_group[0].segments[0].loop_lx.len());
+    println!(
+        "Transaction type: {}",
+        parsed.functional_group[0].segments[0].st._01
+    );
+    println!(
+        "Shipment ID: {:?}",
+        parsed.functional_group[0].segments[0].w06._06
+    );
+    println!(
+        "Ship-to: {:?}",
+        parsed.functional_group[0].segments[0].loop_n1[0].n1._02
+    );
+    println!(
+        "Number of line items: {}",
+        parsed.functional_group[0].segments[0].loop_lx.len()
+    );
 }

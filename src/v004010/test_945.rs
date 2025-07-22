@@ -237,36 +237,39 @@ fn render_945() {
 #[test]
 fn parse_945() {
     let input = "ST*945*0001~W06*F*01766655*20131029*1035**9116*4896833*001001~N1*CN*FOOD DISTRIBUTING INC*91*10333648~N3*4820 BRADLEY DR~N4*JEFFERSON*LA*70121-3204~N1*SF*FORT WORTH*9*708066~N1*DE*J.R. Simplot*9*0377912820000~N9*SN*(Seal Number)~N9*ZZ*(Temperature Recording Device Number)~W27*H*TRUK*TRUCKING*CC***(Equipment ID)~LX*1~W12*CC*72*72**CA**007117901645*UK*10071179016458*40550*799*G*L~N9*LI*1000~N9*PC*989JAN281301~N9*LV*00100752782101847618*36~N9*LV*00100752782101847619*36~LX*2~W12*CC*72*72**CA**007117901645*UK*10071179016458*40551*884*G*L~N9*LI*1000~N9*PC*989JAN291301~N9*LV*00100752782101847620*72~LX*3~W12*CC*96*96**CA**007117900070*UK*10071179000709*93724*1404*G*L~N9*LI*2000~N9*PC*006OCT061301~N9*LV*00100752782101847621*72~N9*LV*00100752782101847622*24~W03*240*15360*LB~SE*32*0001~";
-    
+
     let (rest, obj) = _945::parse(input).unwrap();
     assert_eq!(rest, "");
-    
+
     // Verify the parsed structure
     assert_eq!(obj.st._01, "945");
     assert_eq!(obj.st._02, "0001");
-    
+
     assert_eq!(obj.w06._01, "F");
     assert_eq!(obj.w06._02, Some("01766655".to_string()));
     assert_eq!(obj.w06._03, Some("20131029".to_string()));
-    
+
     assert_eq!(obj.loop_n1.len(), 3);
     assert_eq!(obj.loop_n1[0].n1._01, "CN");
-    assert_eq!(obj.loop_n1[0].n1._02, Some("FOOD DISTRIBUTING INC".to_string()));
-    
+    assert_eq!(
+        obj.loop_n1[0].n1._02,
+        Some("FOOD DISTRIBUTING INC".to_string())
+    );
+
     assert_eq!(obj.n9.len(), 2);
     assert_eq!(obj.n9[0]._01, "SN");
-    
+
     assert!(obj.w27.is_some());
     assert_eq!(obj.w27.as_ref().unwrap()._01, "H");
-    
+
     assert_eq!(obj.loop_lx.len(), 3);
     assert_eq!(obj.loop_lx[0].lx._01, "1");
     assert_eq!(obj.loop_lx[0].w12._01, "CC");
     assert_eq!(obj.loop_lx[0].n9.len(), 4);
-    
+
     assert!(obj.w03.is_some());
     assert_eq!(obj.w03.as_ref().unwrap()._01, "240");
-    
+
     assert_eq!(obj.se._01, "32");
     assert_eq!(obj.se._02, "0001");
 }
@@ -275,10 +278,10 @@ fn parse_945() {
 fn parse_945_minimal() {
     // Test with minimal required segments
     let input = "ST*945*0001~W06*F*12345~LX*1~W12*CC*10*10~SE*4*0001~";
-    
+
     let (rest, obj) = _945::parse(input).unwrap();
     assert_eq!(rest, "");
-    
+
     assert_eq!(obj.st._01, "945");
     assert_eq!(obj.w06._01, "F");
     assert_eq!(obj.loop_lx.len(), 1);
@@ -289,7 +292,7 @@ fn parse_945_minimal() {
 #[test]
 fn full_transmission_945() {
     use crate::v004010::*;
-    
+
     let obj = Transmission {
         isa: ISA {
             _01: "00".to_string(),
@@ -358,7 +361,7 @@ fn full_transmission_945() {
             _02: "000000001".to_string(),
         },
     };
-    
+
     let serialized = format!("{obj}");
     let expected = "ISA*00*          *00*          *ZZ*SENDER         *ZZ*RECEIVER       *220524*1120*U*00401*000000001*0*P*>~\nGS*SW*SENDER*RECEIVER*20220524*1600*1*X*004010~\nST*945*0001~\nW06*F*12345~\nLX*1~\nW12*CC*10*10~\nSE*4*0001~\nGE*1*1~\nIEA*1*000000001~\n";
     assert_eq!(serialized, expected);
