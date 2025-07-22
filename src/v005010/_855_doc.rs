@@ -1,4 +1,3 @@
-
 use super::segment::*;
 use crate::util::Parser;
 use nom::{
@@ -323,7 +322,12 @@ impl<'a> Parser<&'a str, _855LoopPo1, nom::error::Error<&'a str>> for _855LoopPo
             let (rest, td5) = many0(TD5::parse).parse(rest)?;
             let (rest, r#ref) = many0(REF::parse).parse(rest)?;
             loop_rest = rest;
-            loop_sch.push(_855LoopSch { sch, td1, td5, r#ref });
+            loop_sch.push(_855LoopSch {
+                sch,
+                td1,
+                td5,
+                r#ref,
+            });
         }
         let rest = loop_rest;
         output.loop_sch = loop_sch;
@@ -352,7 +356,14 @@ impl<'a> Parser<&'a str, _855LoopPo1, nom::error::Error<&'a str>> for _855LoopPo
             let (rest, r#ref) = many0(REF::parse).parse(rest)?;
             let (rest, per) = many0(PER::parse).parse(rest)?;
             loop_rest = rest;
-            loop_n1.push(_855LoopN1Po1 { n1, n2, n3, n4, r#ref, per });
+            loop_n1.push(_855LoopN1Po1 {
+                n1,
+                n2,
+                n3,
+                n4,
+                r#ref,
+                per,
+            });
         }
         let rest = loop_rest;
         output.loop_n1 = loop_n1;

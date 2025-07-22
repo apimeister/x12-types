@@ -1,8 +1,10 @@
-use crate::{util::Parser, v005010::{Transmission, _855}};
-
+use crate::{
+    util::Parser,
+    v005010::{Transmission, _855},
+};
 
 #[test]
-fn test_855_1(){
+fn test_855_1() {
     //source: https://www.dandh.com/docs/EDI_Guides%5CCustomer%5CImplementation%20Guide%20855,%204010.pdf
     let str = r#"ISA*00* *00* *ZZ*111111111 *01*007911209*150129*2215*U*00401*000122406*0*P*>~
 GS*PR*111111111*007911209*20150129*2215*3152*X*004010~
