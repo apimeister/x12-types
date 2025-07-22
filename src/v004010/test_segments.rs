@@ -263,7 +263,7 @@ fn test_l5() {
 #[test]
 fn test_v1() {
     let obj = V1 {
-        _01: Some("3465322".to_string()),
+        _01: "3465322".to_string(),
         _02: Some("CAP SAN ANTONIO".to_string()),
         _03: Some("DK".to_string()),
         _04: Some("456S".to_string()),
@@ -273,7 +273,7 @@ fn test_v1() {
     let str = format!("{obj}");
     let result = V1::parse(&str).unwrap();
     assert!(result.0.is_empty());
-    assert_eq!(result.1._01, Some("3465322".to_string()));
+    assert_eq!(result.1._01, "3465322".to_string());
     assert_eq!(result.1._02, Some("CAP SAN ANTONIO".to_string()));
 }
 
@@ -288,6 +288,29 @@ fn test_se() {
     assert!(result.0.is_empty());
     assert_eq!(result.1._01, "17");
     assert_eq!(result.1._02, "33233");
+}
+
+#[test]
+fn test_m12() {
+    let obj = M12 {
+        _01: "01".to_string(),
+        _02: Some("123456789".to_string()),
+        _03: Some("LOC1".to_string()),
+        _04: Some("LOC2".to_string()),
+        _05: Some("1000".to_string()),
+        _06: Some("INBOND123".to_string()),
+        _07: Some("CARRIER".to_string()),
+        _08: Some("REF".to_string()),
+        _09: Some("REF123".to_string()),
+        _10: Some("T".to_string()),
+        _11: Some("VESSEL NAME".to_string()),
+    };
+    let str = format!("{obj}");
+    let result = M12::parse(&str).unwrap();
+    assert!(result.0.is_empty());
+    assert_eq!(result.1._01, "01".to_string());
+    assert_eq!(result.1._02, Some("123456789".to_string()));
+    assert_eq!(result.1._03, Some("LOC1".to_string()));
 }
 
 // #[test]
