@@ -146,7 +146,7 @@ PO1*1*2100*EA*195.50**CB*27120018~
 PID*F****LED MOTION LIGHT 2000 LUM WHT~
 CTT*1*2100~
 SE*13*000000001~"#;
-    let (rest, obj) = Transmission::<_850>::parse(str).unwrap();
+    let (rest, obj) = _850::parse(str).unwrap();
     println!("{rest}");
     println!("{obj:?}");
 }
@@ -166,7 +166,7 @@ PO1*1*36*EA*17.01**CB*27120100~
 PID*F****LED ACCENT STRING LIGHTS 2400L~
 SDQ*EA*92*06*24*65*12~
 SE*12*000000001~"#;
-    let (rest, obj) = Transmission::<_850>::parse(str).unwrap();
+    let (rest, obj) = _850::parse(str).unwrap();
     println!("{rest}");
     println!("{obj:?}");
 }
