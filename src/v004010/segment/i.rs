@@ -1,3 +1,10 @@
+use crate::util::Parser;
+use nom::bytes::complete::take;
+use nom::character::complete::newline;
+use nom::combinator::opt;
+use nom::error::ErrorKind;
+use nom::IResult;
+use nom::Parser as _;
 use serde::{Deserialize, Serialize};
 use validator::Validate;
 use x12_types_macros::{DisplaySegment, ParseSegment};
@@ -144,16 +151,7 @@ pub struct IEA {
 /// 15 | I14 | Usage Indicator | 1 | M | ID | 1/1
 /// 16 | I15 | Component Element Separator | 1 | M |  | 1/1
 #[derive(
-    Serialize,
-    Deserialize,
-    Clone,
-    Default,
-    Debug,
-    PartialEq,
-    Eq,
-    DisplaySegment,
-    ParseSegment,
-    Validate,
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, Validate,
 )]
 pub struct ISA {
     /// I01 - Authorization Information Qualifier
@@ -300,6 +298,107 @@ pub struct ISA {
     #[validate(length(equal = 1, message = "ISA 16 (I15) must be 1 characters long"))]
     #[serde(rename = "16")]
     pub _16: String,
+}
+
+impl<'a> Parser<&'a str, ISA, nom::error::Error<&'a str>> for ISA {
+    fn parse(input: &'a str) -> IResult<&'a str, ISA> {
+        // The ISA segment has 16 fields separated by the element separator.
+        // The element separator is typically '*' but can be other characters.
+        // The last field (ISA16) is the component element separator, followed by the segment terminator (usually '~').
+        // We need to parse the segment so that the ISA16 value is not swallowed by the segment terminator.
+
+        // 1. Find the element separator (ISA is always the first segment, so the 4th character is the element separator)
+        let element_sep = input
+            .chars()
+            .nth(3)
+            .ok_or_else(|| nom::Err::Error(nom::error::Error::new(input, ErrorKind::Char)))?;
+
+        // 2. Find the start of the ISA segment
+        let input = input
+            .strip_prefix("ISA")
+            .ok_or_else(|| nom::Err::Error(nom::error::Error::new(input, ErrorKind::Tag)))?;
+
+        // 3. Remove the segment tag and the first element separator
+        let input = input
+            .strip_prefix(element_sep)
+            .ok_or_else(|| nom::Err::Error(nom::error::Error::new(input, ErrorKind::Char)))?;
+
+        // 4. Now, parse the 16 fields, separated by the element separator
+        let mut rest = input;
+
+        // Helper function to parse a field up to the next element separator
+        let mut parse_field = || -> IResult<&'a str, String> {
+            let mut field_end = 0;
+            for (i, ch) in rest.char_indices() {
+                if ch == element_sep {
+                    field_end = i;
+                    break;
+                }
+            }
+            if field_end == 0 {
+                return Err(nom::Err::Error(nom::error::Error::new(
+                    rest,
+                    ErrorKind::Char,
+                )));
+            }
+            let field = &rest[..field_end];
+            rest = &rest[field_end + 1..];
+            Ok((rest, field.to_string()))
+        };
+
+        // Parse all 16 fields
+        let (_, _01) = parse_field()?;
+        let (_, _02) = parse_field()?;
+        let (_, _03) = parse_field()?;
+        let (_, _04) = parse_field()?;
+        let (_, _05) = parse_field()?;
+        let (_, _06) = parse_field()?;
+        let (_, _07) = parse_field()?;
+        let (_, _08) = parse_field()?;
+        let (_, _09) = parse_field()?;
+        let (_, _10) = parse_field()?;
+        let (_, _11) = parse_field()?;
+        let (_, _12) = parse_field()?;
+        let (_, _13) = parse_field()?;
+        let (_, _14) = parse_field()?;
+        let (_, _15) = parse_field()?;
+
+        // ISA16 - Component Element Separator (1 character, followed by segment terminator)
+        let (r, _16) = take(1usize)(rest)?;
+        let mut rest = r;
+
+        // 5. Now we need to find the segment terminator and consume it
+        let _segment_terminator = rest
+            .chars()
+            .next()
+            .ok_or_else(|| nom::Err::Error(nom::error::Error::new(rest, ErrorKind::Char)))?;
+        rest = &rest[1..];
+
+        // 6. Look for optional newline
+        let (rest, _) = opt(newline).parse(rest)?;
+
+        Ok((
+            rest,
+            ISA {
+                _01,
+                _02,
+                _03,
+                _04,
+                _05,
+                _06,
+                _07,
+                _08,
+                _09,
+                _10,
+                _11,
+                _12,
+                _13,
+                _14,
+                _15,
+                _16: _16.to_string(),
+            },
+        ))
+    }
 }
 
 /// ISS - Invoice Shipment Summary
