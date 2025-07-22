@@ -121,7 +121,7 @@ fn test_301() {
             ..Default::default()
         }],
         v1: vec![V1 {
-            _01: Some("3465322".to_string()),
+            _01: "3465322".to_string(),
             _02: Some("CAP SAN ANTONIO".to_string()),
             _03: Some("DK".to_string()),
             _04: Some("456S".to_string()),

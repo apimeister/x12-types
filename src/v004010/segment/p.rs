@@ -16,10 +16,15 @@ use x12_types_macros::{DisplaySegment, ParseSegment};
     Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
 )]
 pub struct P4 {
+    #[serde(rename = "01")]
     pub _01: String,
+    #[serde(rename = "02")]
     pub _02: String,
+    #[serde(rename = "03")]
     pub _03: Option<String>,
+    #[serde(rename = "04")]
     pub _04: Option<String>,
+    #[serde(rename = "05")]
     pub _05: Option<String>,
 }
 
@@ -102,6 +107,7 @@ pub struct PAM {
     Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
 )]
 pub struct PER {
+    #[serde(rename = "01")]
     pub _01: String,
     /// 93 - Name
     ///
@@ -109,13 +115,21 @@ pub struct PER {
     /// - TYPE=AN
     /// - MIN=1
     /// - MAX=60
+    #[serde(rename = "02")]
     pub _02: Option<String>,
+    #[serde(rename = "03")]
     pub _03: Option<String>,
+    #[serde(rename = "04")]
     pub _04: Option<String>,
+    #[serde(rename = "05")]
     pub _05: Option<String>,
+    #[serde(rename = "06")]
     pub _06: Option<String>,
+    #[serde(rename = "07")]
     pub _07: Option<String>,
+    #[serde(rename = "08")]
     pub _08: Option<String>,
+    #[serde(rename = "09")]
     pub _09: Option<String>,
 }
 
@@ -144,16 +158,27 @@ pub struct PER {
     Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
 )]
 pub struct PI {
+    #[serde(rename = "01")]
     pub _01: String,
+    #[serde(rename = "02")]
     pub _02: String,
+    #[serde(rename = "03")]
     pub _03: Option<String>,
+    #[serde(rename = "04")]
     pub _04: Option<String>,
+    #[serde(rename = "05")]
     pub _05: Option<String>,
+    #[serde(rename = "06")]
     pub _06: Option<String>,
+    #[serde(rename = "07")]
     pub _07: Option<String>,
+    #[serde(rename = "08")]
     pub _08: Option<String>,
+    #[serde(rename = "09")]
     pub _09: Option<String>,
+    #[serde(rename = "10")]
     pub _10: Option<String>,
+    #[serde(rename = "11")]
     pub _11: Option<String>,
     /// 373 - Date
     ///
@@ -161,6 +186,7 @@ pub struct PI {
     /// - TYPE=DT
     /// - MIN=8
     /// - MAX=8
+    #[serde(rename = "12")]
     pub _12: Option<String>,
     /// 373 - Date
     ///
@@ -168,8 +194,11 @@ pub struct PI {
     /// - TYPE=DT
     /// - MIN=8
     /// - MAX=8
+    #[serde(rename = "13")]
     pub _13: Option<String>,
+    #[serde(rename = "14")]
     pub _14: Option<String>,
+    #[serde(rename = "15")]
     pub _15: Option<String>,
 }
 
@@ -311,8 +340,11 @@ pub struct PO4 {
     Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
 )]
 pub struct PRF {
+    #[serde(rename = "01")]
     pub _01: String,
+    #[serde(rename = "02")]
     pub _02: Option<String>,
+    #[serde(rename = "03")]
     pub _03: Option<String>,
     /// 373 - Date
     ///
@@ -320,9 +352,13 @@ pub struct PRF {
     /// - TYPE=DT
     /// - MIN=8
     /// - MAX=8
+    #[serde(rename = "04")]
     pub _04: Option<String>,
+    #[serde(rename = "05")]
     pub _05: Option<String>,
+    #[serde(rename = "06")]
     pub _06: Option<String>,
+    #[serde(rename = "07")]
     pub _07: Option<String>,
 }
 
@@ -350,11 +386,17 @@ pub struct PRF {
     Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
 )]
 pub struct PS {
+    #[serde(rename = "01")]
     pub _01: String,
+    #[serde(rename = "02")]
     pub _02: String,
+    #[serde(rename = "03")]
     pub _03: Option<String>,
+    #[serde(rename = "04")]
     pub _04: Option<String>,
+    #[serde(rename = "05")]
     pub _05: Option<String>,
+    #[serde(rename = "06")]
     pub _06: Option<String>,
     /// 19 - City Name
     ///
@@ -362,13 +404,21 @@ pub struct PS {
     /// - TYPE=AN
     /// - MIN=2
     /// - MAX=30
+    #[serde(rename = "07")]
     pub _07: Option<String>,
+    #[serde(rename = "08")]
     pub _08: Option<String>,
+    #[serde(rename = "09")]
     pub _09: Option<String>,
+    #[serde(rename = "10")]
     pub _10: Option<String>,
+    #[serde(rename = "11")]
     pub _11: Option<String>,
+    #[serde(rename = "12")]
     pub _12: Option<String>,
+    #[serde(rename = "13")]
     pub _13: Option<String>,
+    #[serde(rename = "14")]
     pub _14: Option<String>,
 }
 
@@ -391,14 +441,23 @@ pub struct PS {
     Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
 )]
 pub struct PWK {
+    #[serde(rename = "01")]
     pub _01: String,
+    #[serde(rename = "02")]
     pub _02: Option<String>,
+    #[serde(rename = "03")]
     pub _03: Option<String>,
+    #[serde(rename = "04")]
     pub _04: Option<String>,
+    #[serde(rename = "05")]
     pub _05: Option<String>,
+    #[serde(rename = "06")]
     pub _06: Option<String>,
+    #[serde(rename = "07")]
     pub _07: Option<String>,
+    #[serde(rename = "08")]
     pub _08: Option<String>,
+    #[serde(rename = "09")]
     pub _09: Option<String>,
 }
 
