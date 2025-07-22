@@ -33,6 +33,8 @@ mod test_404;
 #[cfg(test)]
 mod test_810;
 #[cfg(test)]
+mod test_940;
+#[cfg(test)]
 mod test_997;
 #[cfg(test)]
 mod test_998;
@@ -2672,3 +2674,6 @@ impl<'a> Parser<&'a str, _998, nom::error::Error<&'a str>> for _998 {
         Ok((input, output))
     }
 }
+
+pub mod _940;
+pub use _940::*;
