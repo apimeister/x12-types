@@ -740,3 +740,49 @@ pub struct CTB {
     #[serde(rename = "07")]
     pub _07: Option<String>,
 }
+
+/// CSH - Sales Requirements
+#[derive(
+    Serialize,
+    Deserialize,
+    Clone,
+    Default,
+    Debug,
+    Validate,
+    PartialEq,
+    Eq,
+    DisplaySegment,
+    ParseSegment,
+)]
+pub struct CSH {
+    /// 563 - Sales Requirement Code
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    /// 306 - Action Code
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    /// 610 - Amount
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    /// 508 - Account Number
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    /// 373 - Date
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    /// 100 - Agency Qualifier Code
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    /// 22 - Special Services Code
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    /// 668 - Product/Service Substitution Code
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    /// 954 - Percentage as Decimal
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+    /// 782 - Percent
+    #[serde(rename = "10")]
+    pub _10: Option<String>,
+}
