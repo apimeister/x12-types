@@ -221,6 +221,30 @@ pub struct LX {
     pub _01: String,
 }
 
+/// LDT - Lead Time
+#[derive(
+    Serialize,
+    Deserialize,
+    Clone,
+    Default,
+    Debug,
+    Validate,
+    PartialEq,
+    Eq,
+    DisplaySegment,
+    ParseSegment,
+)]
+pub struct LDT {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: String,
+    #[serde(rename = "03")]
+    pub _03: String,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+}
+
 /// LOC - Location
 #[derive(
     Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,

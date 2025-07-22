@@ -316,3 +316,37 @@ pub struct ATN {
     #[serde(rename = "25")]
     pub _25: Option<String>,
 }
+
+/// ADV - Advertising Demographic Information
+///
+/// ### Relational Conditions
+/// 
+/// - P0607 - If either ADV06 or ADV07 is present, then the other is required.
+#[derive(
+    Serialize,
+    Deserialize,
+    Clone,
+    Default,
+    Debug,
+    Validate,
+    PartialEq,
+    Eq,
+    DisplaySegment,
+    ParseSegment,
+)]
+pub struct ADV {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+}

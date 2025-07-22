@@ -628,3 +628,67 @@ pub struct SAC {
     #[serde(rename = "25")]
     pub _25: Option<String>,
 }
+
+/// SPI - Specification Identifier
+#[derive(
+    Serialize,
+    Deserialize,
+    Clone,
+    Default,
+    Debug,
+    Validate,
+    PartialEq,
+    Eq,
+    DisplaySegment,
+    ParseSegment,
+)]
+pub struct SPI {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+}
+
+/// SCH - Line Item Schedule
+#[derive(
+    Serialize,
+    Deserialize,
+    Clone,
+    Default,
+    Debug,
+    Validate,
+    PartialEq,
+    Eq,
+    DisplaySegment,
+    ParseSegment,
+)]
+pub struct SCH {
+    /// 380 - Quantity
+    #[serde(rename = "01")]
+    pub _01: String,
+    /// 355 - Unit or Basis for Measurement Code
+    #[serde(rename = "02")]
+    pub _02: String,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    /// 373 - Date
+    #[serde(rename = "05")]
+    pub _05: String,
+    /// 337 - Time
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+}

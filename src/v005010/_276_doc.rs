@@ -2,7 +2,6 @@ use super::segment::*;
 use log::{error, trace};
 use serde::{Deserialize, Serialize};
 use x12_types_macros::DisplayX12;
-
 use crate::util::Parser;
 use nom::{combinator::opt, multi::many0, IResult, Parser as _};
 

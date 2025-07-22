@@ -173,3 +173,37 @@ pub struct MPI {
     #[serde(rename = "07")]
     pub _07: Option<String>,
 }
+
+/// MTX - Text
+#[derive(
+    Serialize,
+    Deserialize,
+    Clone,
+    Default,
+    Debug,
+    Validate,
+    PartialEq,
+    Eq,
+    DisplaySegment,
+    ParseSegment,
+)]
+pub struct MTX {
+    /// 363 - Note Reference Code
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    /// 1551 - Textual Data
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    /// 1551 - Textual Data
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    /// 934 - Printer Carriage Control Code
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    /// 1470 - Number
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    /// 819 - Language Code
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+}
