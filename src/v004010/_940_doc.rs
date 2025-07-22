@@ -1,12 +1,10 @@
 use crate::util::Parser;
 use crate::v004010::*;
 use nom::combinator::opt;
-use nom::combinator::peek;
 use nom::multi::many0;
 use nom::IResult;
 use serde::{Deserialize, Serialize};
 use std::fmt;
-use x12_types_macros::DisplayX12;
 
 /// 940 - Warehouse Shipping Order
 ///
@@ -17,7 +15,7 @@ pub struct _940 {
     pub _020: W05,
     #[serde(default)]
     #[serde(skip_serializing_if = "Vec::is_empty")]
-    pub _0100: Vec<_940_0100_Loop>,
+    pub _0100: Vec<_940_Loop100>,
     #[serde(default)]
     #[serde(skip_serializing_if = "Vec::is_empty")]
     pub _090: Vec<N9>,
@@ -43,10 +41,10 @@ pub struct _940 {
     pub _156: Option<BNX>,
     #[serde(default)]
     #[serde(skip_serializing_if = "Vec::is_empty")]
-    pub _0200_loop: Vec<_940_0200_Loop>,
+    pub _0200_loop: Vec<_940_Loop200>,
     #[serde(default)]
     #[serde(skip_serializing_if = "Vec::is_empty")]
-    pub _0300_loop: Vec<_940_0300_Loop>,
+    pub _0300_loop: Vec<_940_Loop300>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub _0400: Option<W76>,
     pub _0500: SE,
@@ -54,59 +52,47 @@ pub struct _940 {
 
 impl fmt::Display for _940 {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "{}", self.st)?;
-        write!(f, "{}", self.w05)?;
-        if let Some(ref n1_loop_vec) = self.n1_loop {
-            for n1_loop in n1_loop_vec {
-                write!(f, "{n1_loop}")?;
-            }
+        write!(f, "{}{}", self._010, self._020)?;
+        for loop_item in &self._0100 {
+            write!(f, "{loop_item}")?;
         }
-        if let Some(ref n9_heading_vec) = self.n9_heading {
-            for n9 in n9_heading_vec {
-                write!(f, "{n9}")?;
-            }
+        for n9_item in &self._090 {
+            write!(f, "{n9_item}")?;
         }
-        if let Some(ref g61_vec) = self.g61 {
-            for g61 in g61_vec {
-                write!(f, "{g61}")?;
-            }
+        for g61_item in &self._100 {
+            write!(f, "{g61_item}")?;
         }
-        if let Some(ref g62_heading_vec) = self.g62_heading {
-            for g62 in g62_heading_vec {
-                write!(f, "{g62}")?;
-            }
+        for g62_item in &self._110 {
+            write!(f, "{g62_item}")?;
         }
-        if let Some(ref nte_heading_vec) = self.nte_heading {
-            for nte in nte_heading_vec {
-                write!(f, "{nte}")?;
-            }
+        for nte_item in &self._120 {
+            write!(f, "{nte_item}")?;
         }
-        if let Some(ref w09) = self.w09 {
-            write!(f, "{w09}")?;
+        if let Some(ref w09_item) = self._130 {
+            write!(f, "{w09_item}")?;
         }
-        if let Some(ref w66) = self.w66 {
-            write!(f, "{w66}")?;
+        if let Some(ref w66_item) = self._140 {
+            write!(f, "{w66_item}")?;
         }
-        if let Some(ref r2_vec) = self.r2 {
-            for r2 in r2_vec {
-                write!(f, "{r2}")?;
-            }
+        if let Some(ref w6_item) = self._150 {
+            write!(f, "{w6_item}")?;
         }
-        if let Some(ref bnx) = self.bnx {
-            write!(f, "{bnx}")?;
+        for r2_item in &self._153 {
+            write!(f, "{r2_item}")?;
         }
-        if let Some(ref lm_loop_heading_vec) = self.lm_loop_heading {
-            for lm_loop in lm_loop_heading_vec {
-                write!(f, "{lm_loop}")?;
-            }
+        if let Some(ref bnx_item) = self._156 {
+            write!(f, "{bnx_item}")?;
         }
-        for lx_loop in &self.lx_loop {
-            write!(f, "{lx_loop}")?;
+        for loop_item in &self._0200_loop {
+            write!(f, "{loop_item}")?;
         }
-        if let Some(ref w76) = self.w76 {
-            write!(f, "{w76}")?;
+        for loop_item in &self._0300_loop {
+            write!(f, "{loop_item}")?;
         }
-        write!(f, "{}", self.se)?;
+        if let Some(ref w76_item) = self._0400 {
+            write!(f, "{w76_item}")?;
+        }
+        write!(f, "{}", self._0500)?;
         Ok(())
     }
 }
@@ -115,107 +101,68 @@ impl<'a> Parser<&'a str, _940, nom::error::Error<&'a str>> for _940 {
     fn parse(input: &'a str) -> IResult<&'a str, _940> {
         let mut output = _940::default();
         let (mut rest, obj) = ST::parse(input)?;
-        output.st = obj;
+        output._010 = obj;
         let (rest_temp, obj) = W05::parse(rest)?;
-        output.w05 = obj;
+        output._020 = obj;
         rest = rest_temp;
 
-        // N1 loop
-        let mut n1_loop = vec![];
-        let mut loop_rest = rest;
-        while peek(N1::parse).parse(loop_rest)?.1.is_some() {
-            let (rest_n1, n1) = N1::parse(loop_rest)?;
-            let (rest_n2, n2) = opt(many0(N2::parse)).parse(rest_n1)?;
-            let (rest_n3, n3) = opt(many0(N3::parse)).parse(rest_n2)?;
-            let (rest_n4, n4) = opt(N4::parse).parse(rest_n3)?;
-            let (rest_ref, ref_loop) = opt(many0(RefLoop940::parse)).parse(rest_n4)?;
-            let (rest_per, per) = opt(many0(PER::parse)).parse(rest_ref)?;
-            loop_rest = rest_per;
-            n1_loop.push(N1Loop940 {
-                n1,
-                n2,
-                n3,
-                n4,
-                ref_loop,
-                per,
-            });
-        }
-        output.n1_loop = if n1_loop.is_empty() { None } else { Some(n1_loop) };
-        rest = loop_rest;
+        // N1 loop (0100)
+        let (rest_n1, n1_loop) = many0(_940_Loop100::parse).parse(rest)?;
+        output._0100 = n1_loop;
+        rest = rest_n1;
 
-        let (rest_n9, n9_heading) = opt(many0(N9::parse)).parse(rest)?;
-        output.n9_heading = n9_heading;
+        let (rest_n9, n9_heading) = many0(N9::parse).parse(rest)?;
+        output._090 = n9_heading;
         rest = rest_n9;
 
-        let (rest_g61, g61) = opt(many0(G61::parse)).parse(rest)?;
-        output.g61 = g61;
+        let (rest_g61, g61) = many0(G61::parse).parse(rest)?;
+        output._100 = g61;
         rest = rest_g61;
 
-        let (rest_g62, g62_heading) = opt(many0(G62::parse)).parse(rest)?;
-        output.g62_heading = g62_heading;
+        let (rest_g62, g62_heading) = many0(G62::parse).parse(rest)?;
+        output._110 = g62_heading;
         rest = rest_g62;
 
-        let (rest_nte, nte_heading) = opt(many0(NTE::parse)).parse(rest)?;
-        output.nte_heading = nte_heading;
+        let (rest_nte, nte_heading) = many0(NTE::parse).parse(rest)?;
+        output._120 = nte_heading;
         rest = rest_nte;
 
         let (rest_w09, w09) = opt(W09::parse).parse(rest)?;
-        output.w09 = w09;
+        output._130 = w09;
         rest = rest_w09;
 
         let (rest_w66, w66) = opt(W66::parse).parse(rest)?;
-        output.w66 = w66;
+        output._140 = w66;
         rest = rest_w66;
 
-        let (rest_r2, r2) = opt(many0(R2::parse)).parse(rest)?;
-        output.r2 = r2;
+        let (rest_w6, w6) = opt(W6::parse).parse(rest)?;
+        output._150 = w6;
+        rest = rest_w6;
+
+        let (rest_r2, r2) = many0(R2::parse).parse(rest)?;
+        output._153 = r2;
         rest = rest_r2;
 
         let (rest_bnx, bnx) = opt(BNX::parse).parse(rest)?;
-        output.bnx = bnx;
+        output._156 = bnx;
         rest = rest_bnx;
 
-        let (rest_lm_loop, lm_loop_heading) = opt(many0(LmLoop940::parse)).parse(rest)?;
-        output.lm_loop_heading = lm_loop_heading;
+        // LM loop (0200)
+        let (rest_lm_loop, lm_loop_heading) = many0(_940_Loop200::parse).parse(rest)?;
+        output._0200_loop = lm_loop_heading;
         rest = rest_lm_loop;
 
-        // LX loop (detail section)
-        let mut lx_loop = vec![];
-        let mut loop_rest = rest;
-        while peek(LX::parse).parse(loop_rest)?.1.is_some() {
-            let (rest_lx, lx) = LX::parse(loop_rest)?;
-            let (rest_man_loop, man_loop) = opt(many0(ManLoop940::parse)).parse(rest_lx)?;
-            let (rest_sdq, sdq) = opt(many0(SDQ::parse)).parse(rest_man_loop)?;
-            let (rest_n1_detail, n1_detail) = opt(many0(N1::parse)).parse(rest_sdq)?;
-            let (rest_g62_detail, g62_detail) = opt(many0(G62::parse)).parse(rest_n1_detail)?;
-
-            // Nested loop for W01 (0310)
-            let (rest_w01_items, w01_items) = many0(W01Loop940::parse).parse(rest_g62_detail)?;
-
-            // Nested loop for LS (0330)
-            let (final_rest, ls_loop) = opt(many0(LsLoop940::parse)).parse(rest_w01_items)?;
-
-            loop_rest = final_rest;
-
-            lx_loop.push(LxLoop940 {
-                lx,
-                man: if man_loop.is_empty() { None } else { Some(man_loop) },
-                sdq: if sdq.is_empty() { None } else { Some(sdq) },
-                n1_detail: if n1_detail.is_empty() { None } else { Some(n1_detail) },
-                g62_detail: if g62_detail.is_empty() { None } else { Some(g62_detail) },
-                w01_loop: w01_items,
-                ls_loop: if ls_loop.is_empty() { None } else { Some(ls_loop) },
-            });
-        }
-        output.lx_loop = lx_loop;
-        rest = loop_rest;
+        // LX loop (detail section) (0300)
+        let (rest_lx_loop, lx_loop) = many0(_940_Loop300::parse).parse(rest)?;
+        output._0300_loop = lx_loop;
+        rest = rest_lx_loop;
 
         let (rest_w76, w76) = opt(W76::parse).parse(rest)?;
-        output.w76 = w76;
+        output._0400 = w76;
         rest = rest_w76;
 
         let (rest_se, se) = SE::parse(rest)?;
-        output.se = se;
+        output._0500 = se;
         rest = rest_se;
 
         Ok((rest, output))
@@ -225,66 +172,58 @@ impl<'a> Parser<&'a str, _940, nom::error::Error<&'a str>> for _940 {
 // Loop Structures for 940
 
 #[derive(Serialize, Deserialize, Clone, Default, Debug)]
-pub struct N1Loop940 {
+pub struct _940_Loop100 {
     pub n1: N1,
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub n2: Option<Vec<N2>>,
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    pub n2: Vec<N2>,
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub n3: Option<Vec<N3>>,
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    pub n3: Vec<N3>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub n4: Option<N4>,
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub ref_loop: Option<Vec<RefLoop940>>,
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    pub ref_loop: Vec<_940_0100_Ref_Loop>,
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub per: Option<Vec<PER>>,
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    pub per: Vec<PER>,
 }
 
-impl fmt::Display for N1Loop940 {
+impl fmt::Display for _940_Loop100 {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "{}", self.n1)?;
-        if let Some(ref n2_vec) = self.n2 {
-            for n2 in n2_vec {
-                write!(f, "{n2}")?;
-            }
+        for n2 in &self.n2 {
+            write!(f, "{n2}")?;
         }
-        if let Some(ref n3_vec) = self.n3 {
-            for n3 in n3_vec {
-                write!(f, "{n3}")?;
-            }
+        for n3 in &self.n3 {
+            write!(f, "{n3}")?;
         }
         if let Some(ref n4) = self.n4 {
             write!(f, "{n4}")?;
         }
-        if let Some(ref ref_loop_vec) = self.ref_loop {
-            for ref_loop in ref_loop_vec {
-                write!(f, "{ref_loop}")?;
-            }
+        for ref_loop in &self.ref_loop {
+            write!(f, "{ref_loop}")?;
         }
-        if let Some(ref per_vec) = self.per {
-            for per in per_vec {
-                write!(f, "{per}")?;
-            }
+        for per in &self.per {
+            write!(f, "{per}")?;
         }
         Ok(())
     }
 }
 
-impl<'a> Parser<&'a str, N1Loop940, nom::error::Error<&'a str>> for N1Loop940 {
-    fn parse(input: &'a str) -> IResult<&'a str, N1Loop940> {
+impl<'a> Parser<&'a str, _940_Loop100, nom::error::Error<&'a str>> for _940_Loop100 {
+    fn parse(input: &'a str) -> IResult<&'a str, _940_Loop100> {
         let (mut rest, n1) = N1::parse(input)?;
-        let (rest_n2, n2) = opt(many0(N2::parse)).parse(rest)?;
-        let (rest_n3, n3) = opt(many0(N3::parse)).parse(rest_n2)?;
+        let (rest_n2, n2) = many0(N2::parse).parse(rest)?;
+        let (rest_n3, n3) = many0(N3::parse).parse(rest_n2)?;
         let (rest_n4, n4) = opt(N4::parse).parse(rest_n3)?;
-        let (rest_ref, ref_loop) = opt(many0(RefLoop940::parse)).parse(rest_n4)?;
-        let (rest_per, per) = opt(many0(PER::parse)).parse(rest_ref)?;
+        let (rest_ref, ref_loop) = many0(_940_0100_Ref_Loop::parse).parse(rest_n4)?;
+        let (rest_per, per) = many0(PER::parse).parse(rest_ref)?;
         rest = rest_per;
         Ok((
             rest,
-            N1Loop940 {
+            _940_Loop100 {
                 n1,
                 n2,
                 n3,
@@ -296,21 +235,31 @@ impl<'a> Parser<&'a str, N1Loop940, nom::error::Error<&'a str>> for N1Loop940 {
     }
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug, DisplayX12)]
-pub struct RefLoop940 {
+#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+pub struct _940_0100_Ref_Loop {
     pub ref_: REF,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub dtm: Option<DTM>,
 }
 
-impl<'a> Parser<&'a str, RefLoop940, nom::error::Error<&'a str>> for RefLoop940 {
-    fn parse(input: &'a str) -> IResult<&'a str, RefLoop940> {
+impl fmt::Display for _940_0100_Ref_Loop {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "{}", self.ref_)?;
+        if let Some(ref dtm) = self.dtm {
+            write!(f, "{dtm}")?;
+        }
+        Ok(())
+    }
+}
+
+impl<'a> Parser<&'a str, _940_0100_Ref_Loop, nom::error::Error<&'a str>> for _940_0100_Ref_Loop {
+    fn parse(input: &'a str) -> IResult<&'a str, _940_0100_Ref_Loop> {
         let (mut rest, ref_) = REF::parse(input)?;
         let (rest_dtm, dtm) = opt(DTM::parse).parse(rest)?;
         rest = rest_dtm;
         Ok((
             rest,
-            RefLoop940 {
+            _940_0100_Ref_Loop {
                 ref_,
                 dtm,
             },
@@ -319,136 +268,118 @@ impl<'a> Parser<&'a str, RefLoop940, nom::error::Error<&'a str>> for RefLoop940 
 }
 
 #[derive(Serialize, Deserialize, Clone, Default, Debug)]
-pub struct W01Loop940 {
+pub struct _940_Loop300 {
     pub w01: W01,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub g69: Option<G69>,
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub n9_loop: Option<Vec<N9Loop940>>,
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    pub n9_loop: Vec<_940_0300_W01_N9_Loop>,
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub nte: Option<Vec<NTE>>,
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    pub nte: Vec<NTE>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub w20: Option<W20>,
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub qty: Option<Vec<QTY>>,
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    pub qty: Vec<QTY>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub amt: Option<AMT>,
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub g62: Option<Vec<G62>>,
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    pub g62: Vec<G62>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub g66: Option<G66>,
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub n1_loop: Option<Vec<N1>>,
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    pub n1_loop: Vec<N1>,
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub per: Option<Vec<PER>>,
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    pub per: Vec<PER>,
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub lh2: Option<Vec<LH2>>,
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    pub lh2: Vec<LH2>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub lhr: Option<LHR>,
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub lh6: Option<Vec<LH6>>,
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    pub lh6: Vec<LH6>,
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub lm_loop: Option<Vec<LmLoop940>>,
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    pub lm_loop: Vec<_940_Loop200>, // Re-using LM Loop (0200)
 }
 
-impl fmt::Display for W01Loop940 {
+impl fmt::Display for _940_Loop300 {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "{}", self.w01)?;
         if let Some(ref g69) = self.g69 {
             write!(f, "{g69}")?;
         }
-        if let Some(ref n9_loop_vec) = self.n9_loop {
-            for n9_loop in n9_loop_vec {
-                write!(f, "{n9_loop}")?;
-            }
+        for n9_loop in &self.n9_loop {
+            write!(f, "{n9_loop}")?;
         }
-        if let Some(ref nte_vec) = self.nte {
-            for nte in nte_vec {
-                write!(f, "{nte}")?;
-            }
+        for nte in &self.nte {
+            write!(f, "{nte}")?;
         }
         if let Some(ref w20) = self.w20 {
             write!(f, "{w20}")?;
         }
-        if let Some(ref qty_vec) = self.qty {
-            for qty in qty_vec {
-                write!(f, "{qty}")?;
-            }
+        for qty in &self.qty {
+            write!(f, "{qty}")?;
         }
         if let Some(ref amt) = self.amt {
             write!(f, "{amt}")?;
         }
-        if let Some(ref g62_vec) = self.g62 {
-            for g62 in g62_vec {
-                write!(f, "{g62}")?;
-            }
+        for g62 in &self.g62 {
+            write!(f, "{g62}")?;
         }
         if let Some(ref g66) = self.g66 {
             write!(f, "{g66}")?;
         }
-        if let Some(ref n1_loop_vec) = self.n1_loop {
-            for n1 in n1_loop_vec {
-                write!(f, "{n1}")?;
-            }
+        for n1_loop in &self.n1_loop {
+            write!(f, "{n1_loop}")?;
         }
-        if let Some(ref per_vec) = self.per {
-            for per in per_vec {
-                write!(f, "{per}")?;
-            }
+        for per in &self.per {
+            write!(f, "{per}")?;
         }
-        if let Some(ref lh2_vec) = self.lh2 {
-            for lh2 in lh2_vec {
-                write!(f, "{lh2}")?;
-            }
+        for lh2 in &self.lh2 {
+            write!(f, "{lh2}")?;
         }
         if let Some(ref lhr) = self.lhr {
             write!(f, "{lhr}")?;
         }
-        if let Some(ref lh6_vec) = self.lh6 {
-            for lh6 in lh6_vec {
-                write!(f, "{lh6}")?;
-            }
+        for lh6 in &self.lh6 {
+            write!(f, "{lh6}")?;
         }
-        if let Some(ref lm_loop_vec) = self.lm_loop {
-            for lm_loop in lm_loop_vec {
-                write!(f, "{lm_loop}")?;
-            }
+        for lm_loop in &self.lm_loop {
+            write!(f, "{lm_loop}")?;
         }
         Ok(())
     }
 }
 
-impl<'a> Parser<&'a str, W01Loop940, nom::error::Error<&'a str>> for W01Loop940 {
-    fn parse(input: &'a str) -> IResult<&'a str, W01Loop940> {
+impl<'a> Parser<&'a str, _940_Loop300, nom::error::Error<&'a str>> for _940_Loop300 {
+    fn parse(input: &'a str) -> IResult<&'a str, _940_Loop300> {
         let (mut rest, w01) = W01::parse(input)?;
         let (rest_g69, g69) = opt(G69::parse).parse(rest)?;
-        let (rest_n9, n9_loop) = opt(many0(N9Loop940::parse)).parse(rest_g69)?;
-        let (rest_nte, nte) = opt(many0(NTE::parse)).parse(rest_n9)?;
+        let (rest_n9, n9_loop) = many0(_940_0300_W01_N9_Loop::parse).parse(rest_g69)?;
+        let (rest_nte, nte) = many0(NTE::parse).parse(rest_n9)?;
         let (rest_w20, w20) = opt(W20::parse).parse(rest_nte)?;
-        let (rest_qty, qty) = opt(many0(QTY::parse)).parse(rest_w20)?;
+        let (rest_qty, qty) = many0(QTY::parse).parse(rest_w20)?;
         let (rest_amt, amt) = opt(AMT::parse).parse(rest_qty)?;
-        let (rest_g62, g62) = opt(many0(G62::parse)).parse(rest_amt)?;
+        let (rest_g62, g62) = many0(G62::parse).parse(rest_amt)?;
         let (rest_g66, g66) = opt(G66::parse).parse(rest_g62)?;
-        let (rest_n1, n1_loop) = opt(many0(N1::parse)).parse(rest_g66)?;
-        let (rest_per, per) = opt(many0(PER::parse)).parse(rest_n1)?;
-        let (rest_lh2, lh2) = opt(many0(LH2::parse)).parse(rest_per)?;
+        let (rest_n1, n1_loop) = many0(N1::parse).parse(rest_g66)?;
+        let (rest_per, per) = many0(PER::parse).parse(rest_n1)?;
+        let (rest_lh2, lh2) = many0(LH2::parse).parse(rest_per)?;
         let (rest_lhr, lhr) = opt(LHR::parse).parse(rest_lh2)?;
-        let (rest_lh6, lh6) = opt(many0(LH6::parse)).parse(rest_lhr)?;
-        let (rest_lm, lm_loop) = opt(many0(LmLoop940::parse)).parse(rest_lh6)?;
+        let (rest_lh6, lh6) = many0(LH6::parse).parse(rest_lhr)?;
+        let (rest_lm, lm_loop) = many0(_940_Loop200::parse).parse(rest_lh6)?;
         rest = rest_lm;
 
         Ok((
             rest,
-            W01Loop940 {
+            _940_Loop300 {
                 w01,
                 g69,
                 n9_loop,
@@ -470,39 +401,37 @@ impl<'a> Parser<&'a str, W01Loop940, nom::error::Error<&'a str>> for W01Loop940 
 }
 
 #[derive(Serialize, Deserialize, Clone, Default, Debug)]
-pub struct N9Loop940 {
+pub struct _940_0300_W01_N9_Loop {
     pub n9: N9,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub dtm: Option<DTM>,
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub msg: Option<Vec<MSG>>,
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    pub msg: Vec<MSG>,
 }
 
-impl fmt::Display for N9Loop940 {
+impl fmt::Display for _940_0300_W01_N9_Loop {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "{}", self.n9)?;
         if let Some(ref dtm) = self.dtm {
             write!(f, "{dtm}")?;
         }
-        if let Some(ref msg_vec) = self.msg {
-            for msg in msg_vec {
-                write!(f, "{msg}")?;
-            }
+        for msg in &self.msg {
+            write!(f, "{msg}")?;
         }
         Ok(())
     }
 }
 
-impl<'a> Parser<&'a str, N9Loop940, nom::error::Error<&'a str>> for N9Loop940 {
-    fn parse(input: &'a str) -> IResult<&'a str, N9Loop940> {
+impl<'a> Parser<&'a str, _940_0300_W01_N9_Loop, nom::error::Error<&'a str>> for _940_0300_W01_N9_Loop {
+    fn parse(input: &'a str) -> IResult<&'a str, _940_0300_W01_N9_Loop> {
         let (mut rest, n9) = N9::parse(input)?;
         let (rest_dtm, dtm) = opt(DTM::parse).parse(rest)?;
-        let (rest_msg, msg) = opt(many0(MSG::parse)).parse(rest_dtm)?;
+        let (rest_msg, msg) = many0(MSG::parse).parse(rest_dtm)?;
         rest = rest_msg;
         Ok((
             rest,
-            N9Loop940 {
+            _940_0300_W01_N9_Loop {
                 n9,
                 dtm,
                 msg,
@@ -512,101 +441,31 @@ impl<'a> Parser<&'a str, N9Loop940, nom::error::Error<&'a str>> for N9Loop940 {
 }
 
 #[derive(Serialize, Deserialize, Clone, Default, Debug)]
-pub struct ManLoop940 {
-    pub man: MAN,
-    #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub amt: Option<Vec<AMT>>,
-}
-
-impl fmt::Display for ManLoop940 {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "{}", self.man)?;
-        if let Some(ref amt_vec) = self.amt {
-            for amt in amt_vec {
-                write!(f, "{amt}")?;
-            }
-        }
-        Ok(())
-    }
-}
-
-impl<'a> Parser<&'a str, ManLoop940, nom::error::Error<&'a str>> for ManLoop940 {
-    fn parse(input: &'a str) -> IResult<&'a str, ManLoop940> {
-        let (mut rest, man) = MAN::parse(input)?;
-        let (rest_amt, amt) = opt(many0(AMT::parse)).parse(rest)?;
-        rest = rest_amt;
-        Ok((
-            rest,
-            ManLoop940 {
-                man,
-                amt,
-            },
-        ))
-    }
-}
-
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
-pub struct W76Loop940 {
-    pub w76: W76,
-    #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub qty: Option<Vec<QTY>>,
-    #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub lm_loop: Option<Vec<LmLoop940>>,
-}
-
-impl fmt::Display for W76Loop940 {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "{}", self.w76)?;
-        if let Some(ref qty_vec) = self.qty {
-            for qty in qty_vec {
-                write!(f, "{qty}")?;
-            }
-        }
-        if let Some(ref lm_loop_vec) = self.lm_loop {
-            for lm_loop in lm_loop_vec {
-                write!(f, "{lm_loop}")?;
-            }
-        }
-        Ok(())
-    }
-}
-
-impl<'a> Parser<&'a str, W76Loop940, nom::error::Error<&'a str>> for W76Loop940 {
-    fn parse(input: &'a str) -> IResult<&'a str, W76Loop940> {
-        let (mut rest, w76) = W76::parse(input)?;
-        let (rest_qty, qty) = opt(many0(QTY::parse)).parse(rest)?;
-        let (rest_lm, lm_loop) = opt(many0(LmLoop940::parse)).parse(rest_qty)?;
-        rest = rest_lm;
-        Ok((
-            rest,
-            W76Loop940 {
-                w76,
-                qty,
-                lm_loop,
-            },
-        ))
-    }
-}
-
-#[derive(Serialize, Deserialize, Clone, Default, Debug, DisplayX12)]
-pub struct LmLoop940 {
+pub struct _940_Loop200 {
     pub lm: LM,
     #[serde(default)]
     #[serde(skip_serializing_if = "Vec::is_empty")]
     pub lq: Vec<LQ>,
 }
 
-impl<'a> Parser<&'a str, LmLoop940, nom::error::Error<&'a str>> for LmLoop940 {
-    fn parse(input: &'a str) -> IResult<&'a str, LmLoop940> {
+impl fmt::Display for _940_Loop200 {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "{}", self.lm)?;
+        for lq in &self.lq {
+            write!(f, "{lq}")?;
+        }
+        Ok(())
+    }
+}
+
+impl<'a> Parser<&'a str, _940_Loop200, nom::error::Error<&'a str>> for _940_Loop200 {
+    fn parse(input: &'a str) -> IResult<&'a str, _940_Loop200> {
         let (mut rest, lm) = LM::parse(input)?;
         let (rest_lq, lq) = many0(LQ::parse).parse(rest)?;
         rest = rest_lq;
         Ok((
             rest,
-            LmLoop940 {
+            _940_Loop200 {
                 lm,
                 lq,
             },
@@ -615,81 +474,71 @@ impl<'a> Parser<&'a str, LmLoop940, nom::error::Error<&'a str>> for LmLoop940 {
 }
 
 #[derive(Serialize, Deserialize, Clone, Default, Debug)]
-pub struct LxLoop940 {
+pub struct _940_0300_Loop {
     pub lx: LX,
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub man: Option<Vec<MAN>>,
-    #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub sdq: Option<Vec<SDQ>>,
-    #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub n1_detail: Option<Vec<N1>>,
-    #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub g62_detail: Option<Vec<G62>>,
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    pub man: Vec<MAN>,
     #[serde(default)]
     #[serde(skip_serializing_if = "Vec::is_empty")]
-    pub w01_loop: Vec<W01Loop940>, // Nested loop 0310
+    pub sdq: Vec<SDQ>,
     #[serde(default)]
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub ls_loop: Option<Vec<LsLoop940>>, // Nested loop 0330
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    pub n1_detail: Vec<N1>,
+    #[serde(default)]
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    pub g62_detail: Vec<G62>,
+    #[serde(default)]
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    pub w01_loop: Vec<_940_Loop300>, // Nested loop 0310
+    #[serde(default)]
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    pub ls_loop: Vec<_940_0300_Ls_Loop>, // Nested loop 0330
 }
 
-impl fmt::Display for LxLoop940 {
+impl fmt::Display for _940_0300_Loop {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "{}", self.lx)?;
-        if let Some(ref man_vec) = self.man {
-            for man in man_vec {
-                write!(f, "{man}")?;
-            }
+        for man in &self.man {
+            write!(f, "{man}")?;
         }
-        if let Some(ref sdq_vec) = self.sdq {
-            for sdq in sdq_vec {
-                write!(f, "{sdq}")?;
-            }
+        for sdq in &self.sdq {
+            write!(f, "{sdq}")?;
         }
-        if let Some(ref n1_detail_vec) = self.n1_detail {
-            for n1 in n1_detail_vec {
-                write!(f, "{n1}")?;
-            }
+        for n1_detail in &self.n1_detail {
+            write!(f, "{n1_detail}")?;
         }
-        if let Some(ref g62_detail_vec) = self.g62_detail {
-            for g62 in g62_detail_vec {
-                write!(f, "{g62}")?;
-            }
+        for g62_detail in &self.g62_detail {
+            write!(f, "{g62_detail}")?;
         }
         for w01_loop in &self.w01_loop {
             write!(f, "{w01_loop}")?;
         }
-        if let Some(ref ls_loop_vec) = self.ls_loop {
-            for ls_loop in ls_loop_vec {
-                write!(f, "{ls_loop}")?;
-            }
+        for ls_loop in &self.ls_loop {
+            write!(f, "{ls_loop}")?;
         }
         Ok(())
     }
 }
 
-impl<'a> Parser<&'a str, LxLoop940, nom::error::Error<&'a str>> for LxLoop940 {
-    fn parse(input: &'a str) -> IResult<&'a str, LxLoop940> {
+impl<'a> Parser<&'a str, _940_0300_Loop, nom::error::Error<&'a str>> for _940_0300_Loop {
+    fn parse(input: &'a str) -> IResult<&'a str, _940_0300_Loop> {
         let (mut rest, lx) = LX::parse(input)?;
-        let (rest_man, man) = opt(many0(MAN::parse)).parse(rest)?;
-        let (rest_sdq, sdq) = opt(many0(SDQ::parse)).parse(rest_man)?;
-        let (rest_n1, n1_detail) = opt(many0(N1::parse)).parse(rest_sdq)?;
-        let (rest_g62, g62_detail) = opt(many0(G62::parse)).parse(rest_n1)?;
+        let (rest_man, man) = many0(MAN::parse).parse(rest)?;
+        let (rest_sdq, sdq) = many0(SDQ::parse).parse(rest_man)?;
+        let (rest_n1, n1_detail) = many0(N1::parse).parse(rest_sdq)?;
+        let (rest_g62, g62_detail) = many0(G62::parse).parse(rest_n1)?;
 
         // Nested loop for W01
-        let (rest_w01, w01_loop) = many0(W01Loop940::parse).parse(rest_g62)?;
+        let (rest_w01, w01_loop) = many0(_940_Loop300::parse).parse(rest_g62)?;
 
         // Nested loop for LS
-        let (final_rest, ls_loop) = opt(many0(LsLoop940::parse)).parse(rest_w01)?;
+        let (final_rest, ls_loop) = many0(_940_0300_Ls_Loop::parse).parse(rest_w01)?;
 
         rest = final_rest;
         Ok((
             rest,
-            LxLoop940 {
+            _940_0300_Loop {
                 lx,
                 man,
                 sdq,
@@ -703,58 +552,33 @@ impl<'a> Parser<&'a str, LxLoop940, nom::error::Error<&'a str>> for LxLoop940 {
 }
 
 #[derive(Serialize, Deserialize, Clone, Default, Debug)]
-pub struct L5Loop940 {
-    pub l5: L5,
-}
-
-impl fmt::Display for L5Loop940 {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "{}", self.l5)?;
-        Ok(())
-    }
-}
-
-impl<'a> Parser<&'a str, L5Loop940, nom::error::Error<&'a str>> for L5Loop940 {
-    fn parse(input: &'a str) -> IResult<&'a str, L5Loop940> {
-        let (rest, l5) = L5::parse(input)?;
-        Ok((
-            rest,
-            L5Loop940 {
-                l5,
-            },
-        ))
-    }
-}
-
-#[derive(Serialize, Deserialize, Clone, Default, Debug)]
-pub struct LsLoop940 {
+pub struct _940_0300_Ls_Loop {
     pub ls: LS,
     #[serde(default)]
     #[serde(skip_serializing_if = "Vec::is_empty")]
-    pub fa1_loop: Vec<Fa1Loop940>,
+    pub fa1_loop: Vec<_940_0300_Ls_Fa1_Loop>,
     pub le: LE,
 }
 
-impl fmt::Display for LsLoop940 {
+impl fmt::Display for _940_0300_Ls_Loop {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "{}", self.ls)?;
+        write!(f, "{}{}", self.ls, self.le)?;
         for fa1_loop in &self.fa1_loop {
             write!(f, "{fa1_loop}")?;
         }
-        write!(f, "{}", self.le)?;
         Ok(())
     }
 }
 
-impl<'a> Parser<&'a str, LsLoop940, nom::error::Error<&'a str>> for LsLoop940 {
-    fn parse(input: &'a str) -> IResult<&'a str, LsLoop940> {
+impl<'a> Parser<&'a str, _940_0300_Ls_Loop, nom::error::Error<&'a str>> for _940_0300_Ls_Loop {
+    fn parse(input: &'a str) -> IResult<&'a str, _940_0300_Ls_Loop> {
         let (mut rest, ls) = LS::parse(input)?;
-        let (rest_fa1, fa1_loop) = many0(Fa1Loop940::parse).parse(rest)?;
+        let (rest_fa1, fa1_loop) = many0(_940_0300_Ls_Fa1_Loop::parse).parse(rest)?;
         let (rest_le, le) = LE::parse(rest_fa1)?;
         rest = rest_le;
         Ok((
             rest,
-            LsLoop940 {
+            _940_0300_Ls_Loop {
                 ls,
                 fa1_loop,
                 le,
@@ -763,22 +587,32 @@ impl<'a> Parser<&'a str, LsLoop940, nom::error::Error<&'a str>> for LsLoop940 {
     }
 }
 
-#[derive(Serialize, Deserialize, Clone, Default, Debug, DisplayX12)]
-pub struct Fa1Loop940 {
+#[derive(Serialize, Deserialize, Clone, Default, Debug)]
+pub struct _940_0300_Ls_Fa1_Loop {
     pub fa1: FA1,
     #[serde(default)]
     #[serde(skip_serializing_if = "Vec::is_empty")]
     pub fa2: Vec<FA2>,
 }
 
-impl<'a> Parser<&'a str, Fa1Loop940, nom::error::Error<&'a str>> for Fa1Loop940 {
-    fn parse(input: &'a str) -> IResult<&'a str, Fa1Loop940> {
+impl fmt::Display for _940_0300_Ls_Fa1_Loop {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "{}", self.fa1)?;
+        for fa2 in &self.fa2 {
+            write!(f, "{fa2}")?;
+        }
+        Ok(())
+    }
+}
+
+impl<'a> Parser<&'a str, _940_0300_Ls_Fa1_Loop, nom::error::Error<&'a str>> for _940_0300_Ls_Fa1_Loop {
+    fn parse(input: &'a str) -> IResult<&'a str, _940_0300_Ls_Fa1_Loop> {
         let (mut rest, fa1) = FA1::parse(input)?;
         let (rest_fa2, fa2) = many0(FA2::parse).parse(rest)?;
         rest = rest_fa2;
         Ok((
             rest,
-            Fa1Loop940 {
+            _940_0300_Ls_Fa1_Loop {
                 fa1,
                 fa2,
             },
