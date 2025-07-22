@@ -17,6 +17,12 @@ use x12_types_macros::{DisplaySegment, ParseSegment};
 /// 08 | 127 | Reference Identification | 1 | O | AN | 1/30
 /// 09 | 127 | Reference Identification | 1 | O | AN | 1/30
 /// 10 | 127 | Reference Identification | 1 | O | AN | 1/30
+/// 11 | 127 | Reference Identification | 1 | O | AN | 1/30
+/// 12 | 127 | Reference Identification | 1 | O | AN | 1/30
+/// 13 | 127 | Reference Identification | 1 | O | AN | 1/30
+/// 14 | 127 | Reference Identification | 1 | O | AN | 1/30
+/// 15 | 127 | Reference Identification | 1 | O | AN | 1/30
+/// 16 | 127 | Reference Identification | 1 | O | AN | 1/30
 #[derive(
     Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
 )]
@@ -41,6 +47,18 @@ pub struct Q2 {
     pub _09: Option<String>,
     #[serde(rename = "10")]
     pub _10: Option<String>,
+    #[serde(rename = "11")]
+    pub _11: Option<String>,
+    #[serde(rename = "12")]
+    pub _12: Option<String>,
+    #[serde(rename = "13")]
+    pub _13: Option<String>,
+    #[serde(rename = "14")]
+    pub _14: Option<String>,
+    #[serde(rename = "15")]
+    pub _15: Option<String>,
+    #[serde(rename = "16")]
+    pub _16: Option<String>,
 }
 
 /// Q5 - Status Details (Ocean)

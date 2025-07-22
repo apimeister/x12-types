@@ -121,10 +121,6 @@ pub struct R4 {
     pub _07: Option<String>,
     #[serde(rename = "08")]
     pub _08: Option<String>,
-    #[serde(rename = "09")]
-    pub _09: Option<String>,
-    #[serde(rename = "10")]
-    pub _10: Option<String>,
 }
 
 /// R9 - Equipment Details

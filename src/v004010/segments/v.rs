@@ -22,7 +22,7 @@ use x12_types_macros::{DisplaySegment, ParseSegment};
 )]
 pub struct V1 {
     #[serde(rename = "01")]
-    pub _01: String,
+    pub _01: Option<String>,
     #[serde(rename = "02")]
     pub _02: Option<String>,
     #[serde(rename = "03")]
