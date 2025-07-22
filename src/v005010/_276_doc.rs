@@ -1,10 +1,9 @@
-pub use super::segment::*;
+use super::segment::*;
+use crate::util::Parser;
 use log::{error, trace};
+use nom::{combinator::opt, multi::many0, IResult, Parser as _};
 use serde::{Deserialize, Serialize};
 use x12_types_macros::DisplayX12;
-
-use crate::util::Parser;
-use nom::{combinator::opt, multi::many0, IResult, Parser as _};
 
 /// 276 - Health Claim Status Request
 #[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12)]
