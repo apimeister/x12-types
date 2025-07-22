@@ -6,7 +6,7 @@ use nom::combinator::peek;
 use nom::multi::many0;
 use nom::IResult;
 use nom::Parser as _;
-mod segment;
+pub mod segment;
 pub use segment::*;
 use serde::{Deserialize, Serialize};
 use std::fmt::Debug;

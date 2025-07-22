@@ -519,3 +519,143 @@ IEA*1*999999999~"#;
     assert!(rest.is_empty());
     assert_eq!(obj.isa._16, "~"); // Component separator should be the tilde character
 }
+
+#[test]
+fn test_940_usage_indicator_enum_valid_values() {
+    // Test all valid usage indicator values
+    let test_cases = vec![
+        ("I", segment::i::UsageIndicator::Information, "Information"),
+        ("P", segment::i::UsageIndicator::Production, "Production"),
+        ("T", segment::i::UsageIndicator::Test, "Test"),
+    ];
+
+    for (isa_value, expected_enum, description) in test_cases {
+        let test_str = format!(
+            r#"ISA*00*          *00*          *ZZ*SENDER         *ZZ*RECEIVER       *111201*1108*U*00401*000000001*0*{}*:~
+GS*OW*SENDER*RECEIVER*20111201*1108*1*T*004010UCS~
+ST*940*0001~
+W05*N*TEST*TEST~
+SE*2*0001~
+GE*1*1~
+IEA*1*000000001~"#,
+            isa_value
+        );
+
+        let (rest, obj) = Transmission::<_940>::parse(&test_str).unwrap();
+        obj.validate().unwrap();
+        assert!(rest.is_empty());
+        assert_eq!(obj.isa._15, expected_enum);
+        println!(
+            "✓ {} usage indicator parsed and validated correctly",
+            description
+        );
+    }
+}
+
+#[test]
+#[should_panic(expected = "called `Result::unwrap()` on an `Err` value")]
+fn test_940_usage_indicator_invalid_value() {
+    // Test invalid usage indicator value
+    let str = r#"ISA*00*          *00*          *ZZ*SENDER         *ZZ*RECEIVER       *111201*1108*U*00401*000000001*0*X*:~
+GS*OW*SENDER*RECEIVER*20111201*1108*1*T*004010UCS~
+ST*940*0001~
+W05*N*TEST*TEST~
+SE*2*0001~
+GE*1*1~
+IEA*1*000000001~"#;
+
+    let (_rest, _obj) = Transmission::<_940>::parse(str).unwrap();
+}
+
+#[test]
+fn test_940_usage_indicator_enum_clone_and_debug() {
+    // Test that the enum implements Clone and Debug correctly
+    let info = segment::i::UsageIndicator::Information;
+    let prod = segment::i::UsageIndicator::Production;
+    let test = segment::i::UsageIndicator::Test;
+
+    // Test Clone
+    let info_clone = info.clone();
+    let prod_clone = prod.clone();
+    let test_clone = test.clone();
+
+    assert_eq!(info, info_clone);
+    assert_eq!(prod, prod_clone);
+    assert_eq!(test, test_clone);
+
+    // Test Debug
+    assert!(format!("{:?}", info).contains("Information"));
+    assert!(format!("{:?}", prod).contains("Production"));
+    assert!(format!("{:?}", test).contains("Test"));
+
+    println!("✓ UsageIndicator enum Clone and Debug traits work correctly");
+}
+
+#[test]
+fn test_940_usage_indicator_display_trait() {
+    // Test Display trait implementation
+    let info = segment::i::UsageIndicator::Information;
+    let prod = segment::i::UsageIndicator::Production;
+    let test = segment::i::UsageIndicator::Test;
+
+    assert_eq!(format!("{}", info), "I");
+    assert_eq!(format!("{}", prod), "P");
+    assert_eq!(format!("{}", test), "T");
+
+    println!("✓ UsageIndicator Display trait works correctly");
+}
+
+#[test]
+fn test_940_usage_indicator_from_str_trait() {
+    // Test FromStr trait implementation
+    use std::str::FromStr;
+
+    assert_eq!(
+        segment::i::UsageIndicator::from_str("I").unwrap(),
+        segment::i::UsageIndicator::Information
+    );
+    assert_eq!(
+        segment::i::UsageIndicator::from_str("P").unwrap(),
+        segment::i::UsageIndicator::Production
+    );
+    assert_eq!(
+        segment::i::UsageIndicator::from_str("T").unwrap(),
+        segment::i::UsageIndicator::Test
+    );
+
+    // Test invalid values
+    assert!(segment::i::UsageIndicator::from_str("X").is_err());
+    assert!(segment::i::UsageIndicator::from_str("").is_err());
+    assert!(segment::i::UsageIndicator::from_str("PP").is_err());
+
+    println!("✓ UsageIndicator FromStr trait works correctly");
+}
+
+#[test]
+fn test_940_usage_indicator_default() {
+    // Test that default is Production
+    let default_indicator = segment::i::UsageIndicator::default();
+    assert_eq!(default_indicator, segment::i::UsageIndicator::Production);
+
+    println!("✓ UsageIndicator default value is Production");
+}
+
+#[test]
+fn test_940_usage_indicator_in_existing_tests() {
+    // Verify that existing test data still works with the enum
+    // Test with "P" (Production) from existing test data
+    let str = r#"ISA*00*          *00*          *08*925119TEST     *ZZ*TESTTPLEDI     *111201*1108*U*00401*000000009*0*P*~
+GS*OW*6125404455*TESTTPLEDI*20111201*1108*4313*T*004010UCS~
+ST*940*43130001~
+W05*F*18061923*Test Order 1~
+SE*4*43130001~
+GE*1*4313~
+IEA*1*000000009~"#;
+
+    let (rest, obj) = Transmission::<_940>::parse(str).unwrap();
+    obj.validate().unwrap();
+    assert!(rest.is_empty());
+    assert_eq!(obj.isa._15, segment::i::UsageIndicator::Production);
+
+    println!("✓ Existing test data works correctly with UsageIndicator enum");
+}

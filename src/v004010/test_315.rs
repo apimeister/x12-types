@@ -18,7 +18,7 @@ fn parse_315() {
             _12: "00401".to_string(),
             _13: "000000001".to_string(),
             _14: "0".to_string(),
-            _15: "P".to_string(),
+            _15: crate::v004010::segment::i::UsageIndicator::Production,
             _16: ">".to_string(),
             ..Default::default()
         },
@@ -142,7 +142,7 @@ fn test_315() {
             _12: "00401".to_string(),
             _13: "000000001".to_string(),
             _14: "0".to_string(),
-            _15: "P".to_string(),
+            _15: crate::v004010::segment::i::UsageIndicator::Production,
             _16: ">".to_string(),
         },
         functional_group: vec![FunctionalGroup {
@@ -304,7 +304,7 @@ fn test_315_defaults() {
             _12: "00401".to_string(),
             _13: "000000001".to_string(),
             _14: "0".to_string(),
-            _15: "P".to_string(),
+            _15: crate::v004010::segment::i::UsageIndicator::Production,
             _16: ">".to_string(),
             ..Default::default()
         },

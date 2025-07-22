@@ -9,6 +9,48 @@ use serde::{Deserialize, Serialize};
 use validator::Validate;
 use x12_types_macros::{DisplaySegment, ParseSegment};
 
+/// Usage Indicator for ISA field 15
+///
+/// Code to indicate whether data enclosed by this interchange envelope is test, production or information
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Eq, Default)]
+pub enum UsageIndicator {
+    /// I - Information
+    #[serde(rename = "I")]
+    Information,
+    /// P - Production Data
+    #[serde(rename = "P")]
+    #[default]
+    Production,
+    /// T - Test Data
+    #[serde(rename = "T")]
+    Test,
+}
+
+impl std::fmt::Display for UsageIndicator {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UsageIndicator::Information => write!(f, "I"),
+            UsageIndicator::Production => write!(f, "P"),
+            UsageIndicator::Test => write!(f, "T"),
+        }
+    }
+}
+
+impl std::str::FromStr for UsageIndicator {
+    type Err = String;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "I" => Ok(UsageIndicator::Information),
+            "P" => Ok(UsageIndicator::Production),
+            "T" => Ok(UsageIndicator::Test),
+            _ => Err(format!(
+                "Invalid usage indicator: '{s}'. Must be 'I', 'P', or 'T'"
+            )),
+        }
+    }
+}
+
 /// IC - Intermodal Chassis Equipment
 ///
 /// To specify the chassis equipment details in terms of identifying numbers, weights, and ownership
@@ -286,9 +328,8 @@ pub struct ISA {
     /// - TYPE=ID
     /// - MIN=1
     /// - MAX=1
-    #[validate(length(equal = 1, message = "ISA 15 (I14) must be 1 characters long"))]
     #[serde(rename = "15")]
-    pub _15: String,
+    pub _15: UsageIndicator,
     /// I15 - Component Element Separator
     ///
     /// Type is not applicable; the component element separator is a delimiter and not a data element; this field provides the delimiter used to separate component data elements within a composite data structure; this value must be different than the data element separator and the segment terminator
@@ -384,7 +425,9 @@ impl<'a> Parser<&'a str, ISA, nom::error::Error<&'a str>> for ISA {
                 _12: fields[11].clone(),
                 _13: fields[12].clone(),
                 _14: fields[13].clone(),
-                _15: fields[14].clone(),
+                _15: fields[14].parse().map_err(|_| {
+                    nom::Err::Error(nom::error::Error::new(input, ErrorKind::MapRes))
+                })?,
                 _16: component_separator.to_string(),
             },
         ))
