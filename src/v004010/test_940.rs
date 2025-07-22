@@ -659,3 +659,159 @@ IEA*1*000000009~"#;
 
     println!("✓ Existing test data works correctly with UsageIndicator enum");
 }
+
+#[test]
+fn test_940_dynamic_segment_terminator_detection() {
+    // Test various combinations of component element separator and segment terminator
+    let test_cases = vec![
+        // (component_separator, segment_terminator, description)
+        (":", "~", "Standard colon separator with tilde terminator"),
+        (">", "~", "Greater-than separator with tilde terminator"),
+        ("^", "~", "Caret separator with tilde terminator"),
+        ("|", "#", "Pipe separator with hash terminator"),
+        (":", "|", "Colon separator with pipe terminator"),
+        (
+            "\\",
+            "/",
+            "Backslash separator with forward slash terminator",
+        ),
+        ("#", "&", "Hash separator with ampersand terminator"),
+    ];
+
+    for (comp_sep, seg_term, description) in test_cases {
+        let test_str = format!(
+            r#"ISA*00*          *00*          *ZZ*SENDER         *ZZ*RECEIVER       *111201*1108*U*00401*000000001*0*P*{}{}
+GS*OW*SENDER*RECEIVER*20111201*1108*1*T*004010UCS~
+ST*940*0001~
+W05*N*TEST*TEST~
+SE*2*0001~
+GE*1*1~
+IEA*1*000000001~"#,
+            comp_sep, seg_term
+        );
+
+        let (rest, obj) = Transmission::<_940>::parse(&test_str).unwrap();
+        obj.validate().unwrap();
+        assert!(rest.is_empty());
+        assert_eq!(obj.isa._15, segment::i::UsageIndicator::Production);
+        assert_eq!(obj.isa._16, comp_sep);
+
+        println!(
+            "✓ {} - Component separator: '{}', Segment terminator: '{}'",
+            description, comp_sep, seg_term
+        );
+    }
+}
+
+#[test]
+fn test_940_newline_as_segment_terminator() {
+    // Test when segment terminator is a newline character
+    let test_str = r#"ISA*00*          *00*          *ZZ*SENDER         *ZZ*RECEIVER       *111201*1108*U*00401*000000001*0*P*:
+GS*OW*SENDER*RECEIVER*20111201*1108*1*T*004010UCS~
+ST*940*0001~
+W05*N*TEST*TEST~
+SE*2*0001~
+GE*1*1~
+IEA*1*000000001~"#;
+
+    let (rest, obj) = Transmission::<_940>::parse(test_str).unwrap();
+    obj.validate().unwrap();
+    assert!(rest.is_empty());
+    assert_eq!(obj.isa._15, segment::i::UsageIndicator::Production);
+    assert_eq!(obj.isa._16, ":");
+
+    println!("✓ Newline as segment terminator handled correctly");
+}
+
+#[test]
+fn test_940_unicode_component_separator() {
+    // Test Unicode characters as component element separator
+    let test_cases = vec![
+        ("🚀", "~", "Rocket emoji as component separator"),
+        ("€", "|", "Euro symbol as component separator"),
+        ("©", "#", "Copyright symbol as component separator"),
+        ("®", "&", "Registered trademark as component separator"),
+    ];
+
+    for (comp_sep, seg_term, description) in test_cases {
+        let test_str = format!(
+            r#"ISA*00*          *00*          *ZZ*SENDER         *ZZ*RECEIVER       *111201*1108*U*00401*000000001*0*P*{}{}
+GS*OW*SENDER*RECEIVER*20111201*1108*1*T*004010UCS~
+ST*940*0001~
+W05*N*TEST*TEST~
+SE*2*0001~
+GE*1*1~
+IEA*1*000000001~"#,
+            comp_sep, seg_term
+        );
+
+        let (rest, obj) = Transmission::<_940>::parse(&test_str).unwrap();
+        obj.validate().unwrap();
+        assert!(rest.is_empty());
+        assert_eq!(obj.isa._15, segment::i::UsageIndicator::Production);
+        assert_eq!(obj.isa._16, comp_sep);
+
+        println!(
+            "✓ {} - Multi-byte UTF-8 character handled correctly",
+            description
+        );
+    }
+}
+
+#[test]
+fn test_940_same_component_and_segment_separator() {
+    // Test edge case where component separator and segment terminator are the same
+    // This should still work because they are positionally different
+    let test_str = r#"ISA*00*          *00*          *ZZ*SENDER         *ZZ*RECEIVER       *111201*1108*U*00401*000000001*0*P*##
+GS*OW*SENDER*RECEIVER*20111201*1108*1*T*004010UCS~
+ST*940*0001~
+W05*N*TEST*TEST~
+SE*2*0001~
+GE*1*1~
+IEA*1*000000001~"#;
+
+    let (rest, obj) = Transmission::<_940>::parse(test_str).unwrap();
+    obj.validate().unwrap();
+    assert!(rest.is_empty());
+    assert_eq!(obj.isa._15, segment::i::UsageIndicator::Production);
+    assert_eq!(obj.isa._16, "#");
+
+    println!("✓ Same character for component separator and segment terminator handled correctly");
+}
+
+#[test]
+fn test_940_special_characters_as_separators() {
+    // Test various special characters
+    let test_cases = vec![
+        ("!", "@", "Exclamation and at-sign"),
+        ("$", "%", "Dollar and percent"),
+        ("(", ")", "Parentheses"),
+        ("[", "]", "Square brackets"),
+        ("{", "}", "Curly braces"),
+        ("<", ">", "Angle brackets"),
+        ("=", "+", "Equals and plus"),
+        ("?", ".", "Question mark and period"),
+        (",", ";", "Comma and semicolon"),
+    ];
+
+    for (comp_sep, seg_term, description) in test_cases {
+        let test_str = format!(
+            r#"ISA*00*          *00*          *ZZ*SENDER         *ZZ*RECEIVER       *111201*1108*U*00401*000000001*0*P*{}{}
+GS*OW*SENDER*RECEIVER*20111201*1108*1*T*004010UCS~
+ST*940*0001~
+W05*N*TEST*TEST~
+SE*2*0001~
+GE*1*1~
+IEA*1*000000001~"#,
+            comp_sep, seg_term
+        );
+
+        let (rest, obj) = Transmission::<_940>::parse(&test_str).unwrap();
+        obj.validate().unwrap();
+        assert!(rest.is_empty());
+        assert_eq!(obj.isa._15, segment::i::UsageIndicator::Production);
+        assert_eq!(obj.isa._16, comp_sep);
+
+        println!("✓ {} - Special characters handled correctly", description);
+    }
+}

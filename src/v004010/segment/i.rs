@@ -1,10 +1,7 @@
 use crate::util::Parser;
-use nom::bytes::complete::take;
-use nom::character::complete::newline;
-use nom::combinator::opt;
+
 use nom::error::ErrorKind;
 use nom::IResult;
-use nom::Parser as _;
 use serde::{Deserialize, Serialize};
 use validator::Validate;
 use x12_types_macros::{DisplaySegment, ParseSegment};
@@ -386,18 +383,39 @@ impl<'a> Parser<&'a str, ISA, nom::error::Error<&'a str>> for ISA {
             remaining_input = &remaining_input[field_end + 1..];
         }
 
-        // 5. Parse ISA16 - Component Element Separator (1 character, followed by segment terminator)
-        let (remaining_input, component_separator) = take(1usize)(remaining_input)?;
+        // 5. Parse ISA16 - Component Element Separator and determine segment terminator
+        // The component separator is 1 character, followed by the segment terminator
+        // The segment terminator can be any character that's not the component separator
 
-        // 6. Find and consume the segment terminator
-        let _segment_terminator = remaining_input.chars().next().ok_or_else(|| {
+        let mut chars = remaining_input.chars();
+        let component_separator_char = chars.next().ok_or_else(|| {
             nom::Err::Error(nom::error::Error::new(remaining_input, ErrorKind::Char))
         })?;
 
-        let remaining_input = &remaining_input[1..];
+        let segment_terminator = chars.next().ok_or_else(|| {
+            nom::Err::Error(nom::error::Error::new(remaining_input, ErrorKind::Char))
+        })?;
 
-        // 7. Look for optional newline
-        let (remaining_input, _) = opt(newline).parse(remaining_input)?;
+        // Calculate how many bytes to skip (component separator + segment terminator)
+        let component_separator_bytes = component_separator_char.len_utf8();
+        let segment_terminator_bytes = segment_terminator.len_utf8();
+        let remaining_input =
+            &remaining_input[component_separator_bytes + segment_terminator_bytes..];
+
+        let component_separator = component_separator_char.to_string();
+
+        // 6. Handle potential newline after segment terminator (if segment terminator is not already a newline)
+        let (remaining_input, _) = if segment_terminator != '\n' {
+            // Only try to consume a newline if there's actually input remaining and it starts with \n
+            if let Some(stripped) = remaining_input.strip_prefix('\n') {
+                (stripped, Some('\n'))
+            } else {
+                (remaining_input, None)
+            }
+        } else {
+            // If segment terminator is already a newline, don't consume another one
+            (remaining_input, None)
+        };
 
         // 8. Validate we have exactly 15 fields
         if fields.len() != 15 {
