@@ -6483,6 +6483,8 @@ pub struct W66 {
     pub _08: Option<String>,
     #[serde(rename = "09")]
     pub _09: Option<String>,
+    #[serde(rename = "10")]
+    pub _10: Option<String>,
 }
 
 /// W01 - Line Item Detail for Warehouse Shipping Order
