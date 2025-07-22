@@ -14,6 +14,9 @@ use std::fmt::Display;
 use validator::Validate;
 use x12_types_macros::DisplayX12;
 
+mod _940_doc;
+pub use _940_doc::*;
+
 #[cfg(test)]
 mod test_204;
 #[cfg(test)]
@@ -32,6 +35,7 @@ mod test_322;
 mod test_404;
 #[cfg(test)]
 mod test_810;
+#[cfg(test)]
 mod test_856;
 #[cfg(test)]
 mod test_940;
@@ -2683,8 +2687,6 @@ impl<'a> Parser<&'a str, _998, nom::error::Error<&'a str>> for _998 {
     }
 }
 
-mod _940_doc;
-pub use _940_doc::_940;
 /// 856 - Ship Notice/Manifest
 ///
 /// This Draft Standard for Trial Use contains the format and establishes the data contents of the Ship Notice/Manifest Transaction Set (856) for use within the context of an Electronic Data Interchange (EDI) environment. The transaction set can be used to notify a trading partner that a shipment has been or will be sent. The transaction set enables the sender to describe the contents and configuration of a shipment in various levels of detail and provides an organized flexibility that allows both the sender and receiver to carry out automated business processes.
