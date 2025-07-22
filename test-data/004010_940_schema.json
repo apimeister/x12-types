@@ -1,0 +1,1485 @@
+{
+    "transaction": {
+        "transaction_set_id": "940",
+        "transaction_set_name": "Warehouse Shipping Order",
+        "functional_group_id": "OW",
+        "purpose": "This Draft Standard for Trial Use contains the format and establishes the data contents of the Warehouse Shipping Order Transaction Set (940) for use within the context of an Electronic Data Interchange (EDI) environment. This transaction set can be used to enable the depositor to advise a warehouse to make a shipment, confirm a shipment, or modify or cancel a previously transmitted shipping order.",
+        "heading": [{
+                "area": "1",
+                "loop_level": 0,
+                "maximum_use": 1,
+                "requirement": "M",
+                "segment_id": "ST",
+                "sequence": "010",
+                "transaction_set_id": "940",
+                "segment_name": "Transaction Set Header",
+                "purpose": "To indicate the start of a transaction set and to assign a control number",
+                "elements": []
+            },
+            {
+                "area": "1",
+                "loop_level": 0,
+                "maximum_use": 1,
+                "requirement": "M",
+                "segment_id": "W05",
+                "sequence": "020",
+                "transaction_set_id": "940",
+                "segment_name": "Shipping Order Identification",
+                "purpose": "To transmit identifying numbers and other basic data for this transaction set",
+                "relational_conditions": [{
+                    "elements": [
+                        "04",
+                        "05"
+                    ],
+                    "type": "P"
+                }],
+                "elements": []
+            },
+            {
+                "area": "1",
+                "loop_identifier": "0100",
+                "loop_level": 1,
+                "loop_repeat": 10,
+                "requirement": "O",
+                "sequence": "040",
+                "transaction_set_id": "940",
+                "content": [{
+                        "area": "1",
+                        "loop_level": 1,
+                        "maximum_use": 1,
+                        "requirement": "M",
+                        "segment_id": "N1",
+                        "sequence": "040",
+                        "transaction_set_id": "940",
+                        "segment_name": "Name",
+                        "purpose": "To identify a party by type of organization, name, and code",
+                        "relational_conditions": [{
+                                "elements": [
+                                    "02",
+                                    "03"
+                                ],
+                                "type": "R"
+                            },
+                            {
+                                "elements": [
+                                    "03",
+                                    "04"
+                                ],
+                                "type": "P"
+                            }
+                        ],
+                        "elements": []
+                    },
+                    {
+                        "area": "1",
+                        "loop_level": 1,
+                        "maximum_use": 2,
+                        "requirement": "O",
+                        "segment_id": "N2",
+                        "sequence": "050",
+                        "transaction_set_id": "940",
+                        "segment_name": "Additional Name Information",
+                        "purpose": "To specify additional names or those longer than 35 characters in length",
+                        "elements": []
+                    },
+                    {
+                        "area": "1",
+                        "loop_level": 1,
+                        "maximum_use": 2,
+                        "requirement": "O",
+                        "segment_id": "N3",
+                        "sequence": "060",
+                        "transaction_set_id": "940",
+                        "segment_name": "Address Information",
+                        "purpose": "To specify the location of the named party",
+                        "elements": []
+                    },
+                    {
+                        "area": "1",
+                        "loop_level": 1,
+                        "maximum_use": 1,
+                        "requirement": "O",
+                        "segment_id": "N4",
+                        "sequence": "070",
+                        "transaction_set_id": "940",
+                        "segment_name": "Geographic Location",
+                        "purpose": "To specify the geographic place of the named party",
+                        "relational_conditions": [{
+                            "elements": [
+                                "06",
+                                "05"
+                            ],
+                            "type": "C"
+                        }],
+                        "elements": []
+                    },
+                    {
+                        "area": "1",
+                        "loop_level": 1,
+                        "maximum_use": 5,
+                        "requirement": "O",
+                        "segment_id": "PER",
+                        "sequence": "080",
+                        "transaction_set_id": "940",
+                        "segment_name": "Administrative Communications Contact",
+                        "purpose": "To identify a person or office to whom administrative communications should be directed",
+                        "relational_conditions": [{
+                                "elements": [
+                                    "03",
+                                    "04"
+                                ],
+                                "type": "P"
+                            },
+                            {
+                                "elements": [
+                                    "05",
+                                    "06"
+                                ],
+                                "type": "P"
+                            },
+                            {
+                                "elements": [
+                                    "07",
+                                    "08"
+                                ],
+                                "type": "P"
+                            }
+                        ],
+                        "elements": []
+                    }
+                ]
+            },
+            {
+                "area": "1",
+                "loop_level": 0,
+                "maximum_use": 10,
+                "requirement": "O",
+                "segment_id": "N9",
+                "sequence": "090",
+                "transaction_set_id": "940",
+                "segment_name": "Reference Identification",
+                "purpose": "To transmit identifying information as specified by the Reference Identification Qualifier",
+                "relational_conditions": [{
+                        "elements": [
+                            "02",
+                            "03"
+                        ],
+                        "type": "R"
+                    },
+                    {
+                        "elements": [
+                            "06",
+                            "05"
+                        ],
+                        "type": "C"
+                    }
+                ],
+                "elements": []
+            },
+            {
+                "area": "1",
+                "loop_level": 0,
+                "maximum_use": 3,
+                "requirement": "O",
+                "segment_id": "G61",
+                "sequence": "100",
+                "transaction_set_id": "940",
+                "segment_name": "Contact",
+                "purpose": "To identify a person or office to whom communications should be directed",
+                "relational_conditions": [{
+                    "elements": [
+                        "03",
+                        "04"
+                    ],
+                    "type": "P"
+                }],
+                "elements": []
+            },
+            {
+                "area": "1",
+                "loop_level": 0,
+                "maximum_use": 10,
+                "requirement": "O",
+                "segment_id": "G62",
+                "sequence": "110",
+                "transaction_set_id": "940",
+                "segment_name": "Date/Time",
+                "purpose": "To specify pertinent dates and times",
+                "relational_conditions": [{
+                        "elements": [
+                            "01",
+                            "03"
+                        ],
+                        "type": "R"
+                    },
+                    {
+                        "elements": [
+                            "01",
+                            "02"
+                        ],
+                        "type": "P"
+                    },
+                    {
+                        "elements": [
+                            "03",
+                            "04"
+                        ],
+                        "type": "P"
+                    }
+                ],
+                "elements": []
+            },
+            {
+                "area": "1",
+                "loop_level": 0,
+                "maximum_use": "\u003e1",
+                "requirement": "O",
+                "segment_id": "NTE",
+                "sequence": "120",
+                "transaction_set_id": "940",
+                "segment_name": "Note/Special Instruction",
+                "purpose": "To transmit information in a free-form format, if necessary, for comment or special instruction",
+                "elements": []
+            },
+            {
+                "area": "1",
+                "loop_level": 0,
+                "maximum_use": 1,
+                "requirement": "O",
+                "segment_id": "W09",
+                "sequence": "130",
+                "transaction_set_id": "940",
+                "segment_name": "Equipment and Temperature",
+                "purpose": "To relate equipment type and required temperatures",
+                "relational_conditions": [{
+                        "elements": [
+                            "02",
+                            "03"
+                        ],
+                        "type": "P"
+                    },
+                    {
+                        "elements": [
+                            "04",
+                            "05"
+                        ],
+                        "type": "P"
+                    }
+                ],
+                "elements": []
+            },
+            {
+                "area": "1",
+                "loop_level": 0,
+                "maximum_use": 1,
+                "requirement": "O",
+                "segment_id": "W66",
+                "sequence": "140",
+                "transaction_set_id": "940",
+                "segment_name": "Warehouse Carrier Information",
+                "purpose": "To specify transportation instructions relating to shipment",
+                "relational_conditions": [{
+                    "elements": [
+                        "08",
+                        "09"
+                    ],
+                    "type": "P"
+                }],
+                "elements": []
+            },
+            {
+                "area": "1",
+                "loop_level": 0,
+                "maximum_use": 1,
+                "requirement": "O",
+                "segment_id": "W6",
+                "sequence": "150",
+                "transaction_set_id": "940",
+                "segment_name": "Special Handling Information",
+                "purpose": "To provide special handling information that may be necessary for safe handling of shipment",
+                "elements": []
+            },
+            {
+                "area": "1",
+                "loop_level": 0,
+                "maximum_use": 13,
+                "requirement": "O",
+                "segment_id": "R2",
+                "sequence": "153",
+                "transaction_set_id": "940",
+                "segment_name": "Route Information",
+                "purpose": "To specify carrier and routing sequences and details",
+                "relational_conditions": [{
+                    "elements": [
+                        "08",
+                        "07"
+                    ],
+                    "type": "C"
+                }],
+                "elements": []
+            },
+            {
+                "area": "1",
+                "loop_level": 0,
+                "maximum_use": 1,
+                "requirement": "O",
+                "segment_id": "BNX",
+                "sequence": "156",
+                "transaction_set_id": "940",
+                "segment_name": "Rail Shipment Information",
+                "purpose": "To transmit rail-specific shipment data",
+                "elements": []
+            },
+            {
+                "area": "1",
+                "loop_identifier": "0200",
+                "loop_level": 1,
+                "loop_repeat": 10,
+                "requirement": "O",
+                "sequence": "160",
+                "transaction_set_id": "940",
+                "content": [{
+                        "area": "1",
+                        "loop_level": 1,
+                        "maximum_use": 1,
+                        "requirement": "M",
+                        "segment_id": "LM",
+                        "sequence": "160",
+                        "transaction_set_id": "940",
+                        "segment_name": "Code Source Information",
+                        "purpose": "To transmit standard code list identification information",
+                        "elements": []
+                    },
+                    {
+                        "area": "1",
+                        "loop_level": 1,
+                        "maximum_use": 100,
+                        "requirement": "M",
+                        "segment_id": "LQ",
+                        "sequence": "170",
+                        "transaction_set_id": "940",
+                        "segment_name": "Industry Code",
+                        "purpose": "Code to transmit standard industry codes",
+                        "relational_conditions": [{
+                            "elements": [
+                                "01",
+                                "02"
+                            ],
+                            "type": "C"
+                        }],
+                        "elements": []
+                    }
+                ]
+            }
+        ],
+        "detail": [{
+            "area": "2",
+            "loop_identifier": "0300",
+            "loop_level": 1,
+            "loop_repeat": "\u003e1",
+            "requirement": "O",
+            "sequence": "005",
+            "transaction_set_id": "940",
+            "content": [{
+                    "area": "2",
+                    "loop_level": 1,
+                    "maximum_use": 1,
+                    "requirement": "M",
+                    "segment_id": "LX",
+                    "sequence": "005",
+                    "transaction_set_id": "940",
+                    "segment_name": "Assigned Number",
+                    "purpose": "To reference a line number in a transaction set",
+                    "elements": []
+                },
+                {
+                    "area": "2",
+                    "loop_level": 1,
+                    "maximum_use": "\u003e1",
+                    "requirement": "O",
+                    "segment_id": "MAN",
+                    "sequence": "010",
+                    "transaction_set_id": "940",
+                    "segment_name": "Marks and Numbers",
+                    "purpose": "To indicate identifying marks and numbers for shipping containers",
+                    "relational_conditions": [{
+                            "elements": [
+                                "04",
+                                "05"
+                            ],
+                            "type": "P"
+                        },
+                        {
+                            "elements": [
+                                "06",
+                                "05"
+                            ],
+                            "type": "C"
+                        }
+                    ],
+                    "elements": []
+                },
+                {
+                    "area": "2",
+                    "loop_level": 1,
+                    "maximum_use": "\u003e1",
+                    "requirement": "O",
+                    "segment_id": "SDQ",
+                    "sequence": "015",
+                    "transaction_set_id": "940",
+                    "segment_name": "Destination Quantity",
+                    "purpose": "To specify destination and quantity detail",
+                    "relational_conditions": [{
+                            "elements": [
+                                "05",
+                                "06"
+                            ],
+                            "type": "P"
+                        },
+                        {
+                            "elements": [
+                                "07",
+                                "08"
+                            ],
+                            "type": "P"
+                        },
+                        {
+                            "elements": [
+                                "09",
+                                "10"
+                            ],
+                            "type": "P"
+                        },
+                        {
+                            "elements": [
+                                "11",
+                                "12"
+                            ],
+                            "type": "P"
+                        },
+                        {
+                            "elements": [
+                                "13",
+                                "14"
+                            ],
+                            "type": "P"
+                        },
+                        {
+                            "elements": [
+                                "15",
+                                "16"
+                            ],
+                            "type": "P"
+                        },
+                        {
+                            "elements": [
+                                "17",
+                                "18"
+                            ],
+                            "type": "P"
+                        },
+                        {
+                            "elements": [
+                                "19",
+                                "20"
+                            ],
+                            "type": "P"
+                        },
+                        {
+                            "elements": [
+                                "21",
+                                "22"
+                            ],
+                            "type": "P"
+                        }
+                    ],
+                    "elements": []
+                },
+                {
+                    "area": "2",
+                    "loop_level": 1,
+                    "maximum_use": 1,
+                    "requirement": "O",
+                    "segment_id": "N1",
+                    "sequence": "016",
+                    "transaction_set_id": "940",
+                    "segment_name": "Name",
+                    "purpose": "To identify a party by type of organization, name, and code",
+                    "relational_conditions": [{
+                            "elements": [
+                                "02",
+                                "03"
+                            ],
+                            "type": "R"
+                        },
+                        {
+                            "elements": [
+                                "03",
+                                "04"
+                            ],
+                            "type": "P"
+                        }
+                    ],
+                    "elements": []
+                },
+                {
+                    "area": "2",
+                    "loop_level": 1,
+                    "maximum_use": 10,
+                    "requirement": "O",
+                    "segment_id": "G62",
+                    "sequence": "017",
+                    "transaction_set_id": "940",
+                    "segment_name": "Date/Time",
+                    "purpose": "To specify pertinent dates and times",
+                    "relational_conditions": [{
+                            "elements": [
+                                "01",
+                                "03"
+                            ],
+                            "type": "R"
+                        },
+                        {
+                            "elements": [
+                                "01",
+                                "02"
+                            ],
+                            "type": "P"
+                        },
+                        {
+                            "elements": [
+                                "03",
+                                "04"
+                            ],
+                            "type": "P"
+                        }
+                    ],
+                    "elements": []
+                },
+                {
+                    "area": "2",
+                    "loop_level": 2,
+                    "requirement": "O",
+                    "sequence": "020",
+                    "transaction_set_id": "940",
+                    "loop_identifier": "0310",
+                    "loop_repeat": "\u003e1",
+                    "content": [{
+                            "area": "2",
+                            "loop_level": 2,
+                            "maximum_use": 1,
+                            "requirement": "M",
+                            "segment_id": "W01",
+                            "sequence": "020",
+                            "transaction_set_id": "940",
+                            "segment_name": "Line Item Detail - Warehouse",
+                            "purpose": "To transmit basic and most frequent shipment-related line-item data elements",
+                            "relational_conditions": [{
+                                    "elements": [
+                                        "03",
+                                        "04"
+                                    ],
+                                    "type": "R"
+                                },
+                                {
+                                    "elements": [
+                                        "04",
+                                        "05"
+                                    ],
+                                    "type": "P"
+                                },
+                                {
+                                    "elements": [
+                                        "06",
+                                        "07"
+                                    ],
+                                    "type": "P"
+                                },
+                                {
+                                    "elements": [
+                                        "10",
+                                        "11"
+                                    ],
+                                    "type": "P"
+                                },
+                                {
+                                    "elements": [
+                                        "15",
+                                        "16"
+                                    ],
+                                    "type": "P"
+                                }
+                            ],
+                            "elements": []
+                        },
+                        {
+                            "area": "2",
+                            "loop_level": 2,
+                            "maximum_use": 5,
+                            "requirement": "O",
+                            "segment_id": "G69",
+                            "sequence": "030",
+                            "transaction_set_id": "940",
+                            "segment_name": "Line Item Detail - Description",
+                            "purpose": "To describe an item in free-form format",
+                            "elements": []
+                        },
+                        {
+                            "area": "2",
+                            "loop_level": 2,
+                            "maximum_use": 200,
+                            "requirement": "O",
+                            "segment_id": "N9",
+                            "sequence": "040",
+                            "transaction_set_id": "940",
+                            "segment_name": "Reference Identification",
+                            "purpose": "To transmit identifying information as specified by the Reference Identification Qualifier",
+                            "relational_conditions": [{
+                                    "elements": [
+                                        "02",
+                                        "03"
+                                    ],
+                                    "type": "R"
+                                },
+                                {
+                                    "elements": [
+                                        "06",
+                                        "05"
+                                    ],
+                                    "type": "C"
+                                }
+                            ],
+                            "elements": []
+                        },
+                        {
+                            "area": "2",
+                            "loop_level": 2,
+                            "maximum_use": "\u003e1",
+                            "requirement": "O",
+                            "segment_id": "NTE",
+                            "sequence": "045",
+                            "transaction_set_id": "940",
+                            "segment_name": "Note/Special Instruction",
+                            "purpose": "To transmit information in a free-form format, if necessary, for comment or special instruction",
+                            "elements": []
+                        },
+                        {
+                            "area": "2",
+                            "loop_level": 2,
+                            "maximum_use": 3,
+                            "requirement": "O",
+                            "segment_id": "W20",
+                            "sequence": "050",
+                            "transaction_set_id": "940",
+                            "segment_name": "Line-Item Detail - Miscellaneous",
+                            "purpose": "To specify packing details of the items shipped",
+                            "relational_conditions": [{
+                                    "elements": [
+                                        "02",
+                                        "03"
+                                    ],
+                                    "type": "P"
+                                },
+                                {
+                                    "elements": [
+                                        "04",
+                                        "05",
+                                        "06"
+                                    ],
+                                    "type": "P"
+                                },
+                                {
+                                    "elements": [
+                                        "08",
+                                        "09"
+                                    ],
+                                    "type": "P"
+                                }
+                            ],
+                            "elements": []
+                        },
+                        {
+                            "area": "2",
+                            "loop_level": 2,
+                            "maximum_use": 10,
+                            "requirement": "O",
+                            "segment_id": "QTY",
+                            "sequence": "070",
+                            "transaction_set_id": "940",
+                            "segment_name": "Quantity",
+                            "purpose": "To specify quantity information",
+                            "relational_conditions": [{
+                                    "elements": [
+                                        "02",
+                                        "04"
+                                    ],
+                                    "type": "R"
+                                },
+                                {
+                                    "elements": [
+                                        "02",
+                                        "04"
+                                    ],
+                                    "type": "E"
+                                }
+                            ],
+                            "elements": []
+                        },
+                        {
+                            "area": "2",
+                            "loop_level": 2,
+                            "maximum_use": 1,
+                            "requirement": "O",
+                            "segment_id": "AMT",
+                            "sequence": "080",
+                            "transaction_set_id": "940",
+                            "segment_name": "Monetary Amount",
+                            "purpose": "To indicate the total monetary amount",
+                            "elements": []
+                        },
+                        {
+                            "area": "2",
+                            "loop_level": 2,
+                            "maximum_use": 10,
+                            "requirement": "O",
+                            "segment_id": "G62",
+                            "sequence": "090",
+                            "transaction_set_id": "940",
+                            "segment_name": "Date/Time",
+                            "purpose": "To specify pertinent dates and times",
+                            "relational_conditions": [{
+                                    "elements": [
+                                        "01",
+                                        "03"
+                                    ],
+                                    "type": "R"
+                                },
+                                {
+                                    "elements": [
+                                        "01",
+                                        "02"
+                                    ],
+                                    "type": "P"
+                                },
+                                {
+                                    "elements": [
+                                        "03",
+                                        "04"
+                                    ],
+                                    "type": "P"
+                                }
+                            ],
+                            "elements": []
+                        },
+                        {
+                            "area": "2",
+                            "loop_level": 2,
+                            "maximum_use": 1,
+                            "requirement": "O",
+                            "segment_id": "G66",
+                            "sequence": "100",
+                            "transaction_set_id": "940",
+                            "segment_name": "Transportation Instructions",
+                            "purpose": "To specify transportation instructions relating to the shipment",
+                            "elements": []
+                        },
+                        {
+                            "area": "2",
+                            "loop_level": 2,
+                            "maximum_use": 3,
+                            "requirement": "O",
+                            "segment_id": "N1",
+                            "sequence": "110",
+                            "transaction_set_id": "940",
+                            "segment_name": "Name",
+                            "purpose": "To identify a party by type of organization, name, and code",
+                            "relational_conditions": [{
+                                    "elements": [
+                                        "02",
+                                        "03"
+                                    ],
+                                    "type": "R"
+                                },
+                                {
+                                    "elements": [
+                                        "03",
+                                        "04"
+                                    ],
+                                    "type": "P"
+                                }
+                            ],
+                            "elements": []
+                        },
+                        {
+                            "area": "2",
+                            "loop_level": 2,
+                            "maximum_use": 5,
+                            "requirement": "O",
+                            "segment_id": "PER",
+                            "sequence": "112",
+                            "transaction_set_id": "940",
+                            "segment_name": "Administrative Communications Contact",
+                            "purpose": "To identify a person or office to whom administrative communications should be directed",
+                            "relational_conditions": [{
+                                    "elements": [
+                                        "03",
+                                        "04"
+                                    ],
+                                    "type": "P"
+                                },
+                                {
+                                    "elements": [
+                                        "05",
+                                        "06"
+                                    ],
+                                    "type": "P"
+                                },
+                                {
+                                    "elements": [
+                                        "07",
+                                        "08"
+                                    ],
+                                    "type": "P"
+                                }
+                            ],
+                            "elements": []
+                        },
+                        {
+                            "area": "2",
+                            "loop_level": 2,
+                            "maximum_use": 6,
+                            "requirement": "O",
+                            "segment_id": "LH2",
+                            "sequence": "114",
+                            "transaction_set_id": "940",
+                            "segment_name": "Hazardous Classification Information",
+                            "purpose": "To specify the hazardous notation and endorsement information",
+                            "relational_conditions": [{
+                                    "elements": [
+                                        "06",
+                                        "07"
+                                    ],
+                                    "type": "P"
+                                },
+                                {
+                                    "elements": [
+                                        "08",
+                                        "09"
+                                    ],
+                                    "type": "P"
+                                },
+                                {
+                                    "elements": [
+                                        "10",
+                                        "11"
+                                    ],
+                                    "type": "P"
+                                }
+                            ],
+                            "elements": []
+                        },
+                        {
+                            "area": "2",
+                            "loop_level": 2,
+                            "maximum_use": 1,
+                            "requirement": "O",
+                            "segment_id": "LHR",
+                            "sequence": "116",
+                            "transaction_set_id": "940",
+                            "segment_name": "Hazardous Material Identifying Reference Numbers",
+                            "purpose": "To transmit specific hazardous material reference numbers",
+                            "elements": []
+                        },
+                        {
+                            "area": "2",
+                            "loop_level": 2,
+                            "maximum_use": 5,
+                            "requirement": "O",
+                            "segment_id": "LH6",
+                            "sequence": "118",
+                            "transaction_set_id": "940",
+                            "segment_name": "Hazardous Certification",
+                            "purpose": "To specify the name of the person certifying that the shipment complies with the regulations and/or the actual certification",
+                            "relational_conditions": [{
+                                "elements": [
+                                    "02",
+                                    "03"
+                                ],
+                                "type": "P"
+                            }],
+                            "elements": []
+                        },
+                        {
+                            "area": "2",
+                            "loop_identifier": "0320",
+                            "loop_level": 3,
+                            "loop_repeat": 10,
+                            "requirement": "O",
+                            "sequence": "120",
+                            "transaction_set_id": "940",
+                            "content": [{
+                                    "area": "2",
+                                    "loop_level": 3,
+                                    "maximum_use": 1,
+                                    "requirement": "M",
+                                    "segment_id": "LM",
+                                    "sequence": "120",
+                                    "transaction_set_id": "940",
+                                    "segment_name": "Code Source Information",
+                                    "purpose": "To transmit standard code list identification information",
+                                    "elements": []
+                                },
+                                {
+                                    "area": "2",
+                                    "loop_level": 3,
+                                    "maximum_use": 100,
+                                    "requirement": "M",
+                                    "segment_id": "LQ",
+                                    "sequence": "130",
+                                    "transaction_set_id": "940",
+                                    "segment_name": "Industry Code",
+                                    "purpose": "Code to transmit standard industry codes",
+                                    "relational_conditions": [{
+                                        "elements": [
+                                            "01",
+                                            "02"
+                                        ],
+                                        "type": "C"
+                                    }],
+                                    "elements": []
+                                }
+                            ]
+                        },
+                        {
+                            "area": "2",
+                            "loop_level": 2,
+                            "maximum_use": 1,
+                            "requirement": "O",
+                            "segment_id": "LS",
+                            "sequence": "135",
+                            "transaction_set_id": "940",
+                            "segment_name": "Loop Header",
+                            "purpose": "To indicate that the next segment begins a loop",
+                            "elements": []
+                        },
+                        {
+                            "area": "2",
+                            "loop_identifier": "0330",
+                            "loop_level": 3,
+                            "loop_repeat": "\u003e1",
+                            "requirement": "O",
+                            "sequence": "140",
+                            "transaction_set_id": "940",
+                            "content": [{
+                                    "area": "2",
+                                    "loop_level": 3,
+                                    "maximum_use": 1,
+                                    "requirement": "M",
+                                    "segment_id": "LX",
+                                    "sequence": "140",
+                                    "transaction_set_id": "940",
+                                    "notes": [{
+                                        "note_type": "N",
+                                        "paragraph_number": "1",
+                                        "content": "The LX loop conveys serial number data."
+                                    }],
+                                    "segment_name": "Assigned Number",
+                                    "purpose": "To reference a line number in a transaction set",
+                                    "elements": []
+                                },
+                                {
+                                    "area": "2",
+                                    "loop_level": 3,
+                                    "maximum_use": "\u003e1",
+                                    "requirement": "O",
+                                    "segment_id": "N9",
+                                    "sequence": "150",
+                                    "transaction_set_id": "940",
+                                    "segment_name": "Reference Identification",
+                                    "purpose": "To transmit identifying information as specified by the Reference Identification Qualifier",
+                                    "relational_conditions": [{
+                                            "elements": [
+                                                "02",
+                                                "03"
+                                            ],
+                                            "type": "R"
+                                        },
+                                        {
+                                            "elements": [
+                                                "06",
+                                                "05"
+                                            ],
+                                            "type": "C"
+                                        }
+                                    ],
+                                    "elements": []
+                                },
+                                {
+                                    "area": "2",
+                                    "loop_level": 3,
+                                    "maximum_use": 10,
+                                    "requirement": "O",
+                                    "segment_id": "G62",
+                                    "sequence": "160",
+                                    "transaction_set_id": "940",
+                                    "segment_name": "Date/Time",
+                                    "purpose": "To specify pertinent dates and times",
+                                    "relational_conditions": [{
+                                            "elements": [
+                                                "01",
+                                                "03"
+                                            ],
+                                            "type": "R"
+                                        },
+                                        {
+                                            "elements": [
+                                                "01",
+                                                "02"
+                                            ],
+                                            "type": "P"
+                                        },
+                                        {
+                                            "elements": [
+                                                "03",
+                                                "04"
+                                            ],
+                                            "type": "P"
+                                        }
+                                    ],
+                                    "elements": []
+                                },
+                                {
+                                    "area": "2",
+                                    "loop_level": 3,
+                                    "maximum_use": 1,
+                                    "requirement": "O",
+                                    "segment_id": "N1",
+                                    "sequence": "170",
+                                    "transaction_set_id": "940",
+                                    "segment_name": "Name",
+                                    "purpose": "To identify a party by type of organization, name, and code",
+                                    "relational_conditions": [{
+                                            "elements": [
+                                                "02",
+                                                "03"
+                                            ],
+                                            "type": "R"
+                                        },
+                                        {
+                                            "elements": [
+                                                "03",
+                                                "04"
+                                            ],
+                                            "type": "P"
+                                        }
+                                    ],
+                                    "elements": []
+                                },
+                                {
+                                    "area": "2",
+                                    "loop_level": 3,
+                                    "maximum_use": "\u003e1",
+                                    "requirement": "O",
+                                    "segment_id": "SDQ",
+                                    "sequence": "175",
+                                    "transaction_set_id": "940",
+                                    "segment_name": "Destination Quantity",
+                                    "purpose": "To specify destination and quantity detail",
+                                    "relational_conditions": [{
+                                            "elements": [
+                                                "05",
+                                                "06"
+                                            ],
+                                            "type": "P"
+                                        },
+                                        {
+                                            "elements": [
+                                                "07",
+                                                "08"
+                                            ],
+                                            "type": "P"
+                                        },
+                                        {
+                                            "elements": [
+                                                "09",
+                                                "10"
+                                            ],
+                                            "type": "P"
+                                        },
+                                        {
+                                            "elements": [
+                                                "11",
+                                                "12"
+                                            ],
+                                            "type": "P"
+                                        },
+                                        {
+                                            "elements": [
+                                                "13",
+                                                "14"
+                                            ],
+                                            "type": "P"
+                                        },
+                                        {
+                                            "elements": [
+                                                "15",
+                                                "16"
+                                            ],
+                                            "type": "P"
+                                        },
+                                        {
+                                            "elements": [
+                                                "17",
+                                                "18"
+                                            ],
+                                            "type": "P"
+                                        },
+                                        {
+                                            "elements": [
+                                                "19",
+                                                "20"
+                                            ],
+                                            "type": "P"
+                                        },
+                                        {
+                                            "elements": [
+                                                "21",
+                                                "22"
+                                            ],
+                                            "type": "P"
+                                        }
+                                    ],
+                                    "elements": []
+                                },
+                                {
+                                    "area": "2",
+                                    "loop_identifier": "0331",
+                                    "loop_level": 4,
+                                    "loop_repeat": 10,
+                                    "requirement": "O",
+                                    "sequence": "180",
+                                    "transaction_set_id": "940",
+                                    "content": [{
+                                            "area": "2",
+                                            "loop_level": 4,
+                                            "maximum_use": 1,
+                                            "requirement": "M",
+                                            "segment_id": "LM",
+                                            "sequence": "180",
+                                            "transaction_set_id": "940",
+                                            "segment_name": "Code Source Information",
+                                            "purpose": "To transmit standard code list identification information",
+                                            "elements": []
+                                        },
+                                        {
+                                            "area": "2",
+                                            "loop_level": 4,
+                                            "maximum_use": 100,
+                                            "requirement": "M",
+                                            "segment_id": "LQ",
+                                            "sequence": "190",
+                                            "transaction_set_id": "940",
+                                            "segment_name": "Industry Code",
+                                            "purpose": "Code to transmit standard industry codes",
+                                            "relational_conditions": [{
+                                                "elements": [
+                                                    "01",
+                                                    "02"
+                                                ],
+                                                "type": "C"
+                                            }],
+                                            "elements": []
+                                        }
+                                    ]
+                                },
+                                {
+                                    "area": "2",
+                                    "loop_identifier": "0332",
+                                    "loop_level": 4,
+                                    "loop_repeat": "\u003e1",
+                                    "requirement": "O",
+                                    "sequence": "200",
+                                    "transaction_set_id": "940",
+                                    "content": [{
+                                            "area": "2",
+                                            "loop_level": 4,
+                                            "maximum_use": 1,
+                                            "requirement": "M",
+                                            "segment_id": "LH1",
+                                            "sequence": "200",
+                                            "transaction_set_id": "940",
+                                            "segment_name": "Hazardous Identification Information",
+                                            "purpose": "To specify the hazardous commodity identification reference number and quantity",
+                                            "elements": []
+                                        },
+                                        {
+                                            "area": "2",
+                                            "loop_level": 4,
+                                            "maximum_use": 4,
+                                            "requirement": "O",
+                                            "segment_id": "LH2",
+                                            "sequence": "210",
+                                            "transaction_set_id": "940",
+                                            "segment_name": "Hazardous Classification Information",
+                                            "purpose": "To specify the hazardous notation and endorsement information",
+                                            "relational_conditions": [{
+                                                    "elements": [
+                                                        "06",
+                                                        "07"
+                                                    ],
+                                                    "type": "P"
+                                                },
+                                                {
+                                                    "elements": [
+                                                        "08",
+                                                        "09"
+                                                    ],
+                                                    "type": "P"
+                                                },
+                                                {
+                                                    "elements": [
+                                                        "10",
+                                                        "11"
+                                                    ],
+                                                    "type": "P"
+                                                }
+                                            ],
+                                            "elements": []
+                                        },
+                                        {
+                                            "area": "2",
+                                            "loop_level": 4,
+                                            "maximum_use": 10,
+                                            "requirement": "O",
+                                            "segment_id": "LH3",
+                                            "sequence": "220",
+                                            "transaction_set_id": "940",
+                                            "segment_name": "Hazardous Material Shipping Name",
+                                            "purpose": "To specify the hazardous material shipping name and additional descriptive requirements",
+                                            "relational_conditions": [{
+                                                "elements": [
+                                                    "01",
+                                                    "02"
+                                                ],
+                                                "type": "P"
+                                            }],
+                                            "elements": []
+                                        },
+                                        {
+                                            "area": "2",
+                                            "loop_level": 4,
+                                            "maximum_use": 20,
+                                            "requirement": "O",
+                                            "segment_id": "LFH",
+                                            "sequence": "230",
+                                            "transaction_set_id": "940",
+                                            "segment_name": "Freeform Hazardous Material Information",
+                                            "purpose": "To uniquely identify the variable information required by government regulation covering the transportation of hazardous material shipments",
+                                            "relational_conditions": [{
+                                                "elements": [
+                                                    "05",
+                                                    "06"
+                                                ],
+                                                "type": "P"
+                                            }],
+                                            "elements": []
+                                        },
+                                        {
+                                            "area": "2",
+                                            "loop_level": 4,
+                                            "maximum_use": 3,
+                                            "requirement": "O",
+                                            "segment_id": "LEP",
+                                            "sequence": "240",
+                                            "transaction_set_id": "940",
+                                            "segment_name": "EPA Required Data",
+                                            "purpose": "To specify the Environmental Protection Agency (EPA) information relating to shipments of hazardous material",
+                                            "relational_conditions": [{
+                                                "elements": [
+                                                    "03",
+                                                    "04"
+                                                ],
+                                                "type": "P"
+                                            }],
+                                            "elements": []
+                                        },
+                                        {
+                                            "area": "2",
+                                            "loop_level": 4,
+                                            "maximum_use": 1,
+                                            "requirement": "O",
+                                            "segment_id": "LH4",
+                                            "sequence": "250",
+                                            "transaction_set_id": "940",
+                                            "segment_name": "Canadian Dangerous Requirements",
+                                            "purpose": "To specify additional Transport Canada requirements covering transportation of dangerous goods in Canada",
+                                            "relational_conditions": [{
+                                                "elements": [
+                                                    "08",
+                                                    "12"
+                                                ],
+                                                "type": "P"
+                                            }],
+                                            "elements": []
+                                        },
+                                        {
+                                            "area": "2",
+                                            "loop_level": 4,
+                                            "maximum_use": 3,
+                                            "requirement": "O",
+                                            "segment_id": "LHT",
+                                            "sequence": "260",
+                                            "transaction_set_id": "940",
+                                            "segment_name": "Transborder Hazardous Requirements",
+                                            "purpose": "To specify the placard information required by the second government agency when shipment is to cross into another country",
+                                            "elements": []
+                                        },
+                                        {
+                                            "area": "2",
+                                            "loop_level": 4,
+                                            "maximum_use": 5,
+                                            "requirement": "O",
+                                            "segment_id": "LHR",
+                                            "sequence": "270",
+                                            "transaction_set_id": "940",
+                                            "segment_name": "Hazardous Material Identifying Reference Numbers",
+                                            "purpose": "To transmit specific hazardous material reference numbers",
+                                            "elements": []
+                                        },
+                                        {
+                                            "area": "2",
+                                            "loop_level": 4,
+                                            "maximum_use": 5,
+                                            "requirement": "O",
+                                            "segment_id": "PER",
+                                            "sequence": "280",
+                                            "transaction_set_id": "940",
+                                            "segment_name": "Administrative Communications Contact",
+                                            "purpose": "To identify a person or office to whom administrative communications should be directed",
+                                            "relational_conditions": [{
+                                                    "elements": [
+                                                        "03",
+                                                        "04"
+                                                    ],
+                                                    "type": "P"
+                                                },
+                                                {
+                                                    "elements": [
+                                                        "05",
+                                                        "06"
+                                                    ],
+                                                    "type": "P"
+                                                },
+                                                {
+                                                    "elements": [
+                                                        "07",
+                                                        "08"
+                                                    ],
+                                                    "type": "P"
+                                                }
+                                            ],
+                                            "elements": []
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "area": "2",
+                            "loop_level": 2,
+                            "maximum_use": 1,
+                            "requirement": "O",
+                            "segment_id": "LE",
+                            "sequence": "285",
+                            "transaction_set_id": "940",
+                            "segment_name": "Loop Trailer",
+                            "purpose": "To indicate that the loop immediately preceding this segment is complete",
+                            "elements": []
+                        },
+                        {
+                            "area": "2",
+                            "loop_identifier": "0340",
+                            "loop_level": 3,
+                            "loop_repeat": "\u003e1",
+                            "requirement": "O",
+                            "sequence": "290",
+                            "transaction_set_id": "940",
+                            "content": [{
+                                    "area": "2",
+                                    "loop_level": 3,
+                                    "maximum_use": 1,
+                                    "requirement": "M",
+                                    "segment_id": "FA1",
+                                    "sequence": "290",
+                                    "transaction_set_id": "940",
+                                    "segment_name": "Type of Financial Accounting Data",
+                                    "purpose": "To specify the organization controlling the content of the accounting citation, and the purpose associated with the accounting citation",
+                                    "elements": []
+                                },
+                                {
+                                    "area": "2",
+                                    "loop_level": 3,
+                                    "maximum_use": "\u003e1",
+                                    "requirement": "M",
+                                    "segment_id": "FA2",
+                                    "sequence": "300",
+                                    "transaction_set_id": "940",
+                                    "segment_name": "Accounting Data",
+                                    "purpose": "To specify the detailed accounting data",
+                                    "elements": []
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }],
+        "summary": [{
+                "area": "3",
+                "loop_level": 0,
+                "maximum_use": 1,
+                "requirement": "O",
+                "segment_id": "W76",
+                "sequence": "010",
+                "transaction_set_id": "940",
+                "segment_name": "Total Shipping Order",
+                "purpose": "To specify summary details of total items shipped in terms of quantity, weight, and volume",
+                "relational_conditions": [{
+                        "elements": [
+                            "02",
+                            "03"
+                        ],
+                        "type": "P"
+                    },
+                    {
+                        "elements": [
+                            "04",
+                            "05"
+                        ],
+                        "type": "P"
+                    },
+                    {
+                        "elements": [
+                            "06",
+                            "03"
+                        ],
+                        "type": "C"
+                    }
+                ],
+                "elements": []
+            },
+            {
+                "area": "3",
+                "loop_level": 0,
+                "maximum_use": 1,
+                "requirement": "M",
+                "segment_id": "SE",
+                "sequence": "020",
+                "transaction_set_id": "940",
+                "segment_name": "Transaction Set Trailer",
+                "purpose": "To indicate the end of the transaction set and provide the count of the transmitted segments (including the beginning (ST) and ending (SE) segments)",
+                "elements": []
+            }
+        ]
+    }
+}
