@@ -130,13 +130,13 @@ pub struct LIN {
 
 /// LM - Code Source Information
 #[derive(Debug, Serialize, Deserialize)]
-struct LM {
+pub struct LM {
     // Agency Qualifier Code
-    #[serde(rename = "001")]
-    _001: Option<String>,
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
     // Source Subqualifier
-    #[serde(rename = "002")]
-    _002: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
 }
 
 /// LQ - Industry Code Identification

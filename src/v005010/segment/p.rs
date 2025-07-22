@@ -824,3 +824,101 @@ pub struct PO4 {
     #[serde(rename = "18")]
     pub _18: Option<String>,
 }
+
+/// PAM - Period Amount
+#[derive(
+    Serialize,
+    Deserialize,
+    Clone,
+    Default,
+    Debug,
+    Validate,
+    PartialEq,
+    Eq,
+    DisplaySegment,
+    ParseSegment,
+)]
+pub struct PAM {
+    /// 673 - Quantity Qualifier
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    /// 380 - Quantity
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    /// C001 - Composite Unit of Measure
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    /// 522 - Amount Qualifier Code
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    /// 782 - Monetary Amount
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    /// 344 - Unit of Time Period or Interval
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    /// 374 - Date/Time Qualifier
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    /// 373 - Date
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    /// 337 - Time
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+    /// 374 - Date/Time Qualifier
+    #[serde(rename = "10")]
+    pub _10: Option<String>,
+    /// 373 - Date
+    #[serde(rename = "11")]
+    pub _11: Option<String>,
+    /// 337 - Time
+    #[serde(rename = "12")]
+    pub _12: Option<String>,
+    /// 1000 - Percent Qualifier
+    #[serde(rename = "13")]
+    pub _13: Option<String>,
+    /// 954 - Percentage as Decimal
+    #[serde(rename = "14")]
+    pub _14: Option<String>,
+    /// 1073 - Yes/No Condition or Response Code
+    #[serde(rename = "15")]
+    pub _15: Option<String>,
+}
+
+/// PKG - Marking, Packaging, Loading
+#[derive(
+    Serialize,
+    Deserialize,
+    Clone,
+    Default,
+    Debug,
+    Validate,
+    PartialEq,
+    Eq,
+    DisplaySegment,
+    ParseSegment,
+)]
+pub struct PKG {
+    /// 349 - Item Description Type
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    /// 753 - Packaging Characteristic Code
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    /// 559 - Agency Qualifier Code
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    /// 754 - Packaging Description Code
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    /// 352 - Description
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    /// 400 - Unit Load Option Code
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    /// 819 - Language Code
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+}
