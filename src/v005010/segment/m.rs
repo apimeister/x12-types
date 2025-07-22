@@ -207,3 +207,37 @@ pub struct MTX {
     #[serde(rename = "06")]
     pub _06: Option<String>,
 }
+
+/// MAN - Marks and Numbers Information
+#[derive(
+    Serialize,
+    Deserialize,
+    Clone,
+    Default,
+    Debug,
+    Validate,
+    PartialEq,
+    Eq,
+    DisplaySegment,
+    ParseSegment,
+)]
+pub struct MAN {
+    /// 88 - Marks and Numbers Qualifier
+    #[serde(rename = "01")]
+    pub _01: String,
+    /// 87 - Marks and Numbers
+    #[serde(rename = "02")]
+    pub _02: String,
+    /// 87 - Marks and Numbers
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    /// 88 - Marks and Numbers Qualifier
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    /// 87 - Marks and Numbers
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    /// 87 - Marks and Numbers
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+}

@@ -750,3 +750,88 @@ pub struct SI {
     #[serde(rename = "21")]
     pub _21: Option<String>,
 }
+
+/// SDQ - Destination Quantity
+#[derive(
+    Serialize,
+    Deserialize,
+    Clone,
+    Default,
+    Debug,
+    Validate,
+    PartialEq,
+    Eq,
+    DisplaySegment,
+    ParseSegment,
+)]
+pub struct SDQ {
+    /// 355 - Unit or Basis for Measurement Code
+    #[serde(rename = "01")]
+    pub _01: String,
+    /// 66 - Identification Code Qualifier
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    /// 67 - Identification Code
+    #[serde(rename = "03")]
+    pub _03: String,
+    /// 380 - Quantity
+    #[serde(rename = "04")]
+    pub _04: String,
+    /// 67 - Identification Code
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    /// 380 - Quantity
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    /// 67 - Identification Code
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    /// 380 - Quantity
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    /// 67 - Identification Code
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+    /// 380 - Quantity
+    #[serde(rename = "10")]
+    pub _10: Option<String>,
+    /// 67 - Identification Code
+    #[serde(rename = "11")]
+    pub _11: Option<String>,
+    /// 380 - Quantity
+    #[serde(rename = "12")]
+    pub _12: Option<String>,
+    /// 67 - Identification Code
+    #[serde(rename = "13")]
+    pub _13: Option<String>,
+    /// 380 - Quantity
+    #[serde(rename = "14")]
+    pub _14: Option<String>,
+    /// 67 - Identification Code
+    #[serde(rename = "15")]
+    pub _15: Option<String>,
+    /// 380 - Quantity
+    #[serde(rename = "16")]
+    pub _16: Option<String>,
+    /// 67 - Identification Code
+    #[serde(rename = "17")]
+    pub _17: Option<String>,
+    /// 380 - Quantity
+    #[serde(rename = "18")]
+    pub _18: Option<String>,
+    /// 67 - Identification Code
+    #[serde(rename = "19")]
+    pub _19: Option<String>,
+    /// 380 - Quantity
+    #[serde(rename = "20")]
+    pub _20: Option<String>,
+    /// 67 - Identification Code
+    #[serde(rename = "21")]
+    pub _21: Option<String>,
+    /// 380 - Quantity
+    #[serde(rename = "22")]
+    pub _22: Option<String>,
+    /// 310 - Location Identifier
+    #[serde(rename = "23")]
+    pub _23: Option<String>,
+}
