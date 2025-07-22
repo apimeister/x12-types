@@ -33,9 +33,9 @@ mod test_404;
 #[cfg(test)]
 mod test_810;
 #[cfg(test)]
-mod test_997;
-#[cfg(test)]
 mod test_856;
+#[cfg(test)]
+mod test_997;
 mod test_998;
 #[cfg(test)]
 mod test_segments;
@@ -2738,7 +2738,7 @@ impl<'a> Parser<&'a str, _856, nom::error::Error<&'a str>> for _856 {
         output.bsn = obj;
         let (rest, obj) = many0(DTM::parse).parse(rest)?;
         output.dtm = obj;
-        
+
         // loop HL - Hierarchical Level
         let mut loop_hl = vec![];
         let mut loop_rest = rest;
@@ -2759,7 +2759,7 @@ impl<'a> Parser<&'a str, _856, nom::error::Error<&'a str>> for _856 {
             let (rest, lin) = many0(LIN::parse).parse(rest)?;
             let (rest, sn1) = many0(SN1::parse).parse(rest)?;
             let (rest, ctt) = opt(CTT::parse).parse(rest)?;
-            
+
             loop_rest = rest;
             loop_hl.push(_856LoopHL {
                 hl,

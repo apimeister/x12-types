@@ -1,5 +1,5 @@
-use crate::v004010::*;
 use crate::util::Parser;
+use crate::v004010::*;
 
 #[test]
 fn test_856_simple() {
@@ -10,7 +10,7 @@ BSN*00*SHIP001*20231014*1831~
 SE*4*0001~
 GE*1*0001~
 IEA*1*000000001~"#;
-    
+
     let result = Transmission::<_856>::parse(str);
     match result {
         Ok((rest, obj)) => {
@@ -60,7 +60,7 @@ IEA*1*000000001~"#;
             assert_eq!(obj.functional_group[0].segments[0].st._01, "856");
             assert_eq!(obj.functional_group[0].segments[0].bsn._01, "00");
             assert_eq!(obj.functional_group[0].segments[0].bsn._02, "SHIPMENT ID");
-            
+
             // Verify HL loops are parsed
             assert!(!obj.functional_group[0].segments[0].loop_hl.is_empty());
             assert_eq!(obj.functional_group[0].segments[0].loop_hl[0].hl._01, "1");
@@ -136,7 +136,7 @@ IEA*1*000000263~"#;
             assert_eq!(obj.functional_group[0].segments[0].st._01, "856");
             assert_eq!(obj.functional_group[0].segments[0].bsn._01, "00");
             assert_eq!(obj.functional_group[0].segments[0].bsn._02, "01140824");
-            
+
             // Verify HL loops are parsed
             assert!(!obj.functional_group[0].segments[0].loop_hl.is_empty());
             assert_eq!(obj.functional_group[0].segments[0].loop_hl[0].hl._01, "1");
@@ -169,10 +169,10 @@ CTT*4~
 SE*12*0001~
 GE*1*0001~
 IEA*1*000000001~"#;
-    
+
     let (rest, obj) = Transmission::<_856>::parse(str).unwrap();
     assert!(rest.is_empty());
-    
+
     // Verify basic structure
     assert_eq!(obj.isa._06.trim(), "SENDER");
     assert_eq!(obj.isa._08.trim(), "RECEIVER");
@@ -206,10 +206,10 @@ CTT*4~
 SE*15*0001~
 GE*1*0001~
 IEA*1*000000001~"#;
-    
+
     let (rest, obj) = Transmission::<_856>::parse(str).unwrap();
     assert!(rest.is_empty());
-    
+
     // Verify carrier details
     let hl_loop = &obj.functional_group[0].segments[0].loop_hl[0];
     assert_eq!(hl_loop.td1[0]._01, Some("CTN25".to_string()));
@@ -247,18 +247,18 @@ IEA*1*000000001~"#;
         Ok((rest, obj)) => {
             println!("Parsed 856_with_line_items: {:#?}", obj);
             println!("Rest: {}", rest);
-            
+
             // Verify line items
             let hl_loops = &obj.functional_group[0].segments[0].loop_hl;
             assert_eq!(hl_loops.len(), 5);
-            
+
             // First item level (HL*4*3*I)
             let item1 = &hl_loops[3]; // Index 3 for HL*4
             assert_eq!(item1.lin[0]._02, "UP");
             assert_eq!(item1.lin[0]._03, "123456789");
             assert_eq!(item1.sn1[0]._02, "10");
             assert_eq!(item1.sn1[0]._03, "EA");
-            
+
             // Second item level (HL*5*3*I)
             let item2 = &hl_loops[4]; // Index 4 for HL*5
             assert_eq!(item2.lin[0]._02, "UP");
