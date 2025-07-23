@@ -1,3 +1,4 @@
+use super::segment::*;
 use crate::util::Parser;
 use nom::combinator::opt;
 use nom::multi::many0;
@@ -5,7 +6,6 @@ use nom::IResult;
 use nom::Parser as _;
 use serde::{Deserialize, Serialize};
 use x12_types_macros::DisplayX12;
-use super::segment::*;
 
 /// 945 - Warehouse Shipping Advice
 ///
@@ -67,8 +67,18 @@ impl<'a> Parser<&'a str, _945, nom::error::Error<&'a str>> for _945 {
             let (rest, n3) = many0(N3::parse).parse(rest)?;
             let (rest, n4) = opt(N4::parse).parse(rest)?;
             let (rest, per) = many0(PER::parse).parse(rest)?;
-            Ok((rest, _945LoopN1 { n1, n2, n3, n4, per }))
-        }).parse(rest)?;
+            Ok((
+                rest,
+                _945LoopN1 {
+                    n1,
+                    n2,
+                    n3,
+                    n4,
+                    per,
+                },
+            ))
+        })
+        .parse(rest)?;
         output.loop_n1 = loop_n1;
 
         let (rest, obj) = many0(N9::parse).parse(rest)?;
@@ -95,7 +105,8 @@ impl<'a> Parser<&'a str, _945, nom::error::Error<&'a str>> for _945 {
             let (rest, lm) = LM::parse(input)?;
             let (rest, lq) = many0(LQ::parse).parse(rest)?;
             Ok((rest, _945LoopLM { lm, lq }))
-        }).parse(rest)?;
+        })
+        .parse(rest)?;
         output.loop_lm = loop_lm;
 
         // loop lx (assigned number)
@@ -120,7 +131,8 @@ impl<'a> Parser<&'a str, _945, nom::error::Error<&'a str>> for _945 {
                     let (rest, lm) = LM::parse(input)?;
                     let (rest, lq) = many0(LQ::parse).parse(rest)?;
                     Ok((rest, _945LoopLM { lm, lq }))
-                }).parse(rest)?;
+                })
+                .parse(rest)?;
                 let (rest, ls) = opt(LS::parse).parse(rest)?;
                 let (rest, loop_lx_detail) = many0(|input| {
                     let (rest, lx) = LX::parse(input)?;
@@ -131,19 +143,62 @@ impl<'a> Parser<&'a str, _945, nom::error::Error<&'a str>> for _945 {
                         let (rest, lm) = LM::parse(input)?;
                         let (rest, lq) = many0(LQ::parse).parse(rest)?;
                         Ok((rest, _945LoopLM { lm, lq }))
-                    }).parse(rest)?;
-                    Ok((rest, _945LoopLXDetail { lx, n9, g62, n1, loop_lm }))
-                }).parse(rest)?;
+                    })
+                    .parse(rest)?;
+                    Ok((
+                        rest,
+                        _945LoopLXDetail {
+                            lx,
+                            n9,
+                            g62,
+                            n1,
+                            loop_lm,
+                        },
+                    ))
+                })
+                .parse(rest)?;
                 let (rest, le) = opt(LE::parse).parse(rest)?;
                 let (rest, loop_fa1) = many0(|input| {
                     let (rest, fa1) = FA1::parse(input)?;
                     let (rest, fa2) = many0(FA2::parse).parse(rest)?;
                     Ok((rest, _945LoopFA1 { fa1, fa2 }))
-                }).parse(rest)?;
-                Ok((rest, _945LoopW12 { w12, g69, n9, g62, qty, mea, amt, r4, w27, n1, g72, loop_lm, ls, loop_lx_detail, le, loop_fa1 }))
-            }).parse(rest)?;
-            Ok((rest, _945LoopLX { lx, man, pal, n9, loop_w12 }))
-        }).parse(rest)?;
+                })
+                .parse(rest)?;
+                Ok((
+                    rest,
+                    _945LoopW12 {
+                        w12,
+                        g69,
+                        n9,
+                        g62,
+                        qty,
+                        mea,
+                        amt,
+                        r4,
+                        w27,
+                        n1,
+                        g72,
+                        loop_lm,
+                        ls,
+                        loop_lx_detail,
+                        le,
+                        loop_fa1,
+                    },
+                ))
+            })
+            .parse(rest)?;
+            Ok((
+                rest,
+                _945LoopLX {
+                    lx,
+                    man,
+                    pal,
+                    n9,
+                    loop_w12,
+                },
+            ))
+        })
+        .parse(rest)?;
         output.loop_lx = loop_lx;
 
         let (rest, obj) = opt(W03::parse).parse(rest)?;

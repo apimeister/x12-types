@@ -59,5 +59,5 @@ pub use z::*;
 
 // Add the new segments
 pub use f::{FA1, FA2};
-pub use g::{G72};
+pub use g::G72;
 pub use w::{W03, W06, W10, W12, W27, W28};
