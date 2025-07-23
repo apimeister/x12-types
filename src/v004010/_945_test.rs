@@ -86,6 +86,7 @@ fn render_945() {
             _06: None,
             _07: Some("(Equipment ID)".to_string()),
         }),
+        w10: vec![],
         loop_lx: vec![
             _945LoopLX {
                 lx: LX {
@@ -131,6 +132,7 @@ fn render_945() {
                         ..Default::default()
                     },
                 ],
+                ..Default::default()
             },
             _945LoopLX {
                 lx: LX {
@@ -170,6 +172,7 @@ fn render_945() {
                         ..Default::default()
                     },
                 ],
+                ..Default::default()
             },
             _945LoopLX {
                 lx: LX {
@@ -215,6 +218,7 @@ fn render_945() {
                         ..Default::default()
                     },
                 ],
+                ..Default::default()
             },
         ],
         w03: Some(W03 {
@@ -227,6 +231,7 @@ fn render_945() {
             _01: "32".to_string(),
             _02: "0001".to_string(),
         },
+        ..Default::default()
     };
 
     let serialized = format!("{obj}");
@@ -343,7 +348,7 @@ fn full_transmission_945() {
                         _03: Some("10".to_string()),
                         ..Default::default()
                     },
-                    n9: vec![],
+                    ..Default::default()
                 }],
                 se: SE {
                     _01: "4".to_string(),
@@ -365,4 +370,56 @@ fn full_transmission_945() {
     let serialized = format!("{obj}");
     let expected = "ISA*00*          *00*          *ZZ*SENDER         *ZZ*RECEIVER       *220524*1120*U*00401*000000001*0*P*>~\nGS*SW*SENDER*RECEIVER*20220524*1600*1*X*004010~\nST*945*0001~\nW06*F*12345~\nLX*1~\nW12*CC*10*10~\nSE*4*0001~\nGE*1*1~\nIEA*1*000000001~\n";
     assert_eq!(serialized, expected);
+}
+
+#[test]
+fn test_945_parse_1() {
+    let str = r#"ISA*00* *00* *ZZ*YOUR-ID-HERE *ZZ*WAQE *200901*1409*U*00401*043000123*0*P*>~
+GS*SW*YOUR-ID-HERE*WAQE*20200901*1409*000000123*X*004010~
+ST*945*000006123~
+W06*F*IF102*20190604*BOL12345**PO9865~
+N1*ST*CUSTOMER XYZ~
+N3*123 CUSTOMER WAY~
+N4*ANYTOWN*KS*66216-4563~
+N1*SF***CHI~
+G62*10*20190602~
+NTE*WHI*Extra shrink applied~
+W27*M*NPLT*NORTHPOINT TRANSPOR*PP~
+W10*1~
+LX*10~
+W12*CC*3000*3000*0*EA**VN*123456789*LOT12314~
+G69*WIDGETS 100 PER BOX~
+N9*LV*LPN6569~
+W03*3000*15000*LB~
+SE*12*000006123~
+GE*1*000000123~
+IEA*1*043000123~"#;
+    let (rest, _obj) = Transmission::<_945>::parse(str).unwrap();
+    assert!(rest.is_empty());
+}
+
+#[test]
+fn test_945_parse_2() {
+    let str = r#"ISA*00* *00* *ZZ*WAQE *ZZ*YOUR-ID-HERE *200901*1409*U*00401*043000123*0*P*>~
+GS*SW*WAQE*YOUR-ID-HERE*20200901*1409*000000123*X*004010~
+ST*945*000006123~
+W06*F*IF102*20190604*BOL12345**PO9865~
+N1*ST*CUSTOMER XYZ~
+N3*123 CUSTOMER WAY~
+N4*ANYTOWN*KS*66216-4563~
+N1*SF***CHI~
+G62*10*20190602~
+NTE*WHI*Extra shrink applied~
+W27*M*NPLT*NORTHPOINT TRANSPOR*PP~
+W10*1~
+LX*10~
+W12*CC*3000*3000*0*EA**VN*123456789*LOT12314~
+G69*WIDGETS 100 PER BOX~
+N9*LV*LPN6569~
+W03*3000*15000*LB~
+SE*12*000006123~
+GE*1*000000123~
+IEA*1*043000123~"#;
+    let (rest, _obj) = Transmission::<_945>::parse(str).unwrap();
+    assert!(rest.is_empty());
 }
