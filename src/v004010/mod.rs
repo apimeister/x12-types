@@ -6,13 +6,13 @@ use nom::combinator::peek;
 use nom::multi::many0;
 use nom::IResult;
 use nom::Parser as _;
-pub mod segment;
-pub use segment::*;
 use serde::{Deserialize, Serialize};
 use std::fmt::Debug;
 use std::fmt::Display;
 use validator::Validate;
 use x12_types_macros::DisplayX12;
+
+pub mod segment;
 
 mod _940_doc;
 pub use _940_doc::*;

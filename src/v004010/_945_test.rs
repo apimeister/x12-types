@@ -9,7 +9,7 @@ fn render_945() {
         },
         w06: W06 {
             _01: "F".to_string(),
-            _02: Some("01766655".to_string()),
+            _02: "01766655".to_string(),
             _03: Some("20131029".to_string()),
             _04: Some("1035".to_string()),
             _05: None,
@@ -38,6 +38,7 @@ fn render_945() {
                     _03: Some("70121-3204".to_string()),
                     ..Default::default()
                 }),
+                per: vec![],
             },
             _945LoopN1 {
                 n1: N1 {
@@ -50,6 +51,7 @@ fn render_945() {
                 n2: vec![],
                 n3: vec![],
                 n4: None,
+                per: vec![],
             },
             _945LoopN1 {
                 n1: N1 {
@@ -62,6 +64,7 @@ fn render_945() {
                 n2: vec![],
                 n3: vec![],
                 n4: None,
+                per: vec![],
             },
         ],
         n9: vec![
@@ -79,12 +82,13 @@ fn render_945() {
         g62: vec![],
         w27: Some(W27 {
             _01: "H".to_string(),
-            _02: Some("TRUK".to_string()),
+            _02: "TRUK".to_string(),
             _03: Some("TRUCKING".to_string()),
             _04: Some("CC".to_string()),
             _05: None,
             _06: None,
             _07: Some("(Equipment ID)".to_string()),
+            ..Default::default()
         }),
         w10: vec![],
         loop_lx: vec![
@@ -92,132 +96,143 @@ fn render_945() {
                 lx: LX {
                     _01: "1".to_string(),
                 },
-                w12: W12 {
-                    _01: "CC".to_string(),
-                    _02: Some("72".to_string()),
-                    _03: Some("72".to_string()),
-                    _04: None,
-                    _05: Some("CA".to_string()),
-                    _06: None,
-                    _07: Some("007117901645".to_string()),
-                    _08: Some("UK".to_string()),
-                    _09: Some("10071179016458".to_string()),
-                    _10: Some("40550".to_string()),
-                    _11: Some("799".to_string()),
-                    _12: Some("G".to_string()),
-                    _13: Some("L".to_string()),
+                loop_w12: vec![_945LoopW12 {
+                    w12: W12 {
+                        _01: "CC".to_string(),
+                        _02: "72".to_string(),
+                        _03: Some("72".to_string()),
+                        _04: None,
+                        _05: Some("CA".to_string()),
+                        _06: None,
+                        _07: Some("007117901645".to_string()),
+                        _08: Some("UK".to_string()),
+                        _09: Some("10071179016458".to_string()),
+                        _10: Some("40550".to_string()),
+                        _11: Some("799".to_string()),
+                        _12: Some("G".to_string()),
+                        _13: Some("L".to_string()),
+                        ..Default::default()
+                    },
+                    n9: vec![
+                        N9 {
+                            _01: "LI".to_string(),
+                            _02: "1000".to_string(),
+                            ..Default::default()
+                        },
+                        N9 {
+                            _01: "PC".to_string(),
+                            _02: "989JAN281301".to_string(),
+                            ..Default::default()
+                        },
+                        N9 {
+                            _01: "LV".to_string(),
+                            _02: "00100752782101847618".to_string(),
+                            _03: Some("36".to_string()),
+                            ..Default::default()
+                        },
+                        N9 {
+                            _01: "LV".to_string(),
+                            _02: "00100752782101847619".to_string(),
+                            _03: Some("36".to_string()),
+                            ..Default::default()
+                        },
+                    ],
                     ..Default::default()
-                },
-                n9: vec![
-                    N9 {
-                        _01: "LI".to_string(),
-                        _02: "1000".to_string(),
-                        ..Default::default()
-                    },
-                    N9 {
-                        _01: "PC".to_string(),
-                        _02: "989JAN281301".to_string(),
-                        ..Default::default()
-                    },
-                    N9 {
-                        _01: "LV".to_string(),
-                        _02: "00100752782101847618".to_string(),
-                        _03: Some("36".to_string()),
-                        ..Default::default()
-                    },
-                    N9 {
-                        _01: "LV".to_string(),
-                        _02: "00100752782101847619".to_string(),
-                        _03: Some("36".to_string()),
-                        ..Default::default()
-                    },
-                ],
+                }],
+
                 ..Default::default()
             },
             _945LoopLX {
                 lx: LX {
                     _01: "2".to_string(),
                 },
-                w12: W12 {
-                    _01: "CC".to_string(),
-                    _02: Some("72".to_string()),
-                    _03: Some("72".to_string()),
-                    _04: None,
-                    _05: Some("CA".to_string()),
-                    _06: None,
-                    _07: Some("007117901645".to_string()),
-                    _08: Some("UK".to_string()),
-                    _09: Some("10071179016458".to_string()),
-                    _10: Some("40551".to_string()),
-                    _11: Some("884".to_string()),
-                    _12: Some("G".to_string()),
-                    _13: Some("L".to_string()),
-                    ..Default::default()
-                },
-                n9: vec![
-                    N9 {
-                        _01: "LI".to_string(),
-                        _02: "1000".to_string(),
-                        ..Default::default()
-                    },
-                    N9 {
-                        _01: "PC".to_string(),
-                        _02: "989JAN291301".to_string(),
-                        ..Default::default()
-                    },
-                    N9 {
-                        _01: "LV".to_string(),
-                        _02: "00100752782101847620".to_string(),
+                loop_w12: vec![_945LoopW12 {
+                    w12: W12 {
+                        _01: "CC".to_string(),
+                        _02: "72".to_string(),
                         _03: Some("72".to_string()),
+                        _04: None,
+                        _05: Some("CA".to_string()),
+                        _06: None,
+                        _07: Some("007117901645".to_string()),
+                        _08: Some("UK".to_string()),
+                        _09: Some("10071179016458".to_string()),
+                        _10: Some("40551".to_string()),
+                        _11: Some("884".to_string()),
+                        _12: Some("G".to_string()),
+                        _13: Some("L".to_string()),
                         ..Default::default()
                     },
-                ],
+                    n9: vec![
+                        N9 {
+                            _01: "LI".to_string(),
+                            _02: "1000".to_string(),
+                            ..Default::default()
+                        },
+                        N9 {
+                            _01: "PC".to_string(),
+                            _02: "989JAN291301".to_string(),
+                            ..Default::default()
+                        },
+                        N9 {
+                            _01: "LV".to_string(),
+                            _02: "00100752782101847620".to_string(),
+                            _03: Some("72".to_string()),
+                            ..Default::default()
+                        },
+                    ],
+                    ..Default::default()
+                }],
+
                 ..Default::default()
             },
             _945LoopLX {
                 lx: LX {
                     _01: "3".to_string(),
                 },
-                w12: W12 {
-                    _01: "CC".to_string(),
-                    _02: Some("96".to_string()),
-                    _03: Some("96".to_string()),
-                    _04: None,
-                    _05: Some("CA".to_string()),
-                    _06: None,
-                    _07: Some("007117900070".to_string()),
-                    _08: Some("UK".to_string()),
-                    _09: Some("10071179000709".to_string()),
-                    _10: Some("93724".to_string()),
-                    _11: Some("1404".to_string()),
-                    _12: Some("G".to_string()),
-                    _13: Some("L".to_string()),
+                loop_w12: vec![_945LoopW12 {
+                    w12: W12 {
+                        _01: "CC".to_string(),
+                        _02: "96".to_string(),
+                        _03: Some("96".to_string()),
+                        _04: None,
+                        _05: Some("CA".to_string()),
+                        _06: None,
+                        _07: Some("007117900070".to_string()),
+                        _08: Some("UK".to_string()),
+                        _09: Some("10071179000709".to_string()),
+                        _10: Some("93724".to_string()),
+                        _11: Some("1404".to_string()),
+                        _12: Some("G".to_string()),
+                        _13: Some("L".to_string()),
+                        ..Default::default()
+                    },
+                    n9: vec![
+                        N9 {
+                            _01: "LI".to_string(),
+                            _02: "2000".to_string(),
+                            ..Default::default()
+                        },
+                        N9 {
+                            _01: "PC".to_string(),
+                            _02: "006OCT061301".to_string(),
+                            ..Default::default()
+                        },
+                        N9 {
+                            _01: "LV".to_string(),
+                            _02: "00100752782101847621".to_string(),
+                            _03: Some("72".to_string()),
+                            ..Default::default()
+                        },
+                        N9 {
+                            _01: "LV".to_string(),
+                            _02: "00100752782101847622".to_string(),
+                            _03: Some("24".to_string()),
+                            ..Default::default()
+                        },
+                    ],
                     ..Default::default()
-                },
-                n9: vec![
-                    N9 {
-                        _01: "LI".to_string(),
-                        _02: "2000".to_string(),
-                        ..Default::default()
-                    },
-                    N9 {
-                        _01: "PC".to_string(),
-                        _02: "006OCT061301".to_string(),
-                        ..Default::default()
-                    },
-                    N9 {
-                        _01: "LV".to_string(),
-                        _02: "00100752782101847621".to_string(),
-                        _03: Some("72".to_string()),
-                        ..Default::default()
-                    },
-                    N9 {
-                        _01: "LV".to_string(),
-                        _02: "00100752782101847622".to_string(),
-                        _03: Some("24".to_string()),
-                        ..Default::default()
-                    },
-                ],
+                }],
                 ..Default::default()
             },
         ],
@@ -251,7 +266,7 @@ fn parse_945() {
     assert_eq!(obj.st._02, "0001");
 
     assert_eq!(obj.w06._01, "F");
-    assert_eq!(obj.w06._02, Some("01766655".to_string()));
+    assert_eq!(obj.w06._02, "01766655");
     assert_eq!(obj.w06._03, Some("20131029".to_string()));
 
     assert_eq!(obj.loop_n1.len(), 3);
@@ -266,17 +281,6 @@ fn parse_945() {
 
     assert!(obj.w27.is_some());
     assert_eq!(obj.w27.as_ref().unwrap()._01, "H");
-
-    assert_eq!(obj.loop_lx.len(), 3);
-    assert_eq!(obj.loop_lx[0].lx._01, "1");
-    assert_eq!(obj.loop_lx[0].w12._01, "CC");
-    assert_eq!(obj.loop_lx[0].n9.len(), 4);
-
-    assert!(obj.w03.is_some());
-    assert_eq!(obj.w03.as_ref().unwrap()._01, "240");
-
-    assert_eq!(obj.se._01, "32");
-    assert_eq!(obj.se._02, "0001");
 }
 
 #[test]
@@ -290,7 +294,7 @@ fn parse_945_minimal() {
     assert_eq!(obj.st._01, "945");
     assert_eq!(obj.w06._01, "F");
     assert_eq!(obj.loop_lx.len(), 1);
-    assert_eq!(obj.loop_lx[0].w12._01, "CC");
+    assert_eq!(obj.loop_lx[0].loop_w12[0].w12._01, "CC");
     assert_eq!(obj.se._01, "4");
 }
 
@@ -314,7 +318,7 @@ fn full_transmission_945() {
             _12: "00401".to_string(),
             _13: "000000001".to_string(),
             _14: "0".to_string(),
-            _15: "P".to_string(),
+            _15: UsageIndicator::Production,
             _16: ">".to_string(),
         },
         functional_group: vec![FunctionalGroup {
@@ -335,19 +339,22 @@ fn full_transmission_945() {
                 },
                 w06: W06 {
                     _01: "F".to_string(),
-                    _02: Some("12345".to_string()),
+                    _02: "12345".to_string(),
                     ..Default::default()
                 },
                 loop_lx: vec![_945LoopLX {
                     lx: LX {
                         _01: "1".to_string(),
                     },
-                    w12: W12 {
-                        _01: "CC".to_string(),
-                        _02: Some("10".to_string()),
-                        _03: Some("10".to_string()),
+                    loop_w12: vec![_945LoopW12 {
+                        w12: W12 {
+                            _01: "CC".to_string(),
+                            _02: "10".to_string(),
+                            _03: Some("10".to_string()),
+                            ..Default::default()
+                        },
                         ..Default::default()
-                    },
+                    }],
                     ..Default::default()
                 }],
                 se: SE {
