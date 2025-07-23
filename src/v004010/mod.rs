@@ -39,6 +39,12 @@ mod test_810;
 mod test_856;
 #[cfg(test)]
 mod test_940;
+
+mod _945_doc;
+pub use _945_doc::*;
+#[cfg(test)]
+mod _945_test;
+
 #[cfg(test)]
 mod test_997;
 #[cfg(test)]
