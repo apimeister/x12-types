@@ -68,3 +68,20 @@ pub struct UR {
     #[serde(rename = "02")]
     pub _02: Option<String>,
 }
+
+/// UIT - Unit Detail
+///
+/// To carry unit detail data
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct UIT {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+}

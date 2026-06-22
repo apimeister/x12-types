@@ -922,3 +922,237 @@ pub struct PKG {
     #[serde(rename = "07")]
     pub _07: Option<String>,
 }
+
+/// PAL - Pallet Information
+///
+/// To specify the pallet information
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct PAL {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+    #[serde(rename = "10")]
+    pub _10: Option<String>,
+    #[serde(rename = "11")]
+    pub _11: Option<String>,
+    #[serde(rename = "12")]
+    pub _12: Option<String>,
+    #[serde(rename = "13")]
+    pub _13: Option<String>,
+    #[serde(rename = "14")]
+    pub _14: Option<String>,
+    #[serde(rename = "15")]
+    pub _15: Option<String>,
+    #[serde(rename = "16")]
+    pub _16: Option<String>,
+    #[serde(rename = "17")]
+    pub _17: Option<String>,
+    #[serde(rename = "18")]
+    pub _18: Option<String>,
+    #[serde(rename = "19")]
+    pub _19: Option<String>,
+    #[serde(rename = "20")]
+    pub _20: Option<String>,
+    #[serde(rename = "21")]
+    pub _21: Option<String>,
+    #[serde(rename = "22")]
+    pub _22: Option<String>,
+    #[serde(rename = "23")]
+    pub _23: Option<String>,
+    #[serde(rename = "24")]
+    pub _24: Option<String>,
+    #[serde(rename = "25")]
+    pub _25: Option<String>,
+    #[serde(rename = "26")]
+    pub _26: Option<String>,
+    #[serde(rename = "27")]
+    pub _27: Option<String>,
+    #[serde(rename = "28")]
+    pub _28: Option<String>,
+    #[serde(rename = "29")]
+    pub _29: Option<String>,
+    #[serde(rename = "30")]
+    pub _30: Option<String>,
+    #[serde(rename = "31")]
+    pub _31: Option<String>,
+    #[serde(rename = "32")]
+    pub _32: Option<String>,
+    #[serde(rename = "33")]
+    pub _33: Option<String>,
+    #[serde(rename = "34")]
+    pub _34: Option<String>,
+    #[serde(rename = "35")]
+    pub _35: Option<String>,
+    #[serde(rename = "36")]
+    pub _36: Option<String>,
+    #[serde(rename = "37")]
+    pub _37: Option<String>,
+    #[serde(rename = "38")]
+    pub _38: Option<String>,
+    #[serde(rename = "39")]
+    pub _39: Option<String>,
+    #[serde(rename = "40")]
+    pub _40: Option<String>,
+}
+
+/// PLD - Pallet Information NEW
+///
+/// To specify pallet information including quantity, exchange, and weight
+///
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 406 | Quantity of Pallets Shipped | 1 | M | N0 | 1/3
+/// 02 | 399 | Pallet Exchange Code | 1 | O | ID | 1/1
+/// 03 | 188 | Weight Unit Code | 1 | X | ID | 1/1
+/// 04 | 81 | Weight | 1 | X | R | 1/10
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct PLD {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+}
+
+/// PRF - Purchase Order Reference
+///
+/// To provide reference to a specific purchase order
+///
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 324 | Purchase Order Number | 1 | M | AN | 1/22
+/// 02 | 328 | Release Number | 1 | O | AN | 1/30
+/// 03 | 327 | Change Order Sequence Number | 1 | O | AN | 1/8
+/// 04 | 373 | Date | 1 | O/Z | DT | 8/8
+/// 05 | 350 | Assigned Identification | 1 | O | AN | 1/20
+/// 06 | 367 | Contract Number | 1 | O | AN | 1/30
+/// 07 | 92 | Purchase Order Type Code | 1 | O | ID | 2/2
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct PRF {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    /// 373 - Date
+    ///
+    /// Date expressed as CCYYMMDD where CC represents the first two digits of the calendar year
+    /// - TYPE=DT
+    /// - MIN=8
+    /// - MAX=8
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+}
+
+/// POC - Line Item Change
+///
+/// To specify changes to a line item
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct POC {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: String,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+    #[serde(rename = "10")]
+    pub _10: Option<String>,
+    #[serde(rename = "11")]
+    pub _11: Option<String>,
+    #[serde(rename = "12")]
+    pub _12: Option<String>,
+    #[serde(rename = "13")]
+    pub _13: Option<String>,
+    #[serde(rename = "14")]
+    pub _14: Option<String>,
+    #[serde(rename = "15")]
+    pub _15: Option<String>,
+    #[serde(rename = "16")]
+    pub _16: Option<String>,
+    #[serde(rename = "17")]
+    pub _17: Option<String>,
+    #[serde(rename = "18")]
+    pub _18: Option<String>,
+    #[serde(rename = "19")]
+    pub _19: Option<String>,
+    #[serde(rename = "20")]
+    pub _20: Option<String>,
+    #[serde(rename = "21")]
+    pub _21: Option<String>,
+    #[serde(rename = "22")]
+    pub _22: Option<String>,
+    #[serde(rename = "23")]
+    pub _23: Option<String>,
+    #[serde(rename = "24")]
+    pub _24: Option<String>,
+    #[serde(rename = "25")]
+    pub _25: Option<String>,
+    #[serde(rename = "26")]
+    pub _26: Option<String>,
+    #[serde(rename = "27")]
+    pub _27: Option<String>,
+    #[serde(rename = "28")]
+    pub _28: Option<String>,
+}
+
+/// POD - Proof of Delivery
+///
+/// To specify proof of delivery information
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct POD {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+}

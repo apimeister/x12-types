@@ -19,13 +19,52 @@ This library provides bindings for the ASC X12 standard.
   * 997 - Functional Acknowledgment
   * 998 - Set Cancellation
 * 005010
+  * 180 - Return Merchandise Authorization and Notification
+  * 204 - Motor Carrier Load Tender
+  * 210 - Motor Carrier Freight Details and Invoice
+  * 214 - Transportation Carrier Shipment Status Message
   * 270 - Eligibility, Coverage or Benefit Inquiry
   * 271 - Eligibility, Coverage or Benefit Information
-  * 276 - Health Claim Status Request
+  * 274 - Healthcare Provider Information
+  * 275 - Patient Information
+  * 276 - Health Care Claim Status Request
+  * 277 - Health Care Claim Status Notification
+  * 278 - Health Care Services Review Information
+  * 310 - Freight Receipt and Invoice (Ocean)
+  * 315 - Status Details (Ocean)
+  * 753 - Request for Routing Instructions
+  * 754 - Routing Instructions
+  * 810 - Invoice
+  * 812 - Credit/Debit Adjustment
+  * 816 - Organizational Relationships
   * 820 - Payment Order/Remittance Advice
+  * 824 - Application Advice
+  * 830 - Planning Schedule with Release Capability
+  * 832 - Price/Sales Catalog
   * 834 - Benefit Enrollment and Maintenance (005010X220A1)
   * 835 - Health Care Claim Payment/Advice
-  * 837 - Health Care Claim
+  * 837 - Health Care Claim (covers 837P/I/D — Professional, Institutional, Dental)
+  * 840 - Request for Quotation
+  * 843 - Response to Request for Quotation
+  * 846 - Inventory Inquiry/Advice
+  * 850 - Purchase Order
+  * 852 - Product Activity Data
+  * 855 - Purchase Order Acknowledgment
+  * 856 - Ship Notice/Manifest
+  * 860 - Purchase Order Change Request - Buyer Initiated
+  * 861 - Receiving Advice/Acceptance Certificate
+  * 862 - Shipping Schedule
+  * 864 - Text Message
+  * 865 - Purchase Order Change Acknowledgment - Seller Initiated
+  * 870 - Order Status Report
+  * 875 - Grocery Products Purchase Order
+  * 880 - Grocery Products Invoice
+  * 940 - Warehouse Shipping Order
+  * 943 - Warehouse Stock Transfer Shipment Advice
+  * 944 - Warehouse Stock Transfer Receipt Advice
+  * 945 - Warehouse Shipping Advice
+  * 990 - Response to a Load Tender
+  * 997 - Functional Acknowledgment
   * 999 - Implementation Acknowledgment
 * 005030
   * 404 - Rail Carrier Shipment Information

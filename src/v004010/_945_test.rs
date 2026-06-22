@@ -430,3 +430,17 @@ IEA*1*043000123~"#;
     let (rest, _obj) = Transmission::<_945>::parse(str).unwrap();
     assert!(rest.is_empty());
 }
+
+/// Regression: each LX detail loop is a separate top-level line item.
+/// Previously a nested LX inside the W12 loop collapsed multi-item 945s into one.
+#[test]
+fn parse_945_multi_lx() {
+    let input = "ST*945*0001~W06*F*12345~LX*1~W12*CC*10*10~N9*LI*1000~LX*2~W12*CC*20*20~N9*LI*2000~W03*30~SE*9*0001~";
+    let (rest, obj) = _945::parse(input).unwrap();
+    assert_eq!(rest, "");
+    assert_eq!(obj.loop_lx.len(), 2);
+    assert_eq!(obj.loop_lx[0].lx._01, "1");
+    assert_eq!(obj.loop_lx[1].lx._01, "2");
+    assert_eq!(obj.loop_lx[0].loop_w12[0].w12._02, "10");
+    assert_eq!(obj.loop_lx[1].loop_w12[0].w12._02, "20");
+}
