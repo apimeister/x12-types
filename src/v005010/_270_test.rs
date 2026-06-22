@@ -69,3 +69,30 @@ IEA*1*000000101~"#;
     assert_eq!(loop_2100.nm1._02, "2");
     assert_eq!(loop_2100.nm1._03, Some("ABC COMPANY".to_string()));
 }
+
+/// Guards the `ParseX12`-derived parser: parsing, rendering, and re-parsing a
+/// fully-populated 270 must round-trip to an identical structure.
+#[test]
+fn parse_270_roundtrip() {
+    let str = r#"ISA*00*          *00*          *ZZ*1234567        *ZZ*11111          *170508*1141*^*00501*000000101*1*P*:~
+GS*HC*XXXXXXX*XXXXX*20170617*1741*101*X*005010X279A1~
+ST*270*1234*005010X279A1~
+BHT*0022*13*10001234*20060501*1319~
+HL*1**20*1~
+NM1*PR*2*ABC COMPANY*****PI*842610001~
+HL*2*1*21*1~
+NM1*1P*2*BONE AND JOINT CLINIC*****SV*2000035~
+HL*3*2*22*0~
+TRN*1*93175-012547*9877281234~
+NM1*IL*1*SMITH*ROBERT****MI*11122333301~
+DMG*D8*19430519~
+DTP*291*D8*20060501~
+EQ*30~
+SE*13*1234~
+GE*1*101~
+IEA*1*000000101~"#;
+    let (_, first) = Transmission::<_270>::parse(str).unwrap();
+    let rendered = format!("{first}");
+    let (_, second) = Transmission::<_270>::parse(&rendered).unwrap();
+    assert_eq!(first, second);
+}

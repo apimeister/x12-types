@@ -1,4 +1,3 @@
-use crate::v004010::Transmission;
 use nom::bytes::complete::tag;
 use nom::bytes::complete::take_until;
 use nom::bytes::complete::take_while;
@@ -12,15 +11,21 @@ use nom::Parser as _;
 pub mod dt;
 pub mod tm;
 
-pub fn is_equal_payload<T: PartialEq>(src: &Transmission<T>, target: &Transmission<T>) -> bool {
-    let src_group = &src.functional_group;
-    for src_item in src_group {
-        let x = src_item.eq(target.functional_group.first().unwrap());
-        if !x {
-            return false;
-        }
-    }
-    true
+/// Compare two transmissions by their functional-group payload.
+///
+/// Gated behind `v004010` because it references that version's `Transmission`
+/// type; without this gate `util` would not compile when `v004010` is disabled.
+#[cfg(feature = "v004010")]
+pub fn is_equal_payload<T: PartialEq>(
+    src: &crate::v004010::Transmission<T>,
+    target: &crate::v004010::Transmission<T>,
+) -> bool {
+    let Some(target_first) = target.functional_group.first() else {
+        return src.functional_group.is_empty();
+    };
+    src.functional_group
+        .iter()
+        .all(|item| item.eq(target_first))
 }
 
 pub fn parse_line<'a>(input: &'a str, segment_name: &str) -> IResult<&'a str, Vec<&'a str>> {

@@ -1,13 +1,15 @@
 //! v003030 repesents all entities of the 003030 specification.
 
+use crate::util::Parser;
 use nom::IResult;
 use serde::{Deserialize, Serialize};
-use std::fmt::{Debug, Display};
-use x12_types_macros::DisplayX12;
+use std::fmt::Display;
+
 mod segment;
 pub use segment::*;
 
-use crate::util::Parser;
+mod _998_doc;
+pub use _998_doc::*;
 
 #[derive(Serialize, Deserialize, Clone, Default, Debug)]
 pub struct Transmission<T> {
@@ -61,33 +63,4 @@ pub struct FunctionalGroup<T> {
     pub gs: GS,
     pub segments: Vec<T>,
     pub ge: GE,
-}
-
-/// 998 - Set Cancellation NEW
-///
-/// This Draft Standard for Trial Use contains the format and establishes the data contents of the Set Cancellation Transaction Set (998) for use within the context of an Electronic Data Interchange (EDI) environment. The transaction set can be used to request the deletion of a previously transmitted transaction set and will indicate the reason for this action, such as diversion or cancelled bill.
-///
-/// POS | ID | NAME | REQ | MAX | REPEAT
-/// ----|----|------|-----|-----|-------
-/// 0010 | ST | Transaction Set Header | M | 1
-/// 0020 | ZD | Transaction Set Deletion - ID, Reason, and Source | M | 1
-/// 0030 | SE | Transaction Set Trailer | M | 1
-#[derive(Serialize, Deserialize, Clone, Default, Debug, DisplayX12)]
-pub struct _998 {
-    pub st: ST,
-    pub zd: ZD,
-    pub se: SE,
-}
-
-impl<'a> Parser<&'a str, _998, nom::error::Error<&'a str>> for _998 {
-    fn parse(input: &'a str) -> IResult<&'a str, _998> {
-        let mut output = _998::default();
-        let (input, obj) = ST::parse(input)?;
-        output.st = obj;
-        let (input, obj) = ZD::parse(input)?;
-        output.zd = obj;
-        let (input, obj) = SE::parse(input)?;
-        output.se = obj;
-        Ok((input, output))
-    }
 }

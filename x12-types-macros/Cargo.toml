@@ -1,0 +1,22 @@
+[package]
+name = "x12-types-macros"
+version = "0.2.1"
+edition = "2021"
+authors = ["Jens Walter <jens@apimeister.com>"]
+license = "MIT OR Apache-2.0"
+keywords = ["edi", "x12"]
+repository = "https://github.com/apimeister/x12-types-macros/"
+documentation = "https://docs.rs/x12-types-macros/"
+description = "Macros for x12-types."
+rust-version = "1.78"
+
+[lib]
+proc-macro = true
+name = "x12_types_macros"
+
+[dependencies]
+heck = "0.5"
+proc-macro2 = "1.0"
+quote = "1.0"
+rustversion = "1.0"
+syn = { version = "2", features = ["parsing", "extra-traits"] }
