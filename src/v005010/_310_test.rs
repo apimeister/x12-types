@@ -12,8 +12,8 @@ fn parse_310() {
     assert_eq!(obj.b3._02, "INV");
     // two name loops, both top-level
     assert_eq!(obj.loop_n1.len(), 2);
-    assert_eq!(obj.loop_n1[0].n1._01, "SH");
-    assert_eq!(obj.loop_n1[1].n1._01, "CN");
+    assert_eq!(obj.loop_n1[0].n1._01.to_string(), "SH");
+    assert_eq!(obj.loop_n1[1].n1._01.to_string(), "CN");
 }
 
 #[test]

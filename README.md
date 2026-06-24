@@ -19,9 +19,15 @@ This library provides bindings for the ASC X12 standard.
   * 997 - Functional Acknowledgment
   * 998 - Set Cancellation
 * 005010
+  * 148 - Report of Injury, Illness or Incident
+  * 163 - Transportation Appointment Schedule Information
   * 180 - Return Merchandise Authorization and Notification
   * 204 - Motor Carrier Load Tender
   * 210 - Motor Carrier Freight Details and Invoice
+  * 211 - Motor Carrier Bill of Lading
+  * 212 - Motor Carrier Delivery Trailer Manifest
+  * 216 - Motor Carrier Shipment Pickup Notification
+  * 217 - Motor Carrier Loading and Route Guide
   * 214 - Transportation Carrier Shipment Status Message
   * 270 - Eligibility, Coverage or Benefit Inquiry
   * 271 - Eligibility, Coverage or Benefit Information
@@ -30,14 +36,28 @@ This library provides bindings for the ASC X12 standard.
   * 276 - Health Care Claim Status Request
   * 277 - Health Care Claim Status Notification
   * 278 - Health Care Services Review Information
+  * 300 - Reservation (Booking Request) (Ocean)
+  * 301 - Confirmation (Ocean)
+  * 303 - Booking Cancellation (Ocean)
+  * 304 - Shipping Instructions
+  * 309 - Customs Manifest
   * 310 - Freight Receipt and Invoice (Ocean)
   * 315 - Status Details (Ocean)
+  * 350 - Customs Status Information
+  * 353 - Customs Events Advisory Details
+  * 404 - Rail Carrier Shipment Information
+  * 417 - Rail Carrier Waybill Interchange
+  * 425 - Rail Waybill Request
   * 753 - Request for Routing Instructions
   * 754 - Routing Instructions
   * 810 - Invoice
+  * 811 - Consolidated Service Invoice/Statement
   * 812 - Credit/Debit Adjustment
   * 816 - Organizational Relationships
   * 820 - Payment Order/Remittance Advice
+  * 821 - Financial Information Reporting
+  * 822 - Account Analysis
+  * 823 - Lockbox
   * 824 - Application Advice
   * 830 - Planning Schedule with Release Capability
   * 832 - Price/Sales Catalog
@@ -46,19 +66,26 @@ This library provides bindings for the ASC X12 standard.
   * 837 - Health Care Claim (covers 837P/I/D — Professional, Institutional, Dental)
   * 840 - Request for Quotation
   * 843 - Response to Request for Quotation
+  * 845 - Price Authorization Acknowledgment/Status
   * 846 - Inventory Inquiry/Advice
   * 850 - Purchase Order
   * 852 - Product Activity Data
   * 855 - Purchase Order Acknowledgment
   * 856 - Ship Notice/Manifest
+  * 857 - Shipment and Billing Notice
   * 860 - Purchase Order Change Request - Buyer Initiated
   * 861 - Receiving Advice/Acceptance Certificate
   * 862 - Shipping Schedule
   * 864 - Text Message
   * 865 - Purchase Order Change Acknowledgment - Seller Initiated
+  * 866 - Production Sequence
+  * 867 - Product Transfer and Resale Report
+  * 869 - Order Status Inquiry
   * 870 - Order Status Report
   * 875 - Grocery Products Purchase Order
   * 880 - Grocery Products Invoice
+  * 888 - Item Maintenance
+  * 889 - Promotion Announcement
   * 940 - Warehouse Shipping Order
   * 943 - Warehouse Stock Transfer Shipment Advice
   * 944 - Warehouse Stock Transfer Receipt Advice

@@ -2,6 +2,66 @@ use serde::{Deserialize, Serialize};
 use validator::Validate;
 use x12_types_macros::{DisplaySegment, ParseSegment};
 
+/// HAD - Hospital Affiliation Detail
+///
+/// To convey a provider's hospital affiliation detail
+///
+/// REF | ID | NAME | REQ | TYPE | MIN/MAX
+/// ----|----|-------|----|------|-------
+/// 01 | 546 | Status Code | M | ID | 2/2
+/// 02 | 1073 | Yes/No Condition or Response Code | O | ID | 1/1
+/// 03 | 1073 | Yes/No Condition or Response Code | O | ID | 1/1
+/// 04 | 1073 | Yes/No Condition or Response Code | O | ID | 1/1
+/// 05 | 1270 | Code List Qualifier Code | X | ID | 1/3
+/// 06 | 1271 | Industry Code | X | AN | 1/30
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct HAD {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+}
+
+/// HPL - Health Care Provider License
+///
+/// To provide license, certification, accreditation, and registration information for health care providers
+///
+/// REF | ID | NAME | REQ | TYPE | MIN/MAX
+/// ----|----|-------|----|------|-------
+/// 01 | 128 | Reference Identification Qualifier | C | ID | 2/3
+/// 02 | 127 | Reference Identification | C | AN | 1/50
+/// 03 | 546 | Status Code | O | ID | 2/2
+/// 04 | 156 | State or Province Code | O | ID | 2/2
+/// 05 | 352 | Description | O | AN | 1/80
+/// 06 | 83 | Code For Licensing, Certification, Registration, or Accreditation Agency | C | ID | 1/2
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct HPL {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+}
+
 /// HCP - Health Care Pricing
 #[derive(
     Serialize,
@@ -166,10 +226,12 @@ pub struct HL {
     pub _01: String,
     #[serde(rename = "02")]
     pub _02: Option<String>,
+    /// 735 - Hierarchical Level Code
     #[serde(rename = "03")]
-    pub _03: String,
+    pub _03: crate::v005010::element::E735,
+    /// 736 - Hierarchical Child Code
     #[serde(rename = "04")]
-    pub _04: Option<String>,
+    pub _04: Option<crate::v005010::element::E736>,
 }
 
 /// HLH - Health Information
@@ -289,6 +351,60 @@ pub struct H2 {
     pub _01: String,
     #[serde(rename = "02")]
     pub _02: Option<String>,
+}
+
+/// H6 - Special Services
+///
+/// To specify special services to be performed and associated pallet and weight detail
+///
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 560 | Special Services Code | 1 | X | ID | 2/10
+/// 02 | 560 | Special Services Code | 1 | O | ID | 2/10
+/// 03 | 406 | Quantity of Pallets Shipped | 1 | O | N0 | 1/3
+/// 04 | 399 | Pallet Exchange Code | 1 | O | ID | 1/1
+/// 05 | 81 | Weight | 1 | O | R | 1/10
+/// 06 | 188 | Weight Unit Code | 1 | O | ID | 1/1
+/// 07 | 108 | Pickup or Delivery Code | 1 | X | ID | 1/2
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct H6 {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+}
+
+/// H5 - Car Service Order
+///
+/// To identify the car service directive or other car movement instructions applicable to the empty movement of the car
+///
+/// REF | ID | NAME | REQ | TYPE | MIN/MAX
+/// ----|----|-------|----|------|-------
+/// 01 | 240 | Car Service Order Code | M | ID | 3/5
+/// 02 | 19 | City Name | O | AN | 2/30
+/// 03 | 156 | State or Province Code | O | ID | 2/2
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct H5 {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
 }
 
 /// H3 - Special Handling Instructions

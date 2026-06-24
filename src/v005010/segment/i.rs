@@ -2,6 +2,78 @@ use serde::{Deserialize, Serialize};
 use validator::Validate;
 use x12_types_macros::{DisplaySegment, ParseSegment};
 
+/// IMA - Interchange Move Authority
+///
+/// To specify the interchange move authority for a rail shipment
+///
+/// REF | ID | NAME | REQ | TYPE | MIN/MAX
+/// ----|----|-------|----|------|-------
+/// 01 | 748 | Movement Authority Code | M | ID | 1/2
+/// 02 | 140 | Standard Carrier Alpha Code | O | ID | 2/4
+/// 03 | 257 | Tariff Application Code | O | ID | 1/1
+/// 04 | 257 | Tariff Application Code | O | ID | 1/1
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct IMA {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+}
+
+/// IND - Individual Demographic Characteristics
+///
+/// To provide demographic and language information for an individual
+///
+/// REF | ID | NAME | REQ | TYPE | MIN/MAX
+/// ----|----|-------|----|------|-------
+/// 01 | 26 | Country Code | O | ID | 2/3
+/// 02 | 156 | State or Province Code | O | ID | 2/2
+/// 03 | 1096 | County Designator | O | ID | 5/5
+/// 04 | 19 | City Name | O | AN | 2/30
+/// 05 | 819 | Language Code | O | ID | 2/3
+/// 06 | 1476 | Language Proficiency Indicator | O | ID | 1/1
+/// 07 | 819 | Language Code | O | ID | 2/3
+/// 08 | 819 | Language Code | O | ID | 2/3
+/// 09 | 66 | Identification Code Qualifier | X | ID | 1/2
+/// 10 | 67 | Identification Code | X | AN | 2/80
+/// 11 | 66 | Identification Code Qualifier | X | ID | 1/2
+/// 12 | 67 | Identification Code | X | AN | 2/80
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct IND {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+    #[serde(rename = "10")]
+    pub _10: Option<String>,
+    #[serde(rename = "11")]
+    pub _11: Option<String>,
+    #[serde(rename = "12")]
+    pub _12: Option<String>,
+}
+
 /// ICM - Individual Income
 #[derive(
     Serialize,
@@ -110,6 +182,78 @@ pub struct IMM {
     pub _05: Option<String>,
     #[serde(rename = "06")]
     pub _06: Option<String>,
+}
+
+/// IMP - Impairment Detail
+///
+/// To specify the impaired part of the body and the degree of impairment
+///
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 1460 | Part of Body Code | 1 | M | ID | 2/2
+/// 02 | 954 | Percentage as Decimal | 1 | O | R | 1/10
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct IMP {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+}
+
+/// IN1 - Individual Identification
+///
+/// To supply individual identification information for a named party
+///
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 1065 | Entity Type Qualifier | 1 | M | ID | 1/1
+/// 02 | 1107 | Name Type Code | 1 | M | ID | 2/2
+/// 03 | 98 | Entity Identifier Code | 1 | O | ID | 2/3
+/// 04 | 128 | Reference Identification Qualifier | 1 | X | ID | 2/3
+/// 05 | 127 | Reference Identification | 1 | X | AN | 1/50
+/// 06 | 1069 | Individual Relationship Code | 1 | O | ID | 2/2
+/// 07 | 1131 | Level of Individual, Test, or Course Code | 1 | O | ID | 2/2
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct IN1 {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: String,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+}
+
+/// IN2 - Individual Name Structure Components
+///
+/// To provide the components of an individual name
+///
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 1104 | Name Component Qualifier | 1 | M | ID | 2/2
+/// 02 | 93 | Name | 1 | M | AN | 1/60
+/// 03 | 93 | Name | 1 | O | AN | 1/60
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct IN2 {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: String,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
 }
 
 /// INC - Installment Information
@@ -455,11 +599,24 @@ pub struct IK5 {
     pub _06: Option<String>,
 }
 
-/// IT1 - Baseline Item Data (Invoice)
+/// IT8 - Conditions of Sale
+///
+/// To specify the conditions of sale, including substitution and sales-requirement detail
+///
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 563 | Sales Requirement Code | 1 | X | ID | 1/2
+/// 02 | 306 | Action Code | 1 | X | ID | 1/2
+/// 03 | 610 | Amount | 1 | X | N2 | 1/15
+/// 04 | 508 | Account Number | 1 | O | AN | 1/35
+/// 05 | 373 | Date | 1 | X | DT | 8/8
+/// 06 | 559 | Agency Qualifier Code | 1 | O | ID | 2/2
+/// 07 | 566 | Product/Service Substitution Code | 1 | X | ID | 1/2
+/// 08-27 | 235/234 | Product/Service ID Qualifier and ID pairs | 1 | X | |
 #[derive(
     Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
 )]
-pub struct IT1 {
+pub struct IT8 {
     #[serde(rename = "01")]
     pub _01: Option<String>,
     #[serde(rename = "02")]
@@ -510,6 +667,141 @@ pub struct IT1 {
     pub _24: Option<String>,
     #[serde(rename = "25")]
     pub _25: Option<String>,
+    #[serde(rename = "26")]
+    pub _26: Option<String>,
+    #[serde(rename = "27")]
+    pub _27: Option<String>,
+}
+
+/// IT1 - Baseline Item Data (Invoice)
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct IT1 {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    /// 355 - Unit or Basis for Measurement Code
+    #[serde(rename = "03")]
+    pub _03: Option<crate::v005010::element::E355>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    /// 235 - Product/Service ID Qualifier
+    #[serde(rename = "06")]
+    pub _06: Option<crate::v005010::element::E235>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    /// 235 - Product/Service ID Qualifier
+    #[serde(rename = "08")]
+    pub _08: Option<crate::v005010::element::E235>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+    /// 235 - Product/Service ID Qualifier
+    #[serde(rename = "10")]
+    pub _10: Option<crate::v005010::element::E235>,
+    #[serde(rename = "11")]
+    pub _11: Option<String>,
+    /// 235 - Product/Service ID Qualifier
+    #[serde(rename = "12")]
+    pub _12: Option<crate::v005010::element::E235>,
+    #[serde(rename = "13")]
+    pub _13: Option<String>,
+    /// 235 - Product/Service ID Qualifier
+    #[serde(rename = "14")]
+    pub _14: Option<crate::v005010::element::E235>,
+    #[serde(rename = "15")]
+    pub _15: Option<String>,
+    /// 235 - Product/Service ID Qualifier
+    #[serde(rename = "16")]
+    pub _16: Option<crate::v005010::element::E235>,
+    #[serde(rename = "17")]
+    pub _17: Option<String>,
+    /// 235 - Product/Service ID Qualifier
+    #[serde(rename = "18")]
+    pub _18: Option<crate::v005010::element::E235>,
+    #[serde(rename = "19")]
+    pub _19: Option<String>,
+    /// 235 - Product/Service ID Qualifier
+    #[serde(rename = "20")]
+    pub _20: Option<crate::v005010::element::E235>,
+    #[serde(rename = "21")]
+    pub _21: Option<String>,
+    /// 235 - Product/Service ID Qualifier
+    #[serde(rename = "22")]
+    pub _22: Option<crate::v005010::element::E235>,
+    #[serde(rename = "23")]
+    pub _23: Option<String>,
+    /// 235 - Product/Service ID Qualifier
+    #[serde(rename = "24")]
+    pub _24: Option<crate::v005010::element::E235>,
+    #[serde(rename = "25")]
+    pub _25: Option<String>,
+}
+
+/// ITA - Allowance, Charge or Service
+///
+/// To specify allowances, charges, or services
+///
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 248 | Allowance or Charge Indicator | 1 | M | ID | 1/1
+/// 02 | 559 | Agency Qualifier Code | 1 | X | ID | 2/2
+/// 03 | 560 | Special Services Code | 1 | X | ID | 2/10
+/// 04 | 331 | Allowance or Charge Method of Handling Code | 1 | M | ID | 2/2
+/// 05 | 341 | Allowance or Charge Number | 1 | O | AN | 1/16
+/// 06 | 359 | Allowance or Charge Rate | 1 | O | R | 1/15
+/// 07 | 360 | Allowance or Charge Total Amount | 1 | O | N2 | 1/15
+/// 08 | 378 | Allowance/Charge Percent Qualifier | 1 | O | ID | 1/1
+/// 09 | 332 | Percent, Decimal Format | 1 | X | R | 1/6
+/// 10 | 380 | Quantity | 1 | X | R | 1/15
+/// 11 | 355 | Unit or Basis for Measurement Code | 1 | X | ID | 2/2
+/// 12 | 380 | Quantity | 1 | X | R | 1/15
+/// 13 | 352 | Description | 1 | X | AN | 1/80
+/// 14 | 150 | Special Charge or Allowance Code | 1 | X | ID | 3/3
+/// 15 | 822 | Source Subqualifier | 1 | O | AN | 1/15
+/// 16 | 662 | Relationship Code | 1 | O | ID | 1/1
+/// 17 | 355 | Unit or Basis for Measurement Code | 1 | O | ID | 2/2
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct ITA {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: String,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+    #[serde(rename = "10")]
+    pub _10: Option<String>,
+    #[serde(rename = "11")]
+    pub _11: Option<String>,
+    #[serde(rename = "12")]
+    pub _12: Option<String>,
+    #[serde(rename = "13")]
+    pub _13: Option<String>,
+    #[serde(rename = "14")]
+    pub _14: Option<String>,
+    #[serde(rename = "15")]
+    pub _15: Option<String>,
+    #[serde(rename = "16")]
+    pub _16: Option<String>,
+    #[serde(rename = "17")]
+    pub _17: Option<String>,
 }
 
 /// ITD - Terms of Sale/Deferred Terms of Sale
@@ -526,8 +818,9 @@ pub struct IT1 {
     ParseSegment,
 )]
 pub struct ITD {
+    /// 336 - Terms Type Code
     #[serde(rename = "01")]
-    pub _01: Option<String>,
+    pub _01: Option<crate::v005010::element::E336>,
     #[serde(rename = "02")]
     pub _02: Option<String>,
     #[serde(rename = "03")]
@@ -556,6 +849,27 @@ pub struct ITD {
     pub _14: Option<String>,
     #[serde(rename = "15")]
     pub _15: Option<String>,
+}
+
+/// ISR - Item Status Report
+///
+/// To specify the status of an order or line item
+///
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 368 | Shipment/Order Status Code | 1 | M | ID | 2/2
+/// 02 | 373 | Date | 1 | O | DT | 8/8
+/// 03 | 641 | Status Reason Code | 1 | O | ID | 3/3
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct ISR {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
 }
 
 /// ISS - Invoice Shipment Summary
@@ -600,4 +914,42 @@ pub struct IT3 {
     pub _04: Option<String>,
     #[serde(rename = "05")]
     pub _05: Option<String>,
+}
+
+/// IC - Intermodal Chassis Equipment
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct IC {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: String,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+}
+
+/// IM - Intermodal Movement Information
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct IM {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
 }

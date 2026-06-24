@@ -129,6 +129,17 @@ fn gen_types(ast: &DeriveInput) -> Vec<TokenStream> {
     output
 }
 
+/// Name of the single generic argument of a `Vec<..>` / `Option<..>` type, if any.
+fn inner_type_name(ty: &Type) -> Option<String> {
+    outer_and_inner(ty).and_then(|(_, inner)| {
+        if let Type::Path(p) = inner {
+            p.path.segments.last().map(|s| s.ident.to_string())
+        } else {
+            None
+        }
+    })
+}
+
 fn parse_types(ast: &DeriveInput) -> Vec<TokenStream> {
     let x = &ast.data;
     let mut output = vec![];
@@ -155,14 +166,32 @@ fn parse_types(ast: &DeriveInput) -> Vec<TokenStream> {
                         output.push(ts);
                     }
                     "Option" => {
-                        let ts = quote! {
-                            obj.#id = vars.get(#idx).map(crate::util::unborrow_string);
+                        // `Option<String>` keeps its original codegen; any other
+                        // optional inner type is built via the `X12Element` trait.
+                        let ts = if inner_type_name(t).as_deref() == Some("String") {
+                            quote! {
+                                obj.#id = vars.get(#idx).map(crate::util::unborrow_string);
+                            }
+                        } else {
+                            quote! {
+                                obj.#id = vars
+                                    .get(#idx)
+                                    .map(|x| crate::util::X12Element::from_x12(x));
+                            }
                         };
                         output.push(ts);
                     }
-                    _ => {
+                    "String" => {
                         let ts = quote! {
                             obj.#id = vars.get(#idx).unwrap().to_string();
+                        };
+                        output.push(ts);
+                    }
+                    // Any other plain (mandatory) field type is built via the
+                    // `X12Element` trait, e.g. `Element<u32>`.
+                    _ => {
+                        let ts = quote! {
+                            obj.#id = crate::util::X12Element::from_x12(vars.get(#idx).unwrap());
                         };
                         output.push(ts);
                     }

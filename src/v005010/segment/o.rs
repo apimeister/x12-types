@@ -2,6 +2,24 @@ use serde::{Deserialize, Serialize};
 use validator::Validate;
 use x12_types_macros::{DisplaySegment, ParseSegment};
 
+/// OQS - Order Quantity Sequence
+///
+/// To specify the number assigned to a unit within a multiple unit order
+///
+/// REF | ID | NAME | REQ | TYPE | MIN/MAX
+/// ----|----|-------|----|------|-------
+/// 01 | 1041 | Sequence Value | M | R | 1/9
+/// 02 | 380 | Quantity | M | R | 1/15
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct OQS {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: String,
+}
+
 /// OI - Other Health Insurance Information
 #[derive(
     Serialize,

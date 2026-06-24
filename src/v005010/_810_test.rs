@@ -11,8 +11,8 @@ fn parse_810() {
     assert_eq!(obj.big._01, "20200101");
     // two name loops and two line-item loops, all top-level
     assert_eq!(obj.loop_n1.len(), 2);
-    assert_eq!(obj.loop_n1[0].n1._01, "ST");
-    assert_eq!(obj.loop_n1[1].n1._01, "BT");
+    assert_eq!(obj.loop_n1[0].n1._01.to_string(), "ST");
+    assert_eq!(obj.loop_n1[1].n1._01.to_string(), "BT");
     assert_eq!(obj.loop_it1.len(), 2);
     assert_eq!(obj.loop_it1[0].it1._01, Some("1".to_string()));
     assert_eq!(obj.loop_it1[1].it1._01, Some("2".to_string()));

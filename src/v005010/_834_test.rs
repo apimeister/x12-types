@@ -1,4 +1,8 @@
 use super::*;
+use crate::util::X12Element as _;
+use crate::v005010::element::{
+    E1065, E1250, E128, E156, E306, E337, E353, E365, E366, E373, E374, E66, E98,
+};
 
 #[test]
 fn parse_834() {
@@ -100,18 +104,18 @@ IEA*1*000012345~
                     _03: Some("005010X220A1".to_string()),
                 },
                 bgn: BGN {
-                    _01: "00".to_string(),
+                    _01: E353::from_x12("00"),
                     _02: "12456".to_string(),
-                    _03: "19980520".to_string(),
-                    _04: Some("1200".to_string()),
-                    _08: Some("2".to_string()),
+                    _03: E373::from_x12("19980520"),
+                    _04: Some(E337::from_x12("1200")),
+                    _08: Some(E306::from_x12("2")),
                     ..Default::default()
                 },
                 loop_1000: vec![
                     _834Loop1000 {
                         n1: N1 {
-                            _01: "P5".to_string(),
-                            _03: Some("FI".to_string()),
+                            _01: E98::from_x12("P5"),
+                            _03: Some(E66::from_x12("FI")),
                             _04: Some("999888777".to_string()),
                             ..Default::default()
                         },
@@ -119,8 +123,8 @@ IEA*1*000012345~
                     },
                     _834Loop1000 {
                         n1: N1 {
-                            _01: "IN".to_string(),
-                            _03: Some("FI".to_string()),
+                            _01: E98::from_x12("IN"),
+                            _03: Some(E66::from_x12("FI")),
                             _04: Some("654456654".to_string()),
                             ..Default::default()
                         },
@@ -139,37 +143,37 @@ IEA*1*000012345~
                     }),
                     r#ref: vec![
                         REF {
-                            _01: "0F".to_string(),
+                            _01: E128::from_x12("0F"),
                             _02: Some("123456789".to_string()),
                             ..Default::default()
                         },
                         REF {
-                            _01: "1L".to_string(),
+                            _01: E128::from_x12("1L"),
                             _02: Some("123456001".to_string()),
                             ..Default::default()
                         },
                     ],
                     dtp: vec![DTP {
-                        _01: "356".to_string(),
-                        _02: "D8".to_string(),
+                        _01: E374::from_x12("356"),
+                        _02: E1250::from_x12("D8"),
                         _03: "19960523".to_string(),
                     }],
                     loop_2100: vec![_834Loop2100 {
                         nm1: Some(NM1 {
-                            _01: "IL".to_string(),
-                            _02: "1".to_string(),
+                            _01: E98::from_x12("IL"),
+                            _02: E1065::from_x12("1"),
                             _03: Some("DOE".to_string()),
                             _04: Some("JOHN".to_string()),
                             _05: Some("P".to_string()),
-                            _08: Some("34".to_string()),
+                            _08: Some(E66::from_x12("34")),
                             _09: Some("123456789".to_string()),
                             ..Default::default()
                         }),
                         per: Some(PER {
-                            _01: "IP".to_string(),
-                            _03: Some("HP".to_string()),
+                            _01: E366::from_x12("IP"),
+                            _03: Some(E365::from_x12("HP")),
                             _04: Some("7172343334".to_string()),
-                            _05: Some("WP".to_string()),
+                            _05: Some(E365::from_x12("WP")),
                             _06: Some("7172341240".to_string()),
                             ..Default::default()
                         }),
@@ -179,7 +183,7 @@ IEA*1*000012345~
                         }),
                         n4: Some(N4 {
                             _01: Some("CAMP HILL".to_string()),
-                            _02: Some("PA".to_string()),
+                            _02: Some(E156::from_x12("PA")),
                             _03: Some("17011".to_string()),
                             _05: Some("CY".to_string()),
                             _06: Some("CUMBERLAND".to_string()),
@@ -201,8 +205,8 @@ IEA*1*000012345~
                                 ..Default::default()
                             }),
                             dtp: vec![DTP {
-                                _01: "348".to_string(),
-                                _02: "D8".to_string(),
+                                _01: E374::from_x12("348"),
+                                _02: E1250::from_x12("D8"),
                                 _03: "19960601".to_string(),
                             }],
                             loop_2320: vec![_834Loop2320 {
@@ -223,8 +227,8 @@ IEA*1*000012345~
                                 ..Default::default()
                             }),
                             dtp: vec![DTP {
-                                _01: "348".to_string(),
-                                _02: "D8".to_string(),
+                                _01: E374::from_x12("348"),
+                                _02: E1250::from_x12("D8"),
                                 _03: "19960601".to_string(),
                             }],
                             ..Default::default()
@@ -236,8 +240,8 @@ IEA*1*000012345~
                                 ..Default::default()
                             }),
                             dtp: vec![DTP {
-                                _01: "348".to_string(),
-                                _02: "D8".to_string(),
+                                _01: E374::from_x12("348"),
+                                _02: E1250::from_x12("D8"),
                                 _03: "19960601".to_string(),
                             }],
                             ..Default::default()

@@ -15,7 +15,7 @@ fn parse_945() {
     assert_eq!(obj.w06._03, Some("20131029".to_string()));
 
     assert_eq!(obj.loop_n1.len(), 3);
-    assert_eq!(obj.loop_n1[0].n1._01, "CN");
+    assert_eq!(obj.loop_n1[0].n1._01.to_string(), "CN");
     assert_eq!(
         obj.loop_n1[0].n1._02,
         Some("FOOD DISTRIBUTING INC".to_string())

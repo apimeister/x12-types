@@ -43,22 +43,22 @@ pub struct YNQ {
     pub _10: Option<String>,
 }
 
-/// Y2 - Equipment Details
+/// Y2 - Container Details
 ///
-/// To specify the equipment details
+/// To specify the container details for an ocean shipment
 ///
 /// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
 /// ----|----|-------|--------|----|------|-------
-/// 01 | 127 | Reference Identification | 1 | M | AN | 1/30
-/// 02 | 127 | Reference Identification | 1 | O | AN | 1/30
-/// 03 | 127 | Reference Identification | 1 | O | AN | 1/30
-/// 04 | 127 | Reference Identification | 1 | M | AN | 1/30
-/// 05 | 127 | Reference Identification | 1 | O | AN | 1/30
-/// 06 | 127 | Reference Identification | 1 | O | AN | 1/30
-/// 07 | 127 | Reference Identification | 1 | O | AN | 1/30
-/// 08 | 127 | Reference Identification | 1 | O | AN | 1/30
-/// 09 | 127 | Reference Identification | 1 | O | AN | 1/30
-/// 10 | 127 | Reference Identification | 1 | O | AN | 1/30
+/// 01 | 95 | Number of Containers | 1 | M | N0 | 1/4
+/// 02 | 78 | Container Type Request Code | 1 | O | ID | 1/1
+/// 03 | 56 | Type of Service Code | 1 | O | ID | 2/2
+/// 04 | 24 | Equipment Type | 1 | M | ID | 4/4
+/// 05 | 91 | Transportation Method/Type Code | 1 | O | ID | 1/2
+/// 06 | 177 | Intermodal Service Code | 1 | O | ID | 1/2
+/// 07 | 140 | Standard Carrier Alpha Code | 1 | O | ID | 2/4
+/// 08 | 464 | Container Terms Code | 1 | O | ID | 3/3
+/// 09 | 465 | Container Terms Code Qualifier | 1 | O | ID | 1/1
+/// 10 | 466 | Total Stop-offs | 1 | O | N0 | 1/2
 #[derive(
     Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
 )]
@@ -85,15 +85,15 @@ pub struct Y2 {
     pub _10: Option<String>,
 }
 
-/// Y6 - Equipment Details
+/// Y6 - Authentication
 ///
-/// To specify the equipment details
+/// To authenticate the booking or its amendment, and to identify the authorizing party
 ///
 /// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
 /// ----|----|-------|--------|----|------|-------
-/// 01 | 127 | Reference Identification | 1 | O | AN | 1/30
-/// 02 | 127 | Reference Identification | 1 | M | AN | 1/30
-/// 03 | 127 | Reference Identification | 1 | M | AN | 1/30
+/// 01 | 313 | Authority Identifier Code | 1 | O | ID | 2/2
+/// 02 | 151 | Authority | 1 | M | AN | 1/20
+/// 03 | 275 | Authorization Date | 1 | M | DT | 8/8
 #[derive(
     Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
 )]
@@ -104,4 +104,172 @@ pub struct Y6 {
     pub _02: String,
     #[serde(rename = "03")]
     pub _03: String,
+}
+
+/// Y1 - Space Reservation Request
+///
+/// To request space reservation aboard an ocean vessel
+///
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 135 | Sailing/Flight Date Estimated | 1 | O | DT | 8/8
+/// 02 | 373 | Date | 1 | X | DT | 8/8
+/// 03 | 140 | Standard Carrier Alpha Code | 1 | O | ID | 2/4
+/// 04 | 91 | Transportation Method/Type Code | 1 | O | ID | 1/2
+/// 05 | 98 | Entity Identifier Code | 1 | O | ID | 2/3
+/// 06 | 19 | City Name | 1 | O | AN | 2/30
+/// 07 | 156 | State or Province Code | 1 | O | ID | 2/2
+/// 08 | 375 | Tariff Service Code | 1 | O | ID | 2/2
+/// 09 | 374 | Date/Time Qualifier | 1 | X | ID | 3/3
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct Y1 {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+}
+
+/// Y3 - Space Confirmation
+///
+/// To confirm space reservation aboard an ocean vessel
+///
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 13 | Booking Number | 1 | M | AN | 1/17
+/// 02 | 140 | Standard Carrier Alpha Code | 1 | O | ID | 2/4
+/// 03 | 373 | Date | 1 | O | DT | 8/8
+/// 04 | 373 | Date | 1 | O | DT | 8/8
+/// 05 | 154 | Standard Point Location Code | 1 | O | ID | 6/9
+/// 06 | 112 | Pier Name | 1 | O | AN | 2/14
+/// 07 | 373 | Date | 1 | O | DT | 8/8
+/// 08 | 337 | Time | 1 | X | TM | 4/8
+/// 09 | 91 | Transportation Method/Type Code | 1 | O | ID | 1/2
+/// 10 | 375 | Tariff Service Code | 1 | O | ID | 2/2
+/// 11 | 623 | Time Code | 1 | O | ID | 2/2
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct Y3 {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+    #[serde(rename = "10")]
+    pub _10: Option<String>,
+    #[serde(rename = "11")]
+    pub _11: Option<String>,
+}
+
+/// Y4 - Container Release
+///
+/// To transmit information relative to containers available for release
+///
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 13 | Booking Number | 1 | O | AN | 1/17
+/// 02 | 13 | Booking Number | 1 | O | AN | 1/17
+/// 03 | 373 | Date | 1 | O | DT | 8/8
+/// 04 | 154 | Standard Point Location Code | 1 | O | ID | 6/9
+/// 05 | 95 | Number of Containers | 1 | O | N0 | 1/4
+/// 06 | 24 | Equipment Type | 1 | O | ID | 4/4
+/// 07 | 140 | Standard Carrier Alpha Code | 1 | O | ID | 2/4
+/// 08 | 309 | Location Qualifier | 1 | X | ID | 1/2
+/// 09 | 310 | Location Identifier | 1 | X | AN | 1/30
+/// 10 | 56 | Type of Service Code | 1 | O | ID | 2/2
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct Y4 {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+    #[serde(rename = "10")]
+    pub _10: Option<String>,
+}
+
+/// Y5 - Space Booking Cancellation
+///
+/// To cancel a previously requested space booking aboard an ocean vessel
+///
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 13 | Booking Number | 1 | M | AN | 1/17
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct Y5 {
+    #[serde(rename = "01")]
+    pub _01: String,
+}
+
+/// Y7 - Cargo Booking Priority
+///
+/// To provide cargo booking priority and associated handling information
+///
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 467 | Priority | 1 | O | N0 | 1/1
+/// 02 | 470 | Priority Code | 1 | X | N0 | 1/1
+/// 03 | 471 | Priority Code Qualifier | 1 | X | AN | 1/1
+/// 04 | 468 | Port Call File Number | 1 | O | N0 | 4/4
+/// 05 | 373 | Date | 1 | O | DT | 8/8
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct Y7 {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
 }

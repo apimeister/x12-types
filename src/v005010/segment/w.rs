@@ -53,6 +53,63 @@ pub struct W03 {
     pub _07: Option<String>,
 }
 
+/// W04 - Item Detail (Total)
+///
+/// To detail the units of an item being shipped for a warehouse stock transfer
+///
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 382 | Number of Units Shipped | 1 | M | R | 1/10
+/// 02 | 355 | Unit or Basis for Measurement Code | 1 | M | ID | 2/2
+/// 03 | 438 | U.P.C. Case Code | 1 | X | AN | 12/12
+/// 04 | 235 | Product/Service ID Qualifier | 1 | X | ID | 2/2
+/// 05 | 234 | Product/Service ID | 1 | X | AN | 1/48
+/// 06 | 235 | Product/Service ID Qualifier | 1 | X | ID | 2/2
+/// 07 | 234 | Product/Service ID | 1 | X | AN | 1/48
+/// 08 | 59 | Freight Class Code | 1 | O | AN | 2/5
+/// 09 | 121 | Rate Class Code | 1 | O | ID | 1/3
+/// 10 | 23 | Commodity Code Qualifier | 1 | X | ID | 1/1
+/// 11 | 22 | Commodity Code | 1 | X | AN | 1/30
+/// 12 | 416 | Pallet Block and Tiers | 1 | O | N0 | 6/6
+/// 13 | 844 | Inbound Condition Hold Code | 1 | O | ID | 2/2
+/// 14 | 235 | Product/Service ID Qualifier | 1 | X | ID | 2/2
+/// 15 | 234 | Product/Service ID | 1 | X | AN | 1/48
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct W04 {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: String,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+    #[serde(rename = "10")]
+    pub _10: Option<String>,
+    #[serde(rename = "11")]
+    pub _11: Option<String>,
+    #[serde(rename = "12")]
+    pub _12: Option<String>,
+    #[serde(rename = "13")]
+    pub _13: Option<String>,
+    #[serde(rename = "14")]
+    pub _14: Option<String>,
+    #[serde(rename = "15")]
+    pub _15: Option<String>,
+}
+
 /// W05 - Warehouse Information
 ///
 /// To transmit warehouse facility and special handling information
@@ -87,6 +144,45 @@ pub struct W06 {
     pub _01: String,
     #[serde(rename = "02")]
     pub _02: String,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+}
+
+/// W08 - Receipt Carrier Information
+///
+/// To identify the carrier and equipment for a warehouse receipt
+///
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 91 | Transportation Method/Type Code | 1 | M | ID | 1/2
+/// 02 | 140 | Standard Carrier Alpha Code | 1 | X | ID | 2/4
+/// 03 | 387 | Routing | 1 | O | AN | 1/35
+/// 04 | 206 | Equipment Initial | 1 | X | AN | 1/4
+/// 05 | 207 | Equipment Number | 1 | X | AN | 1/15
+/// 06 | 225 | Seal Number | 1 | O | AN | 2/15
+/// 07 | 225 | Seal Number | 1 | O | AN | 2/15
+/// 08 | 407 | Seal Status Code | 1 | O | ID | 2/2
+/// 09 | 400 | Unit Load Option Code | 1 | O | ID | 2/2
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct W08 {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
     #[serde(rename = "03")]
     pub _03: Option<String>,
     #[serde(rename = "04")]
@@ -222,6 +318,27 @@ pub struct W12 {
     pub _22: Option<String>,
 }
 
+/// W18 - Probe Temperatures
+///
+/// To report temperatures taken at a probe location
+///
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 456 | Temperature Probe Location Code | 1 | M | ID | 2/2
+/// 02 | 408 | Temperature | 1 | M | R | 1/4
+/// 03 | 355 | Unit or Basis for Measurement Code | 1 | O | ID | 2/2
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct W18 {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: String,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+}
+
 /// W20 - Warehouse Information
 ///
 /// To transmit warehouse facility and special handling information
@@ -293,6 +410,27 @@ pub struct W28 {
     pub _06: Option<String>,
     #[serde(rename = "07")]
     pub _07: Option<String>,
+}
+
+/// WS - Work Schedule
+///
+/// To identify a work schedule pattern and the associated start and end times
+///
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 678 | Ship/Delivery or Calendar Pattern Code | 1 | M | ID | 1/2
+/// 02 | 337 | Time | 1 | O | TM | 4/8
+/// 03 | 337 | Time | 1 | O | TM | 4/8
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct WS {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
 }
 
 /// W6 - Warehouse Information
@@ -401,6 +539,33 @@ pub struct W07 {
     pub _09: Option<String>,
     #[serde(rename = "10")]
     pub _10: Option<String>,
+}
+
+/// W13 - Item Detail Exception
+///
+/// To report the exception detail for an item received
+///
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 380 | Quantity | 1 | M | R | 1/15
+/// 02 | 355 | Unit or Basis for Measurement Code | 1 | M | ID | 2/2
+/// 03 | 412 | Receiving Condition Code | 1 | M | ID | 2/2
+/// 04 | 451 | Warehouse Lot Number | 1 | O | AN | 1/12
+/// 05 | 853 | Damage Reason Code | 1 | O | ID | 2/2
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct W13 {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: String,
+    #[serde(rename = "03")]
+    pub _03: String,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
 }
 
 /// W14 - Total Shipping Order Information

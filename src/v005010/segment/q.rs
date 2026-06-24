@@ -16,8 +16,9 @@ use x12_types_macros::{DisplaySegment, ParseSegment};
     ParseSegment,
 )]
 pub struct QTY {
+    /// 673 - Quantity Qualifier
     #[serde(rename = "01")]
-    pub _01: String,
+    pub _01: crate::v005010::element::E673,
     #[serde(rename = "02")]
     pub _02: Option<String>,
     #[serde(rename = "03")]

@@ -50,6 +50,36 @@ pub struct LE {
     pub _01: String,
 }
 
+/// LFG - Hazardous Material - Finished Goods
+///
+/// To describe hazardous material information for finished goods
+///
+/// REF | ID | NAME | REQ | TYPE | MIN/MAX
+/// ----|----|-------|----|------|-------
+/// 01 | 352 | Description | M | AN | 1/80
+/// 02 | 215 | Hazardous Classification | M | ID | 1/30
+/// 03 | 277 | UN/NA Identification Code | M | ID | 6/6
+/// 04 | 218 | Hazardous Placard Notation | M | ID | 14/40
+/// 05 | 254 | Packing Group Code | O | ID | 1/3
+/// 06 | 1577 | Hazardous Material Regulations Exception Code | O | ID | 1/1
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct LFG {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: String,
+    #[serde(rename = "03")]
+    pub _03: String,
+    #[serde(rename = "04")]
+    pub _04: String,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+}
+
 /// LIN - Item Identification
 #[derive(
     Serialize,
@@ -66,64 +96,79 @@ pub struct LE {
 pub struct LIN {
     #[serde(rename = "01")]
     pub _01: Option<String>,
+    /// 235 - Product/Service ID Qualifier
     #[serde(rename = "02")]
-    pub _02: String,
+    pub _02: crate::v005010::element::E235,
     #[serde(rename = "03")]
     pub _03: String,
+    /// 235 - Product/Service ID Qualifier
     #[serde(rename = "04")]
-    pub _04: Option<String>,
+    pub _04: Option<crate::v005010::element::E235>,
     #[serde(rename = "05")]
     pub _05: Option<String>,
+    /// 235 - Product/Service ID Qualifier
     #[serde(rename = "06")]
-    pub _06: Option<String>,
+    pub _06: Option<crate::v005010::element::E235>,
     #[serde(rename = "07")]
     pub _07: Option<String>,
+    /// 235 - Product/Service ID Qualifier
     #[serde(rename = "08")]
-    pub _08: Option<String>,
+    pub _08: Option<crate::v005010::element::E235>,
     #[serde(rename = "09")]
     pub _09: Option<String>,
+    /// 235 - Product/Service ID Qualifier
     #[serde(rename = "10")]
-    pub _10: Option<String>,
+    pub _10: Option<crate::v005010::element::E235>,
     #[serde(rename = "11")]
     pub _11: Option<String>,
+    /// 235 - Product/Service ID Qualifier
     #[serde(rename = "12")]
-    pub _12: Option<String>,
+    pub _12: Option<crate::v005010::element::E235>,
     #[serde(rename = "13")]
     pub _13: Option<String>,
+    /// 235 - Product/Service ID Qualifier
     #[serde(rename = "14")]
-    pub _14: Option<String>,
+    pub _14: Option<crate::v005010::element::E235>,
     #[serde(rename = "15")]
     pub _15: Option<String>,
+    /// 235 - Product/Service ID Qualifier
     #[serde(rename = "16")]
-    pub _16: Option<String>,
+    pub _16: Option<crate::v005010::element::E235>,
     #[serde(rename = "17")]
     pub _17: Option<String>,
+    /// 235 - Product/Service ID Qualifier
     #[serde(rename = "18")]
-    pub _18: Option<String>,
+    pub _18: Option<crate::v005010::element::E235>,
     #[serde(rename = "19")]
     pub _19: Option<String>,
+    /// 235 - Product/Service ID Qualifier
     #[serde(rename = "20")]
-    pub _20: Option<String>,
+    pub _20: Option<crate::v005010::element::E235>,
     #[serde(rename = "21")]
     pub _21: Option<String>,
+    /// 235 - Product/Service ID Qualifier
     #[serde(rename = "22")]
-    pub _22: Option<String>,
+    pub _22: Option<crate::v005010::element::E235>,
     #[serde(rename = "23")]
     pub _23: Option<String>,
+    /// 235 - Product/Service ID Qualifier
     #[serde(rename = "24")]
-    pub _24: Option<String>,
+    pub _24: Option<crate::v005010::element::E235>,
     #[serde(rename = "25")]
     pub _25: Option<String>,
+    /// 235 - Product/Service ID Qualifier
     #[serde(rename = "26")]
-    pub _26: Option<String>,
+    pub _26: Option<crate::v005010::element::E235>,
     #[serde(rename = "27")]
     pub _27: Option<String>,
+    /// 235 - Product/Service ID Qualifier
     #[serde(rename = "28")]
-    pub _28: Option<String>,
+    pub _28: Option<crate::v005010::element::E235>,
     #[serde(rename = "29")]
     pub _29: Option<String>,
+    /// 235 - Product/Service ID Qualifier
     #[serde(rename = "30")]
-    pub _30: Option<String>,
+    pub _30: Option<crate::v005010::element::E235>,
     #[serde(rename = "31")]
     pub _31: Option<String>,
 }
@@ -142,12 +187,57 @@ pub struct LIN {
     ParseSegment,
 )]
 pub struct LM {
-    // Agency Qualifier Code
+    /// 559 - Agency Qualifier Code
     #[serde(rename = "01")]
-    pub _01: Option<String>,
+    pub _01: Option<crate::v005010::element::E559>,
     // Source Subqualifier
     #[serde(rename = "02")]
     pub _02: Option<String>,
+}
+
+/// LN - Loan Information
+///
+/// To convey loan identification, amount, and repayment terms
+///
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 127 | Reference Identification | 1 | M | AN | 1/50
+/// 02 | 782 | Monetary Amount | 1 | M | R | 1/18
+/// 03 | 1250 | Date Time Period Format Qualifier | 1 | X | ID | 2/3
+/// 04 | 1251 | Date Time Period | 1 | X | AN | 1/35
+/// 05 | 594 | Frequency Code | 1 | X | ID | 1/1
+/// 06 | 782 | Monetary Amount | 1 | X | R | 1/18
+/// 07 | 954 | Percentage as Decimal | 1 | O | R | 1/10
+/// 08 | 1073 | Yes/No Condition or Response Code | 1 | O | ID | 1/1
+/// 09 | 1081 | Loan Purpose Code | 1 | O | ID | 2/2
+/// 10 | 1085 | Loan Payment Type Code | 1 | O | ID | 2/2
+/// 11 | 1086 | Loan Rate Type Code | 1 | O | ID | 1/1
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct LN {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: String,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+    #[serde(rename = "10")]
+    pub _10: Option<String>,
+    #[serde(rename = "11")]
+    pub _11: Option<String>,
 }
 
 /// LQ - Industry Code Identification
@@ -164,8 +254,9 @@ pub struct LM {
     ParseSegment,
 )]
 pub struct LQ {
+    /// 1270 - Code List Qualifier Code
     #[serde(rename = "01")]
-    pub _01: Option<String>,
+    pub _01: Option<crate::v005010::element::E1270>,
     #[serde(rename = "02")]
     pub _02: Option<String>,
 }
@@ -230,6 +321,36 @@ pub struct LUI {
 pub struct LX {
     #[serde(rename = "01")]
     pub _01: String,
+}
+
+/// LCD - Place/Location Description
+///
+/// To identify the place/location and associated parties for a lot, line item, or detail
+///
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 350 | Assigned Identification | 1 | O | AN | 1/20
+/// 02 | 98 | Entity Identifier Code | 1 | O | ID | 2/3
+/// 03 | 306 | Action Code | 1 | O | ID | 1/2
+/// 04 | 373 | Date | 1 | O | DT | 8/8
+/// 05 | 66 | Identification Code Qualifier | 1 | X | ID | 1/2
+/// 06 | 67 | Identification Code | 1 | X | AN | 2/80
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct LCD {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
 }
 
 /// LDT - Lead Time
@@ -391,6 +512,36 @@ pub struct L3 {
     pub _15: Option<String>,
 }
 
+/// L4 - Measurement
+///
+/// To describe physical dimensions and quantities
+///
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 82 | Length | 1 | M | R | 1/8
+/// 02 | 189 | Width | 1 | M | R | 1/8
+/// 03 | 65 | Height | 1 | M | R | 1/8
+/// 04 | 90 | Measurement Unit Qualifier | 1 | M | ID | 1/1
+/// 05 | 380 | Quantity | 1 | O | R | 1/15
+/// 06 | 1271 | Industry Code | 1 | O | AN | 1/30
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct L4 {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: String,
+    #[serde(rename = "03")]
+    pub _03: String,
+    #[serde(rename = "04")]
+    pub _04: String,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+}
+
 /// L5 - Description, Marks and Numbers
 ///
 /// To specify the line item in terms of description, quantity, packaging, and marks and numbers
@@ -431,6 +582,42 @@ pub struct L5 {
     pub _09: Option<String>,
     #[serde(rename = "10")]
     pub _10: Option<String>,
+}
+
+/// L9 - Charge Detail
+///
+/// To enable the carrier to assess special charges or allowances
+///
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 150 | Special Charge or Allowance Code | 1 | M | ID | 3/3
+/// 02 | 782 | Monetary Amount | 1 | M | R | 1/18
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct L9 {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: String,
+}
+
+/// L12 - Alternate Lading Description
+///
+/// To provide additional or alternate lading description
+///
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 592 | Lading Description Qualifier | 1 | O | ID | 1/1
+/// 02 | 352 | Description | 1 | O | AN | 1/80
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct L12 {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
 }
 
 /// L7 - Tariff Reference
@@ -791,6 +978,33 @@ pub struct LH6 {
     pub _03: Option<String>,
     #[serde(rename = "04")]
     pub _04: Option<String>,
+}
+
+/// LHE - Empty Equipment Hazardous Material Information
+///
+/// To identify hazardous material information for empty equipment
+///
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 224 | Hazardous Material Shipping Name | 1 | M | AN | 1/25
+/// 02 | 218 | Hazardous Placard Notation | 1 | M | ID | 14/40
+/// 03 | 128 | Reference Identification Qualifier | 1 | M | ID | 2/3
+/// 04 | 127 | Reference Identification | 1 | M | AN | 1/50
+/// 05 | 759 | Reportable Quantity Code | 1 | O | ID | 2/2
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct LHE {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: String,
+    #[serde(rename = "03")]
+    pub _03: String,
+    #[serde(rename = "04")]
+    pub _04: String,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
 }
 
 /// LHR - Hazardous Material Identifying Reference Numbers

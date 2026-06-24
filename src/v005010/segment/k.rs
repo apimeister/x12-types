@@ -24,6 +24,21 @@ pub struct K3 {
     pub _03: Option<String>,
 }
 
+/// K2 - Administrative Message
+///
+/// To transmit information in a free-form format for comment or special instruction
+///
+/// REF | ID | NAME | REQ | TYPE | MIN/MAX
+/// ----|----|-------|----|------|-------
+/// 01 | 352 | Description | M | AN | 1/80
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct K2 {
+    #[serde(rename = "01")]
+    pub _01: String,
+}
+
 /// K1 - Remarks
 ///
 /// To transmit information in a free-form format for comment or special instruction

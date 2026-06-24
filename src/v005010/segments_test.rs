@@ -45,7 +45,7 @@ fn test_ref() {
     let s = "REF*0F*XX99991X~";
     let (rest, obj) = REF::parse(s).unwrap();
     assert!(rest.is_empty());
-    assert_eq!(obj._01, "0F");
+    assert_eq!(obj._01.to_string(), "0F");
     assert_eq!(obj._02, Some("XX99991X".to_string()));
 }
 
@@ -54,8 +54,8 @@ fn test_dtp() {
     let s = "DTP*356*D8*20190101~";
     let (rest, obj) = DTP::parse(s).unwrap();
     assert!(rest.is_empty());
-    assert_eq!(obj._01, "356");
-    assert_eq!(obj._02, "D8");
+    assert_eq!(obj._01.to_string(), "356");
+    assert_eq!(obj._02.to_string(), "D8");
 }
 
 #[test]
@@ -80,7 +80,7 @@ fn test_bgn() {
     let s = "BGN*00*1932900000000002XF1932900000000002*20191125*140915****2~";
     let (rest, obj) = BGN::parse(s).unwrap();
     assert!(rest.is_empty());
-    assert_eq!(obj._01, "00");
+    assert_eq!(obj._01.to_string(), "00");
 }
 
 #[test]
@@ -96,7 +96,7 @@ fn test_nm1() {
     let s = "NM1*IL*1*SUBSCRIBER 3 LAST NAME*SUBSCRIBER 3 FIRST NAME*MI***34*999999993~";
     let (rest, obj) = NM1::parse(s).unwrap();
     assert!(rest.is_empty());
-    assert_eq!(obj._01, "IL");
+    assert_eq!(obj._01.to_string(), "IL");
 }
 
 #[test]

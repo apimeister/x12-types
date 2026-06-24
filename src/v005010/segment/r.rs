@@ -2,6 +2,51 @@ use serde::{Deserialize, Serialize};
 use validator::Validate;
 use x12_types_macros::{DisplaySegment, ParseSegment};
 
+/// RST - Carrier Restriction
+///
+/// To specify carrier restrictions
+///
+/// REF | ID | NAME | REQ | TYPE | MIN/MAX
+/// ----|----|-------|----|------|-------
+/// 01 | 281 | Carrier Restriction Code | C | AN | 1/10
+/// 02 | 352 | Description | C | AN | 1/80
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct RST {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+}
+
+/// RTE - Rate Information
+///
+/// To specify rate information
+///
+/// REF | ID | NAME | REQ | TYPE | MIN/MAX
+/// ----|----|-------|----|------|-------
+/// 01 | 1387 | Rate Qualifier | M | ID | 1/2
+/// 02 | 953 | Interest Rate | M | R | 1/6
+/// 03 | 782 | Monetary Amount | O | R | 1/18
+/// 04 | 1470 | Number | O | N0 | 1/9
+/// 05 | 1470 | Number | O | N0 | 1/9
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct RTE {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: String,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+}
+
 /// RDM - Remittance Delivery Method
 #[derive(
     Serialize,
@@ -52,14 +97,8 @@ pub struct RDM {
 )]
 pub struct REF {
     /// 128 - Reference Identification Qualifier
-    ///
-    /// Code qualifying the Reference Identification
-    /// - TYPE=ID
-    /// - MIN=2
-    /// - MAX=3
-    #[validate(length(min = 2, max = 3))]
     #[serde(rename = "01")]
-    pub _01: String,
+    pub _01: crate::v005010::element::E128,
     /// 127 - Reference Identification
     ///
     /// Reference information as defined for a particular Transaction Set or as specified by the Reference Identification Qualifier
@@ -180,6 +219,24 @@ pub struct RPA {
     pub _04: Option<String>,
     #[serde(rename = "05")]
     pub _05: Option<String>,
+}
+
+/// RRA - Required Response
+///
+/// To identify the type of response required and an associated reference
+///
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 701 | Information Type | 1 | M | ID | 2/2
+/// 02 | 127 | Reference Identification | 1 | O | AN | 1/50
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct RRA {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
 }
 
 /// RYL - Royalty Payment
@@ -317,6 +374,33 @@ pub struct R4 {
     pub _07: Option<String>,
     #[serde(rename = "08")]
     pub _08: Option<String>,
+}
+
+/// RDR - Return Disposition Reason
+///
+/// To specify the disposition and reason for the return of merchandise
+///
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 1292 | Returns Disposition Code | 1 | O | ID | 2/2
+/// 02 | 1293 | Return Request Reason Code | 1 | X | ID | 2/2
+/// 03 | 1294 | Return Response Reason Code | 1 | X | ID | 2/2
+/// 04 | 352 | Description | 1 | O | AN | 1/80
+/// 05 | 1073 | Yes/No Condition or Response Code | 1 | O | ID | 1/1
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct RDR {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
 }
 
 /// RED - Related Data
@@ -458,4 +542,29 @@ pub struct RCD {
     pub _19: Option<String>,
     #[serde(rename = "20")]
     pub _20: Option<String>,
+}
+
+/// R9 - Code Identification
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct R9 {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
 }

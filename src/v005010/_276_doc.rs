@@ -174,7 +174,7 @@ pub fn parse_276(input: &str) -> IResult<&str, _276> {
 
     let mut rest = rest;
     while let Ok((r_hl, hl)) = HL::parse(rest) {
-        let (r, loop_result) = match hl._03.as_str() {
+        let (r, loop_result) = match hl._03.to_string().as_str() {
             "20" => parse_loop_2000_a(hl, r_hl),
             "21" => parse_loop_2000_b(hl, r_hl),
             "19" => parse_loop_2000_c(hl, r_hl),
@@ -484,7 +484,7 @@ mod tests {
         debug!("Parsed: {doc:#?}");
         // Header
         assert_eq!(doc.st._01, "276");
-        assert_eq!(doc.bht._02, "13");
+        assert_eq!(doc.bht._02.to_string(), "13");
         // Loop counts
         assert_eq!(doc.loop_2000a.len(), 1);
         assert_eq!(doc.loop_2000b.len(), 1);
@@ -514,7 +514,7 @@ mod tests {
         assert_eq!(sub.loop_2100d.nm1._03.as_deref(), Some("SMITH"));
         let sub_stat = &sub.loop_2200d[0];
         assert_eq!(sub_stat.trn._02, "ABCXYZ1");
-        assert_eq!(sub_stat.r#ref[0]._01, "BLT");
+        assert_eq!(sub_stat.r#ref[0]._01.to_string(), "BLT");
         // 2000E – Dependent Service Details
         let dep = &doc.loop_2000e[0];
         let svc = dep.loop_2200e[0].svc.as_ref().unwrap();

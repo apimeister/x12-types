@@ -50,8 +50,8 @@ IEA*1*000000101~"#;
     assert_eq!(transaction.st._02, "1234");
 
     // Verify BHT segment
-    assert_eq!(transaction.bht._01, "0022");
-    assert_eq!(transaction.bht._02, "13");
+    assert_eq!(transaction.bht._01.to_string(), "0022");
+    assert_eq!(transaction.bht._02.to_string(), "13");
 
     // Verify SE segment
     assert_eq!(transaction.se._01, "13");
@@ -61,12 +61,12 @@ IEA*1*000000101~"#;
     assert_eq!(transaction.loop_2000.len(), 1);
     let loop_2000 = &transaction.loop_2000[0];
     assert_eq!(loop_2000.hl._01, "1");
-    assert_eq!(loop_2000.hl._03, "20");
+    assert_eq!(loop_2000.hl._03.to_string(), "20");
 
     assert_eq!(loop_2000.loop_2100.len(), 1);
     let loop_2100 = &loop_2000.loop_2100[0];
-    assert_eq!(loop_2100.nm1._01, "PR");
-    assert_eq!(loop_2100.nm1._02, "2");
+    assert_eq!(loop_2100.nm1._01.to_string(), "PR");
+    assert_eq!(loop_2100.nm1._02.to_string(), "2");
     assert_eq!(loop_2100.nm1._03, Some("ABC COMPANY".to_string()));
 }
 

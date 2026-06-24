@@ -47,6 +47,39 @@ pub struct CAS {
     pub _19: Option<String>,
 }
 
+/// CAT - Category of Patient Information Service
+///
+/// To convey the category, transmission method, and version of patient information
+///
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 755 | Report Type Code | 1 | O | ID | 2/2
+/// 02 | 756 | Report Transmission Code | 1 | X | ID | 1/2
+/// 03 | 799 | Version Identifier | 1 | O | AN | 1/30
+/// 04 | 1270 | Code List Qualifier Code | 1 | X | ID | 1/3
+/// 05 | 1271 | Industry Code | 1 | X | AN | 1/30
+/// 06 | 1271 | Industry Code | 1 | O | AN | 1/30
+/// 07 | 799 | Version Identifier | 1 | O | AN | 1/30
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct CAT {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+}
+
 /// CB1 - Contract and Cost Accounting Information
 #[derive(
     Serialize,
@@ -65,6 +98,60 @@ pub struct CB1 {
     pub _01: String,
     #[serde(rename = "02")]
     pub _02: Option<String>,
+}
+
+/// CDD - Credit/Debit Adjustment Detail
+///
+/// To convey the reason for, and the detail of, a credit or debit adjustment
+///
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 426 | Adjustment Reason Code | 1 | M | ID | 2/2
+/// 02 | 478 | Credit/Debit Flag Code | 1 | M | ID | 1/1
+/// 03 | 350 | Assigned Identification | 1 | O | AN | 1/20
+/// 04 | 610 | Amount | 1 | X | N2 | 1/15
+/// 05 | 1073 | Yes/No Condition or Response Code | 1 | O | ID | 1/1
+/// 06 | 417 | Price Bracket Identifier | 1 | O | AN | 1/3
+/// 07 | 477 | Credit/Debit Quantity | 1 | X | R | 1/10
+/// 08 | 355 | Unit or Basis for Measurement Code | 1 | X | ID | 2/2
+/// 09 | 427 | Unit Price Difference | 1 | O | R | 1/15
+/// 10 | 236 | Price Identifier Code | 1 | X | ID | 3/3
+/// 11 | 212 | Unit Price | 1 | X | R | 1/17
+/// 12 | 236 | Price Identifier Code | 1 | X | ID | 3/3
+/// 13 | 212 | Unit Price | 1 | X | R | 1/17
+/// 14 | 933 | Free-form Message Text | 1 | O | AN | 1/264
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct CDD {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: String,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+    #[serde(rename = "10")]
+    pub _10: Option<String>,
+    #[serde(rename = "11")]
+    pub _11: Option<String>,
+    #[serde(rename = "12")]
+    pub _12: Option<String>,
+    #[serde(rename = "13")]
+    pub _13: Option<String>,
+    #[serde(rename = "14")]
+    pub _14: Option<String>,
 }
 
 /// CL1 - Claim Codes
@@ -164,6 +251,24 @@ pub struct CLP {
     pub _14: Option<String>,
 }
 
+/// CMC - Commodity Classification
+///
+/// To identify the commodity and freight class of an item
+///
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 22 | Commodity Code | 1 | O | AN | 1/30
+/// 02 | 59 | Freight Class Code | 1 | O | AN | 2/5
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct CMC {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+}
+
 /// CN1 - Contract Information
 #[derive(
     Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
@@ -196,6 +301,66 @@ pub struct COB {
     pub _03: Option<String>,
     #[serde(rename = "04")]
     pub _04: Option<String>,
+}
+
+/// CFI - Compensation Financial Information
+///
+/// To convey financial compensation classification and adjustment information
+///
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 1136 | Code Category | 1 | M | ID | 2/2
+/// 02 | 426 | Adjustment Reason Code | 1 | O | ID | 2/2
+/// 03 | 1129 | Adjustment Reason Code Characteristic | 1 | O | ID | 1/2
+/// 04 | 875 | Maintenance Type Code | 1 | O | ID | 3/3
+/// 05 | 594 | Frequency Code | 1 | O | ID | 1/1
+/// 06 | 1698 | Settlement Type Code | 1 | O | ID | 1/2
+/// 07 | 9 | Late Reason Code | 1 | O | ID | 2/2
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct CFI {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+}
+
+/// CPR - Commodity Price Reference
+///
+/// To convey commodity pricing information referenced to a market exchange
+///
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 1053 | Market Exchange Identifier | 1 | M | ID | 3/3
+/// 02 | 373 | Date | 1 | M | DT | 8/8
+/// 03 | 212 | Unit Price | 1 | M | R | 1/17
+/// 04 | 1054 | Commodity Identification | 1 | M | ID | 2/2
+/// 05 | 1073 | Yes/No Condition or Response Code | 1 | O | ID | 1/1
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct CPR {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: String,
+    #[serde(rename = "03")]
+    pub _03: String,
+    #[serde(rename = "04")]
+    pub _04: String,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
 }
 
 /// CR1 - Ambulance Certification
@@ -531,6 +696,78 @@ pub struct CR8 {
     pub _09: String,
 }
 
+/// CII - Conveyance Insurance Information
+///
+/// To specify the conveyance insurance information
+///
+/// REF | ID | NAME | REQ | TYPE | MIN/MAX
+/// ----|----|-------|----|------|-------
+/// 01 | 93 | Name | M | AN | 1/60
+/// 02 | 127 | Reference Identification | M | AN | 1/50
+/// 03 | 1095 | Year | M | N0 | 4/4
+/// 04 | 100 | Currency Code | M | ID | 3/3
+/// 05 | 610 | Amount | M | N2 | 1/15
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct CII {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: String,
+    #[serde(rename = "03")]
+    pub _03: String,
+    #[serde(rename = "04")]
+    pub _04: String,
+    #[serde(rename = "05")]
+    pub _05: String,
+}
+
+/// CON - Contract Number
+///
+/// To specify contract or reference number and status
+///
+/// REF | ID | NAME | REQ | TYPE | MIN/MAX
+/// ----|----|-------|----|------|-------
+/// 01 | 128 | Reference Identification Qualifier | M | ID | 2/3
+/// 02 | 127 | Reference Identification | M | AN | 1/50
+/// 03 | 846 | Contract Status Code | M | ID | 2/2
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct CON {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: String,
+    #[serde(rename = "03")]
+    pub _03: String,
+}
+
+/// CRD - Country of Origin Detail
+///
+/// To supply the detail information necessary to fulfill mandated requirements for the reporting of non-domestic materials and/or components included in domestically produced products
+///
+/// REF | ID | NAME | REQ | TYPE | MIN/MAX
+/// ----|----|-------|----|------|-------
+/// 01 | 26 | Country Code | M | ID | 2/3
+/// 02 | 522 | Amount Qualifier Code | C | ID | 1/3
+/// 03 | 782 | Monetary Amount | C | R | 1/18
+/// 04 | 488 | Percent, Integer Format | C | N0 | 1/3
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct CRD {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+}
+
 /// CRC - Conditions Indicator
 #[derive(
     Serialize,
@@ -599,6 +836,51 @@ pub struct CTP {
     pub _11: Option<String>,
 }
 
+/// CRI - Claim Report Information
+///
+/// To provide claim status and reporting information for an injury, illness, or incident
+///
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 875 | Maintenance Type Code | 1 | X | ID | 3/3
+/// 02 | 1029 | Claim Status Code | 1 | O | ID | 1/2
+/// 03 | 1203 | Maintenance Reason Code | 1 | O | ID | 2/3
+/// 04 | 1073 | Yes/No Condition or Response Code | 1 | O | ID | 1/1
+/// 05 | 594 | Frequency Code | 1 | O | ID | 1/1
+/// 06 | 1032 | Claim Filing Indicator Code | 1 | M | ID | 1/2
+/// 07 | 1250 | Date Time Period Format Qualifier | 1 | X | ID | 2/3
+/// 08 | 1251 | Date Time Period | 1 | X | AN | 1/35
+/// 09 | 1129 | Adjustment Reason Code Characteristic | 1 | O | ID | 1/2
+/// 10 | 9 | Late Reason Code | 1 | O | ID | 2/2
+/// 11 | 1321 | Condition Indicator | 1 | O | ID | 2/3
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct CRI {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: String,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+    #[serde(rename = "10")]
+    pub _10: Option<String>,
+    #[serde(rename = "11")]
+    pub _11: Option<String>,
+}
+
 /// CUR - Currency
 #[derive(
     Serialize,
@@ -613,16 +895,20 @@ pub struct CTP {
     ParseSegment,
 )]
 pub struct CUR {
+    /// 98 - Entity Identifier Code
     #[serde(rename = "01")]
-    pub _01: String,
+    pub _01: crate::v005010::element::E98,
+    /// 100 - Currency Code
     #[serde(rename = "02")]
-    pub _02: String,
+    pub _02: crate::v005010::element::E100,
     #[serde(rename = "03")]
     pub _03: Option<String>,
+    /// 98 - Entity Identifier Code
     #[serde(rename = "04")]
-    pub _04: Option<String>,
+    pub _04: Option<crate::v005010::element::E98>,
+    /// 100 - Currency Code
     #[serde(rename = "05")]
-    pub _05: Option<String>,
+    pub _05: Option<crate::v005010::element::E100>,
     #[serde(rename = "06")]
     pub _06: Option<String>,
     #[serde(rename = "07")]
@@ -704,6 +990,30 @@ pub struct CTT {
     pub _02: Option<String>,
 }
 
+/// CST - Cost Analysis
+///
+/// To convey cost analysis detail for a line item
+///
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 964 | Cost Code | 1 | M | ID | 3/3
+/// 02 | 782 | Monetary Amount | 1 | M | R | 1/18
+/// 03 | C001 | Composite Unit of Measure | 1 | X | | 1/1
+/// 04 | 380 | Quantity | 1 | X | R | 1/15
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct CST {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: String,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+}
+
 /// CTB - Restrictions/Conditions
 #[derive(
     Serialize,
@@ -739,6 +1049,72 @@ pub struct CTB {
     /// C001 - Composite Unit of Measure
     #[serde(rename = "07")]
     pub _07: Option<String>,
+}
+
+/// CS - Contract Summary
+///
+/// To provide information about a contract
+///
+/// REF | ID | NAME | REPEAT | REQ | TYPE | MIN/MAX
+/// ----|----|-------|--------|----|------|-------
+/// 01 | 367 | Contract Number | 1 | O | AN | 1/30
+/// 02 | 327 | Change Order Sequence Number | 1 | O | AN | 1/8
+/// 03 | 328 | Release Number | 1 | O | AN | 1/30
+/// 04 | 128 | Reference Identification Qualifier | 1 | X | ID | 2/3
+/// 05 | 127 | Reference Identification | 1 | X | AN | 1/50
+/// 06 | 324 | Purchase Order Number | 1 | O | AN | 1/22
+/// 07 | 560 | Special Services Code | 1 | O | ID | 2/10
+/// 08 | 433 | F.O.B. Point Code | 1 | O | ID | 2/2
+/// 09 | 954 | Percentage as Decimal | 1 | O | R | 1/10
+/// 10 | 954 | Percentage as Decimal | 1 | O | R | 1/10
+/// 11 | 782 | Monetary Amount | 1 | O | R | 1/18
+/// 12 | 336 | Terms Type Code | 1 | O | ID | 2/2
+/// 13 | 560 | Special Services Code | 1 | O | ID | 2/10
+/// 14 | 355 | Unit or Basis for Measurement Code | 1 | O | ID | 2/2
+/// 15 | 212 | Unit Price | 1 | O | R | 1/17
+/// 16 | 336 | Terms Type Code | 1 | O | ID | 2/2
+/// 17 | 1073 | Yes/No Condition or Response Code | 1 | O | ID | 1/1
+/// 18 | 1073 | Yes/No Condition or Response Code | 1 | O | ID | 1/1
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct CS {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+    #[serde(rename = "10")]
+    pub _10: Option<String>,
+    #[serde(rename = "11")]
+    pub _11: Option<String>,
+    #[serde(rename = "12")]
+    pub _12: Option<String>,
+    #[serde(rename = "13")]
+    pub _13: Option<String>,
+    #[serde(rename = "14")]
+    pub _14: Option<String>,
+    #[serde(rename = "15")]
+    pub _15: Option<String>,
+    #[serde(rename = "16")]
+    pub _16: Option<String>,
+    #[serde(rename = "17")]
+    pub _17: Option<String>,
+    #[serde(rename = "18")]
+    pub _18: Option<String>,
 }
 
 /// CSH - Sales Requirements
@@ -1058,4 +1434,74 @@ pub struct C8C {
     pub _02: Option<String>,
     #[serde(rename = "03")]
     pub _03: Option<String>,
+}
+
+/// CM - Cargo Manifest
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct CM {
+    #[serde(rename = "01")]
+    pub _01: Option<String>,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+    #[serde(rename = "10")]
+    pub _10: Option<String>,
+    #[serde(rename = "11")]
+    pub _11: Option<String>,
+    #[serde(rename = "12")]
+    pub _12: Option<String>,
+    #[serde(rename = "13")]
+    pub _13: Option<String>,
+    #[serde(rename = "14")]
+    pub _14: Option<String>,
+    #[serde(rename = "15")]
+    pub _15: Option<String>,
+    #[serde(rename = "16")]
+    pub _16: Option<String>,
+    #[serde(rename = "17")]
+    pub _17: Option<String>,
+}
+
+/// CD - Shipment Condition
+#[derive(
+    Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
+)]
+pub struct CD {
+    #[serde(rename = "01")]
+    pub _01: String,
+    #[serde(rename = "02")]
+    pub _02: Option<String>,
+    #[serde(rename = "03")]
+    pub _03: Option<String>,
+    #[serde(rename = "04")]
+    pub _04: Option<String>,
+    #[serde(rename = "05")]
+    pub _05: Option<String>,
+    #[serde(rename = "06")]
+    pub _06: Option<String>,
+    #[serde(rename = "07")]
+    pub _07: Option<String>,
+    #[serde(rename = "08")]
+    pub _08: Option<String>,
+    #[serde(rename = "09")]
+    pub _09: Option<String>,
+    #[serde(rename = "10")]
+    pub _10: Option<String>,
+    #[serde(rename = "11")]
+    pub _11: Option<String>,
 }

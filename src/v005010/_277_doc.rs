@@ -453,7 +453,7 @@ fn parse_2000_any(input: &str) -> IResult<&str, _277Generic2000Loop> {
 
     let (rest, hl_seg) = HL::parse(input)?;
     trace!("Parsed HL: {hl_seg}");
-    match hl_seg._03.as_str() {
+    match hl_seg._03.to_string().as_str() {
         "20" => parse_loop_2000_a(hl_seg, rest),
         "21" => parse_loop_2000_b(hl_seg, rest),
         "19" => parse_loop_2000_c(hl_seg, rest),
