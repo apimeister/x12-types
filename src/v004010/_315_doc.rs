@@ -25,7 +25,7 @@ pub struct _315 {
     #[serde(default)]
     #[serde(skip_serializing_if = "Vec::is_empty")]
     pub n9: Vec<N9>,
-    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub q2: Option<Q2>,
     #[serde(default)]
     #[serde(skip_serializing_if = "Vec::is_empty")]
@@ -34,7 +34,7 @@ pub struct _315 {
     #[serde(skip_serializing_if = "Vec::is_empty")]
     #[x12(loop_trigger = "R4")]
     pub loop_r4: Vec<_315LoopR4>,
-    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub v9: Option<V9>,
     pub se: SE,
 }

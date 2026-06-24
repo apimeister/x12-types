@@ -14,15 +14,15 @@ use x12_types_macros::{DisplayX12, ParseX12};
 pub struct _821 {
     pub st: ST,
     pub b2a: B2A,
-    #[serde(skip_serializing_if = "Vec::is_empty")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub dtm: Vec<DTM>,
-    #[serde(skip_serializing_if = "Vec::is_empty")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub trn: Vec<TRN>,
-    #[serde(skip_serializing_if = "Vec::is_empty")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub n1: Vec<N1>,
-    #[serde(skip_serializing_if = "Vec::is_empty")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub per: Vec<PER>,
-    #[serde(skip_serializing_if = "Vec::is_empty")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub r#ref: Vec<REF>,
     #[serde(default)]
     #[serde(skip_serializing_if = "Vec::is_empty")]

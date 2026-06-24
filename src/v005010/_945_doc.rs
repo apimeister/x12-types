@@ -24,11 +24,11 @@ pub struct _945 {
     #[serde(default)]
     #[serde(skip_serializing_if = "Vec::is_empty")]
     pub nte: Vec<NTE>,
-    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub w27: Option<W27>,
-    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub w6: Option<W6>,
-    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub w28: Option<W28>,
     #[serde(default)]
     #[serde(skip_serializing_if = "Vec::is_empty")]
@@ -42,7 +42,7 @@ pub struct _945 {
     #[serde(default)]
     #[serde(skip_serializing_if = "Vec::is_empty")]
     pub loop_lx: Vec<_945LoopLX>,
-    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub w03: Option<W03>,
     pub se: SE,
 }
@@ -56,7 +56,7 @@ pub struct _945LoopN1 {
     #[serde(default)]
     #[serde(skip_serializing_if = "Vec::is_empty")]
     pub n3: Vec<N3>,
-    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub n4: Option<N4>,
     #[serde(default)]
     #[serde(skip_serializing_if = "Vec::is_empty")]
@@ -77,7 +77,7 @@ pub struct _945LoopLX {
     #[serde(default)]
     #[serde(skip_serializing_if = "Vec::is_empty")]
     pub man: Vec<MAN>,
-    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub pal: Option<PAL>,
     #[serde(default)]
     #[serde(skip_serializing_if = "Vec::is_empty")]
@@ -105,12 +105,12 @@ pub struct _945LoopW12 {
     #[serde(default)]
     #[serde(skip_serializing_if = "Vec::is_empty")]
     pub mea: Vec<MEA>,
-    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub amt: Option<AMT>,
     #[serde(default)]
     #[serde(skip_serializing_if = "Vec::is_empty")]
     pub r4: Vec<R4>,
-    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub w27: Option<W27>,
     #[serde(default)]
     #[serde(skip_serializing_if = "Vec::is_empty")]

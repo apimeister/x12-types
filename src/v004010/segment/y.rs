@@ -166,13 +166,13 @@ pub struct Y6 {
     Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
 )]
 pub struct Y7 {
-    #[serde(rename = "01", skip_serializing_if = "Option::is_none")]
+    #[serde(default, rename = "01", skip_serializing_if = "Option::is_none")]
     pub _01: Option<String>,
-    #[serde(rename = "02", skip_serializing_if = "Option::is_none")]
+    #[serde(default, rename = "02", skip_serializing_if = "Option::is_none")]
     pub _02: Option<String>,
-    #[serde(rename = "03", skip_serializing_if = "Option::is_none")]
+    #[serde(default, rename = "03", skip_serializing_if = "Option::is_none")]
     pub _03: Option<String>,
-    #[serde(rename = "04", skip_serializing_if = "Option::is_none")]
+    #[serde(default, rename = "04", skip_serializing_if = "Option::is_none")]
     pub _04: Option<String>,
     /// 373 - Date
     ///
@@ -180,7 +180,7 @@ pub struct Y7 {
     /// - TYPE=DT
     /// - MIN=8
     /// - MAX=8
-    #[serde(rename = "05", skip_serializing_if = "Option::is_none")]
+    #[serde(default, rename = "05", skip_serializing_if = "Option::is_none")]
     pub _05: Option<String>,
 }
 

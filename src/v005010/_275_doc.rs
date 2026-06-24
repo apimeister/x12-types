@@ -43,11 +43,11 @@ use x12_types_macros::{DisplayX12, ParseX12};
 #[derive(Debug, Default, Clone, Serialize, Deserialize, PartialEq, Eq, DisplayX12, ParseX12)]
 pub struct _275 {
     pub st: ST,
-    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub bgn: Option<BGN>,
-    #[serde(skip_serializing_if = "Vec::is_empty")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub dtm: Vec<DTM>,
-    #[serde(skip_serializing_if = "Vec::is_empty")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub trn: Vec<TRN>,
     #[serde(default)]
     #[serde(skip_serializing_if = "Vec::is_empty")]

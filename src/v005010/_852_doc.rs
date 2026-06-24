@@ -14,11 +14,11 @@ use x12_types_macros::{DisplayX12, ParseX12};
 pub struct _852 {
     pub st: ST,
     pub xq: XQ,
-    #[serde(skip_serializing_if = "Vec::is_empty")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub xpo: Vec<XPO>,
-    #[serde(skip_serializing_if = "Vec::is_empty")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub n9: Vec<N9>,
-    #[serde(skip_serializing_if = "Vec::is_empty")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub per: Vec<PER>,
     #[serde(default)]
     #[serde(skip_serializing_if = "Vec::is_empty")]
@@ -28,7 +28,7 @@ pub struct _852 {
     #[serde(skip_serializing_if = "Vec::is_empty")]
     #[x12(loop_trigger = "LIN")]
     pub loop_lin: Vec<_852LoopLin>,
-    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub ctt: Option<CTT>,
     pub se: SE,
 }

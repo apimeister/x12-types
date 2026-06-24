@@ -19,9 +19,9 @@ pub struct _823 {
     #[serde(skip_serializing_if = "Vec::is_empty")]
     #[x12(loop_trigger = "N1")]
     pub loop_n1: Vec<_823LoopN1>,
-    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub trn: Option<TRN>,
-    #[serde(skip_serializing_if = "Vec::is_empty")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub dtm: Vec<DTM>,
     #[serde(default)]
     #[serde(skip_serializing_if = "Vec::is_empty")]

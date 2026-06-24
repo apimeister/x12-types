@@ -286,7 +286,7 @@ pub struct N9 {
     #[serde(rename = "02")]
     pub _02: String,
     #[serde(rename = "03")]
-    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub _03: Option<String>,
     /// 373 - Date
     ///
@@ -295,7 +295,7 @@ pub struct N9 {
     /// - MIN=8
     /// - MAX=8
     #[serde(rename = "04")]
-    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub _04: Option<String>,
     /// 337 - Time
     ///
@@ -304,7 +304,7 @@ pub struct N9 {
     /// - MIN=4
     /// - MAX=8
     #[serde(rename = "05")]
-    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub _05: Option<String>,
     /// 623 - Time Code
     ///
@@ -313,10 +313,10 @@ pub struct N9 {
     /// - MIN=2
     /// - MAX=2
     #[serde(rename = "06")]
-    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub _06: Option<String>,
     #[serde(rename = "07")]
-    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub _07: Option<String>,
 }
 

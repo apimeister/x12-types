@@ -14,22 +14,22 @@ use x12_types_macros::{DisplayX12, ParseX12};
 #[derive(Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplayX12, ParseX12)]
 pub struct _888 {
     pub st: ST,
-    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub bgn: Option<BGN>,
     #[serde(default)]
     #[serde(skip_serializing_if = "Vec::is_empty")]
     #[x12(loop_trigger = "N1")]
     pub loop_n1: Vec<_888LoopN1>,
-    #[serde(skip_serializing_if = "Vec::is_empty")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub n9: Vec<N9>,
-    #[serde(skip_serializing_if = "Vec::is_empty")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub g61: Vec<G61>,
-    #[serde(skip_serializing_if = "Vec::is_empty")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub nte: Vec<NTE>,
-    #[serde(skip_serializing_if = "Vec::is_empty")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub g93: Vec<G93>,
     pub g62: G62,
-    #[serde(skip_serializing_if = "Vec::is_empty")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub ldt: Vec<LDT>,
     #[serde(default)]
     #[serde(skip_serializing_if = "Vec::is_empty")]

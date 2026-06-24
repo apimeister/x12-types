@@ -59,18 +59,18 @@ use x12_types_macros::{DisplayX12, ParseX12};
 pub struct _301 {
     pub st: ST,
     pub b1: B1,
-    #[serde(skip_serializing_if = "Vec::is_empty")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub g61: Vec<G61>,
-    #[serde(skip_serializing_if = "Vec::is_empty")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub y6: Vec<Y6>,
     pub y3: Y3,
     #[serde(default)]
     #[serde(skip_serializing_if = "Vec::is_empty")]
     #[x12(loop_trigger = "Y4")]
     pub loop_y4: Vec<_301LoopY4>,
-    #[serde(skip_serializing_if = "Vec::is_empty")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub n9: Vec<N9>,
-    #[serde(skip_serializing_if = "Vec::is_empty")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub r2a: Vec<R2A>,
     #[serde(default)]
     #[serde(skip_serializing_if = "Vec::is_empty")]
@@ -80,19 +80,19 @@ pub struct _301 {
     #[serde(skip_serializing_if = "Vec::is_empty")]
     #[x12(loop_trigger = "R4")]
     pub loop_r4: Vec<_301LoopR4>,
-    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub w09: Option<W09>,
-    #[serde(skip_serializing_if = "Vec::is_empty")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub h3: Vec<H3>,
-    #[serde(skip_serializing_if = "Vec::is_empty")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub ea: Vec<EA>,
     #[serde(default)]
     #[serde(skip_serializing_if = "Vec::is_empty")]
     #[x12(loop_trigger = "LX")]
     pub loop_lx: Vec<_301LoopLx>,
-    #[serde(skip_serializing_if = "Vec::is_empty")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub v1: Vec<V1>,
-    #[serde(skip_serializing_if = "Vec::is_empty")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub v9: Vec<V9>,
     pub se: SE,
 }

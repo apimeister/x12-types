@@ -24,16 +24,16 @@ pub struct _940 {
     #[serde(default)]
     #[serde(skip_serializing_if = "Vec::is_empty")]
     pub _120: Vec<NTE>,
-    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub _130: Option<W09>,
-    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub _140: Option<W66>,
-    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub _150: Option<W6>,
     #[serde(default)]
     #[serde(skip_serializing_if = "Vec::is_empty")]
     pub _153: Vec<R2>,
-    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub _156: Option<BNX>,
     #[serde(default)]
     #[serde(skip_serializing_if = "Vec::is_empty")]
@@ -41,7 +41,7 @@ pub struct _940 {
     #[serde(default)]
     #[serde(skip_serializing_if = "Vec::is_empty")]
     pub _0300_loop: Vec<_940Loop300>,
-    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub _0400: Option<W76>,
     pub _0500: SE,
 }
@@ -57,7 +57,7 @@ pub struct _940Loop100 {
     #[serde(default)]
     #[serde(skip_serializing_if = "Vec::is_empty")]
     pub _060: Vec<N3>,
-    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub _070: Option<N4>,
     #[serde(default)]
     #[serde(skip_serializing_if = "Vec::is_empty")]
@@ -208,7 +208,7 @@ pub struct _940Loop332 {
     #[serde(default)]
     #[serde(skip_serializing_if = "Vec::is_empty")]
     pub _280: Vec<PER>,
-    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub _285: Option<LE>,
     #[serde(default)]
     #[serde(skip_serializing_if = "Vec::is_empty")]

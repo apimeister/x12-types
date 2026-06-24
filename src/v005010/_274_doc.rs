@@ -14,9 +14,9 @@ use x12_types_macros::{DisplayX12, ParseX12};
 pub struct _274 {
     pub st: ST,
     pub bht: BHT,
-    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub dtm: Option<DTM>,
-    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub per: Option<PER>,
     #[serde(default)]
     #[serde(skip_serializing_if = "Vec::is_empty")]

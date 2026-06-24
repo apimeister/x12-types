@@ -17,27 +17,27 @@ pub struct _944 {
     #[serde(skip_serializing_if = "Vec::is_empty")]
     #[x12(loop_trigger = "N1")]
     pub loop_n1: Vec<_944LoopN1>,
-    #[serde(skip_serializing_if = "Vec::is_empty")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub n9: Vec<N9>,
-    #[serde(skip_serializing_if = "Vec::is_empty")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub g61: Vec<G61>,
-    #[serde(skip_serializing_if = "Vec::is_empty")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub g62: Vec<G62>,
-    #[serde(skip_serializing_if = "Vec::is_empty")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub nte: Vec<NTE>,
-    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub w08: Option<W08>,
-    #[serde(skip_serializing_if = "Vec::is_empty")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub w18: Vec<W18>,
-    #[serde(skip_serializing_if = "Vec::is_empty")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub g08: Vec<G08>,
-    #[serde(skip_serializing_if = "Vec::is_empty")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub td1: Vec<TD1>,
     #[serde(default)]
     #[serde(skip_serializing_if = "Vec::is_empty")]
     #[x12(loop_trigger = "LX")]
     pub loop_lx: Vec<_944LoopLx>,
-    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub w14: Option<W14>,
     pub se: SE,
 }

@@ -16,7 +16,7 @@ pub struct _212 {
     pub st: ST,
     pub ata: ATA,
     pub b2a: B2A,
-    #[serde(skip_serializing_if = "Vec::is_empty")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub l11: Vec<L11>,
     #[serde(default)]
     #[serde(skip_serializing_if = "Vec::is_empty")]

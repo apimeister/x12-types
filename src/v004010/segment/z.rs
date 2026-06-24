@@ -19,9 +19,9 @@ use x12_types_macros::{DisplaySegment, ParseSegment};
     Serialize, Deserialize, Clone, Default, Debug, PartialEq, Eq, DisplaySegment, ParseSegment,
 )]
 pub struct ZC1 {
-    #[serde(rename = "01", skip_serializing_if = "Option::is_none")]
+    #[serde(default, rename = "01", skip_serializing_if = "Option::is_none")]
     pub _01: Option<String>,
-    #[serde(rename = "02", skip_serializing_if = "Option::is_none")]
+    #[serde(default, rename = "02", skip_serializing_if = "Option::is_none")]
     pub _02: Option<String>,
     #[serde(rename = "03")]
     pub _03: String,

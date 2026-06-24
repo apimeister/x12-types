@@ -18,10 +18,10 @@ use x12_types_macros::{DisplayX12, ParseX12};
 pub struct _303 {
     pub st: ST,
     pub b1: B1,
-    #[serde(skip_serializing_if = "Vec::is_empty")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub y6: Vec<Y6>,
     pub y5: Y5,
-    #[serde(skip_serializing_if = "Vec::is_empty")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub v9: Vec<V9>,
     pub se: SE,
 }

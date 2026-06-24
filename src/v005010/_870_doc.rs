@@ -16,13 +16,13 @@ use x12_types_macros::{DisplayX12, ParseX12};
 pub struct _870 {
     pub st: ST,
     pub bsr: BSR,
-    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub td3: Option<TD3>,
-    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub td4: Option<TD4>,
-    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub td5: Option<TD5>,
-    #[serde(skip_serializing_if = "Vec::is_empty")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub dtm: Vec<DTM>,
     #[serde(default)]
     #[serde(skip_serializing_if = "Vec::is_empty")]
@@ -40,7 +40,7 @@ pub struct _870 {
     #[serde(skip_serializing_if = "Vec::is_empty")]
     #[x12(loop_trigger = "HL")]
     pub loop_hl: Vec<_870LoopHl>,
-    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub ctt: Option<CTT>,
     pub se: SE,
 }

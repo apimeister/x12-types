@@ -37,9 +37,9 @@ use x12_types_macros::{DisplayX12, ParseX12};
 pub struct _816 {
     pub st: ST,
     pub bht: BHT,
-    #[serde(skip_serializing_if = "Vec::is_empty")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub dtm: Vec<DTM>,
-    #[serde(skip_serializing_if = "Vec::is_empty")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub r#ref: Vec<REF>,
     #[serde(default)]
     #[serde(skip_serializing_if = "Vec::is_empty")]

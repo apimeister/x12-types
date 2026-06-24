@@ -12,15 +12,15 @@ use x12_types_macros::{DisplayX12, ParseX12};
 pub struct _216 {
     pub st: ST,
     pub pun: PUN,
-    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub g61: Option<G61>,
-    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub tem: Option<TEM>,
-    #[serde(skip_serializing_if = "Vec::is_empty")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub prf: Vec<PRF>,
-    #[serde(skip_serializing_if = "Vec::is_empty")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub at5: Vec<AT5>,
-    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub k2: Option<K2>,
     #[serde(default)]
     #[serde(skip_serializing_if = "Vec::is_empty")]

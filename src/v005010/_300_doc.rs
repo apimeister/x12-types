@@ -61,20 +61,20 @@ use x12_types_macros::{DisplayX12, ParseX12};
 pub struct _300 {
     pub st: ST,
     pub b1: B1,
-    #[serde(skip_serializing_if = "Vec::is_empty")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub g61: Vec<G61>,
-    #[serde(skip_serializing_if = "Vec::is_empty")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub y6: Vec<Y6>,
-    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub y7: Option<Y7>,
     pub y1: Y1,
     #[serde(default)]
     #[serde(skip_serializing_if = "Vec::is_empty")]
     #[x12(loop_trigger = "Y2")]
     pub loop_y2: Vec<_300LoopY2>,
-    #[serde(skip_serializing_if = "Vec::is_empty")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub n9: Vec<N9>,
-    #[serde(skip_serializing_if = "Vec::is_empty")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub r2a: Vec<R2A>,
     #[serde(default)]
     #[serde(skip_serializing_if = "Vec::is_empty")]
@@ -84,21 +84,21 @@ pub struct _300 {
     #[serde(skip_serializing_if = "Vec::is_empty")]
     #[x12(loop_trigger = "R4")]
     pub loop_r4: Vec<_300LoopR4>,
-    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default, skip_serializing_if = "Option::is_none")]
     pub w09: Option<W09>,
-    #[serde(skip_serializing_if = "Vec::is_empty")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub h3: Vec<H3>,
-    #[serde(skip_serializing_if = "Vec::is_empty")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub ea: Vec<EA>,
     #[serde(default)]
     #[serde(skip_serializing_if = "Vec::is_empty")]
     #[x12(loop_trigger = "LX")]
     pub loop_lx: Vec<_300LoopLx>,
-    #[serde(skip_serializing_if = "Vec::is_empty")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub v1: Vec<V1>,
-    #[serde(skip_serializing_if = "Vec::is_empty")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub v9: Vec<V9>,
-    #[serde(skip_serializing_if = "Vec::is_empty")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub k1: Vec<K1>,
     pub se: SE,
 }

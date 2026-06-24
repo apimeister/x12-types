@@ -13,7 +13,7 @@ use x12_types_macros::{DisplayX12, ParseX12};
 pub struct _753 {
     pub st: ST,
     pub bgn: BGN,
-    #[serde(skip_serializing_if = "Vec::is_empty")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub per: Vec<PER>,
     #[serde(default)]
     #[serde(skip_serializing_if = "Vec::is_empty")]

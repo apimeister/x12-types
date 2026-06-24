@@ -1,3 +1,7 @@
+# 0.11.1 2026-06-24
+
+* fix JSON round-trip: pair `#[serde(default)]` with every `#[serde(skip_serializing_if = ...)]` field (455 fields) so that omitted optional segments/loops deserialize back to `None`/empty instead of erroring with `missing field ...`
+
 # 0.11.0 2026-06-23
 
 * add support for
