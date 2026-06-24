@@ -17,7 +17,7 @@ serde = { version = "1.0", features = ["derive"] }
 validator = { version = "0.20", features = ["derive"] }
 chrono = "0.4"
 nom = "8"
-x12-types-macros = { version = "0.2.2", path = "x12-types-macros" }
+x12-types-macros = { version = "0.2.3", path = "x12-types-macros" }
 
 [dev-dependencies]
 pretty_env_logger = "0.5"
