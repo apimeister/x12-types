@@ -36,5 +36,8 @@ GE*1*1~
 IEA*1*000000001~"#;
     let (rest, obj) = Transmission::<_214>::parse(str).unwrap();
     assert!(rest.is_empty());
-    assert_eq!(obj.functional_group[0].segments[0].b10._03.to_string(), "SCAC");
+    assert_eq!(
+        obj.functional_group[0].segments[0].b10._03.to_string(),
+        "SCAC"
+    );
 }

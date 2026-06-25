@@ -214,7 +214,10 @@ fn test_dtm() {
     let result = DTM::parse(&str).unwrap();
     assert!(result.0.is_empty());
     assert_eq!(result.1._01, "649");
-    assert_eq!(result.1._02.as_ref().map(ToString::to_string), Some("20230102".to_string()));
+    assert_eq!(
+        result.1._02.as_ref().map(ToString::to_string),
+        Some("20230102".to_string())
+    );
 }
 
 #[test]
@@ -243,8 +246,14 @@ fn test_l0() {
     let str = format!("{obj}");
     let result = L0::parse(&str).unwrap();
     assert!(result.0.is_empty());
-    assert_eq!(result.1._01.as_ref().map(ToString::to_string), Some("1".to_string()));
-    assert_eq!(result.1._04.as_ref().map(ToString::to_string), Some("14000".to_string()));
+    assert_eq!(
+        result.1._01.as_ref().map(ToString::to_string),
+        Some("1".to_string())
+    );
+    assert_eq!(
+        result.1._04.as_ref().map(ToString::to_string),
+        Some("14000".to_string())
+    );
 }
 
 #[test]
@@ -257,7 +266,10 @@ fn test_l5() {
     let str = format!("{obj}");
     let result = L5::parse(&str).unwrap();
     assert!(result.0.is_empty());
-    assert_eq!(result.1._01.as_ref().map(ToString::to_string), Some("1".to_string()));
+    assert_eq!(
+        result.1._01.as_ref().map(ToString::to_string),
+        Some("1".to_string())
+    );
     assert_eq!(result.1._02, Some("VEHICLES:PARTS".to_string()));
 }
 

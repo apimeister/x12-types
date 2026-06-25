@@ -551,10 +551,7 @@ IEA*1*000000001~"#;
 
     let (rest, obj) = Transmission::<_940>::parse(str).unwrap();
     assert!(rest.is_empty());
-    assert_eq!(
-        obj.isa._15,
-        element::I14::Unknown("X".to_string())
-    );
+    assert_eq!(obj.isa._15, element::I14::Unknown("X".to_string()));
     // Renders back to the original code.
     assert_eq!(format!("{}", obj.isa._15), "X");
 
@@ -604,18 +601,9 @@ fn test_940_usage_indicator_from_x12() {
     // Test X12Element::from_x12 conversion
     use crate::util::X12Element;
 
-    assert_eq!(
-        element::I14::from_x12("I"),
-        element::I14::Information
-    );
-    assert_eq!(
-        element::I14::from_x12("P"),
-        element::I14::Production
-    );
-    assert_eq!(
-        element::I14::from_x12("T"),
-        element::I14::Test
-    );
+    assert_eq!(element::I14::from_x12("I"), element::I14::Information);
+    assert_eq!(element::I14::from_x12("P"), element::I14::Production);
+    assert_eq!(element::I14::from_x12("T"), element::I14::Test);
 
     // Unpublished codes are preserved as `Unknown` rather than rejected.
     assert_eq!(
@@ -635,10 +623,7 @@ fn test_940_usage_indicator_default() {
     // A code-list element defaults to the empty `Unknown`, which renders as
     // nothing; the parser always supplies a real value for the field.
     let default_indicator = element::I14::default();
-    assert_eq!(
-        default_indicator,
-        element::I14::Unknown(String::new())
-    );
+    assert_eq!(default_indicator, element::I14::Unknown(String::new()));
     assert_eq!(format!("{default_indicator}"), "");
 
     println!("✓ I14 default value is empty Unknown");

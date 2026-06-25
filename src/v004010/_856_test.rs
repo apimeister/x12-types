@@ -56,9 +56,15 @@ IEA*1*000000001~"#;
             assert_eq!(obj.isa._06.trim(), "SENDER");
             assert_eq!(obj.isa._08.trim(), "RECEIVER");
             assert_eq!(obj.functional_group[0].gs._01.to_string(), "SH");
-            assert_eq!(obj.functional_group[0].segments[0].st._01.to_string(), "856");
+            assert_eq!(
+                obj.functional_group[0].segments[0].st._01.to_string(),
+                "856"
+            );
             assert_eq!(obj.functional_group[0].segments[0].bsn._01, "00");
-            assert_eq!(obj.functional_group[0].segments[0].bsn._02.to_string(), "SHIPMENT ID");
+            assert_eq!(
+                obj.functional_group[0].segments[0].bsn._02.to_string(),
+                "SHIPMENT ID"
+            );
 
             // Verify HL loops are parsed
             assert!(!obj.functional_group[0].segments[0].loop_hl.is_empty());
@@ -132,9 +138,15 @@ IEA*1*000000263~"#;
             assert_eq!(obj.isa._06.trim(), "SENDER1");
             assert_eq!(obj.isa._08.trim(), "RECEIVER1");
             assert_eq!(obj.functional_group[0].gs._01.to_string(), "IN");
-            assert_eq!(obj.functional_group[0].segments[0].st._01.to_string(), "856");
+            assert_eq!(
+                obj.functional_group[0].segments[0].st._01.to_string(),
+                "856"
+            );
             assert_eq!(obj.functional_group[0].segments[0].bsn._01, "00");
-            assert_eq!(obj.functional_group[0].segments[0].bsn._02.to_string(), "01140824");
+            assert_eq!(
+                obj.functional_group[0].segments[0].bsn._02.to_string(),
+                "01140824"
+            );
 
             // Verify HL loops are parsed
             assert!(!obj.functional_group[0].segments[0].loop_hl.is_empty());
@@ -176,9 +188,15 @@ IEA*1*000000001~"#;
     assert_eq!(obj.isa._06.trim(), "SENDER");
     assert_eq!(obj.isa._08.trim(), "RECEIVER");
     assert_eq!(obj.functional_group[0].gs._01.to_string(), "SH");
-    assert_eq!(obj.functional_group[0].segments[0].st._01.to_string(), "856");
+    assert_eq!(
+        obj.functional_group[0].segments[0].st._01.to_string(),
+        "856"
+    );
     assert_eq!(obj.functional_group[0].segments[0].bsn._01, "00");
-    assert_eq!(obj.functional_group[0].segments[0].bsn._02.to_string(), "SHIP001");
+    assert_eq!(
+        obj.functional_group[0].segments[0].bsn._02.to_string(),
+        "SHIP001"
+    );
 }
 
 #[test]
@@ -212,7 +230,10 @@ IEA*1*000000001~"#;
     // Verify carrier details
     let hl_loop = &obj.functional_group[0].segments[0].loop_hl[0];
     assert_eq!(hl_loop.td1[0]._01, Some("CTN25".to_string()));
-    assert_eq!(hl_loop.td1[0]._02.as_ref().map(ToString::to_string), Some("5".to_string()));
+    assert_eq!(
+        hl_loop.td1[0]._02.as_ref().map(ToString::to_string),
+        Some("5".to_string())
+    );
     assert_eq!(hl_loop.td5[0]._01, "B");
     assert_eq!(hl_loop.td5[0]._02, "2");
     assert_eq!(hl_loop.td5[0]._03, "FEDEX");

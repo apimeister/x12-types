@@ -22,13 +22,24 @@ fn parse_211() {
     // line item 1 carries the AT2 detail loop and an LX marks loop
     assert_eq!(obj.loop_200[0].loop_210.len(), 1);
     assert_eq!(obj.loop_200[0].loop_210[0].at2._05.to_string(), "5000");
-    assert_eq!(obj.loop_200[0].loop_210[0].l4.as_ref().unwrap()._01.to_string(), "48");
+    assert_eq!(
+        obj.loop_200[0].loop_210[0]
+            .l4
+            .as_ref()
+            .unwrap()
+            ._01
+            .to_string(),
+        "48"
+    );
     assert_eq!(obj.loop_200[0].loop_220.len(), 1);
     assert_eq!(obj.loop_200[0].loop_220[0].lx._01, "1");
     // line item 2 carries the hazardous-material loop
     assert_eq!(obj.loop_200[1].loop_230.len(), 1);
     assert_eq!(obj.loop_200[1].loop_230[0].loop_231.len(), 1);
-    assert_eq!(obj.loop_200[1].loop_230[0].loop_231[0].lh1._02.to_string(), "1203");
+    assert_eq!(
+        obj.loop_200[1].loop_230[0].loop_231[0].lh1._02.to_string(),
+        "1203"
+    );
 }
 
 #[test]

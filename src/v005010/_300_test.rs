@@ -9,7 +9,10 @@ fn parse_300() {
     assert_eq!(rest, "");
     assert_eq!(obj.st._01, "300");
     assert_eq!(obj.b1._02.as_deref(), Some("BOOK001"));
-    assert_eq!(obj.y1._01.as_ref().map(ToString::to_string), Some("20200115".to_string()));
+    assert_eq!(
+        obj.y1._01.as_ref().map(ToString::to_string),
+        Some("20200115".to_string())
+    );
     assert!(obj.y7.is_some());
     // container-details loop with its equipment/temperature
     assert_eq!(obj.loop_y2.len(), 1);
@@ -67,7 +70,10 @@ IEA*1*000000001~"#;
     let (rest, obj) = Transmission::<_300>::parse(str).unwrap();
     assert!(rest.is_empty());
     let t = &obj.functional_group[0].segments[0];
-    assert_eq!(t.y1._01.as_ref().map(ToString::to_string), Some("20200115".to_string()));
+    assert_eq!(
+        t.y1._01.as_ref().map(ToString::to_string),
+        Some("20200115".to_string())
+    );
     assert_eq!(t.loop_y2.len(), 1);
     assert_eq!(t.loop_lx.len(), 1);
 }
