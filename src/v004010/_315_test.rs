@@ -1,41 +1,42 @@
+use crate::util::X12Element;
 use crate::v004010::*;
 
 #[test]
 fn parse_315() {
     let x = Transmission {
         isa: ISA {
-            _01: "00".to_string(),
+            _01: element::I01::N00,
             _02: "          ".to_string(),
-            _03: "00".to_string(),
+            _03: element::I03::N00,
             _04: "          ".to_string(),
-            _05: "ZZ".to_string(),
+            _05: element::I05::Zz,
             _06: "SOURCE         ".to_string(),
-            _07: "ZZ".to_string(),
+            _07: element::I05::Zz,
             _08: "TARGET         ".to_string(),
-            _09: "220524".to_string(),
-            _10: "1120".to_string(),
-            _11: "U".to_string(),
-            _12: "00401".to_string(),
-            _13: "000000001".to_string(),
-            _14: "0".to_string(),
-            _15: crate::v004010::segment::i::UsageIndicator::Production,
+            _09: element::I08::from_x12("220524"),
+            _10: element::I09::from_x12("1120"),
+            _11: element::I10::U,
+            _12: element::I11::N00401,
+            _13: element::I12::from_x12("000000001"),
+            _14: element::I13::N0,
+            _15: crate::v004010::element::I14::Production,
             _16: ">".to_string(),
             ..Default::default()
         },
         functional_group: vec![FunctionalGroup {
             gs: GS {
-                _01: "QO".to_string(),
+                _01: crate::v004010::element::E479::from_x12("QO"),
                 _02: "SOURCE".to_string(),
                 _03: "TARGET".to_string(),
-                _04: "20220524".to_string(),
-                _05: "1600".to_string(),
-                _06: "1".to_string(),
-                _07: "X".to_string(),
+                _04: crate::v004010::element::E373::from_x12("20220524"),
+                _05: crate::v004010::element::E337::from_x12("1600"),
+                _06: crate::v004010::element::E28::from_x12("1"),
+                _07: crate::v004010::element::E455::from_x12("X"),
                 _08: "004010".to_string(),
             },
             segments: vec![_315 {
                 st: ST {
-                    _01: "315".to_string(),
+                    _01: crate::v004010::element::E143::from_x12("315"),
                     _02: "00001".to_string(),
                 },
                 b4: B4 {
@@ -103,18 +104,18 @@ fn parse_315() {
                 ],
                 v9: None,
                 se: SE {
-                    _01: "9".to_string(),
+                    _01: crate::v004010::element::E96::from_x12("9"),
                     _02: "00001".to_string(),
                 },
             }],
             ge: GE {
-                _01: "1".to_string(),
-                _02: "1".to_string(),
+                _01: crate::v004010::element::E97::from_x12("1"),
+                _02: crate::v004010::element::E28::from_x12("1"),
             },
         }],
         iea: IEA {
-            _01: "1".to_string(),
-            _02: "000000001".to_string(),
+            _01: element::I16::from_x12("1"),
+            _02: element::I12::from_x12("000000001"),
         },
     };
     let str = format!("{x}");
@@ -128,37 +129,37 @@ fn parse_315() {
 fn test_315() {
     let x = Transmission {
         isa: ISA {
-            _01: "00".to_string(),
+            _01: element::I01::N00,
             _02: "          ".to_string(),
-            _03: "00".to_string(),
+            _03: element::I03::N00,
             _04: "          ".to_string(),
-            _05: "ZZ".to_string(),
+            _05: element::I05::Zz,
             _06: "SOURCE         ".to_string(),
-            _07: "ZZ".to_string(),
+            _07: element::I05::Zz,
             _08: "TARGET         ".to_string(),
-            _09: "220524".to_string(),
-            _10: "1120".to_string(),
-            _11: "U".to_string(),
-            _12: "00401".to_string(),
-            _13: "000000001".to_string(),
-            _14: "0".to_string(),
-            _15: crate::v004010::segment::i::UsageIndicator::Production,
+            _09: element::I08::from_x12("220524"),
+            _10: element::I09::from_x12("1120"),
+            _11: element::I10::U,
+            _12: element::I11::N00401,
+            _13: element::I12::from_x12("000000001"),
+            _14: element::I13::N0,
+            _15: crate::v004010::element::I14::Production,
             _16: ">".to_string(),
         },
         functional_group: vec![FunctionalGroup {
             gs: GS {
-                _01: "QO".to_string(),
+                _01: crate::v004010::element::E479::from_x12("QO"),
                 _02: "SOURCE".to_string(),
                 _03: "TARGET".to_string(),
-                _04: "20220524".to_string(),
-                _05: "1600".to_string(),
-                _06: "1".to_string(),
-                _07: "X".to_string(),
+                _04: crate::v004010::element::E373::from_x12("20220524"),
+                _05: crate::v004010::element::E337::from_x12("1600"),
+                _06: crate::v004010::element::E28::from_x12("1"),
+                _07: crate::v004010::element::E455::from_x12("X"),
                 _08: "004010".to_string(),
             },
             segments: vec![_315 {
                 st: ST {
-                    _01: "315".to_string(),
+                    _01: crate::v004010::element::E143::from_x12("315"),
                     _02: "00001".to_string(),
                 },
                 b4: B4 {
@@ -254,18 +255,18 @@ fn test_315() {
                 ],
                 v9: None,
                 se: SE {
-                    _01: "9".to_string(),
+                    _01: crate::v004010::element::E96::from_x12("9"),
                     _02: "00001".to_string(),
                 },
             }],
             ge: GE {
-                _01: "1".to_string(),
-                _02: "1".to_string(),
+                _01: crate::v004010::element::E97::from_x12("1"),
+                _02: crate::v004010::element::E28::from_x12("1"),
             },
         }],
         iea: IEA {
-            _01: "1".to_string(),
-            _02: "000000001".to_string(),
+            _01: element::I16::from_x12("1"),
+            _02: element::I12::from_x12("000000001"),
         },
     };
     let serialized = format!("{x}");
@@ -290,38 +291,38 @@ IEA*1*000000001~
 fn test_315_defaults() {
     let x = Transmission {
         isa: ISA {
-            _01: "00".to_string(),
+            _01: element::I01::N00,
             _02: "          ".to_string(),
-            _03: "00".to_string(),
+            _03: element::I03::N00,
             _04: "          ".to_string(),
-            _05: "ZZ".to_string(),
+            _05: element::I05::Zz,
             _06: "SOURCE         ".to_string(),
-            _07: "ZZ".to_string(),
+            _07: element::I05::Zz,
             _08: "TARGET         ".to_string(),
-            _09: "220524".to_string(),
-            _10: "1120".to_string(),
-            _11: "U".to_string(),
-            _12: "00401".to_string(),
-            _13: "000000001".to_string(),
-            _14: "0".to_string(),
-            _15: crate::v004010::segment::i::UsageIndicator::Production,
+            _09: element::I08::from_x12("220524"),
+            _10: element::I09::from_x12("1120"),
+            _11: element::I10::U,
+            _12: element::I11::N00401,
+            _13: element::I12::from_x12("000000001"),
+            _14: element::I13::N0,
+            _15: crate::v004010::element::I14::Production,
             _16: ">".to_string(),
             ..Default::default()
         },
         functional_group: vec![FunctionalGroup {
             gs: GS {
-                _01: "QO".to_string(),
+                _01: crate::v004010::element::E479::from_x12("QO"),
                 _02: "SOURCE".to_string(),
                 _03: "TARGET".to_string(),
-                _04: "20220524".to_string(),
-                _05: "1600".to_string(),
-                _06: "1".to_string(),
-                _07: "X".to_string(),
+                _04: crate::v004010::element::E373::from_x12("20220524"),
+                _05: crate::v004010::element::E337::from_x12("1600"),
+                _06: crate::v004010::element::E28::from_x12("1"),
+                _07: crate::v004010::element::E455::from_x12("X"),
                 _08: "004010".to_string(),
             },
             segments: vec![_315 {
                 st: ST {
-                    _01: "315".to_string(),
+                    _01: crate::v004010::element::E143::from_x12("315"),
                     _02: "00001".to_string(),
                 },
                 b4: B4 {
@@ -390,18 +391,18 @@ fn test_315_defaults() {
                 ],
                 v9: None,
                 se: SE {
-                    _01: "9".to_string(),
+                    _01: crate::v004010::element::E96::from_x12("9"),
                     _02: "00001".to_string(),
                 },
             }],
             ge: GE {
-                _01: "1".to_string(),
-                _02: "1".to_string(),
+                _01: crate::v004010::element::E97::from_x12("1"),
+                _02: crate::v004010::element::E28::from_x12("1"),
             },
         }],
         iea: IEA {
-            _01: "1".to_string(),
-            _02: "000000001".to_string(),
+            _01: element::I16::from_x12("1"),
+            _02: element::I12::from_x12("000000001"),
         },
     };
     let serialized = format!("{x}");

@@ -32,7 +32,7 @@ pub struct N1 {
     #[serde(rename = "04")]
     pub _04: Option<String>,
     #[serde(rename = "05")]
-    pub _05: Option<String>,
+    pub _05: Option<crate::v004010::element::E706>,
     #[serde(rename = "06")]
     pub _06: Option<String>,
 }
@@ -383,7 +383,7 @@ pub struct N10 {
 )]
 pub struct N12 {
     #[serde(rename = "01")]
-    pub _01: String,
+    pub _01: crate::v004010::element::E829,
     #[serde(rename = "02")]
     pub _02: String,
 }

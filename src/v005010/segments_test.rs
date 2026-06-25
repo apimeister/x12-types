@@ -37,7 +37,7 @@ fn test_isa() {
     let s = "ISA*00*          *00*          *ZZ*EMEDNYMCR      *ZZ*8-DIGIT PLAN ID*191125*1409*^*00501*193290002*0*T*:~";
     let (rest, obj) = ISA::parse(s).unwrap();
     assert!(rest.is_empty());
-    assert_eq!(obj._01, "00");
+    assert_eq!(obj._01.to_string(), "00");
 }
 
 #[test]
@@ -148,7 +148,7 @@ fn test_iea() {
     let s = "IEA*1*193230001~";
     let (rest, obj) = IEA::parse(s).unwrap();
     assert!(rest.is_empty());
-    assert_eq!(obj._01, "1");
+    assert_eq!(obj._01.to_string(), "1");
 }
 
 #[test]

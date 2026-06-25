@@ -8,7 +8,7 @@ fn parse_214() {
     let (rest, obj) = _214::parse(SAMPLE).unwrap();
     assert_eq!(rest, "");
     assert_eq!(obj.st._01, "214");
-    assert_eq!(obj.b10._03, "SCAC");
+    assert_eq!(obj.b10._03.to_string(), "SCAC");
     // two LX loops, both top-level
     assert_eq!(obj.loop_0200.len(), 2);
     assert_eq!(obj.loop_0200[0].lx._01, "1");
@@ -36,5 +36,5 @@ GE*1*1~
 IEA*1*000000001~"#;
     let (rest, obj) = Transmission::<_214>::parse(str).unwrap();
     assert!(rest.is_empty());
-    assert_eq!(obj.functional_group[0].segments[0].b10._03, "SCAC");
+    assert_eq!(obj.functional_group[0].segments[0].b10._03.to_string(), "SCAC");
 }

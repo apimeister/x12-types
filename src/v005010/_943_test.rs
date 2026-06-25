@@ -29,7 +29,7 @@ fn parse_943() {
     assert_eq!(obj.w27._01, "M");
     // two item loops; the first carries description/reference/packing
     assert_eq!(obj.loop_w04.len(), 2);
-    assert_eq!(obj.loop_w04[0].w04._01, "10");
+    assert_eq!(obj.loop_w04[0].w04._01.to_string(), "10");
     assert_eq!(obj.loop_w04[0].g69.len(), 1);
     assert_eq!(obj.loop_w04[0].n9.len(), 1);
     assert_eq!(obj.loop_w04[0].w20.len(), 1);

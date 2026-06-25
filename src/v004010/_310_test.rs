@@ -71,9 +71,9 @@ C3*USD~
 SE*49*32353~"#;
     let obj = _310::parse(edi).unwrap();
     println!("{obj:?}");
-    assert_eq!(obj.1.st._01, "310");
+    assert_eq!(obj.1.st._01.to_string(), "310");
     assert_eq!(obj.1.st._02, "35353");
-    assert_eq!(obj.1.se._01, "49");
+    assert_eq!(obj.1.se._01.to_string(), "49");
     assert_eq!(obj.1.se._02, "32353");
 }
 
@@ -125,7 +125,7 @@ IEA*1*000000015~
 "#;
     let (rest, obj) = Transmission::<_310>::parse(edi).unwrap();
     assert!(rest.is_empty());
-    assert_eq!(obj.iea._02, "000000015");
+    assert_eq!(obj.iea._02.to_string(), "000000015");
     println!("{obj:?}");
 }
 
@@ -189,6 +189,6 @@ IEA*1*000145269~
 "#;
     let (rest, obj) = Transmission::<_310>::parse(edi).unwrap();
     assert!(rest.is_empty());
-    assert_eq!(obj.iea._02, "000145269");
+    assert_eq!(obj.iea._02.to_string(), "000145269");
     println!("{obj:?}");
 }

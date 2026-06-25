@@ -11,7 +11,7 @@ fn parse_997() {
     assert_eq!(obj.ak1._01, Some("HC".to_string()));
     // two transaction-set responses (AK2 loops), the 2nd with an AK3 sub-loop
     assert_eq!(obj.loop_ak2.len(), 2);
-    assert_eq!(obj.loop_ak2[0].ak5._01, "A");
+    assert_eq!(obj.loop_ak2[0].ak5._01.to_string(), "A");
     assert_eq!(obj.loop_ak2[1].loop_ak3.len(), 1);
     assert_eq!(obj.ak9._01, Some("P".to_string()));
 }

@@ -12,5 +12,5 @@ GE*1*97614~
 IEA*1*000097614~"#;
     let (rest, obj) = Transmission::<_998>::parse(s).unwrap();
     assert!(rest.is_empty());
-    assert_eq!(obj.iea._02, "000097614");
+    assert_eq!(obj.iea._02.to_string(), "000097614");
 }

@@ -36,15 +36,15 @@ pub struct RST {
 )]
 pub struct RTE {
     #[serde(rename = "01")]
-    pub _01: String,
+    pub _01: crate::v005010::element::E1387,
     #[serde(rename = "02")]
-    pub _02: String,
+    pub _02: crate::v005010::element::E953,
     #[serde(rename = "03")]
-    pub _03: Option<String>,
+    pub _03: Option<crate::v005010::element::E782>,
     #[serde(rename = "04")]
-    pub _04: Option<String>,
+    pub _04: Option<crate::v005010::element::E1470>,
     #[serde(rename = "05")]
-    pub _05: Option<String>,
+    pub _05: Option<crate::v005010::element::E1470>,
 }
 
 /// RDM - Remittance Delivery Method
@@ -234,7 +234,7 @@ pub struct RPA {
 )]
 pub struct RRA {
     #[serde(rename = "01")]
-    pub _01: String,
+    pub _01: crate::v005010::element::E701,
     #[serde(rename = "02")]
     pub _02: Option<String>,
 }
@@ -392,15 +392,15 @@ pub struct R4 {
 )]
 pub struct RDR {
     #[serde(rename = "01")]
-    pub _01: Option<String>,
+    pub _01: Option<crate::v005010::element::E1292>,
     #[serde(rename = "02")]
-    pub _02: Option<String>,
+    pub _02: Option<crate::v005010::element::E1293>,
     #[serde(rename = "03")]
-    pub _03: Option<String>,
+    pub _03: Option<crate::v005010::element::E1294>,
     #[serde(rename = "04")]
     pub _04: Option<String>,
     #[serde(rename = "05")]
-    pub _05: Option<String>,
+    pub _05: Option<crate::v005010::element::E1073>,
 }
 
 /// RED - Related Data

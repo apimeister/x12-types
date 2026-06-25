@@ -232,7 +232,7 @@ pub struct W2 {
     /// - MIN=8
     /// - MAX=8
     #[serde(rename = "09")]
-    pub _09: Option<String>,
+    pub _09: Option<crate::v004010::element::E373>,
     #[serde(rename = "10")]
     pub _10: Option<String>,
     #[serde(rename = "11")]

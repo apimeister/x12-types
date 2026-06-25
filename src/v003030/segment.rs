@@ -1,3 +1,4 @@
+use crate::v003030::element;
 use serde::{Deserialize, Serialize};
 use x12_types_macros::{DisplaySegment, ParseSegment};
 
@@ -12,9 +13,9 @@ use x12_types_macros::{DisplaySegment, ParseSegment};
 #[derive(Serialize, Deserialize, Clone, Default, Debug, DisplaySegment, ParseSegment)]
 pub struct IEA {
     #[serde(rename = "01")]
-    pub _01: String,
+    pub _01: element::I16,
     #[serde(rename = "02")]
-    pub _02: String,
+    pub _02: element::I12,
 }
 
 /// ISA - Interchange Control Header NEW
@@ -42,35 +43,35 @@ pub struct IEA {
 #[derive(Serialize, Deserialize, Clone, Default, Debug, DisplaySegment, ParseSegment)]
 pub struct ISA {
     #[serde(rename = "01")]
-    pub _01: String,
+    pub _01: element::I01,
     #[serde(rename = "02")]
     pub _02: String,
     #[serde(rename = "03")]
-    pub _03: String,
+    pub _03: element::I03,
     #[serde(rename = "04")]
     pub _04: String,
     #[serde(rename = "05")]
-    pub _05: String,
+    pub _05: element::I05,
     #[serde(rename = "06")]
     pub _06: String,
     #[serde(rename = "07")]
-    pub _07: String,
+    pub _07: element::I05,
     #[serde(rename = "08")]
     pub _08: String,
     #[serde(rename = "09")]
-    pub _09: String,
+    pub _09: element::I08,
     #[serde(rename = "10")]
-    pub _10: String,
+    pub _10: element::I09,
     #[serde(rename = "11")]
-    pub _11: String,
+    pub _11: element::I10,
     #[serde(rename = "12")]
-    pub _12: String,
+    pub _12: element::I11,
     #[serde(rename = "13")]
-    pub _13: String,
+    pub _13: element::I12,
     #[serde(rename = "14")]
-    pub _14: String,
+    pub _14: element::I13,
     #[serde(rename = "15")]
-    pub _15: String,
+    pub _15: element::I14,
     #[serde(rename = "16")]
     pub _16: String,
 }
@@ -86,9 +87,9 @@ pub struct ISA {
 #[derive(Serialize, Deserialize, Clone, Default, Debug, DisplaySegment, ParseSegment)]
 pub struct GE {
     #[serde(rename = "01")]
-    pub _01: String,
+    pub _01: crate::v003030::element::E97,
     #[serde(rename = "02")]
-    pub _02: String,
+    pub _02: crate::v003030::element::E28,
 }
 
 /// GS - Functional Group Header
@@ -108,19 +109,19 @@ pub struct GE {
 #[derive(Serialize, Deserialize, Clone, Default, Debug, DisplaySegment, ParseSegment)]
 pub struct GS {
     #[serde(rename = "01")]
-    pub _01: String,
+    pub _01: crate::v003030::element::E479,
     #[serde(rename = "02")]
     pub _02: String,
     #[serde(rename = "03")]
     pub _03: String,
     #[serde(rename = "04")]
-    pub _04: Option<String>,
+    pub _04: Option<crate::v003030::element::E373>,
     #[serde(rename = "05")]
-    pub _05: Option<String>,
+    pub _05: Option<crate::v003030::element::E337>,
     #[serde(rename = "06")]
-    pub _06: Option<String>,
+    pub _06: Option<crate::v003030::element::E28>,
     #[serde(rename = "07")]
-    pub _07: String,
+    pub _07: crate::v003030::element::E455,
     #[serde(rename = "08")]
     pub _08: String,
 }
@@ -136,7 +137,7 @@ pub struct GS {
 #[derive(Serialize, Deserialize, Clone, Default, Debug, DisplaySegment, ParseSegment)]
 pub struct SE {
     #[serde(rename = "01")]
-    pub _01: String,
+    pub _01: crate::v003030::element::E96,
     #[serde(rename = "02")]
     pub _02: String,
 }
@@ -152,7 +153,7 @@ pub struct SE {
 #[derive(Serialize, Deserialize, Clone, Default, Debug, DisplaySegment, ParseSegment)]
 pub struct ST {
     #[serde(rename = "01")]
-    pub _01: String,
+    pub _01: crate::v003030::element::E143,
     #[serde(rename = "02")]
     pub _02: String,
 }
@@ -174,7 +175,7 @@ pub struct ST {
 #[derive(Serialize, Deserialize, Clone, Default, Debug, DisplaySegment, ParseSegment)]
 pub struct ZD {
     #[serde(rename = "01")]
-    pub _01: String,
+    pub _01: crate::v003030::element::E143,
     #[serde(rename = "02")]
     pub _02: Option<String>,
     #[serde(rename = "03")]
@@ -184,9 +185,9 @@ pub struct ZD {
     #[serde(rename = "05")]
     pub _05: Option<String>,
     #[serde(rename = "06")]
-    pub _06: Option<String>,
+    pub _06: Option<crate::v003030::element::E243>,
     #[serde(rename = "07")]
-    pub _07: String,
+    pub _07: crate::v003030::element::E202,
     #[serde(rename = "08")]
     pub _08: Option<String>,
 }

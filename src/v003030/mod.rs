@@ -5,6 +5,7 @@ use nom::IResult;
 use serde::{Deserialize, Serialize};
 use std::fmt::Display;
 
+pub mod element;
 mod segment;
 pub use segment::*;
 

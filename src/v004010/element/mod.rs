@@ -1,0 +1,37 @@
+//! Typed X12 data elements for v004010, named by element number.
+
+mod e00xx;
+mod e01xx;
+mod e02xx;
+mod e03xx;
+mod e04xx;
+mod e05xx;
+mod e06xx;
+mod e07xx;
+mod e08xx;
+mod e09xx;
+mod e10xx;
+mod e11xx;
+mod e12xx;
+mod e13xx;
+mod e14xx;
+mod e15xx;
+mod i;
+
+pub use e00xx::*;
+pub use e01xx::*;
+pub use e02xx::*;
+pub use e03xx::*;
+pub use e04xx::*;
+pub use e05xx::*;
+pub use e06xx::*;
+pub use e07xx::*;
+pub use e08xx::*;
+pub use e09xx::*;
+pub use e10xx::*;
+pub use e11xx::*;
+pub use e12xx::*;
+pub use e13xx::*;
+pub use e14xx::*;
+pub use e15xx::*;
+pub use i::*;

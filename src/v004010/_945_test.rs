@@ -1,10 +1,11 @@
+use crate::util::X12Element;
 use crate::v004010::*;
 
 #[test]
 fn render_945() {
     let obj = _945 {
         st: ST {
-            _01: "945".to_string(),
+            _01: crate::v004010::element::E143::from_x12("945"),
             _02: "0001".to_string(),
         },
         w06: W06 {
@@ -94,7 +95,7 @@ fn render_945() {
         loop_lx: vec![
             _945LoopLX {
                 lx: LX {
-                    _01: "1".to_string(),
+                    _01: crate::v004010::element::E554::from_x12("1"),
                 },
                 loop_w12: vec![_945LoopW12 {
                     w12: W12 {
@@ -144,7 +145,7 @@ fn render_945() {
             },
             _945LoopLX {
                 lx: LX {
-                    _01: "2".to_string(),
+                    _01: crate::v004010::element::E554::from_x12("2"),
                 },
                 loop_w12: vec![_945LoopW12 {
                     w12: W12 {
@@ -188,7 +189,7 @@ fn render_945() {
             },
             _945LoopLX {
                 lx: LX {
-                    _01: "3".to_string(),
+                    _01: crate::v004010::element::E554::from_x12("3"),
                 },
                 loop_w12: vec![_945LoopW12 {
                     w12: W12 {
@@ -243,7 +244,7 @@ fn render_945() {
             ..Default::default()
         }),
         se: SE {
-            _01: "32".to_string(),
+            _01: crate::v004010::element::E96::from_x12("32"),
             _02: "0001".to_string(),
         },
         ..Default::default()
@@ -262,7 +263,7 @@ fn parse_945() {
     assert_eq!(rest, "");
 
     // Verify the parsed structure
-    assert_eq!(obj.st._01, "945");
+    assert_eq!(obj.st._01.to_string(), "945");
     assert_eq!(obj.st._02, "0001");
 
     assert_eq!(obj.w06._01, "F");
@@ -291,11 +292,11 @@ fn parse_945_minimal() {
     let (rest, obj) = _945::parse(input).unwrap();
     assert_eq!(rest, "");
 
-    assert_eq!(obj.st._01, "945");
+    assert_eq!(obj.st._01.to_string(), "945");
     assert_eq!(obj.w06._01, "F");
     assert_eq!(obj.loop_lx.len(), 1);
     assert_eq!(obj.loop_lx[0].loop_w12[0].w12._01, "CC");
-    assert_eq!(obj.se._01, "4");
+    assert_eq!(obj.se._01.to_string(), "4");
 }
 
 #[test]
@@ -304,37 +305,37 @@ fn full_transmission_945() {
 
     let obj = Transmission {
         isa: ISA {
-            _01: "00".to_string(),
+            _01: element::I01::N00,
             _02: "          ".to_string(),
-            _03: "00".to_string(),
+            _03: element::I03::N00,
             _04: "          ".to_string(),
-            _05: "ZZ".to_string(),
+            _05: element::I05::Zz,
             _06: "SENDER         ".to_string(),
-            _07: "ZZ".to_string(),
+            _07: element::I05::Zz,
             _08: "RECEIVER       ".to_string(),
-            _09: "220524".to_string(),
-            _10: "1120".to_string(),
-            _11: "U".to_string(),
-            _12: "00401".to_string(),
-            _13: "000000001".to_string(),
-            _14: "0".to_string(),
-            _15: UsageIndicator::Production,
+            _09: element::I08::from_x12("220524"),
+            _10: element::I09::from_x12("1120"),
+            _11: element::I10::U,
+            _12: element::I11::N00401,
+            _13: element::I12::from_x12("000000001"),
+            _14: element::I13::N0,
+            _15: element::I14::Production,
             _16: ">".to_string(),
         },
         functional_group: vec![FunctionalGroup {
             gs: GS {
-                _01: "SW".to_string(),
+                _01: crate::v004010::element::E479::from_x12("SW"),
                 _02: "SENDER".to_string(),
                 _03: "RECEIVER".to_string(),
-                _04: "20220524".to_string(),
-                _05: "1600".to_string(),
-                _06: "1".to_string(),
-                _07: "X".to_string(),
+                _04: crate::v004010::element::E373::from_x12("20220524"),
+                _05: crate::v004010::element::E337::from_x12("1600"),
+                _06: crate::v004010::element::E28::from_x12("1"),
+                _07: crate::v004010::element::E455::from_x12("X"),
                 _08: "004010".to_string(),
             },
             segments: vec![_945 {
                 st: ST {
-                    _01: "945".to_string(),
+                    _01: crate::v004010::element::E143::from_x12("945"),
                     _02: "0001".to_string(),
                 },
                 w06: W06 {
@@ -344,7 +345,7 @@ fn full_transmission_945() {
                 },
                 loop_lx: vec![_945LoopLX {
                     lx: LX {
-                        _01: "1".to_string(),
+                        _01: crate::v004010::element::E554::from_x12("1"),
                     },
                     loop_w12: vec![_945LoopW12 {
                         w12: W12 {
@@ -358,19 +359,19 @@ fn full_transmission_945() {
                     ..Default::default()
                 }],
                 se: SE {
-                    _01: "4".to_string(),
+                    _01: crate::v004010::element::E96::from_x12("4"),
                     _02: "0001".to_string(),
                 },
                 ..Default::default()
             }],
             ge: GE {
-                _01: "1".to_string(),
-                _02: "1".to_string(),
+                _01: crate::v004010::element::E97::from_x12("1"),
+                _02: crate::v004010::element::E28::from_x12("1"),
             },
         }],
         iea: IEA {
-            _01: "1".to_string(),
-            _02: "000000001".to_string(),
+            _01: element::I16::from_x12("1"),
+            _02: element::I12::from_x12("000000001"),
         },
     };
 
@@ -439,8 +440,8 @@ fn parse_945_multi_lx() {
     let (rest, obj) = _945::parse(input).unwrap();
     assert_eq!(rest, "");
     assert_eq!(obj.loop_lx.len(), 2);
-    assert_eq!(obj.loop_lx[0].lx._01, "1");
-    assert_eq!(obj.loop_lx[1].lx._01, "2");
+    assert_eq!(obj.loop_lx[0].lx._01.to_string(), "1");
+    assert_eq!(obj.loop_lx[1].lx._01.to_string(), "2");
     assert_eq!(obj.loop_lx[0].loop_w12[0].w12._02, "10");
     assert_eq!(obj.loop_lx[1].loop_w12[0].w12._02, "20");
 }

@@ -22,9 +22,9 @@ use x12_types_macros::{DisplaySegment, ParseSegment};
 )]
 pub struct YNQ {
     #[serde(rename = "01")]
-    pub _01: String,
+    pub _01: crate::v005010::element::E1021,
     #[serde(rename = "02")]
-    pub _02: String,
+    pub _02: crate::v005010::element::E1073,
     #[serde(rename = "03")]
     pub _03: Option<String>,
     #[serde(rename = "04")]
@@ -34,13 +34,13 @@ pub struct YNQ {
     #[serde(rename = "06")]
     pub _06: Option<String>,
     #[serde(rename = "07")]
-    pub _07: Option<String>,
+    pub _07: Option<crate::v005010::element::E1254>,
     #[serde(rename = "08")]
     pub _08: Option<String>,
     #[serde(rename = "09")]
     pub _09: Option<String>,
     #[serde(rename = "10")]
-    pub _10: Option<String>,
+    pub _10: Option<crate::v005010::element::E1257>,
 }
 
 /// Y2 - Container Details
@@ -64,9 +64,9 @@ pub struct YNQ {
 )]
 pub struct Y2 {
     #[serde(rename = "01")]
-    pub _01: String,
+    pub _01: crate::v005010::element::E95,
     #[serde(rename = "02")]
-    pub _02: Option<String>,
+    pub _02: Option<crate::v005010::element::E78>,
     #[serde(rename = "03")]
     pub _03: Option<String>,
     #[serde(rename = "04")]
@@ -80,9 +80,9 @@ pub struct Y2 {
     #[serde(rename = "08")]
     pub _08: Option<String>,
     #[serde(rename = "09")]
-    pub _09: Option<String>,
+    pub _09: Option<crate::v005010::element::E465>,
     #[serde(rename = "10")]
-    pub _10: Option<String>,
+    pub _10: Option<crate::v005010::element::E466>,
 }
 
 /// Y6 - Authentication
@@ -99,11 +99,11 @@ pub struct Y2 {
 )]
 pub struct Y6 {
     #[serde(rename = "01")]
-    pub _01: Option<String>,
+    pub _01: Option<crate::v005010::element::E313>,
     #[serde(rename = "02")]
     pub _02: String,
     #[serde(rename = "03")]
-    pub _03: String,
+    pub _03: crate::v005010::element::E275,
 }
 
 /// Y1 - Space Reservation Request
@@ -126,7 +126,7 @@ pub struct Y6 {
 )]
 pub struct Y1 {
     #[serde(rename = "01")]
-    pub _01: Option<String>,
+    pub _01: Option<crate::v005010::element::E135>,
     #[serde(rename = "02")]
     pub _02: Option<String>,
     #[serde(rename = "03")]
@@ -140,7 +140,7 @@ pub struct Y1 {
     #[serde(rename = "07")]
     pub _07: Option<String>,
     #[serde(rename = "08")]
-    pub _08: Option<String>,
+    pub _08: Option<crate::v005010::element::E375>,
     #[serde(rename = "09")]
     pub _09: Option<String>,
 }
@@ -185,9 +185,9 @@ pub struct Y3 {
     #[serde(rename = "09")]
     pub _09: Option<String>,
     #[serde(rename = "10")]
-    pub _10: Option<String>,
+    pub _10: Option<crate::v005010::element::E375>,
     #[serde(rename = "11")]
-    pub _11: Option<String>,
+    pub _11: Option<crate::v005010::element::E623>,
 }
 
 /// Y4 - Container Release
@@ -219,7 +219,7 @@ pub struct Y4 {
     #[serde(rename = "04")]
     pub _04: Option<String>,
     #[serde(rename = "05")]
-    pub _05: Option<String>,
+    pub _05: Option<crate::v005010::element::E95>,
     #[serde(rename = "06")]
     pub _06: Option<String>,
     #[serde(rename = "07")]
@@ -263,13 +263,13 @@ pub struct Y5 {
 )]
 pub struct Y7 {
     #[serde(rename = "01")]
-    pub _01: Option<String>,
+    pub _01: Option<crate::v005010::element::E467>,
     #[serde(rename = "02")]
-    pub _02: Option<String>,
+    pub _02: Option<crate::v005010::element::E470>,
     #[serde(rename = "03")]
     pub _03: Option<String>,
     #[serde(rename = "04")]
-    pub _04: Option<String>,
+    pub _04: Option<crate::v005010::element::E468>,
     #[serde(rename = "05")]
     pub _05: Option<String>,
 }

@@ -19,17 +19,17 @@ use x12_types_macros::{DisplaySegment, ParseSegment};
 )]
 pub struct G3 {
     #[serde(rename = "01")]
-    pub _01: Option<String>,
+    pub _01: Option<crate::v004010::element::E315>,
     #[serde(rename = "02")]
-    pub _02: String,
+    pub _02: crate::v004010::element::E317,
     #[serde(rename = "03")]
     pub _03: Option<String>,
     #[serde(rename = "04")]
-    pub _04: Option<String>,
+    pub _04: Option<crate::v004010::element::E201>,
     #[serde(rename = "05")]
-    pub _05: Option<String>,
+    pub _05: Option<crate::v004010::element::E782>,
     #[serde(rename = "06")]
-    pub _06: Option<String>,
+    pub _06: Option<crate::v004010::element::E73>,
 }
 
 /// G61 - Contact
@@ -89,11 +89,11 @@ pub struct G62 {
     /// - MIN=8
     /// - MAX=8
     #[serde(rename = "02")]
-    pub _02: Option<String>,
+    pub _02: Option<crate::v004010::element::E373>,
     #[serde(rename = "03")]
     pub _03: Option<String>,
     #[serde(rename = "04")]
-    pub _04: Option<String>,
+    pub _04: Option<crate::v004010::element::E337>,
     /// 623 - Time Code
     ///
     /// Code identifying the time. In accordance with International Standards Organization standard 8601, time can be specified by a + or - and an indication in hours in relation to Universal Time Coordinate (UTC) time; since + is a restricted character, + and - are substituted by P and M in the codes that follow
@@ -101,7 +101,7 @@ pub struct G62 {
     /// - MIN=2
     /// - MAX=2
     #[serde(rename = "05")]
-    pub _05: Option<String>,
+    pub _05: Option<crate::v004010::element::E623>,
 }
 
 /// GA - Canadian Grain Information
@@ -132,17 +132,17 @@ pub struct G62 {
 )]
 pub struct GA {
     #[serde(rename = "01")]
-    pub _01: Option<String>,
+    pub _01: Option<crate::v004010::element::E1275>,
     #[serde(rename = "02")]
     pub _02: Option<String>,
     #[serde(rename = "03")]
-    pub _03: Option<String>,
+    pub _03: Option<crate::v004010::element::E1576>,
     #[serde(rename = "04")]
     pub _04: Option<String>,
     #[serde(rename = "05")]
     pub _05: Option<String>,
     #[serde(rename = "06")]
-    pub _06: Option<String>,
+    pub _06: Option<crate::v004010::element::E642>,
     #[serde(rename = "07")]
     pub _07: Option<String>,
     /// 373 - Date
@@ -152,25 +152,25 @@ pub struct GA {
     /// - MIN=8
     /// - MAX=8
     #[serde(rename = "08")]
-    pub _08: Option<String>,
+    pub _08: Option<crate::v004010::element::E373>,
     #[serde(rename = "09")]
-    pub _09: Option<String>,
+    pub _09: Option<crate::v004010::element::E1470>,
     #[serde(rename = "10")]
     pub _10: Option<String>,
     #[serde(rename = "11")]
-    pub _11: Option<String>,
+    pub _11: Option<crate::v004010::element::E1277>,
     #[serde(rename = "12")]
-    pub _12: Option<String>,
+    pub _12: Option<crate::v004010::element::E1278>,
     #[serde(rename = "13")]
-    pub _13: Option<String>,
+    pub _13: Option<crate::v004010::element::E1073>,
     #[serde(rename = "14")]
     pub _14: Option<String>,
     #[serde(rename = "15")]
     pub _15: Option<String>,
     #[serde(rename = "16")]
-    pub _16: Option<String>,
+    pub _16: Option<crate::v004010::element::E1004>,
     #[serde(rename = "17")]
-    pub _17: Option<String>,
+    pub _17: Option<crate::v004010::element::E954>,
 }
 
 /// GE - Functional Group Trailer
@@ -200,18 +200,16 @@ pub struct GE {
     /// - TYPE=N0
     /// - MIN=1
     /// - MAX=6
-    #[validate(length(min = 1, max = 6, message = "GE01 must be 1-6 characters long"))]
     #[serde(rename = "01")]
-    pub _01: String,
+    pub _01: crate::v004010::element::E97,
     /// 28 - Group Control Number
     ///
     /// Assigned number originated and maintained by the sender
     /// - TYPE=N0
     /// - MIN=1
     /// - MAX=9
-    #[validate(length(min = 1, max = 9, message = "GE02 must be 1-9 characters long"))]
     #[serde(rename = "02")]
-    pub _02: String,
+    pub _02: crate::v004010::element::E28,
 }
 
 /// GR5 - Loading Details
@@ -232,13 +230,13 @@ pub struct GR5 {
     #[serde(rename = "01")]
     pub _01: String,
     #[serde(rename = "02")]
-    pub _02: Option<String>,
+    pub _02: Option<crate::v004010::element::E752>,
     #[serde(rename = "03")]
-    pub _03: Option<String>,
+    pub _03: Option<crate::v004010::element::E739>,
     #[serde(rename = "04")]
     pub _04: Option<String>,
     #[serde(rename = "05")]
-    pub _05: Option<String>,
+    pub _05: Option<crate::v004010::element::E641>,
 }
 
 /// GS - Functional Group Header
@@ -269,7 +267,7 @@ pub struct GR5 {
 )]
 pub struct GS {
     #[serde(rename = "01")]
-    pub _01: String,
+    pub _01: crate::v004010::element::E479,
     #[serde(rename = "02")]
     pub _02: String,
     #[serde(rename = "03")]
@@ -281,7 +279,7 @@ pub struct GS {
     /// - MIN=8
     /// - MAX=8
     #[serde(rename = "04")]
-    pub _04: String,
+    pub _04: crate::v004010::element::E373,
     /// 337 - Time
     ///
     /// Time expressed in 24-hour clock time as follows: HHMM, or HHMMSS, or HHMMSSD, or HHMMSSDD, where H = hours (00-23), M = minutes (00-59), S = integer seconds (00-59) and DD = decimal seconds; decimal seconds are expressed as follows: D = tenths (0-9) and DD = hundredths (00-99)
@@ -289,11 +287,11 @@ pub struct GS {
     /// - MIN=4
     /// - MAX=8
     #[serde(rename = "05")]
-    pub _05: String,
+    pub _05: crate::v004010::element::E337,
     #[serde(rename = "06")]
-    pub _06: String,
+    pub _06: crate::v004010::element::E28,
     #[serde(rename = "07")]
-    pub _07: String,
+    pub _07: crate::v004010::element::E455,
     #[serde(rename = "08")]
     pub _08: String,
 }

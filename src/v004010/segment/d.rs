@@ -24,7 +24,7 @@ use x12_types_macros::{DisplaySegment, ParseSegment};
 )]
 pub struct D9 {
     #[serde(rename = "01")]
-    pub _01: Option<String>,
+    pub _01: Option<crate::v004010::element::E100>,
     /// 19 - City Name
     ///
     /// Free-form text for city name
@@ -44,7 +44,7 @@ pub struct D9 {
     #[serde(rename = "04")]
     pub _04: Option<String>,
     #[serde(rename = "05")]
-    pub _05: Option<String>,
+    pub _05: Option<crate::v004010::element::E100>,
     /// 19 - City Name
     ///
     /// Free-form text for city name
@@ -56,13 +56,13 @@ pub struct D9 {
     #[serde(rename = "07")]
     pub _07: Option<String>,
     #[serde(rename = "08")]
-    pub _08: Option<String>,
+    pub _08: Option<crate::v004010::element::E100>,
     #[serde(rename = "09")]
-    pub _09: Option<String>,
+    pub _09: Option<crate::v004010::element::E100>,
     #[serde(rename = "10")]
-    pub _10: Option<String>,
+    pub _10: Option<crate::v004010::element::E100>,
     #[serde(rename = "11")]
-    pub _11: Option<String>,
+    pub _11: Option<crate::v004010::element::E100>,
     /// 26 - Country Code
     ///
     /// Code identifying the country
@@ -97,19 +97,19 @@ pub struct DMG {
     #[serde(rename = "02")]
     pub _02: Option<String>,
     #[serde(rename = "03")]
-    pub _03: Option<String>,
+    pub _03: Option<crate::v004010::element::E1068>,
     #[serde(rename = "04")]
-    pub _04: Option<String>,
+    pub _04: Option<crate::v004010::element::E1067>,
     #[serde(rename = "05")]
-    pub _05: Option<String>,
+    pub _05: Option<crate::v004010::element::E1109>,
     #[serde(rename = "06")]
-    pub _06: Option<String>,
+    pub _06: Option<crate::v004010::element::E1066>,
     #[serde(rename = "07")]
     pub _07: Option<String>,
     #[serde(rename = "08")]
-    pub _08: Option<String>,
+    pub _08: Option<crate::v004010::element::E659>,
     #[serde(rename = "09")]
-    pub _09: Option<String>,
+    pub _09: Option<crate::v004010::element::E380>,
 }
 
 /// DTM - Date/Time Reference
@@ -143,7 +143,7 @@ pub struct DTM {
     /// - MIN=8
     /// - MAX=8
     #[serde(rename = "02")]
-    pub _02: Option<String>,
+    pub _02: Option<crate::v004010::element::E373>,
     /// 337 - Time
     ///
     /// Time expressed in 24-hour clock time as follows: HHMM, or HHMMSS, or HHMMSSD, or HHMMSSDD, where H = hours (00-23), M = minutes (00-59), S = integer seconds (00-59) and DD = decimal seconds; decimal seconds are expressed as follows: D = tenths (0-9) and DD = hundredths (00-99)
@@ -151,7 +151,7 @@ pub struct DTM {
     /// - MIN=4
     /// - MAX=8
     #[serde(rename = "03")]
-    pub _03: Option<String>,
+    pub _03: Option<crate::v004010::element::E337>,
     /// 623 - Time Code
     ///
     /// Code identifying the time. In accordance with International Standards Organization standard 8601, time can be specified by a + or - and an indication in hours in relation to Universal Time Coordinate (UTC) time; since + is a restricted character, + and - are substituted by P and M in the codes that follow
@@ -159,7 +159,7 @@ pub struct DTM {
     /// - MIN=2
     /// - MAX=2
     #[serde(rename = "04")]
-    pub _04: Option<String>,
+    pub _04: Option<crate::v004010::element::E623>,
     #[serde(rename = "05")]
     pub _05: Option<String>,
     #[serde(rename = "06")]

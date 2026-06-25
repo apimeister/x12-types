@@ -18,17 +18,17 @@ use x12_types_macros::{DisplaySegment, ParseSegment};
 )]
 pub struct ZT {
     #[serde(rename = "01")]
-    pub _01: String,
+    pub _01: crate::v005010::element::E214,
     #[serde(rename = "02")]
     pub _02: String,
     #[serde(rename = "03")]
     pub _03: String,
     #[serde(rename = "04")]
-    pub _04: Option<String>,
+    pub _04: Option<crate::v005010::element::E186>,
     #[serde(rename = "05")]
     pub _05: Option<String>,
     #[serde(rename = "06")]
-    pub _06: Option<String>,
+    pub _06: Option<crate::v005010::element::E761>,
 }
 
 /// ZA - Product Activity Reporting

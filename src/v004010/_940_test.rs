@@ -258,10 +258,11 @@ IEA*1*000000009~"#;
 fn test_940_validation_failures() {
     // Test ISA field length validation failures
     let test_cases = vec![
-        // ISA01 too short (1 char instead of 2)
-        r#"ISA*0*          *00*          *08*925119TEST     *ZZ*TESTTPLEDI     *111201*1108*U*00401*000000009*0*P*~"#,
-        // ISA01 too long (3 chars instead of 2)
-        r#"ISA*000*          *00*          *08*925119TEST     *ZZ*TESTTPLEDI     *111201*1108*U*00401*000000009*0*P*~"#,
+        // Only the fixed-length free-text fields (ISA02/04/06/08) and the component
+        // separator (ISA16) still carry length validators. The I-series qualifier,
+        // date, time and numeric fields are now typed elements: out-of-list codes
+        // round-trip as `Unknown` and date/time/numeric text is not length-checked,
+        // so wrong-length values there no longer fail `validate()`.
         // ISA02 too short (9 chars instead of 10)
         r#"ISA*00*         *00*          *08*925119TEST     *ZZ*TESTTPLEDI     *111201*1108*U*00401*000000009*0*P*~"#,
         // ISA02 too long (11 chars instead of 10)
@@ -270,22 +271,6 @@ fn test_940_validation_failures() {
         r#"ISA*00*          *00*          *08*925119TES     *ZZ*TESTTPLEDI     *111201*1108*U*00401*000000009*0*P*~"#,
         // ISA06 too long (16 chars instead of 15)
         r#"ISA*00*          *00*          *08*925119TEST1     *ZZ*TESTTPLEDI     *111201*1108*U*00401*000000009*0*P*~"#,
-        // ISA09 too short (5 chars instead of 6)
-        r#"ISA*00*          *00*          *08*925119TEST     *ZZ*TESTTPLEDI     *11120*1108*U*00401*000000009*0*P*~"#,
-        // ISA09 too long (7 chars instead of 6)
-        r#"ISA*00*          *00*          *08*925119TEST     *ZZ*TESTTPLEDI     *1112011*1108*U*00401*000000009*0*P*~"#,
-        // ISA10 too short (3 chars instead of 4)
-        r#"ISA*00*          *00*          *08*925119TEST     *ZZ*TESTTPLEDI     *111201*110*U*00401*000000009*0*P*~"#,
-        // ISA10 too long (5 chars instead of 4)
-        r#"ISA*00*          *00*          *08*925119TEST     *ZZ*TESTTPLEDI     *111201*11088*U*00401*000000009*0*P*~"#,
-        // ISA12 too short (4 chars instead of 5)
-        r#"ISA*00*          *00*          *08*925119TEST     *ZZ*TESTTPLEDI     *111201*1108*U*0040*000000009*0*P*~"#,
-        // ISA12 too long (6 chars instead of 5)
-        r#"ISA*00*          *00*          *08*925119TEST     *ZZ*TESTTPLEDI     *111201*1108*U*004011*000000009*0*P*~"#,
-        // ISA13 too short (8 chars instead of 9)
-        r#"ISA*00*          *00*          *08*925119TEST     *ZZ*TESTTPLEDI     *111201*1108*U*00401*00000009*0*P*~"#,
-        // ISA13 too long (10 chars instead of 9)
-        r#"ISA*00*          *00*          *08*925119TEST     *ZZ*TESTTPLEDI     *111201*1108*U*00401*0000000099*0*P*~"#,
         // ISA16 too long (2 chars instead of 1)
         r#"ISA*00*          *00*          *08*925119TEST     *ZZ*TESTTPLEDI     *111201*1108*U*00401*000000009*0*P*::~"#,
     ];
@@ -524,9 +509,9 @@ IEA*1*999999999~"#;
 fn test_940_usage_indicator_enum_valid_values() {
     // Test all valid usage indicator values
     let test_cases = vec![
-        ("I", segment::i::UsageIndicator::Information, "Information"),
-        ("P", segment::i::UsageIndicator::Production, "Production"),
-        ("T", segment::i::UsageIndicator::Test, "Test"),
+        ("I", element::I14::Information, "Information"),
+        ("P", element::I14::Production, "Production"),
+        ("T", element::I14::Test, "Test"),
     ];
 
     for (isa_value, expected_enum, description) in test_cases {
@@ -553,9 +538,9 @@ IEA*1*000000001~"#,
 }
 
 #[test]
-#[should_panic(expected = "called `Result::unwrap()` on an `Err` value")]
-fn test_940_usage_indicator_invalid_value() {
-    // Test invalid usage indicator value
+fn test_940_usage_indicator_unknown_value_round_trips() {
+    // An unpublished usage indicator code is preserved verbatim as `Unknown`
+    // and round-trips byte-for-byte, rather than failing to parse.
     let str = r#"ISA*00*          *00*          *ZZ*SENDER         *ZZ*RECEIVER       *111201*1108*U*00401*000000001*0*X*:~
 GS*OW*SENDER*RECEIVER*20111201*1108*1*T*004010UCS~
 ST*940*0001~
@@ -564,15 +549,24 @@ SE*2*0001~
 GE*1*1~
 IEA*1*000000001~"#;
 
-    let (_rest, _obj) = Transmission::<_940>::parse(str).unwrap();
+    let (rest, obj) = Transmission::<_940>::parse(str).unwrap();
+    assert!(rest.is_empty());
+    assert_eq!(
+        obj.isa._15,
+        element::I14::Unknown("X".to_string())
+    );
+    // Renders back to the original code.
+    assert_eq!(format!("{}", obj.isa._15), "X");
+
+    println!("✓ Unknown usage indicator code round-trips verbatim");
 }
 
 #[test]
 fn test_940_usage_indicator_enum_clone_and_debug() {
     // Test that the enum implements Clone and Debug correctly
-    let info = segment::i::UsageIndicator::Information;
-    let prod = segment::i::UsageIndicator::Production;
-    let test = segment::i::UsageIndicator::Test;
+    let info = element::I14::Information;
+    let prod = element::I14::Production;
+    let test = element::I14::Test;
 
     // Test Clone
     let info_clone = info.clone();
@@ -588,56 +582,66 @@ fn test_940_usage_indicator_enum_clone_and_debug() {
     assert!(format!("{:?}", prod).contains("Production"));
     assert!(format!("{:?}", test).contains("Test"));
 
-    println!("✓ UsageIndicator enum Clone and Debug traits work correctly");
+    println!("✓ I14 enum Clone and Debug traits work correctly");
 }
 
 #[test]
 fn test_940_usage_indicator_display_trait() {
     // Test Display trait implementation
-    let info = segment::i::UsageIndicator::Information;
-    let prod = segment::i::UsageIndicator::Production;
-    let test = segment::i::UsageIndicator::Test;
+    let info = element::I14::Information;
+    let prod = element::I14::Production;
+    let test = element::I14::Test;
 
     assert_eq!(format!("{}", info), "I");
     assert_eq!(format!("{}", prod), "P");
     assert_eq!(format!("{}", test), "T");
 
-    println!("✓ UsageIndicator Display trait works correctly");
+    println!("✓ I14 Display trait works correctly");
 }
 
 #[test]
-fn test_940_usage_indicator_from_str_trait() {
-    // Test FromStr trait implementation
-    use std::str::FromStr;
+fn test_940_usage_indicator_from_x12() {
+    // Test X12Element::from_x12 conversion
+    use crate::util::X12Element;
 
     assert_eq!(
-        segment::i::UsageIndicator::from_str("I").unwrap(),
-        segment::i::UsageIndicator::Information
+        element::I14::from_x12("I"),
+        element::I14::Information
     );
     assert_eq!(
-        segment::i::UsageIndicator::from_str("P").unwrap(),
-        segment::i::UsageIndicator::Production
+        element::I14::from_x12("P"),
+        element::I14::Production
     );
     assert_eq!(
-        segment::i::UsageIndicator::from_str("T").unwrap(),
-        segment::i::UsageIndicator::Test
+        element::I14::from_x12("T"),
+        element::I14::Test
     );
 
-    // Test invalid values
-    assert!(segment::i::UsageIndicator::from_str("X").is_err());
-    assert!(segment::i::UsageIndicator::from_str("").is_err());
-    assert!(segment::i::UsageIndicator::from_str("PP").is_err());
+    // Unpublished codes are preserved as `Unknown` rather than rejected.
+    assert_eq!(
+        element::I14::from_x12("X"),
+        element::I14::Unknown("X".to_string())
+    );
+    assert_eq!(
+        element::I14::from_x12("PP"),
+        element::I14::Unknown("PP".to_string())
+    );
 
-    println!("✓ UsageIndicator FromStr trait works correctly");
+    println!("✓ I14 X12Element::from_x12 works correctly");
 }
 
 #[test]
 fn test_940_usage_indicator_default() {
-    // Test that default is Production
-    let default_indicator = segment::i::UsageIndicator::default();
-    assert_eq!(default_indicator, segment::i::UsageIndicator::Production);
+    // A code-list element defaults to the empty `Unknown`, which renders as
+    // nothing; the parser always supplies a real value for the field.
+    let default_indicator = element::I14::default();
+    assert_eq!(
+        default_indicator,
+        element::I14::Unknown(String::new())
+    );
+    assert_eq!(format!("{default_indicator}"), "");
 
-    println!("✓ UsageIndicator default value is Production");
+    println!("✓ I14 default value is empty Unknown");
 }
 
 #[test]
@@ -655,9 +659,9 @@ IEA*1*000000009~"#;
     let (rest, obj) = Transmission::<_940>::parse(str).unwrap();
     obj.validate().unwrap();
     assert!(rest.is_empty());
-    assert_eq!(obj.isa._15, segment::i::UsageIndicator::Production);
+    assert_eq!(obj.isa._15, element::I14::Production);
 
-    println!("✓ Existing test data works correctly with UsageIndicator enum");
+    println!("✓ Existing test data works correctly with I14 enum");
 }
 
 #[test]
@@ -693,7 +697,7 @@ IEA*1*000000001~"#,
         let (rest, obj) = Transmission::<_940>::parse(&test_str).unwrap();
         obj.validate().unwrap();
         assert!(rest.is_empty());
-        assert_eq!(obj.isa._15, segment::i::UsageIndicator::Production);
+        assert_eq!(obj.isa._15, element::I14::Production);
         assert_eq!(obj.isa._16, comp_sep);
 
         println!(
@@ -717,7 +721,7 @@ IEA*1*000000001~"#;
     let (rest, obj) = Transmission::<_940>::parse(test_str).unwrap();
     obj.validate().unwrap();
     assert!(rest.is_empty());
-    assert_eq!(obj.isa._15, segment::i::UsageIndicator::Production);
+    assert_eq!(obj.isa._15, element::I14::Production);
     assert_eq!(obj.isa._16, ":");
 
     println!("✓ Newline as segment terminator handled correctly");
@@ -748,7 +752,7 @@ IEA*1*000000001~"#,
         let (rest, obj) = Transmission::<_940>::parse(&test_str).unwrap();
         obj.validate().unwrap();
         assert!(rest.is_empty());
-        assert_eq!(obj.isa._15, segment::i::UsageIndicator::Production);
+        assert_eq!(obj.isa._15, element::I14::Production);
         assert_eq!(obj.isa._16, comp_sep);
 
         println!(
@@ -773,7 +777,7 @@ IEA*1*000000001~"#;
     let (rest, obj) = Transmission::<_940>::parse(test_str).unwrap();
     obj.validate().unwrap();
     assert!(rest.is_empty());
-    assert_eq!(obj.isa._15, segment::i::UsageIndicator::Production);
+    assert_eq!(obj.isa._15, element::I14::Production);
     assert_eq!(obj.isa._16, "#");
 
     println!("✓ Same character for component separator and segment terminator handled correctly");
@@ -809,7 +813,7 @@ IEA*1*000000001~"#,
         let (rest, obj) = Transmission::<_940>::parse(&test_str).unwrap();
         obj.validate().unwrap();
         assert!(rest.is_empty());
-        assert_eq!(obj.isa._15, segment::i::UsageIndicator::Production);
+        assert_eq!(obj.isa._15, element::I14::Production);
         assert_eq!(obj.isa._16, comp_sep);
 
         println!("✓ {} - Special characters handled correctly", description);

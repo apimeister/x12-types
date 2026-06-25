@@ -173,31 +173,31 @@ pub struct QTY {
     #[serde(rename = "01")]
     pub _01: String,
     #[serde(rename = "02")]
-    pub _02: String,
+    pub _02: crate::v004010::element::E380,
     #[serde(rename = "03")]
     pub _03: Option<String>,
     #[serde(rename = "04")]
     pub _04: Option<String>,
     #[serde(rename = "05")]
-    pub _05: Option<String>,
+    pub _05: Option<crate::v004010::element::E373>,
     #[serde(rename = "06")]
-    pub _06: Option<String>,
+    pub _06: Option<crate::v004010::element::E337>,
     #[serde(rename = "07")]
     pub _07: Option<String>,
     #[serde(rename = "08")]
-    pub _08: Option<String>,
+    pub _08: Option<crate::v004010::element::E373>,
     #[serde(rename = "09")]
-    pub _09: Option<String>,
+    pub _09: Option<crate::v004010::element::E337>,
     #[serde(rename = "10")]
     pub _10: Option<String>,
     #[serde(rename = "11")]
-    pub _11: Option<String>,
+    pub _11: Option<crate::v004010::element::E373>,
     #[serde(rename = "12")]
-    pub _12: Option<String>,
+    pub _12: Option<crate::v004010::element::E337>,
     #[serde(rename = "13")]
     pub _13: Option<String>,
     #[serde(rename = "14")]
-    pub _14: Option<String>,
+    pub _14: Option<crate::v004010::element::E373>,
     #[serde(rename = "15")]
-    pub _15: Option<String>,
+    pub _15: Option<crate::v004010::element::E337>,
 }

@@ -14,9 +14,9 @@ use x12_types_macros::{DisplaySegment, ParseSegment};
 )]
 pub struct AK1 {
     #[serde(rename = "01")]
-    pub _01: String,
+    pub _01: crate::v004010::element::E479,
     #[serde(rename = "02")]
-    pub _02: String,
+    pub _02: crate::v004010::element::E28,
 }
 
 /// AK2 - Transaction Set Response Header
@@ -32,7 +32,7 @@ pub struct AK1 {
 )]
 pub struct AK2 {
     #[serde(rename = "01")]
-    pub _01: String,
+    pub _01: crate::v004010::element::E143,
     #[serde(rename = "02")]
     pub _02: String,
 }
@@ -54,11 +54,11 @@ pub struct AK3 {
     #[serde(rename = "01")]
     pub _01: String,
     #[serde(rename = "02")]
-    pub _02: String,
+    pub _02: crate::v004010::element::E719,
     #[serde(rename = "03")]
     pub _03: Option<String>,
     #[serde(rename = "04")]
-    pub _04: Option<String>,
+    pub _04: Option<crate::v004010::element::E720>,
 }
 
 /// AK4 - Data Element Note
@@ -78,11 +78,11 @@ pub struct AK4 {
     #[serde(rename = "01")]
     pub _01: String,
     #[serde(rename = "02")]
-    pub _02: Option<String>,
+    pub _02: Option<crate::v004010::element::E723>,
     #[serde(rename = "03")]
     pub _03: String,
     #[serde(rename = "04")]
-    pub _04: Option<String>,
+    pub _04: Option<crate::v004010::element::E725>,
 }
 
 /// AK5 - Transaction Set Response Trailer
@@ -102,17 +102,17 @@ pub struct AK4 {
 )]
 pub struct AK5 {
     #[serde(rename = "01")]
-    pub _01: String,
+    pub _01: crate::v004010::element::E717,
     #[serde(rename = "02")]
-    pub _02: Option<String>,
+    pub _02: Option<crate::v004010::element::E718>,
     #[serde(rename = "03")]
-    pub _03: Option<String>,
+    pub _03: Option<crate::v004010::element::E718>,
     #[serde(rename = "04")]
-    pub _04: Option<String>,
+    pub _04: Option<crate::v004010::element::E718>,
     #[serde(rename = "05")]
-    pub _05: Option<String>,
+    pub _05: Option<crate::v004010::element::E718>,
     #[serde(rename = "06")]
-    pub _06: Option<String>,
+    pub _06: Option<crate::v004010::element::E718>,
 }
 
 /// AK9 - Functional Group Response Trailer
@@ -135,23 +135,23 @@ pub struct AK5 {
 )]
 pub struct AK9 {
     #[serde(rename = "01")]
-    pub _01: String,
+    pub _01: crate::v004010::element::E715,
     #[serde(rename = "02")]
-    pub _02: String,
+    pub _02: crate::v004010::element::E97,
     #[serde(rename = "03")]
-    pub _03: String,
+    pub _03: crate::v004010::element::E123,
     #[serde(rename = "04")]
-    pub _04: String,
+    pub _04: crate::v004010::element::E2,
     #[serde(rename = "05")]
-    pub _05: Option<String>,
+    pub _05: Option<crate::v004010::element::E716>,
     #[serde(rename = "06")]
-    pub _06: Option<String>,
+    pub _06: Option<crate::v004010::element::E716>,
     #[serde(rename = "07")]
-    pub _07: Option<String>,
+    pub _07: Option<crate::v004010::element::E716>,
     #[serde(rename = "08")]
-    pub _08: Option<String>,
+    pub _08: Option<crate::v004010::element::E716>,
     #[serde(rename = "09")]
-    pub _09: Option<String>,
+    pub _09: Option<crate::v004010::element::E716>,
 }
 
 /// AMT - Monetary Amount
@@ -170,7 +170,7 @@ pub struct AMT {
     #[serde(rename = "01")]
     pub _01: String,
     #[serde(rename = "02")]
-    pub _02: String,
+    pub _02: crate::v004010::element::E782,
     #[serde(rename = "03")]
     pub _03: Option<String>,
 }
@@ -228,7 +228,7 @@ pub struct AT7 {
     /// - MIN=8
     /// - MAX=8
     #[serde(rename = "05")]
-    pub _05: Option<String>,
+    pub _05: Option<crate::v004010::element::E373>,
     #[serde(rename = "06")]
     pub _06: Option<String>,
     /// 623 - Time Code
@@ -238,7 +238,7 @@ pub struct AT7 {
     /// - MIN=2
     /// - MAX=2
     #[serde(rename = "07")]
-    pub _07: Option<String>,
+    pub _07: Option<crate::v004010::element::E623>,
 }
 
 /// AT8 - Shipment Status Details

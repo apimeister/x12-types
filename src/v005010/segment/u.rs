@@ -25,13 +25,13 @@ use x12_types_macros::{DisplaySegment, ParseSegment};
 )]
 pub struct USD {
     #[serde(rename = "01")]
-    pub _01: String,
+    pub _01: crate::v005010::element::E662,
     #[serde(rename = "02")]
     pub _02: Option<String>,
     #[serde(rename = "03")]
-    pub _03: Option<String>,
+    pub _03: Option<crate::v005010::element::E118>,
     #[serde(rename = "04")]
-    pub _04: Option<String>,
+    pub _04: Option<crate::v005010::element::E954>,
     #[serde(rename = "05")]
     pub _05: Option<String>,
     #[serde(rename = "06")]
@@ -39,9 +39,9 @@ pub struct USD {
     #[serde(rename = "07")]
     pub _07: Option<String>,
     #[serde(rename = "08")]
-    pub _08: Option<String>,
+    pub _08: Option<crate::v005010::element::E782>,
     #[serde(rename = "09")]
-    pub _09: Option<String>,
+    pub _09: Option<crate::v005010::element::E610>,
     #[serde(rename = "10")]
     pub _10: Option<String>,
     #[serde(rename = "11")]
@@ -66,9 +66,9 @@ pub struct USI {
     #[serde(rename = "01")]
     pub _01: String,
     #[serde(rename = "02")]
-    pub _02: String,
+    pub _02: crate::v005010::element::E211,
     #[serde(rename = "03")]
-    pub _03: Option<String>,
+    pub _03: Option<crate::v005010::element::E1073>,
 }
 
 /// UM - Health Care Services Review Information

@@ -59,7 +59,7 @@ fn parse_811() {
     assert_eq!(it1.loop_ita.len(), 1);
     assert_eq!(it1.loop_nm1.len(), 1);
     // summary
-    assert_eq!(obj.tds._01, "5000");
+    assert_eq!(obj.tds._01.to_string(), "5000");
     assert_eq!(obj.loop_ita.len(), 1);
     assert!(obj.loop_ita[0].dtm.is_some());
     assert_eq!(obj.loop_bal.len(), 1);
@@ -97,5 +97,5 @@ IEA*1*000000001~"#;
     let t = &obj.functional_group[0].segments[0];
     assert_eq!(t.big._02, "INV1");
     assert_eq!(t.loop_hl.len(), 1);
-    assert_eq!(t.tds._01, "5000");
+    assert_eq!(t.tds._01.to_string(), "5000");
 }

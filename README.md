@@ -103,25 +103,26 @@ Something missing? Please open an issue.
 ### Rendering X12
 
 ```rust
+use x12_types::util::X12Element;
 use x12_types::v004010::*;
 
 let x = Transmission {
     isa: ISA {
-        _01: "00".to_string(),
+        _01: element::I01::N00,
         _02: "          ".to_string(),
-        _03: "00".to_string(),
+        _03: element::I03::N00,
         _04: "          ".to_string(),
-        _05: "ZZ".to_string(),
+        _05: element::I05::Zz,
         _06: "SOURCE         ".to_string(),
-        _07: "ZZ".to_string(),
+        _07: element::I05::Zz,
         _08: "TARGET         ".to_string(),
-        _09: "220524".to_string(),
-        _10: "1120".to_string(),
-        _11: "U".to_string(),
-        _12: "00401".to_string(),
-        _13: "000000001".to_string(),
-        _14: "0".to_string(),
-        _15: "P".to_string(),
+        _09: element::I08::from_x12("220524"),
+        _10: element::I09::from_x12("1120"),
+        _11: element::I10::U,
+        _12: element::I11::N00401,
+        _13: element::I12::from_x12("000000001"),
+        _14: element::I13::N0,
+        _15: element::I14::Production,
         _16: ">".to_string(),
     },
     functional_group: vec![FunctionalGroup {
@@ -142,8 +143,8 @@ let x = Transmission {
         },
     }],
     iea: IEA {
-        _01: "1".to_string(),
-        _02: "000000001".to_string(),
+        _01: element::I16::from_x12("1"),
+        _02: element::I12::from_x12("000000001"),
     },
 };
 let serialized = format!("{x}");
@@ -159,6 +160,7 @@ let serialized = format!("{x}");
 ### Parsing X12
 
 ```rust
+use x12_types::util::Parser;
 use x12_types::v005010::*;
 
 let str = r#"ISA*01*0000000000*01*0000000000*ZZ*ABCDEFGHIJKLMNO*ZZ*123456789012345*101127*1719*U*00400*000003438*0*P*>~
@@ -169,12 +171,12 @@ BPR*H*5.75*C*NON************20110315~
 SE*93*07504123~
 GE*1*1~
 IEA*1*004075123~"#;
-    let (rest, obj) = Transmission::<_835>::parse(&str).unwrap();
+    let (rest, obj) = Transmission::<_835>::parse(str).unwrap();
     println!("{obj:?}");
 // resulting string
 //
 // Transmission { isa: 
-//  ISA { _01: "01", _02: "0000000000", _03: "01", _04: "0000000000", _05: "ZZ", _06: "ABCDEFGHIJKLMNO", _07: "ZZ", _08: "123456789012345", _09: "101127", _10: "1719", _11: "U", _12: "00400", _13: "000003438", _14: "0", _15: "P", _16: ">" }, 
+//  ISA { _01: N01, _02: "0000000000", _03: N01, _04: "0000000000", _05: Zz, _06: "ABCDEFGHIJKLMNO", _07: Zz, _08: "123456789012345", _09: I08 { raw: "101127" }, _10: I09 { raw: "1719" }, _11: U, _12: N00400, _13: I12 { raw: "000003438" }, _14: N0, _15: Production, _16: ">" }, 
 //  functional_group: [
 //    FunctionalGroup { 
 //      gs: GS { _01: "HP", _02: "ABCCOM", _03: "01017", _04: "20110315", _05: "1005", _06: "1", _07: "X", _08: "004010X091A1" }, 

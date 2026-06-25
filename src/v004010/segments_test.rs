@@ -1,9 +1,10 @@
+use crate::util::X12Element;
 use crate::v004010::*;
 
 #[test]
 fn test_st() {
     let obj = ST {
-        _01: "301".to_string(),
+        _01: crate::v004010::element::E143::from_x12("301"),
         _02: "33233".to_string(),
     };
     let str = format!("{obj}");
@@ -14,14 +15,14 @@ fn test_st() {
     assert!(result.0.is_empty());
     // check actual object
     let obj = result.1;
-    assert_eq!(obj._01, "301");
+    assert_eq!(obj._01.to_string(), "301");
     assert_eq!(obj._02, "33233");
 }
 
 #[test]
 fn st_display() {
     let obj = ST {
-        _01: "301".to_string(),
+        _01: crate::v004010::element::E143::from_x12("301"),
         _02: "33233".to_string(),
     };
     let str = format!("{obj}");
@@ -31,8 +32,8 @@ fn st_display() {
 #[test]
 fn t1_display() {
     let obj = T1 {
-        _01: "301".to_string(),
-        _02: Some("33233".to_string()),
+        _01: crate::v004010::element::E554::from_x12("301"),
+        _02: Some(crate::v004010::element::E186::from_x12("33233")),
         ..Default::default()
     };
     let str = format!("{obj}");
@@ -44,13 +45,13 @@ fn test_b1() {
     let obj = B1 {
         _01: Some("SNDR".to_string()),
         _02: "ERXX412223".to_string(),
-        _03: Some("20221121".to_string()),
-        _04: "A".to_string(),
+        _03: Some(crate::v004010::element::E373::from_x12("20221121")),
+        _04: crate::v004010::element::E284::from_x12("A"),
     };
     let str = format!("{obj}");
     let result = B1::parse(&str).unwrap();
     assert!(result.0.is_empty());
-    assert_eq!(result.1._04, "A");
+    assert_eq!(result.1._04.to_string(), "A");
 }
 
 #[test]
@@ -206,35 +207,35 @@ fn test_r4() {
 fn test_dtm() {
     let obj = DTM {
         _01: "649".to_string(),
-        _02: Some("20230102".to_string()),
+        _02: Some(crate::v004010::element::E373::from_x12("20230102")),
         ..Default::default()
     };
     let str = format!("{obj}");
     let result = DTM::parse(&str).unwrap();
     assert!(result.0.is_empty());
     assert_eq!(result.1._01, "649");
-    assert_eq!(result.1._02, Some("20230102".to_string()));
+    assert_eq!(result.1._02.as_ref().map(ToString::to_string), Some("20230102".to_string()));
 }
 
 #[test]
 fn test_lx() {
     let obj = LX {
-        _01: "2".to_string(),
+        _01: crate::v004010::element::E554::from_x12("2"),
     };
     let str = format!("{obj}");
     let result = LX::parse(&str).unwrap();
     assert!(result.0.is_empty());
-    assert_eq!(result.1._01, "2");
+    assert_eq!(result.1._01.to_string(), "2");
 }
 
 #[test]
 fn test_l0() {
     let obj = L0 {
-        _01: Some("1".to_string()),
-        _04: Some("14000".to_string()),
+        _01: Some(crate::v004010::element::E213::from_x12("1")),
+        _04: Some(crate::v004010::element::E81::from_x12("14000")),
         _05: Some("G".to_string()),
-        _08: Some("1".to_string()),
-        _09: Some("CNT".to_string()),
+        _08: Some(crate::v004010::element::E80::from_x12("1")),
+        _09: Some(crate::v004010::element::E211::from_x12("CNT")),
         _11: Some("K".to_string()),
         _12: Some("HP".to_string()),
         ..Default::default()
@@ -242,21 +243,21 @@ fn test_l0() {
     let str = format!("{obj}");
     let result = L0::parse(&str).unwrap();
     assert!(result.0.is_empty());
-    assert_eq!(result.1._01, Some("1".to_string()));
-    assert_eq!(result.1._04, Some("14000".to_string()));
+    assert_eq!(result.1._01.as_ref().map(ToString::to_string), Some("1".to_string()));
+    assert_eq!(result.1._04.as_ref().map(ToString::to_string), Some("14000".to_string()));
 }
 
 #[test]
 fn test_l5() {
     let obj = L5 {
-        _01: Some("1".to_string()),
+        _01: Some(crate::v004010::element::E213::from_x12("1")),
         _02: Some("VEHICLES:PARTS".to_string()),
         ..Default::default()
     };
     let str = format!("{obj}");
     let result = L5::parse(&str).unwrap();
     assert!(result.0.is_empty());
-    assert_eq!(result.1._01, Some("1".to_string()));
+    assert_eq!(result.1._01.as_ref().map(ToString::to_string), Some("1".to_string()));
     assert_eq!(result.1._02, Some("VEHICLES:PARTS".to_string()));
 }
 
@@ -280,13 +281,13 @@ fn test_v1() {
 #[test]
 fn test_se() {
     let obj = SE {
-        _01: "17".to_string(),
+        _01: crate::v004010::element::E96::from_x12("17"),
         _02: "33233".to_string(),
     };
     let str = format!("{obj}");
     let result = SE::parse(&str).unwrap();
     assert!(result.0.is_empty());
-    assert_eq!(result.1._01, "17");
+    assert_eq!(result.1._01.to_string(), "17");
     assert_eq!(result.1._02, "33233");
 }
 

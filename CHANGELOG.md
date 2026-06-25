@@ -1,3 +1,12 @@
+# 0.12.0 2026-06-25
+
+* typed data elements: segment fields that were raw `String`/`Option<String>` now use a typed element wherever X12 defines one, across v003030/v004010/v005010/v005030. Every element type preserves the raw text and renders/round-trips byte-for-byte.
+  * interchange-control I-series (I01–I16) wired into `ISA`/`IEA` — qualifiers/indicators as enums, interchange date/time/control numbers as typed date/time/numeric elements; free-text fields and the component separator remain `String`
+  * numeric, date and time elements modeled with `num_element`/`date_element`/`time_element`, exposing typed views (`as_f64()`/`as_i64()`, `date()`, `time()`) while preserving the original text
+  * ID code-list elements modeled as enums via `code_enum` with an `Unknown(String)` catch-all so unpublished codes still round-trip; all code values verified against the Stedi X12 reference
+  * 416 of 578 referenced data elements are now typed; the remainder stay `String` by design — free-text (AN) elements and open ID registries with no enumerated code list (e.g. 140 Standard Carrier Alpha Code)
+  * note: the I-series and ID code-list fields are no longer `String`, so constructing these segments uses the element types (e.g. `I14::Production`, `E373::from_x12("20240115")`) — see the updated README and `examples/`
+
 # 0.11.1 2026-06-24
 
 * fix JSON round-trip: pair `#[serde(default)]` with every `#[serde(skip_serializing_if = ...)]` field (455 fields) so that omitted optional segments/loops deserialize back to `None`/empty instead of erroring with `missing field ...`

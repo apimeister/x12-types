@@ -327,3 +327,531 @@ crate::code_enum!(
         "RE" => Re,
     }
 );
+
+crate::date_element!(
+    /// **32** Delivery Date
+    ///
+    /// - Data element: 32
+    /// - Type: Date (DT)
+    /// - Length: min 8, max 8
+    ///
+    /// Delivery Date.
+    E32
+);
+
+crate::num_element!(
+    /// **34** Service Standard
+    ///
+    /// - Data element: 34
+    /// - Type: Numeric (N1)
+    /// - Length: min 1, max 4
+    ///
+    /// Service Standard.
+    E34
+);
+
+crate::num_element!(
+    /// **58** Amount Charged
+    ///
+    /// - Data element: 58
+    /// - Type: Numeric (N2)
+    /// - Length: min 1, max 15
+    ///
+    /// Amount Charged.
+    E58
+);
+
+crate::num_element!(
+    /// **60** Freight Rate
+    ///
+    /// - Data element: 60
+    /// - Type: Numeric (R)
+    /// - Length: min 1, max 9
+    ///
+    /// Freight Rate.
+    E60
+);
+
+crate::num_element!(
+    /// **65** Height
+    ///
+    /// - Data element: 65
+    /// - Type: Numeric (R)
+    /// - Length: min 1, max 8
+    ///
+    /// Height.
+    E65
+);
+
+crate::num_element!(
+    /// **74** Declared Value
+    ///
+    /// - Data element: 74
+    /// - Type: Numeric (N2)
+    /// - Length: min 2, max 12
+    ///
+    /// Declared Value.
+    E74
+);
+
+crate::date_element!(
+    /// **76** Invoice Date
+    ///
+    /// - Data element: 76
+    /// - Type: Date (DT)
+    /// - Length: min 8, max 8
+    ///
+    /// Invoice Date.
+    E76
+);
+
+crate::num_element!(
+    /// **77** Flashpoint Temperature
+    ///
+    /// - Data element: 77
+    /// - Type: Numeric (N)
+    /// - Length: min 1, max 3
+    ///
+    /// Flashpoint Temperature.
+    E77
+);
+
+crate::num_element!(
+    /// **80** Lading Quantity
+    ///
+    /// - Data element: 80
+    /// - Type: Numeric (N0)
+    /// - Length: min 1, max 7
+    ///
+    /// Lading Quantity.
+    E80
+);
+
+crate::num_element!(
+    /// **81** Weight
+    ///
+    /// - Data element: 81
+    /// - Type: Numeric (R)
+    /// - Length: min 1, max 10
+    ///
+    /// Weight.
+    E81
+);
+
+crate::num_element!(
+    /// **82** Length
+    ///
+    /// - Data element: 82
+    /// - Type: Numeric (R)
+    /// - Length: min 1, max 8
+    ///
+    /// Length.
+    E82
+);
+
+crate::num_element!(
+    /// **95** Number of Containers
+    ///
+    /// - Data element: 95
+    /// - Type: Numeric (N0)
+    /// - Length: min 1, max 4
+    ///
+    /// Number of Containers.
+    E95
+);
+
+crate::code_enum!(
+    /// **9** Late Reason Code
+    ///
+    /// - Data element: 9
+    /// - Type: Identifier (ID)
+    /// - Length: min 2, max 2
+    ///
+    /// Late Reason Code. Code values verified against the Stedi X12 reference.
+    E9 {
+        /// Coverage Lack of Information
+        "C1" => C1,
+        /// Dispute Concerning Coverage
+        "D1" => D1,
+        /// Dispute Concerning Compensability in Whole
+        "D2" => D2,
+        /// Dispute Concerning Compensability in Part
+        "D3" => D3,
+        /// Dispute Concerning Disability in Whole
+        "D4" => D4,
+        /// Dispute Concerning Disability in Part
+        "D5" => D5,
+        /// Dispute Concerning Impairment
+        "D6" => D6,
+        /// Wrongful Determination of No Coverage
+        "E1" => E1,
+        /// Error(s) from Employer
+        "E2" => E2,
+        /// Error(s) from Employee
+        "E3" => E3,
+        /// Error(s) from State
+        "E4" => E4,
+        /// Error(s) from Health Care Provider
+        "E5" => E5,
+        /// Error(s) from Other Claim Administrator, Independent Adjuster or Third Party Administrator
+        "E6" => E6,
+        /// Late No Excuse
+        "L1" => L1,
+        /// Late Notification, Employer
+        "L2" => L2,
+        /// Late Notification, Employee
+        "L3" => L3,
+        /// Late Notification, State
+        "L4" => L4,
+        /// Late Notification, Health Care Provider
+        "L5" => L5,
+        /// Late Notification, Assigned Risk
+        "L6" => L6,
+        /// Late Investigation
+        "L7" => L7,
+        /// Technical Processing Delay or Computer Failure
+        "L8" => L8,
+        /// Manual Processing Delay
+        "L9" => L9,
+        /// Intermittent Lost Time Prior to First Payment
+        "LA" => La,
+        /// Awaiting Wage Amount Verification
+        "LB" => Lb,
+    }
+);
+
+crate::code_enum!(
+    /// **39** Entitlement Code
+    ///
+    /// - Data element: 39
+    /// - Type: Identifier (ID)
+    /// - Length: min 1, max 1
+    ///
+    /// Entitlement Code. Code values verified against the Stedi X12 reference.
+    E39 {
+        /// Agent
+        "A" => A,
+        /// Broker
+        "B" => B,
+        /// Consignee
+        "C" => C,
+        /// Destination Carrier
+        "D" => D,
+        /// Forwarder or Agent
+        "E" => E,
+        /// Issuing Carrier
+        "I" => I,
+        /// Shipper
+        "S" => S,
+        /// Mutually Defined
+        "Z" => Z,
+    }
+);
+
+crate::code_enum!(
+    /// **72** Type of Service Offered Code
+    ///
+    /// - Data element: 72
+    /// - Type: Identifier (ID)
+    /// - Length: min 1, max 1
+    ///
+    /// Type of Service Offered Code. Code values verified against the Stedi X12 reference.
+    E72 {
+        /// Direct Service
+        "D" => D,
+        /// Interline with Connecting Line
+        "I" => I,
+        /// No Service
+        "N" => N,
+    }
+);
+
+crate::code_enum!(
+    /// **73** Compensation Qualifier
+    ///
+    /// - Data element: 73
+    /// - Type: Identifier (ID)
+    /// - Length: min 1, max 1
+    ///
+    /// Compensation Qualifier. Code values verified against the Stedi X12 reference.
+    E73 {
+        /// Agency Fees
+        "A" => A,
+        /// Brokerage
+        "B" => B,
+        /// Freight Forwarder
+        "F" => F,
+    }
+);
+
+crate::code_enum!(
+    /// **78** Container Type Request Code
+    ///
+    /// - Data element: 78
+    /// - Type: Identifier (ID)
+    /// - Length: min 1, max 1
+    ///
+    /// Container Type Request Code. Code values verified against the Stedi X12 reference.
+    E78 {
+        /// Containers with Chassis
+        "C" => C,
+        /// Containers Only
+        "R" => R,
+        /// Shipper To Provide - None Requested
+        "S" => S,
+        /// Chassis Only
+        "W" => W,
+    }
+);
+
+crate::code_enum!(
+    /// **83** Code For Licensing, Certification, Registration, or Accreditation Agency
+    ///
+    /// - Data element: 83
+    /// - Type: Identifier (ID)
+    /// - Length: min 1, max 2
+    ///
+    /// Code For Licensing, Certification, Registration, or Accreditation Agency. Code values verified against the Stedi X12 reference.
+    E83 {
+        /// Middle States Association of Colleges and Schools, Commission on Higher Education
+        "1" => N1,
+        /// Middle States Association of Colleges and Schools, Commission on Secondary Schools
+        "2" => N2,
+        /// New England Association of Schools and Colleges, Commission on Institutions of Higher Education
+        "3" => N3,
+        /// New England Association of Schools and Colleges, Commission on Vocational, Technical, Career Institutions
+        "4" => N4,
+        /// North Central Association of Colleges and Schools, Commission on Institutions of Higher Education
+        "5" => N5,
+        /// North Central Association of Colleges and Schools, Commission on Schools
+        "6" => N6,
+        /// Northwest Association of Schools and Colleges, Commission on Colleges
+        "7" => N7,
+        /// Southern Association of Colleges and Schools, Commission on Colleges
+        "8" => N8,
+        /// Western Association of Schools and Colleges, Accrediting Commission for Community and Junior Colleges
+        "9" => N9,
+        /// Western Association of Schools and Colleges, Accrediting Commission for Schools
+        "10" => N10,
+        /// Western Association of Schools and Colleges, Accrediting Commission for Senior Colleges and Universities
+        "11" => N11,
+        /// Commission for Accreditation for Rehabilitation Facilities (CARF)
+        "A" => A,
+        /// Joint Commission on Accreditation of Health Organizations (JCAHO)
+        "B" => B,
+        /// Commercial - Motor Vehicle
+        "C" => C,
+        /// Driver License - Motor Vehicle
+        "D" => D,
+        /// Office of Export Administration
+        "E" => E,
+        /// Federal Aviation Administration (FAA)
+        "F" => F,
+        /// Department of Agriculture - Tobacco, Seeds & Plants
+        "G" => G,
+        /// National Committee for Quality Assurance (NCQA)
+        "H" => H,
+        /// Department of the Interior - U.S. Endangered Native Fish and Wildlife and Migratory Birds
+        "I" => I,
+        /// Department of Justice - Narcotics and Dangerous Drugs
+        "J" => J,
+        /// Utilization Review Accreditation Commission (URAC)
+        "K" => K,
+        /// US Customs Service - Automated Export System
+        "L" => L,
+        /// Maritime Administration - Watercraft (Other Than Vessels of War), Vessels Exported for Scrapping, Dismantling, Dismembering, or Destroying the Hulls Thereof (Also Controlled by Office of Export Administration)
+        "M" => M,
+        /// Nuclear Regulatory Commission - Commodities Subject to the Atomic Energy Act
+        "N" => N,
+        /// Federal Power Commission - Natural Gas and Electric Energy
+        "P" => P,
+        /// Department of State - Arms, Ammunition, Implements of War; Vessels of War
+        "S" => S,
+        /// Department of Treasury - Gold
+        "T" => T,
+    }
+);
+
+crate::code_enum!(
+    /// **90** Measurement Unit Qualifier
+    ///
+    /// - Data element: 90
+    /// - Type: Identifier (ID)
+    /// - Length: min 1, max 1
+    ///
+    /// Measurement Unit Qualifier. Code values verified against the Stedi X12 reference.
+    E90 {
+        /// Centimeters
+        "C" => C,
+        /// Feet
+        "E" => E,
+        /// Inches
+        "N" => N,
+        /// Meters
+        "X" => X,
+    }
+);
+
+crate::code_enum!(
+    /// **92** Purchase Order Type Code
+    ///
+    /// - Data element: 92
+    /// - Type: Identifier (ID)
+    /// - Length: min 2, max 2
+    ///
+    /// Purchase Order Type Code. Code values verified against the Stedi X12 reference.
+    E92 {
+        /// Assortment Against Blanket
+        "AB" => Ab,
+        /// AOG (Aircraft on Ground) Critical
+        "AC" => Ac,
+        /// AOG (Aircraft on Ground) Service
+        "AO" => Ao,
+        /// Bidding
+        "BD" => Bd,
+        /// Blanket Order/Estimated Quantities (Not firm Commitment)
+        "BE" => Be,
+        /// Bill and Hold
+        "BH" => Bh,
+        /// Blanket Order (Quantity Firm)
+        "BK" => Bk,
+        /// Bailment
+        "BL" => Bl,
+        /// Budgetary Quote
+        "BQ" => Bq,
+        /// Buying
+        "BY" => By,
+        /// Contract Award Notification
+        "CA" => Ca,
+        /// Cooperative Agreement
+        "CB" => Cb,
+        /// Change to Contract
+        "CC" => Cc,
+        /// Assistance Award Loan
+        "CD" => Cd,
+        /// Undefinitized Contract Action
+        "CE" => Ce,
+        /// Confirmation
+        "CF" => Cf,
+        /// Formula Funds Assistance Award
+        "CG" => Cg,
+        /// Consigned Order
+        "CN" => Cn,
+        /// Catalog Order
+        "CO" => Co,
+        /// Change to Purchase Order
+        "CP" => Cp,
+        /// Change to Release
+        "CR" => Cr,
+        /// Direct Ship
+        "DR" => Dr,
+        /// Dropship
+        "DS" => Ds,
+        /// Emergency Order
+        "EO" => Eo,
+        /// Formula Funds
+        "FF" => Ff,
+        /// Fabricate and Hold
+        "FH" => Fh,
+        /// Information Copy
+        "IN" => In,
+        /// Job Lot
+        "JL" => Jl,
+        /// Agreement
+        "KA" => Ka,
+        /// Blanket Purchase Agreement
+        "KB" => Kb,
+        /// Contract
+        "KC" => Kc,
+        /// Basic Agreement
+        "KD" => Kd,
+        /// Basic Ordering Agreement
+        "KE" => Ke,
+        /// Grant
+        "KG" => Kg,
+        /// Indefinite Delivery Indefinite Quantity
+        "KI" => Ki,
+        /// Purchase Order
+        "KN" => Kn,
+        /// Close Out
+        "KO" => Ko,
+        /// Authority to Proceed
+        "KP" => Kp,
+        /// Indefinite Delivery Definite Quantity
+        "KQ" => Kq,
+        /// Requirements
+        "KR" => Kr,
+        /// Letter Contract
+        "KS" => Ks,
+        /// Task Order
+        "KT" => Kt,
+        /// Lease (Blanket Agreement)
+        "LB" => Lb,
+        /// Loan
+        "LN" => Ln,
+        /// Lease
+        "LS" => Ls,
+        /// Novation Agreement
+        "NA" => Na,
+        /// New Order
+        "NE" => Ne,
+        /// Not for Sale
+        "NO" => No,
+        /// New Product Introduction
+        "NP" => Np,
+        /// New Store Opening
+        "NS" => Ns,
+        /// Special Order
+        "OS" => Os,
+        /// Promotion
+        "PR" => Pr,
+        /// Release Against Assortment
+        "RA" => Ra,
+        /// Retailer Pre-commitment
+        "RC" => Rc,
+        /// Reorder
+        "RE" => Re,
+        /// Release or Delivery Order
+        "RL" => Rl,
+        /// Renewal Order
+        "RN" => Rn,
+        /// Rush Order
+        "RO" => Ro,
+        /// Repair and Return
+        "RR" => Rr,
+        /// Rental
+        "RT" => Rt,
+        /// Record Update Service
+        "RU" => Ru,
+        /// Resume Work Order
+        "RW" => Rw,
+        /// Stand-alone Order
+        "SA" => Sa,
+        /// Shipped Order
+        "SO" => So,
+        /// Sample
+        "SP" => Sp,
+        /// Supply or Service Order
+        "SS" => Ss,
+        /// Standing Order
+        "ST" => St,
+        /// Stop Work
+        "SW" => Sw,
+        /// Toll Conversion Order
+        "TC" => Tc,
+        /// Time & Materials
+        "TM" => Tm,
+        /// Termination
+        "TR" => Tr,
+        /// Unit Down
+        "UD" => Ud,
+        /// Unit Exchange
+        "UE" => Ue,
+        /// Urgent Service Request
+        "US" => Us,
+        /// Warranty Order
+        "WO" => Wo,
+        /// Mutually Defined
+        "ZZ" => Zz,
+    }
+);

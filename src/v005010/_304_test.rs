@@ -89,7 +89,7 @@ fn parse_304() {
     let (rest, obj) = _304::parse(SAMPLE).unwrap();
     assert_eq!(rest, "");
     assert_eq!(obj.st._01, "304");
-    assert_eq!(obj.b2._06, "SCAC");
+    assert_eq!(obj.b2._06.to_string(), "SCAC");
     // heading loops
     assert_eq!(obj.loop_m1.len(), 1);
     assert!(obj.loop_m1[0].cur.is_some());
@@ -111,7 +111,7 @@ fn parse_304() {
     assert_eq!(n7.loop_h1.len(), 1);
     assert_eq!(n7.loop_h1[0].h2.len(), 1);
     assert_eq!(n7.loop_lh1.len(), 1);
-    assert_eq!(n7.loop_lh1[0].lh1._02, "UN");
+    assert_eq!(n7.loop_lh1[0].lh1._02.to_string(), "UN");
     // equipment-level PO4 loop
     assert_eq!(lx.loop_po4.len(), 1);
     assert_eq!(lx.loop_po4[0].man.len(), 1);
@@ -127,7 +127,7 @@ fn parse_304() {
     assert_eq!(l0.loop_l9.len(), 1);
     assert_eq!(l0.loop_h1.len(), 1);
     assert_eq!(l0.loop_lh1.len(), 1);
-    assert_eq!(l0.loop_lh1[0].lh1._02, "UN");
+    assert_eq!(l0.loop_lh1[0].lh1._02.to_string(), "UN");
     assert_eq!(l0.loop_n1.len(), 1);
     assert_eq!(l0.loop_n1[0].n1._01.to_string(), "MF");
     // summary L3 loop with its nested loops
@@ -135,7 +135,7 @@ fn parse_304() {
     let l3 = &obj.loop_l3[0];
     assert_eq!(l3.loop_l1.len(), 1);
     assert_eq!(l3.loop_tds.len(), 1);
-    assert_eq!(l3.loop_tds[0].tds._01, "100000");
+    assert_eq!(l3.loop_tds[0].tds._01.to_string(), "100000");
     assert_eq!(l3.loop_sac.len(), 1);
     assert_eq!(l3.loop_l9.len(), 1);
     assert_eq!(l3.v9.len(), 1);
@@ -173,7 +173,7 @@ IEA*1*000000001~"#;
     let (rest, obj) = Transmission::<_304>::parse(str).unwrap();
     assert!(rest.is_empty());
     let t = &obj.functional_group[0].segments[0];
-    assert_eq!(t.b2._06, "SCAC");
+    assert_eq!(t.b2._06.to_string(), "SCAC");
     assert_eq!(t.loop_n1.len(), 1);
     assert_eq!(t.loop_lx.len(), 1);
     assert_eq!(t.loop_lx[0].loop_n7.len(), 1);

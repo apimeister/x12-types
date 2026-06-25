@@ -8,6 +8,7 @@ use serde::{Deserialize, Serialize};
 use std::fmt::Display;
 use validator::Validate;
 
+pub mod element;
 pub mod segment;
 pub use segment::*;
 

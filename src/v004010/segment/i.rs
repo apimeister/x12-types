@@ -1,52 +1,11 @@
 use crate::util::Parser;
+use crate::v004010::element;
 
 use nom::error::ErrorKind;
 use nom::IResult;
 use serde::{Deserialize, Serialize};
 use validator::Validate;
 use x12_types_macros::{DisplaySegment, ParseSegment};
-
-/// Usage Indicator for ISA field 15
-///
-/// Code to indicate whether data enclosed by this interchange envelope is test, production or information
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Eq, Default)]
-pub enum UsageIndicator {
-    /// I - Information
-    #[serde(rename = "I")]
-    Information,
-    /// P - Production Data
-    #[serde(rename = "P")]
-    #[default]
-    Production,
-    /// T - Test Data
-    #[serde(rename = "T")]
-    Test,
-}
-
-impl std::fmt::Display for UsageIndicator {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        match self {
-            UsageIndicator::Information => write!(f, "I"),
-            UsageIndicator::Production => write!(f, "P"),
-            UsageIndicator::Test => write!(f, "T"),
-        }
-    }
-}
-
-impl std::str::FromStr for UsageIndicator {
-    type Err = String;
-
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
-        match s {
-            "I" => Ok(UsageIndicator::Information),
-            "P" => Ok(UsageIndicator::Production),
-            "T" => Ok(UsageIndicator::Test),
-            _ => Err(format!(
-                "Invalid usage indicator: '{s}'. Must be 'I', 'P', or 'T'"
-            )),
-        }
-    }
-}
 
 /// IC - Intermodal Chassis Equipment
 ///
@@ -71,17 +30,17 @@ pub struct IC {
     #[serde(rename = "02")]
     pub _02: String,
     #[serde(rename = "03")]
-    pub _03: Option<String>,
+    pub _03: Option<crate::v004010::element::E167>,
     #[serde(rename = "04")]
     pub _04: Option<String>,
     #[serde(rename = "05")]
     pub _05: Option<String>,
     #[serde(rename = "06")]
-    pub _06: Option<String>,
+    pub _06: Option<crate::v004010::element::E567>,
     #[serde(rename = "07")]
     pub _07: Option<String>,
     #[serde(rename = "08")]
-    pub _08: Option<String>,
+    pub _08: Option<crate::v004010::element::E845>,
 }
 
 /// IM - Intermodal Movement Information
@@ -98,11 +57,11 @@ pub struct IC {
 )]
 pub struct IM {
     #[serde(rename = "01")]
-    pub _01: Option<String>,
+    pub _01: Option<crate::v004010::element::E533>,
     #[serde(rename = "02")]
     pub _02: Option<String>,
     #[serde(rename = "03")]
-    pub _03: Option<String>,
+    pub _03: Option<crate::v004010::element::E534>,
 }
 
 /// INC - Installment Information
@@ -153,18 +112,16 @@ pub struct IEA {
     /// - TYPE=N0
     /// - MIN=1
     /// - MAX=5
-    #[validate(length(min = 1, max = 5, message = "IEA 01 (I16) must be 1-5 characters long"))]
     #[serde(rename = "01")]
-    pub _01: String,
+    pub _01: element::I16,
     /// I12 - Interchange Control Number
     ///
     /// A control number assigned by the interchange sender
     /// - TYPE=N0
     /// - MIN=9
     /// - MAX=9
-    #[validate(length(min = 9, max = 9, message = "IEA 02 (I12) must be 9 characters long"))]
     #[serde(rename = "02")]
-    pub _02: String,
+    pub _02: element::I12,
 }
 
 /// ISA - Interchange Control Header
@@ -199,9 +156,8 @@ pub struct ISA {
     /// - TYPE=ID
     /// - MIN=2
     /// - MAX=2
-    #[validate(length(equal = 2, message = "ISA 01 (I01) must be 2 characters long"))]
     #[serde(rename = "01")]
-    pub _01: String,
+    pub _01: element::I01,
     /// I02 - Authorization Information
     ///
     /// Information used for additional identification or authorization of the interchange sender or the data in the interchange; the type of information is set by the Authorization Information Qualifier (I01)
@@ -217,9 +173,8 @@ pub struct ISA {
     /// - TYPE=ID
     /// - MIN=2
     /// - MAX=2
-    #[validate(length(equal = 2, message = "ISA 03 (I03) must be 2 characters long"))]
     #[serde(rename = "03")]
-    pub _03: String,
+    pub _03: element::I03,
     /// I04 - Security Information
     ///
     /// This is used for identifying the security information about the interchange sender or the data in the interchange; the type of information is set by the Security Information Qualifier (I03)
@@ -235,9 +190,8 @@ pub struct ISA {
     /// - TYPE=ID
     /// - MIN=2
     /// - MAX=2
-    #[validate(length(equal = 2, message = "ISA 05 (I05) must be 2 characters long"))]
     #[serde(rename = "05")]
-    pub _05: String,
+    pub _05: element::I05,
     /// I06 - Interchange Sender ID
     ///
     /// Identification code published by the sender for other parties to use as the receiver ID to route data to them; the sender always codes this value in the sender ID element
@@ -253,9 +207,8 @@ pub struct ISA {
     /// - TYPE=ID
     /// - MIN=2
     /// - MAX=2
-    #[validate(length(equal = 2, message = "ISA 07 (I05) must be 2 characters long"))]
     #[serde(rename = "07")]
-    pub _07: String,
+    pub _07: element::I05,
     /// I07 - Interchange Receiver ID
     ///
     /// Identification code published by the receiver of the data; When sending, it is used by the sender as their sending ID, thus other parties sending to them will use this as a receiving ID to route data to them
@@ -271,54 +224,48 @@ pub struct ISA {
     /// - TYPE=DT
     /// - MIN=6
     /// - MAX=6
-    #[validate(length(equal = 6, message = "ISA 09 (I08) must be 6 characters long"))]
     #[serde(rename = "09")]
-    pub _09: String,
+    pub _09: element::I08,
     /// I09 - Interchange Time
     ///
     /// Time of the interchange
     /// - TYPE=TM
     /// - MIN=4
     /// - MAX=4
-    #[validate(length(equal = 4, message = "ISA 10 (I09) must be 4 characters long"))]
     #[serde(rename = "10")]
-    pub _10: String,
+    pub _10: element::I09,
     /// I10 - Interchange Control Standards Identifier
     ///
     /// Code to identify the agency responsible for the control standard used by the message that is enclosed by the interchange header and trailer
     /// - TYPE=ID
     /// - MIN=1
     /// - MAX=1
-    #[validate(length(equal = 1, message = "ISA 11 (I10) must be 1 characters long"))]
     #[serde(rename = "11")]
-    pub _11: String,
+    pub _11: element::I10,
     /// I11 - Interchange Control Version Number
     ///
     /// This version number covers the interchange control segments
     /// - TYPE=ID
     /// - MIN=5
     /// - MAX=5
-    #[validate(length(equal = 5, message = "ISA 12 (I11) must be 5 characters long"))]
     #[serde(rename = "12")]
-    pub _12: String,
+    pub _12: element::I11,
     /// I12 - Interchange Control Number
     ///
     /// A control number assigned by the interchange sender
     /// - TYPE=N0
     /// - MIN=9
     /// - MAX=9
-    #[validate(length(equal = 9, message = "ISA 13 (I12) must be 9 characters long"))]
     #[serde(rename = "13")]
-    pub _13: String,
+    pub _13: element::I12,
     /// I13 - Acknowledgment Requested
     ///
     /// Code sent by the sender to request an interchange acknowledgment (TA1)
     /// - TYPE=ID
     /// - MIN=1
     /// - MAX=1
-    #[validate(length(equal = 1, message = "ISA 14 (I13) must be 1 characters long"))]
     #[serde(rename = "14")]
-    pub _14: String,
+    pub _14: element::I13,
     /// I14 - Usage Indicator
     ///
     /// Code to indicate whether data enclosed by this interchange envelope is test, production or information
@@ -326,7 +273,7 @@ pub struct ISA {
     /// - MIN=1
     /// - MAX=1
     #[serde(rename = "15")]
-    pub _15: UsageIndicator,
+    pub _15: element::I14,
     /// I15 - Component Element Separator
     ///
     /// Type is not applicable; the component element separator is a delimiter and not a data element; this field provides the delimiter used to separate component data elements within a composite data structure; this value must be different than the data element separator and the segment terminator
@@ -429,23 +376,21 @@ impl<'a> Parser<&'a str, ISA, nom::error::Error<&'a str>> for ISA {
         Ok((
             remaining_input,
             ISA {
-                _01: fields[0].clone(),
+                _01: <element::I01 as crate::util::X12Element>::from_x12(&fields[0]),
                 _02: fields[1].clone(),
-                _03: fields[2].clone(),
+                _03: <element::I03 as crate::util::X12Element>::from_x12(&fields[2]),
                 _04: fields[3].clone(),
-                _05: fields[4].clone(),
+                _05: <element::I05 as crate::util::X12Element>::from_x12(&fields[4]),
                 _06: fields[5].clone(),
-                _07: fields[6].clone(),
+                _07: <element::I05 as crate::util::X12Element>::from_x12(&fields[6]),
                 _08: fields[7].clone(),
-                _09: fields[8].clone(),
-                _10: fields[9].clone(),
-                _11: fields[10].clone(),
-                _12: fields[11].clone(),
-                _13: fields[12].clone(),
-                _14: fields[13].clone(),
-                _15: fields[14].parse().map_err(|_| {
-                    nom::Err::Error(nom::error::Error::new(input, ErrorKind::MapRes))
-                })?,
+                _09: <element::I08 as crate::util::X12Element>::from_x12(&fields[8]),
+                _10: <element::I09 as crate::util::X12Element>::from_x12(&fields[9]),
+                _11: <element::I10 as crate::util::X12Element>::from_x12(&fields[10]),
+                _12: <element::I11 as crate::util::X12Element>::from_x12(&fields[11]),
+                _13: <element::I12 as crate::util::X12Element>::from_x12(&fields[12]),
+                _14: <element::I13 as crate::util::X12Element>::from_x12(&fields[13]),
+                _15: <element::I14 as crate::util::X12Element>::from_x12(&fields[14]),
                 _16: component_separator.to_string(),
             },
         ))

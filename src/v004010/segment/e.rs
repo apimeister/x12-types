@@ -15,11 +15,11 @@ use x12_types_macros::{DisplaySegment, ParseSegment};
 )]
 pub struct E1 {
     #[serde(rename = "01")]
-    pub _01: String,
+    pub _01: crate::v004010::element::E100,
     #[serde(rename = "02")]
-    pub _02: Option<String>,
+    pub _02: Option<crate::v004010::element::E100>,
     #[serde(rename = "03")]
-    pub _03: Option<String>,
+    pub _03: Option<crate::v004010::element::E100>,
 }
 
 /// E4 - Extended Reference Information
@@ -47,7 +47,7 @@ pub struct E4 {
     #[serde(rename = "02")]
     pub _02: String,
     #[serde(rename = "03")]
-    pub _03: Option<String>,
+    pub _03: Option<crate::v004010::element::E100>,
     /// 26 - Country Code
     ///
     /// Code identifying the country
@@ -73,9 +73,9 @@ pub struct E4 {
 )]
 pub struct E5 {
     #[serde(rename = "01")]
-    pub _01: String,
+    pub _01: crate::v004010::element::E100,
     #[serde(rename = "02")]
-    pub _02: String,
+    pub _02: crate::v004010::element::E100,
     /// 19 - City Name
     ///
     /// Free-form text for city name
@@ -85,7 +85,7 @@ pub struct E5 {
     #[serde(rename = "03")]
     pub _03: Option<String>,
     #[serde(rename = "04")]
-    pub _04: Option<String>,
+    pub _04: Option<crate::v004010::element::E100>,
 }
 
 /// EA - Equipment Attributes
@@ -102,11 +102,11 @@ pub struct E5 {
 )]
 pub struct EA {
     #[serde(rename = "01")]
-    pub _01: String,
+    pub _01: crate::v004010::element::E100,
     #[serde(rename = "02")]
-    pub _02: Option<String>,
+    pub _02: Option<crate::v004010::element::E100>,
     #[serde(rename = "03")]
-    pub _03: Option<String>,
+    pub _03: Option<crate::v004010::element::E100>,
 }
 
 /// EFI - External Filing Information
@@ -136,37 +136,37 @@ pub struct EA {
 )]
 pub struct EFI {
     #[serde(rename = "01")]
-    pub _01: String,
+    pub _01: crate::v004010::element::E100,
     #[serde(rename = "02")]
-    pub _02: Option<String>,
+    pub _02: Option<crate::v004010::element::E100>,
     #[serde(rename = "03")]
-    pub _03: Option<String>,
+    pub _03: Option<crate::v004010::element::E100>,
     #[serde(rename = "04")]
-    pub _04: Option<String>,
+    pub _04: Option<crate::v004010::element::E100>,
     #[serde(rename = "05")]
-    pub _05: Option<String>,
+    pub _05: Option<crate::v004010::element::E100>,
     #[serde(rename = "06")]
-    pub _06: Option<String>,
+    pub _06: Option<crate::v004010::element::E100>,
     #[serde(rename = "07")]
-    pub _07: Option<String>,
+    pub _07: Option<crate::v004010::element::E100>,
     #[serde(rename = "08")]
-    pub _08: Option<String>,
+    pub _08: Option<crate::v004010::element::E100>,
     #[serde(rename = "09")]
-    pub _09: Option<String>,
+    pub _09: Option<crate::v004010::element::E100>,
     #[serde(rename = "10")]
-    pub _10: Option<String>,
+    pub _10: Option<crate::v004010::element::E100>,
     #[serde(rename = "11")]
-    pub _11: Option<String>,
+    pub _11: Option<crate::v004010::element::E100>,
     #[serde(rename = "12")]
-    pub _12: Option<String>,
+    pub _12: Option<crate::v004010::element::E100>,
     #[serde(rename = "13")]
-    pub _13: Option<String>,
+    pub _13: Option<crate::v004010::element::E100>,
     #[serde(rename = "14")]
-    pub _14: Option<String>,
+    pub _14: Option<crate::v004010::element::E100>,
     #[serde(rename = "15")]
-    pub _15: Option<String>,
+    pub _15: Option<crate::v004010::element::E100>,
     #[serde(rename = "16")]
-    pub _16: Option<String>,
+    pub _16: Option<crate::v004010::element::E100>,
 }
 
 /// EM - Equipment Details
@@ -187,13 +187,13 @@ pub struct EFI {
 )]
 pub struct EM {
     #[serde(rename = "01")]
-    pub _01: Option<String>,
+    pub _01: Option<crate::v004010::element::E100>,
     #[serde(rename = "02")]
-    pub _02: Option<String>,
+    pub _02: Option<crate::v004010::element::E100>,
     #[serde(rename = "03")]
-    pub _03: Option<String>,
+    pub _03: Option<crate::v004010::element::E100>,
     #[serde(rename = "04")]
-    pub _04: Option<String>,
+    pub _04: Option<crate::v004010::element::E100>,
     /// 26 - Country Code
     ///
     /// Code identifying the country
@@ -203,7 +203,7 @@ pub struct EM {
     #[serde(rename = "05")]
     pub _05: Option<String>,
     #[serde(rename = "06")]
-    pub _06: Option<String>,
+    pub _06: Option<crate::v004010::element::E100>,
     /// 373 - Date
     ///
     /// Date expressed as CCYYMMDD where CC represents the first two digits of the calendar year
@@ -211,7 +211,7 @@ pub struct EM {
     /// - MIN=8
     /// - MAX=8
     #[serde(rename = "07")]
-    pub _07: Option<String>,
+    pub _07: Option<crate::v004010::element::E373>,
 }
 
 /// ETD - Excess Transportation Detail
@@ -235,23 +235,23 @@ pub struct EM {
 )]
 pub struct ETD {
     #[serde(rename = "01")]
-    pub _01: Option<String>,
+    pub _01: Option<crate::v004010::element::E100>,
     #[serde(rename = "02")]
-    pub _02: Option<String>,
+    pub _02: Option<crate::v004010::element::E100>,
     #[serde(rename = "03")]
-    pub _03: Option<String>,
+    pub _03: Option<crate::v004010::element::E100>,
     #[serde(rename = "04")]
-    pub _04: Option<String>,
+    pub _04: Option<crate::v004010::element::E100>,
     #[serde(rename = "05")]
-    pub _05: Option<String>,
+    pub _05: Option<crate::v004010::element::E100>,
     #[serde(rename = "06")]
-    pub _06: Option<String>,
+    pub _06: Option<crate::v004010::element::E100>,
     #[serde(rename = "07")]
-    pub _07: Option<String>,
+    pub _07: Option<crate::v004010::element::E100>,
     #[serde(rename = "08")]
-    pub _08: Option<String>,
+    pub _08: Option<crate::v004010::element::E100>,
     #[serde(rename = "09")]
-    pub _09: Option<String>,
+    pub _09: Option<crate::v004010::element::E100>,
     #[serde(rename = "10")]
-    pub _10: Option<String>,
+    pub _10: Option<crate::v004010::element::E100>,
 }

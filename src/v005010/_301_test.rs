@@ -30,7 +30,7 @@ fn parse_301() {
     assert_eq!(obj.loop_lx[0].loop_h1.len(), 1);
     assert_eq!(obj.loop_lx[0].loop_h1[0].h2.len(), 1);
     assert_eq!(obj.loop_lx[0].loop_lh1.len(), 1);
-    assert_eq!(obj.loop_lx[0].loop_lh1[0].lh1._02, "UN");
+    assert_eq!(obj.loop_lx[0].loop_lh1[0].lh1._02.to_string(), "UN");
     assert_eq!(obj.v1.len(), 1);
     assert_eq!(obj.v9.len(), 1);
 }

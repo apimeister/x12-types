@@ -69,14 +69,14 @@ fn parse_148() {
     let hl = &obj.loop_hl[0];
     assert_eq!(hl.hl._01, "1");
     assert_eq!(hl.cri.len(), 1);
-    assert_eq!(hl.cri[0]._06, "1");
+    assert_eq!(hl.cri[0]._06.to_string(), "1");
     // HL-level party (injured worker)
     assert_eq!(hl.loop_nm1.len(), 1);
     assert_eq!(hl.loop_nm1[0].nm1._01.to_string(), "IL");
     // employment-status loop with its income LX loop
     assert_eq!(hl.loop_esi.len(), 1);
     let esi = &hl.loop_esi[0];
-    assert_eq!(esi.esi._01, "Y");
+    assert_eq!(esi.esi._01.to_string(), "Y");
     assert!(esi.emt.is_some());
     assert_eq!(esi.loop_lx.len(), 1);
     assert!(esi.loop_lx[0].ain.is_some());
@@ -105,7 +105,7 @@ fn parse_148() {
     // compensation financial information loop
     assert_eq!(hl.loop_cfi.len(), 1);
     let cfi = &hl.loop_cfi[0];
-    assert_eq!(cfi.cfi._01, "01");
+    assert_eq!(cfi.cfi._01.to_string(), "01");
     assert_eq!(cfi.loop_ad1.len(), 1);
     assert_eq!(cfi.loop_nm1.len(), 1);
     assert_eq!(cfi.loop_nm1[0].nm1._01.to_string(), "PR");

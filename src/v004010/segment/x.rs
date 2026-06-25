@@ -40,7 +40,7 @@ pub struct X1 {
     /// - MIN=8
     /// - MAX=8
     #[serde(rename = "04")]
-    pub _04: Option<String>,
+    pub _04: Option<crate::v004010::element::E373>,
     #[serde(rename = "05")]
     pub _05: String,
     #[serde(rename = "06")]

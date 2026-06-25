@@ -25,7 +25,7 @@ pub struct TSU {
     #[serde(rename = "02")]
     pub _02: String,
     #[serde(rename = "03")]
-    pub _03: String,
+    pub _03: crate::v005010::element::E782,
     #[serde(rename = "04")]
     pub _04: Option<String>,
     #[serde(rename = "05")]
@@ -35,7 +35,7 @@ pub struct TSU {
     #[serde(rename = "07")]
     pub _07: Option<String>,
     #[serde(rename = "08")]
-    pub _08: Option<String>,
+    pub _08: Option<crate::v005010::element::E623>,
 }
 
 /// TCD - Test Period or Interval
@@ -87,15 +87,15 @@ pub struct TCD {
     #[serde(rename = "11")]
     pub _11: Option<String>,
     #[serde(rename = "12")]
-    pub _12: Option<String>,
+    pub _12: Option<crate::v005010::element::E782>,
     #[serde(rename = "13")]
-    pub _13: Option<String>,
+    pub _13: Option<crate::v005010::element::E782>,
     #[serde(rename = "14")]
-    pub _14: Option<String>,
+    pub _14: Option<crate::v005010::element::E782>,
     #[serde(rename = "15")]
-    pub _15: Option<String>,
+    pub _15: Option<crate::v005010::element::E782>,
     #[serde(rename = "16")]
-    pub _16: Option<String>,
+    pub _16: Option<crate::v005010::element::E662>,
 }
 
 /// TRF - Tariff Rating Information
@@ -147,9 +147,9 @@ pub struct TEM {
     #[serde(rename = "03")]
     pub _03: Option<String>,
     #[serde(rename = "04")]
-    pub _04: Option<String>,
+    pub _04: Option<crate::v005010::element::E81>,
     #[serde(rename = "05")]
-    pub _05: Option<String>,
+    pub _05: Option<crate::v005010::element::E1703>,
 }
 
 /// TOO - Tooth Identification
@@ -455,7 +455,7 @@ pub struct TAX {
 )]
 pub struct TPB {
     #[serde(rename = "01")]
-    pub _01: Option<String>,
+    pub _01: Option<crate::v005010::element::E1634>,
     #[serde(rename = "02")]
     pub _02: Option<String>,
     #[serde(rename = "03")]
@@ -669,7 +669,7 @@ pub struct TD5 {
 )]
 pub struct TDS {
     #[serde(rename = "01")]
-    pub _01: String,
+    pub _01: crate::v005010::element::E610,
 }
 
 /// TED - Technical Error Description

@@ -79,7 +79,7 @@ pub struct W03 {
 )]
 pub struct W04 {
     #[serde(rename = "01")]
-    pub _01: String,
+    pub _01: crate::v005010::element::E382,
     #[serde(rename = "02")]
     pub _02: String,
     #[serde(rename = "03")]
@@ -95,15 +95,15 @@ pub struct W04 {
     #[serde(rename = "08")]
     pub _08: Option<String>,
     #[serde(rename = "09")]
-    pub _09: Option<String>,
+    pub _09: Option<crate::v005010::element::E121>,
     #[serde(rename = "10")]
     pub _10: Option<String>,
     #[serde(rename = "11")]
     pub _11: Option<String>,
     #[serde(rename = "12")]
-    pub _12: Option<String>,
+    pub _12: Option<crate::v005010::element::E416>,
     #[serde(rename = "13")]
-    pub _13: Option<String>,
+    pub _13: Option<crate::v005010::element::E844>,
     #[serde(rename = "14")]
     pub _14: Option<String>,
     #[serde(rename = "15")]
@@ -194,7 +194,7 @@ pub struct W08 {
     #[serde(rename = "07")]
     pub _07: Option<String>,
     #[serde(rename = "08")]
-    pub _08: Option<String>,
+    pub _08: Option<crate::v005010::element::E407>,
     #[serde(rename = "09")]
     pub _09: Option<String>,
 }
@@ -332,9 +332,9 @@ pub struct W12 {
 )]
 pub struct W18 {
     #[serde(rename = "01")]
-    pub _01: String,
+    pub _01: crate::v005010::element::E456,
     #[serde(rename = "02")]
-    pub _02: String,
+    pub _02: crate::v005010::element::E408,
     #[serde(rename = "03")]
     pub _03: Option<String>,
 }
@@ -426,7 +426,7 @@ pub struct W28 {
 )]
 pub struct WS {
     #[serde(rename = "01")]
-    pub _01: String,
+    pub _01: crate::v005010::element::E678,
     #[serde(rename = "02")]
     pub _02: Option<String>,
     #[serde(rename = "03")]
@@ -561,11 +561,11 @@ pub struct W13 {
     #[serde(rename = "02")]
     pub _02: String,
     #[serde(rename = "03")]
-    pub _03: String,
+    pub _03: crate::v005010::element::E412,
     #[serde(rename = "04")]
     pub _04: Option<String>,
     #[serde(rename = "05")]
-    pub _05: Option<String>,
+    pub _05: Option<crate::v005010::element::E853>,
 }
 
 /// W14 - Total Shipping Order Information

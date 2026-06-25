@@ -74,11 +74,11 @@ pub struct DEP {
     #[serde(rename = "04")]
     pub _04: Option<String>,
     #[serde(rename = "05")]
-    pub _05: String,
+    pub _05: crate::v005010::element::E506,
     #[serde(rename = "06")]
     pub _06: String,
     #[serde(rename = "07")]
-    pub _07: Option<String>,
+    pub _07: Option<crate::v005010::element::E569>,
     #[serde(rename = "08")]
     pub _08: Option<String>,
 }
@@ -118,7 +118,7 @@ pub struct DD {
     #[serde(rename = "07")]
     pub _07: Option<String>,
     #[serde(rename = "08")]
-    pub _08: Option<String>,
+    pub _08: Option<crate::v005010::element::E1073>,
     #[serde(rename = "09")]
     pub _09: Option<String>,
     #[serde(rename = "10")]
@@ -149,7 +149,7 @@ pub struct DEG {
     #[serde(rename = "04")]
     pub _04: Option<String>,
     #[serde(rename = "05")]
-    pub _05: Option<String>,
+    pub _05: Option<crate::v005010::element::E641>,
 }
 
 /// DMG - Demographic Information

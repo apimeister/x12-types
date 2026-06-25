@@ -41,7 +41,7 @@ fn parse_812() {
     // adjustment-detail loop with its sub-loops
     assert_eq!(obj.loop_cdd.len(), 1);
     let cdd = &obj.loop_cdd[0];
-    assert_eq!(cdd.cdd._01, "A1");
+    assert_eq!(cdd.cdd._01.to_string(), "A1");
     assert!(cdd.lin.is_some());
     assert_eq!(cdd.n9.len(), 1);
     assert_eq!(cdd.loop_sac.len(), 1);
@@ -78,5 +78,5 @@ IEA*1*000000001~"#;
     let t = &obj.functional_group[0].segments[0];
     assert_eq!(t.bcd._01, "20200101");
     assert_eq!(t.loop_cdd.len(), 1);
-    assert_eq!(t.loop_cdd[0].cdd._01, "A1");
+    assert_eq!(t.loop_cdd[0].cdd._01.to_string(), "A1");
 }

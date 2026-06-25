@@ -63,7 +63,7 @@ pub struct X4 {
     #[serde(rename = "16")]
     pub _16: Option<String>,
     #[serde(rename = "17")]
-    pub _17: Option<String>,
+    pub _17: Option<crate::v005010::element::E623>,
     #[serde(rename = "18")]
     pub _18: Option<String>,
     #[serde(rename = "19")]

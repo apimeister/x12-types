@@ -65,7 +65,7 @@ fn parse_880() {
     assert_eq!(r.loop_g17.len(), 1);
     assert_eq!(r.loop_g17[0].g19.len(), 1);
     assert_eq!(obj.g31._01, "15");
-    assert_eq!(obj.g33._01, "250");
+    assert_eq!(obj.g33._01.to_string(), "250");
 }
 
 #[test]

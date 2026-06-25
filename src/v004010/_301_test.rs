@@ -1,17 +1,18 @@
+use crate::util::X12Element;
 use crate::v004010::*;
 
 #[test]
 fn test_301() {
     let obj = _301 {
         st: ST {
-            _01: "301".to_string(),
+            _01: crate::v004010::element::E143::from_x12("301"),
             _02: "33233".to_string(),
         },
         b1: B1 {
             _01: Some("SNDR".to_string()),
             _02: "ERXX412223".to_string(),
-            _03: Some("20221121".to_string()),
-            _04: "A".to_string(),
+            _03: Some(crate::v004010::element::E373::from_x12("20221121")),
+            _04: crate::v004010::element::E284::from_x12("A"),
         },
         y3: Y3 {
             _01: "ERXX412223".to_string(),
@@ -82,7 +83,7 @@ fn test_301() {
                 },
                 dtm: vec![DTM {
                     _01: "649".to_string(),
-                    _02: Some("20230102".to_string()),
+                    _02: Some(crate::v004010::element::E373::from_x12("20230102")),
                     ..Default::default()
                 }],
             },
@@ -101,20 +102,20 @@ fn test_301() {
         ],
         loop_lx: vec![_301LoopLx {
             lx: LX {
-                _01: "2".to_string(),
+                _01: crate::v004010::element::E554::from_x12("2"),
             },
             l0: Some(L0 {
-                _01: Some("1".to_string()),
-                _04: Some("14000".to_string()),
+                _01: Some(crate::v004010::element::E213::from_x12("1")),
+                _04: Some(crate::v004010::element::E81::from_x12("14000")),
                 _05: Some("G".to_string()),
-                _08: Some("1".to_string()),
-                _09: Some("CNT".to_string()),
+                _08: Some(crate::v004010::element::E80::from_x12("1")),
+                _09: Some(crate::v004010::element::E211::from_x12("CNT")),
                 _11: Some("K".to_string()),
                 _12: Some("HP".to_string()),
                 ..Default::default()
             }),
             l5: Some(L5 {
-                _01: Some("1".to_string()),
+                _01: Some(crate::v004010::element::E213::from_x12("1")),
                 _02: Some("VEHICLES:PARTS".to_string()),
                 ..Default::default()
             }),
@@ -129,7 +130,7 @@ fn test_301() {
             ..Default::default()
         }],
         se: SE {
-            _01: "17".to_string(),
+            _01: crate::v004010::element::E96::from_x12("17"),
             _02: "33233".to_string(),
         },
         ..Default::default()
@@ -161,9 +162,9 @@ SE*17*33233~"#;
     println!("{obj:?}");
     assert!(obj.0.is_empty());
     let obj = obj.1;
-    assert_eq!(obj.st._01, "301");
+    assert_eq!(obj.st._01.to_string(), "301");
     assert_eq!(obj.st._02, "33233");
-    assert_eq!(obj.se._01, "17");
+    assert_eq!(obj.se._01.to_string(), "17");
     assert_eq!(obj.se._02, "33233");
 }
 

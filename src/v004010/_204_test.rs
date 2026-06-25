@@ -1,16 +1,17 @@
+use crate::util::X12Element;
 use crate::v004010::*;
 
 #[test]
 fn render_204() {
     let obj = _204 {
         st: ST {
-            _01: "204".to_string(),
+            _01: crate::v004010::element::E143::from_x12("204"),
             _02: "18711".to_string(),
         },
         b2: B2 {
             _02: Some("SNDR".to_string()),
-            _04: Some("6XULT02DCM".to_string()),
-            _06: "DE".to_string(),
+            _04: Some(crate::v004010::element::E373::from_x12("6XULT02DCM")),
+            _06: crate::v004010::element::E284::from_x12("DE"),
             ..Default::default()
         },
         b2a: B2A {
@@ -24,10 +25,10 @@ fn render_204() {
         }],
         g62: Some(G62 {
             _01: Some("04".to_string()),
-            _02: Some("20221121".to_string()),
+            _02: Some(crate::v004010::element::E373::from_x12("20221121")),
             _03: None,
-            _04: Some("1513".to_string()),
-            _05: Some("LT".to_string()),
+            _04: Some(crate::v004010::element::E337::from_x12("1513")),
+            _05: Some(crate::v004010::element::E623::from_x12("LT")),
         }),
         at5: Some(AT5 {
             _01: Some("XP".to_string()),
@@ -140,7 +141,7 @@ fn render_204() {
                 }],
                 loop_320: vec![_204Loop320 {
                     l5: Some(L5 {
-                        _01: Some("1".to_string()),
+                        _01: Some(crate::v004010::element::E213::from_x12("1")),
                         _02: Some("FOOD:(NOS)".to_string()),
                         ..Default::default()
                     }),
@@ -204,7 +205,7 @@ fn render_204() {
             },
         ],
         se: SE {
-            _01: "37".to_string(),
+            _01: crate::v004010::element::E96::from_x12("37"),
             _02: "18711".to_string(),
         },
         ..Default::default()
@@ -247,7 +248,7 @@ SE*37*18711~"#;
     let (str, obj) = _204::parse(str).unwrap();
     println!("{obj:?}");
     assert!(str.is_empty());
-    assert_eq!(obj.se._01, "37");
+    assert_eq!(obj.se._01.to_string(), "37");
     assert_eq!(obj.se._02, "18711");
 }
 

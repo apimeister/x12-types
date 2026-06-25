@@ -79,7 +79,7 @@ fn parse_867() {
     // detail
     assert_eq!(obj.loop_ptd.len(), 1);
     let ptd = &obj.loop_ptd[0];
-    assert_eq!(ptd.ptd._01, "PT");
+    assert_eq!(ptd.ptd._01.to_string(), "PT");
     assert!(ptd.prf.is_some());
     assert_eq!(ptd.loop_n1.len(), 1);
     assert_eq!(ptd.loop_n1[0].n1._01.to_string(), "ST");

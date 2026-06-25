@@ -32,7 +32,7 @@ fn parse_417() {
     assert_eq!(obj.loop_n7.len(), 1);
     assert_eq!(obj.loop_n7[0].m7.len(), 1);
     assert_eq!(obj.n8.len(), 1);
-    assert_eq!(obj.n8[0]._01, "123456");
+    assert_eq!(obj.n8[0]._01.to_string(), "123456");
     assert_eq!(obj.loop_n1.len(), 1);
     assert!(obj.loop_n1[0].n4.is_some());
     assert_eq!(obj.r2.len(), 1);

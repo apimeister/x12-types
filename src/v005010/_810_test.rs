@@ -8,7 +8,7 @@ fn parse_810() {
     let (rest, obj) = _810::parse(SAMPLE).unwrap();
     assert_eq!(rest, "");
     assert_eq!(obj.st._01, "810");
-    assert_eq!(obj.big._01, "20200101");
+    assert_eq!(obj.big._01.to_string(), "20200101");
     // two name loops and two line-item loops, all top-level
     assert_eq!(obj.loop_n1.len(), 2);
     assert_eq!(obj.loop_n1[0].n1._01.to_string(), "ST");
@@ -16,7 +16,7 @@ fn parse_810() {
     assert_eq!(obj.loop_it1.len(), 2);
     assert_eq!(obj.loop_it1[0].it1._01, Some("1".to_string()));
     assert_eq!(obj.loop_it1[1].it1._01, Some("2".to_string()));
-    assert_eq!(obj.tds._01, "130");
+    assert_eq!(obj.tds._01.to_string(), "130");
 }
 
 #[test]

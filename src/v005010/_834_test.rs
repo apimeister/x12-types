@@ -68,21 +68,21 @@ IEA*1*000012345~
 "#;
     let obj: Transmission<_834> = Transmission::<_834> {
         isa: ISA {
-            _01: "00".to_string(),
+            _01: element::I01::N00,
             _02: "          ".to_string(),
-            _03: "00".to_string(),
+            _03: element::I03::N00,
             _04: "          ".to_string(),
-            _05: "ZZ".to_string(),
+            _05: element::I05::Zz,
             _06: "386028429      ".to_string(),
-            _07: "30".to_string(),
+            _07: element::I05::N30,
             _08: "382328142      ".to_string(),
-            _09: "050221".to_string(),
-            _10: "0602".to_string(),
-            _11: "U".to_string(),
-            _12: "00501".to_string(),
-            _13: "000012345".to_string(),
-            _14: "0".to_string(),
-            _15: "P".to_string(),
+            _09: element::I08::from_x12("050221"),
+            _10: element::I09::from_x12("0602"),
+            _11: element::I10::U,
+            _12: element::I11::N00501,
+            _13: element::I12::from_x12("000012345"),
+            _14: element::I13::N0,
+            _15: element::I14::Production,
             _16: ":".to_string(),
         },
         functional_group: vec![FunctionalGroup {
@@ -261,8 +261,8 @@ IEA*1*000012345~
             },
         }],
         iea: IEA {
-            _01: "1".to_string(),
-            _02: "000012345".to_string(),
+            _01: element::I16::from_x12("1"),
+            _02: element::I12::from_x12("000012345"),
         },
     };
     let obj_str = format!("{obj}");

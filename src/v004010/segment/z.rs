@@ -34,7 +34,7 @@ pub struct ZC1 {
     /// - MIN=8
     /// - MAX=8
     #[serde(rename = "05")]
-    pub _05: String,
+    pub _05: crate::v004010::element::E243,
     #[serde(rename = "06")]
     pub _06: String,
     #[serde(rename = "07")]
@@ -62,11 +62,11 @@ pub struct ZC1 {
 )]
 pub struct ZD {
     #[serde(rename = "01")]
-    pub _01: String,
+    pub _01: crate::v004010::element::E96,
     #[serde(rename = "02")]
     pub _02: Option<String>,
     #[serde(rename = "03")]
-    pub _03: String,
+    pub _03: crate::v004010::element::E96,
     #[serde(rename = "04")]
     pub _04: String,
     #[serde(rename = "05")]
@@ -78,9 +78,9 @@ pub struct ZD {
     /// - MIN=8
     /// - MAX=8
     #[serde(rename = "06")]
-    pub _06: Option<String>,
+    pub _06: Option<crate::v004010::element::E243>,
     #[serde(rename = "07")]
-    pub _07: String,
+    pub _07: crate::v004010::element::E96,
     #[serde(rename = "08")]
     pub _08: Option<String>,
 }

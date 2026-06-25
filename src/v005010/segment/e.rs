@@ -16,7 +16,7 @@ use x12_types_macros::{DisplaySegment, ParseSegment};
 )]
 pub struct EA {
     #[serde(rename = "01")]
-    pub _01: String,
+    pub _01: crate::v005010::element::E1402,
     #[serde(rename = "02")]
     pub _02: Option<String>,
     #[serde(rename = "03")]
@@ -287,23 +287,23 @@ pub struct EMS {
 )]
 pub struct ESI {
     #[serde(rename = "01")]
-    pub _01: String,
+    pub _01: crate::v005010::element::E1073,
     #[serde(rename = "02")]
-    pub _02: Option<String>,
+    pub _02: Option<crate::v005010::element::E1073>,
     #[serde(rename = "03")]
-    pub _03: Option<String>,
+    pub _03: Option<crate::v005010::element::E1073>,
     #[serde(rename = "04")]
     pub _04: Option<String>,
     #[serde(rename = "05")]
     pub _05: Option<String>,
     #[serde(rename = "06")]
-    pub _06: Option<String>,
+    pub _06: Option<crate::v005010::element::E584>,
     #[serde(rename = "07")]
-    pub _07: Option<String>,
+    pub _07: Option<crate::v005010::element::E1154>,
     #[serde(rename = "08")]
-    pub _08: Option<String>,
+    pub _08: Option<crate::v005010::element::E1468>,
     #[serde(rename = "09")]
-    pub _09: Option<String>,
+    pub _09: Option<crate::v005010::element::E641>,
 }
 
 /// EMT - Employment
@@ -335,11 +335,11 @@ pub struct EMT {
     #[serde(rename = "05")]
     pub _05: Option<String>,
     #[serde(rename = "06")]
-    pub _06: Option<String>,
+    pub _06: Option<crate::v005010::element::E1073>,
     #[serde(rename = "07")]
-    pub _07: Option<String>,
+    pub _07: Option<crate::v005010::element::E1073>,
     #[serde(rename = "08")]
-    pub _08: Option<String>,
+    pub _08: Option<crate::v005010::element::E1073>,
 }
 
 /// ETD - Excess Transportation Detail
@@ -358,15 +358,15 @@ pub struct EMT {
 )]
 pub struct ETD {
     #[serde(rename = "01")]
-    pub _01: String,
+    pub _01: crate::v005010::element::E626,
     #[serde(rename = "02")]
-    pub _02: String,
+    pub _02: crate::v005010::element::E627,
     #[serde(rename = "03")]
     pub _03: Option<String>,
     #[serde(rename = "04")]
     pub _04: Option<String>,
     #[serde(rename = "05")]
-    pub _05: Option<String>,
+    pub _05: Option<crate::v005010::element::E743>,
 }
 
 /// EFI - Electronic Format Identification

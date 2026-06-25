@@ -9,7 +9,7 @@ fn parse_990() {
     assert_eq!(rest, "");
     assert_eq!(obj.st._01, "990");
     assert_eq!(obj.b1._02.as_deref(), Some("SHIP123"));
-    assert_eq!(obj.b1._04.as_deref(), Some("A"));
+    assert_eq!(obj.b1._04.as_ref().map(ToString::to_string), Some("A".to_string()));
     assert_eq!(obj.n9.len(), 1);
 }
 

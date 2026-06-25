@@ -37,7 +37,7 @@ fn parse_845() {
     assert_eq!(obj.loop_n1[0].n3.len(), 1);
     assert_eq!(obj.loop_con.len(), 1);
     let con = &obj.loop_con[0];
-    assert_eq!(con.con._03, "AC");
+    assert_eq!(con.con._03.to_string(), "AC");
     assert_eq!(con.r#ref.len(), 1);
     assert_eq!(con.loop_n1.len(), 1);
     assert_eq!(con.loop_pad.len(), 1);

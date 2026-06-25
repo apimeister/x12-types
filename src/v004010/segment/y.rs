@@ -205,9 +205,9 @@ pub struct Y7 {
 )]
 pub struct YNQ {
     #[serde(rename = "01")]
-    pub _01: String,
+    pub _01: crate::v004010::element::E1021,
     #[serde(rename = "02")]
-    pub _02: String,
+    pub _02: crate::v004010::element::E1073,
     #[serde(rename = "03")]
     pub _03: Option<String>,
     #[serde(rename = "04")]
@@ -217,11 +217,11 @@ pub struct YNQ {
     #[serde(rename = "06")]
     pub _06: Option<String>,
     #[serde(rename = "07")]
-    pub _07: Option<String>,
+    pub _07: Option<crate::v004010::element::E1254>,
     #[serde(rename = "08")]
     pub _08: Option<String>,
     #[serde(rename = "09")]
     pub _09: Option<String>,
     #[serde(rename = "10")]
-    pub _10: Option<String>,
+    pub _10: Option<crate::v004010::element::E1257>,
 }

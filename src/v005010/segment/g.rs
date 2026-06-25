@@ -54,11 +54,11 @@ pub struct GRI {
     #[serde(rename = "05")]
     pub _05: Option<String>,
     #[serde(rename = "06")]
-    pub _06: Option<String>,
+    pub _06: Option<crate::v005010::element::E782>,
     #[serde(rename = "07")]
-    pub _07: Option<String>,
+    pub _07: Option<crate::v005010::element::E1004>,
     #[serde(rename = "08")]
-    pub _08: Option<String>,
+    pub _08: Option<crate::v005010::element::E488>,
     #[serde(rename = "09")]
     pub _09: Option<String>,
     #[serde(rename = "10")]
@@ -223,7 +223,7 @@ pub struct G62 {
     /// - MIN=2
     /// - MAX=2
     #[serde(rename = "05")]
-    pub _05: Option<String>,
+    pub _05: Option<crate::v005010::element::E623>,
 }
 
 /// G66 - Transportation Instructions
@@ -278,11 +278,11 @@ pub struct G69 {
 )]
 pub struct G95 {
     #[serde(rename = "01")]
-    pub _01: Option<String>,
+    pub _01: Option<crate::v005010::element::E293>,
     #[serde(rename = "02")]
-    pub _02: String,
+    pub _02: crate::v005010::element::E422,
     #[serde(rename = "03")]
-    pub _03: Option<String>,
+    pub _03: Option<crate::v005010::element::E554>,
     #[serde(rename = "04")]
     pub _04: Option<String>,
     #[serde(rename = "05")]
@@ -290,7 +290,7 @@ pub struct G95 {
     #[serde(rename = "06")]
     pub _06: Option<String>,
     #[serde(rename = "07")]
-    pub _07: Option<String>,
+    pub _07: Option<crate::v005010::element::E1470>,
 }
 
 /// G68 - Line Item Detail - Product
@@ -323,7 +323,7 @@ pub struct G68 {
     #[serde(rename = "02")]
     pub _02: String,
     #[serde(rename = "03")]
-    pub _03: Option<String>,
+    pub _03: Option<crate::v005010::element::E237>,
     #[serde(rename = "04")]
     pub _04: Option<String>,
     #[serde(rename = "05")]
@@ -337,7 +337,7 @@ pub struct G68 {
     #[serde(rename = "09")]
     pub _09: Option<String>,
     #[serde(rename = "10")]
-    pub _10: Option<String>,
+    pub _10: Option<crate::v005010::element::E258>,
     #[serde(rename = "11")]
     pub _11: Option<String>,
     #[serde(rename = "12")]
@@ -345,9 +345,9 @@ pub struct G68 {
     #[serde(rename = "13")]
     pub _13: Option<String>,
     #[serde(rename = "14")]
-    pub _14: Option<String>,
+    pub _14: Option<crate::v005010::element::E857>,
     #[serde(rename = "15")]
-    pub _15: Option<String>,
+    pub _15: Option<crate::v005010::element::E858>,
 }
 
 /// G70 - Line Item Detail - Miscellaneous
@@ -371,25 +371,25 @@ pub struct G68 {
 )]
 pub struct G70 {
     #[serde(rename = "01")]
-    pub _01: Option<String>,
+    pub _01: Option<crate::v005010::element::E356>,
     #[serde(rename = "02")]
-    pub _02: Option<String>,
+    pub _02: Option<crate::v005010::element::E357>,
     #[serde(rename = "03")]
     pub _03: Option<String>,
     #[serde(rename = "04")]
-    pub _04: Option<String>,
+    pub _04: Option<crate::v005010::element::E444>,
     #[serde(rename = "05")]
-    pub _05: Option<String>,
+    pub _05: Option<crate::v005010::element::E381>,
     #[serde(rename = "06")]
-    pub _06: Option<String>,
+    pub _06: Option<crate::v005010::element::E445>,
     #[serde(rename = "07")]
-    pub _07: Option<String>,
+    pub _07: Option<crate::v005010::element::E441>,
     #[serde(rename = "08")]
     pub _08: Option<String>,
     #[serde(rename = "09")]
-    pub _09: Option<String>,
+    pub _09: Option<crate::v005010::element::E416>,
     #[serde(rename = "10")]
-    pub _10: Option<String>,
+    pub _10: Option<crate::v005010::element::E810>,
 }
 
 /// G73 - Allowance or Charge Description
@@ -432,21 +432,21 @@ pub struct G76 {
     #[serde(rename = "02")]
     pub _02: String,
     #[serde(rename = "03")]
-    pub _03: Option<String>,
+    pub _03: Option<crate::v005010::element::E81>,
     #[serde(rename = "04")]
     pub _04: Option<String>,
     #[serde(rename = "05")]
-    pub _05: Option<String>,
+    pub _05: Option<crate::v005010::element::E183>,
     #[serde(rename = "06")]
     pub _06: Option<String>,
     #[serde(rename = "07")]
-    pub _07: Option<String>,
+    pub _07: Option<crate::v005010::element::E398>,
     #[serde(rename = "08")]
-    pub _08: Option<String>,
+    pub _08: Option<crate::v005010::element::E610>,
     #[serde(rename = "09")]
     pub _09: Option<String>,
     #[serde(rename = "10")]
-    pub _10: Option<String>,
+    pub _10: Option<crate::v005010::element::E107>,
 }
 
 /// G72 - Allowance or Charge
@@ -494,11 +494,11 @@ pub struct G72 {
 )]
 pub struct G1 {
     #[serde(rename = "01")]
-    pub _01: String,
+    pub _01: crate::v005010::element::E311,
     #[serde(rename = "02")]
-    pub _02: Option<String>,
+    pub _02: Option<crate::v005010::element::E312>,
     #[serde(rename = "03")]
-    pub _03: Option<String>,
+    pub _03: Option<crate::v005010::element::E312>,
 }
 
 /// G2 - Beyond Routing
@@ -514,7 +514,7 @@ pub struct G1 {
 )]
 pub struct G2 {
     #[serde(rename = "01")]
-    pub _01: String,
+    pub _01: crate::v005010::element::E312,
     #[serde(rename = "02")]
     pub _02: Option<String>,
 }
@@ -544,11 +544,11 @@ pub struct G2 {
 )]
 pub struct G17 {
     #[serde(rename = "01")]
-    pub _01: String,
+    pub _01: crate::v005010::element::E358,
     #[serde(rename = "02")]
     pub _02: String,
     #[serde(rename = "03")]
-    pub _03: Option<String>,
+    pub _03: Option<crate::v005010::element::E237>,
     #[serde(rename = "04")]
     pub _04: Option<String>,
     #[serde(rename = "05")]
@@ -562,7 +562,7 @@ pub struct G17 {
     #[serde(rename = "09")]
     pub _09: Option<String>,
     #[serde(rename = "10")]
-    pub _10: Option<String>,
+    pub _10: Option<crate::v005010::element::E382>,
     #[serde(rename = "11")]
     pub _11: Option<String>,
     #[serde(rename = "12")]
@@ -570,7 +570,7 @@ pub struct G17 {
     #[serde(rename = "13")]
     pub _13: Option<String>,
     #[serde(rename = "14")]
-    pub _14: Option<String>,
+    pub _14: Option<crate::v005010::element::E782>,
 }
 
 /// G19 - Item Detail (Quantity/Unit of Measure/Price Differences)
@@ -593,17 +593,17 @@ pub struct G17 {
 )]
 pub struct G19 {
     #[serde(rename = "01")]
-    pub _01: Option<String>,
+    pub _01: Option<crate::v005010::element::E382>,
     #[serde(rename = "02")]
     pub _02: Option<String>,
     #[serde(rename = "03")]
-    pub _03: Option<String>,
+    pub _03: Option<crate::v005010::element::E383>,
     #[serde(rename = "04")]
-    pub _04: Option<String>,
+    pub _04: Option<crate::v005010::element::E368>,
     #[serde(rename = "05")]
-    pub _05: Option<String>,
+    pub _05: Option<crate::v005010::element::E381>,
     #[serde(rename = "06")]
-    pub _06: Option<String>,
+    pub _06: Option<crate::v005010::element::E445>,
     #[serde(rename = "07")]
     pub _07: Option<String>,
     #[serde(rename = "08")]
@@ -632,23 +632,23 @@ pub struct G19 {
 )]
 pub struct G20 {
     #[serde(rename = "01")]
-    pub _01: Option<String>,
+    pub _01: Option<crate::v005010::element::E356>,
     #[serde(rename = "02")]
-    pub _02: Option<String>,
+    pub _02: Option<crate::v005010::element::E357>,
     #[serde(rename = "03")]
     pub _03: Option<String>,
     #[serde(rename = "04")]
-    pub _04: Option<String>,
+    pub _04: Option<crate::v005010::element::E81>,
     #[serde(rename = "05")]
     pub _05: Option<String>,
     #[serde(rename = "06")]
-    pub _06: Option<String>,
+    pub _06: Option<crate::v005010::element::E183>,
     #[serde(rename = "07")]
     pub _07: Option<String>,
     #[serde(rename = "08")]
     pub _08: Option<String>,
     #[serde(rename = "09")]
-    pub _09: Option<String>,
+    pub _09: Option<crate::v005010::element::E810>,
 }
 
 /// G25 - F.O.B. Information
@@ -667,7 +667,7 @@ pub struct G25 {
     #[serde(rename = "01")]
     pub _01: String,
     #[serde(rename = "02")]
-    pub _02: String,
+    pub _02: crate::v005010::element::E433,
     #[serde(rename = "03")]
     pub _03: Option<String>,
 }
@@ -698,9 +698,9 @@ pub struct G25 {
 )]
 pub struct GY {
     #[serde(rename = "01")]
-    pub _01: String,
+    pub _01: crate::v005010::element::E262,
     #[serde(rename = "02")]
-    pub _02: Option<String>,
+    pub _02: Option<crate::v005010::element::E699>,
     #[serde(rename = "03")]
     pub _03: Option<String>,
     #[serde(rename = "04")]
@@ -712,7 +712,7 @@ pub struct GY {
     #[serde(rename = "07")]
     pub _07: Option<String>,
     #[serde(rename = "08")]
-    pub _08: Option<String>,
+    pub _08: Option<crate::v005010::element::E259>,
     #[serde(rename = "09")]
     pub _09: Option<String>,
     #[serde(rename = "10")]
@@ -726,7 +726,7 @@ pub struct GY {
     #[serde(rename = "14")]
     pub _14: Option<String>,
     #[serde(rename = "15")]
-    pub _15: Option<String>,
+    pub _15: Option<crate::v005010::element::E1073>,
 }
 
 /// G22 - Pre-Pricing Information
@@ -745,11 +745,11 @@ pub struct GY {
 )]
 pub struct G22 {
     #[serde(rename = "01")]
-    pub _01: String,
+    pub _01: crate::v005010::element::E288,
     #[serde(rename = "02")]
-    pub _02: Option<String>,
+    pub _02: Option<crate::v005010::element::E420>,
     #[serde(rename = "03")]
-    pub _03: Option<String>,
+    pub _03: Option<crate::v005010::element::E289>,
     #[serde(rename = "04")]
     pub _04: Option<String>,
     #[serde(rename = "05")]
@@ -794,19 +794,19 @@ pub struct G24 {
 )]
 pub struct G46 {
     #[serde(rename = "01")]
-    pub _01: String,
+    pub _01: crate::v005010::element::E340,
     #[serde(rename = "02")]
-    pub _02: String,
+    pub _02: crate::v005010::element::E331,
     #[serde(rename = "03")]
-    pub _03: Option<String>,
+    pub _03: Option<crate::v005010::element::E359>,
     #[serde(rename = "04")]
     pub _04: Option<String>,
     #[serde(rename = "05")]
-    pub _05: Option<String>,
+    pub _05: Option<crate::v005010::element::E610>,
     #[serde(rename = "06")]
-    pub _06: Option<String>,
+    pub _06: Option<crate::v005010::element::E378>,
     #[serde(rename = "07")]
-    pub _07: Option<String>,
+    pub _07: Option<crate::v005010::element::E332>,
     #[serde(rename = "08")]
     pub _08: Option<String>,
     #[serde(rename = "09")]
@@ -814,9 +814,9 @@ pub struct G46 {
     #[serde(rename = "10")]
     pub _10: Option<String>,
     #[serde(rename = "11")]
-    pub _11: Option<String>,
+    pub _11: Option<crate::v005010::element::E236>,
     #[serde(rename = "12")]
-    pub _12: Option<String>,
+    pub _12: Option<crate::v005010::element::E1470>,
 }
 
 /// G23 - Terms of Sale
@@ -848,35 +848,35 @@ pub struct G23 {
     #[serde(rename = "01")]
     pub _01: String,
     #[serde(rename = "02")]
-    pub _02: String,
+    pub _02: crate::v005010::element::E333,
     #[serde(rename = "03")]
-    pub _03: Option<String>,
+    pub _03: Option<crate::v005010::element::E282>,
     #[serde(rename = "04")]
-    pub _04: Option<String>,
+    pub _04: Option<crate::v005010::element::E283>,
     #[serde(rename = "05")]
-    pub _05: Option<String>,
+    pub _05: Option<crate::v005010::element::E338>,
     #[serde(rename = "06")]
-    pub _06: Option<String>,
+    pub _06: Option<crate::v005010::element::E370>,
     #[serde(rename = "07")]
-    pub _07: Option<String>,
+    pub _07: Option<crate::v005010::element::E351>,
     #[serde(rename = "08")]
-    pub _08: Option<String>,
+    pub _08: Option<crate::v005010::element::E446>,
     #[serde(rename = "09")]
-    pub _09: Option<String>,
+    pub _09: Option<crate::v005010::element::E386>,
     #[serde(rename = "10")]
-    pub _10: Option<String>,
+    pub _10: Option<crate::v005010::element::E362>,
     #[serde(rename = "11")]
-    pub _11: Option<String>,
+    pub _11: Option<crate::v005010::element::E391>,
     #[serde(rename = "12")]
-    pub _12: Option<String>,
+    pub _12: Option<crate::v005010::element::E390>,
     #[serde(rename = "13")]
-    pub _13: Option<String>,
+    pub _13: Option<crate::v005010::element::E343>,
     #[serde(rename = "14")]
-    pub _14: Option<String>,
+    pub _14: Option<crate::v005010::element::E342>,
     #[serde(rename = "15")]
     pub _15: Option<String>,
     #[serde(rename = "16")]
-    pub _16: Option<String>,
+    pub _16: Option<crate::v005010::element::E713>,
 }
 
 /// G4 - Scale Identification
@@ -906,7 +906,7 @@ pub struct G4 {
     #[serde(rename = "05")]
     pub _05: Option<String>,
     #[serde(rename = "06")]
-    pub _06: Option<String>,
+    pub _06: Option<crate::v005010::element::E570>,
 }
 
 /// G3 - Compensation Information
@@ -926,17 +926,17 @@ pub struct G4 {
 )]
 pub struct G3 {
     #[serde(rename = "01")]
-    pub _01: Option<String>,
+    pub _01: Option<crate::v005010::element::E315>,
     #[serde(rename = "02")]
-    pub _02: String,
+    pub _02: crate::v005010::element::E317,
     #[serde(rename = "03")]
     pub _03: Option<String>,
     #[serde(rename = "04")]
-    pub _04: Option<String>,
+    pub _04: Option<crate::v005010::element::E201>,
     #[serde(rename = "05")]
-    pub _05: Option<String>,
+    pub _05: Option<crate::v005010::element::E782>,
     #[serde(rename = "06")]
-    pub _06: Option<String>,
+    pub _06: Option<crate::v005010::element::E73>,
 }
 
 /// GF - Furnished Goods and Services
@@ -965,7 +965,7 @@ pub struct GF {
     #[serde(rename = "03")]
     pub _03: Option<String>,
     #[serde(rename = "04")]
-    pub _04: Option<String>,
+    pub _04: Option<crate::v005010::element::E782>,
     #[serde(rename = "05")]
     pub _05: Option<String>,
     #[serde(rename = "06")]
@@ -997,19 +997,19 @@ pub struct GF {
 )]
 pub struct G05 {
     #[serde(rename = "01")]
-    pub _01: Option<String>,
+    pub _01: Option<crate::v005010::element::E382>,
     #[serde(rename = "02")]
     pub _02: Option<String>,
     #[serde(rename = "03")]
-    pub _03: Option<String>,
+    pub _03: Option<crate::v005010::element::E81>,
     #[serde(rename = "04")]
     pub _04: Option<String>,
     #[serde(rename = "05")]
-    pub _05: Option<String>,
+    pub _05: Option<crate::v005010::element::E183>,
     #[serde(rename = "06")]
     pub _06: Option<String>,
     #[serde(rename = "07")]
-    pub _07: Option<String>,
+    pub _07: Option<crate::v005010::element::E80>,
     #[serde(rename = "08")]
     pub _08: Option<String>,
 }
@@ -1029,13 +1029,13 @@ pub struct G05 {
 )]
 pub struct G08 {
     #[serde(rename = "01")]
-    pub _01: Option<String>,
+    pub _01: Option<crate::v005010::element::E409>,
     #[serde(rename = "02")]
-    pub _02: Option<String>,
+    pub _02: Option<crate::v005010::element::E410>,
     #[serde(rename = "03")]
-    pub _03: Option<String>,
+    pub _03: Option<crate::v005010::element::E411>,
     #[serde(rename = "04")]
-    pub _04: Option<String>,
+    pub _04: Option<crate::v005010::element::E412>,
 }
 
 /// G38 - Claim Payment Information
@@ -1052,11 +1052,11 @@ pub struct G08 {
 )]
 pub struct G38 {
     #[serde(rename = "01")]
-    pub _01: String,
+    pub _01: crate::v005010::element::E782,
     #[serde(rename = "02")]
     pub _02: Option<String>,
     #[serde(rename = "03")]
-    pub _03: Option<String>,
+    pub _03: Option<crate::v005010::element::E1292>,
 }
 
 /// G31 - Total Invoice Quantity and Weight
@@ -1075,7 +1075,7 @@ pub struct G31 {
     #[serde(rename = "01")]
     pub _01: String,
     #[serde(rename = "02")]
-    pub _02: String,
+    pub _02: crate::v005010::element::E81,
     #[serde(rename = "03")]
     pub _03: Option<String>,
 }
@@ -1092,7 +1092,7 @@ pub struct G31 {
 )]
 pub struct G33 {
     #[serde(rename = "01")]
-    pub _01: String,
+    pub _01: crate::v005010::element::E610,
 }
 
 /// G26 - Pricing Conditions
@@ -1112,13 +1112,13 @@ pub struct G33 {
 )]
 pub struct G26 {
     #[serde(rename = "01")]
-    pub _01: String,
+    pub _01: crate::v005010::element::E290,
     #[serde(rename = "02")]
     pub _02: Option<String>,
     #[serde(rename = "03")]
     pub _03: Option<String>,
     #[serde(rename = "04")]
-    pub _04: Option<String>,
+    pub _04: Option<crate::v005010::element::E292>,
     #[serde(rename = "05")]
     pub _05: Option<String>,
     #[serde(rename = "06")]
@@ -1146,7 +1146,7 @@ pub struct G36 {
     #[serde(rename = "03")]
     pub _03: String,
     #[serde(rename = "04")]
-    pub _04: Option<String>,
+    pub _04: Option<crate::v005010::element::E291>,
 }
 
 /// G39 - Item Characteristics - Manufacturer
@@ -1238,21 +1238,21 @@ pub struct G40 {
     #[serde(rename = "01")]
     pub _01: Option<String>,
     #[serde(rename = "02")]
-    pub _02: String,
+    pub _02: crate::v005010::element::E418,
     #[serde(rename = "03")]
-    pub _03: Option<String>,
+    pub _03: Option<crate::v005010::element::E419>,
     #[serde(rename = "04")]
     pub _04: Option<String>,
     #[serde(rename = "05")]
-    pub _05: Option<String>,
+    pub _05: Option<crate::v005010::element::E420>,
     #[serde(rename = "06")]
-    pub _06: Option<String>,
+    pub _06: Option<crate::v005010::element::E421>,
     #[serde(rename = "07")]
     pub _07: Option<String>,
     #[serde(rename = "08")]
-    pub _08: Option<String>,
+    pub _08: Option<crate::v005010::element::E236>,
     #[serde(rename = "09")]
-    pub _09: Option<String>,
+    pub _09: Option<crate::v005010::element::E1470>,
 }
 
 /// G43 - Market Area
@@ -1270,13 +1270,13 @@ pub struct G40 {
 )]
 pub struct G43 {
     #[serde(rename = "01")]
-    pub _01: String,
+    pub _01: crate::v005010::element::E771,
     #[serde(rename = "02")]
     pub _02: Option<String>,
     #[serde(rename = "03")]
     pub _03: Option<String>,
     #[serde(rename = "04")]
-    pub _04: Option<String>,
+    pub _04: Option<crate::v005010::element::E687>,
 }
 
 /// G54 - Minimum Order Quantity
@@ -1413,11 +1413,11 @@ pub struct G93 {
     #[serde(rename = "05")]
     pub _05: Option<String>,
     #[serde(rename = "06")]
-    pub _06: Option<String>,
+    pub _06: Option<crate::v005010::element::E236>,
     #[serde(rename = "07")]
     pub _07: Option<String>,
     #[serde(rename = "08")]
-    pub _08: Option<String>,
+    pub _08: Option<crate::v005010::element::E1073>,
 }
 
 /// G42 - Promotion Announcement Identification
@@ -1434,7 +1434,7 @@ pub struct G93 {
 )]
 pub struct G42 {
     #[serde(rename = "01")]
-    pub _01: String,
+    pub _01: crate::v005010::element::E423,
     #[serde(rename = "02")]
     pub _02: String,
     #[serde(rename = "03")]
@@ -1503,11 +1503,11 @@ pub struct G45 {
 )]
 pub struct G51 {
     #[serde(rename = "01")]
-    pub _01: Option<String>,
+    pub _01: Option<crate::v005010::element::E773>,
     #[serde(rename = "02")]
     pub _02: Option<String>,
     #[serde(rename = "03")]
-    pub _03: String,
+    pub _03: crate::v005010::element::E768,
     #[serde(rename = "04")]
     pub _04: String,
     #[serde(rename = "05")]
@@ -1533,7 +1533,7 @@ pub struct G51 {
 )]
 pub struct G94 {
     #[serde(rename = "01")]
-    pub _01: Option<String>,
+    pub _01: Option<crate::v005010::element::E293>,
     #[serde(rename = "02")]
     pub _02: String,
 }

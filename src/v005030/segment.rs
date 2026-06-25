@@ -1,3 +1,4 @@
+use crate::v005030::element;
 use serde::{Deserialize, Serialize};
 use validator::Validate;
 use x12_types_macros::{DisplaySegment, ParseSegment};
@@ -372,7 +373,7 @@ pub struct GE {
     /// - MIN=1
     /// - MAX=6
     #[serde(rename = "01")]
-    pub _01: String,
+    pub _01: crate::v005030::element::E97,
     /// 28 - Group Control Number
     ///
     /// Assigned number originated and maintained by the sender
@@ -380,7 +381,7 @@ pub struct GE {
     /// - MIN=1
     /// - MAX=9
     #[serde(rename = "02")]
-    pub _02: String,
+    pub _02: crate::v005030::element::E28,
 }
 
 /// GS - Functional Group Header
@@ -402,7 +403,7 @@ pub struct GE {
 )]
 pub struct GS {
     #[serde(rename = "01")]
-    pub _01: String,
+    pub _01: crate::v005030::element::E479,
     #[serde(rename = "02")]
     pub _02: String,
     #[serde(rename = "03")]
@@ -414,7 +415,7 @@ pub struct GS {
     /// - MIN=8
     /// - MAX=8
     #[serde(rename = "04")]
-    pub _04: String,
+    pub _04: crate::v005030::element::E373,
     /// 337 - Time
     ///
     /// Time expressed in 24-hour clock time as follows: HHMM, or HHMMSS, or HHMMSSD, or HHMMSSDD, where H = hours (00-23), M = minutes (00-59), S = integer seconds (00-59) and DD = decimal seconds; decimal seconds are expressed as follows: D = tenths (0-9) and DD = hundredths (00-99)
@@ -422,11 +423,11 @@ pub struct GS {
     /// - MIN=4
     /// - MAX=8
     #[serde(rename = "05")]
-    pub _05: String,
+    pub _05: crate::v005030::element::E337,
     #[serde(rename = "06")]
-    pub _06: String,
+    pub _06: crate::v005030::element::E28,
     #[serde(rename = "07")]
-    pub _07: String,
+    pub _07: crate::v005030::element::E455,
     #[serde(rename = "08")]
     pub _08: String,
 }
@@ -492,7 +493,7 @@ pub struct IEA {
     /// - MIN=1
     /// - MAX=5
     #[serde(rename = "01")]
-    pub _01: String,
+    pub _01: element::I16,
     /// I12 - Interchange Control Number
     ///
     /// A control number assigned by the interchange sender
@@ -500,7 +501,7 @@ pub struct IEA {
     /// - MIN=9
     /// - MAX=9
     #[serde(rename = "02")]
-    pub _02: String,
+    pub _02: element::I12,
 }
 
 /// IM - Intermodal Movement Information
@@ -557,9 +558,8 @@ pub struct ISA {
     /// - TYPE=ID
     /// - MIN=2
     /// - MAX=2
-    #[validate(length(equal = 2))]
     #[serde(rename = "01")]
-    pub _01: String,
+    pub _01: element::I01,
     /// I02 - Authorization Information
     ///
     /// Information used for additional identification or authorization of the interchange sender or the data in the interchange; the type of information is set by the Authorization Information Qualifier (I01)
@@ -575,9 +575,8 @@ pub struct ISA {
     /// - TYPE=ID
     /// - MIN=2
     /// - MAX=2
-    #[validate(length(equal = 2))]
     #[serde(rename = "03")]
-    pub _03: String,
+    pub _03: element::I03,
     /// I04 - Security Information
     ///
     /// This is used for identifying the security information about the interchange sender or the data in the interchange; the type of information is set by the Security Information Qualifier (I03)
@@ -594,7 +593,7 @@ pub struct ISA {
     /// - MIN=2
     /// - MAX=2
     #[serde(rename = "05")]
-    pub _05: String,
+    pub _05: element::I05,
     /// I06 - Interchange Sender ID
     ///
     /// Identification code published by the sender for other parties to use as the receiver ID to route data to them; the sender always codes this value in the sender ID element
@@ -610,7 +609,7 @@ pub struct ISA {
     /// - MIN=2
     /// - MAX=2
     #[serde(rename = "07")]
-    pub _07: String,
+    pub _07: element::I05,
     /// I07 - Interchange Receiver ID
     ///
     /// Identification code published by the receiver of the data; When sending, it is used by the sender as their sending ID, thus other parties sending to them will use this as a receiving ID to route data to them
@@ -626,7 +625,7 @@ pub struct ISA {
     /// - MIN=6
     /// - MAX=6
     #[serde(rename = "09")]
-    pub _09: String,
+    pub _09: element::I08,
     /// I09 - Interchange Time
     ///
     /// Time of the interchange
@@ -634,7 +633,7 @@ pub struct ISA {
     /// - MIN=4
     /// - MAX=4
     #[serde(rename = "10")]
-    pub _10: String,
+    pub _10: element::I09,
     /// I10 - Interchange Control Standards Identifier
     ///
     /// Code to identify the agency responsible for the control standard used by the message that is enclosed by the interchange header and trailer
@@ -642,7 +641,7 @@ pub struct ISA {
     /// - MIN=1
     /// - MAX=1
     #[serde(rename = "11")]
-    pub _11: String,
+    pub _11: element::I10,
     /// I11 - Interchange Control Version Number
     ///
     /// This version number covers the interchange control segments
@@ -650,7 +649,7 @@ pub struct ISA {
     /// - MIN=5
     /// - MAX=5
     #[serde(rename = "12")]
-    pub _12: String,
+    pub _12: element::I11,
     /// I12 - Interchange Control Number
     ///
     /// A control number assigned by the interchange sender
@@ -658,7 +657,7 @@ pub struct ISA {
     /// - MIN=9
     /// - MAX=9
     #[serde(rename = "13")]
-    pub _13: String,
+    pub _13: element::I12,
     /// I13 - Acknowledgment Requested
     ///
     /// Code sent by the sender to request an interchange acknowledgment (TA1)
@@ -666,7 +665,7 @@ pub struct ISA {
     /// - MIN=1
     /// - MAX=1
     #[serde(rename = "14")]
-    pub _14: String,
+    pub _14: element::I13,
     /// I14 - Usage Indicator
     ///
     /// Code to indicate whether data enclosed by this interchange envelope is test, production or information
@@ -674,7 +673,7 @@ pub struct ISA {
     /// - MIN=1
     /// - MAX=1
     #[serde(rename = "15")]
-    pub _15: String,
+    pub _15: element::I14,
     /// I15 - Component Element Separator
     ///
     /// Type is not applicable; the component element separator is a delimiter and not a data element; this field provides the delimiter used to separate component data elements within a composite data structure; this value must be different than the data element separator and the segment terminator
@@ -1655,7 +1654,7 @@ pub struct SE {
     /// - MIN=1
     /// - MAX=10
     #[serde(rename = "01")]
-    pub _01: String,
+    pub _01: crate::v005030::element::E96,
     /// 329 - Transaction Set Control Number
     ///
     /// Identifying control number that must be unique within the transaction set functional group assigned by the originator for a transaction set
@@ -1680,7 +1679,7 @@ pub struct SE {
 pub struct ST {
     /// 143 - Transaction Set Identifier Code 3/3
     #[serde(rename = "01")]
-    pub _01: String,
+    pub _01: crate::v005030::element::E143,
     /// 329 - Transaction Set Control Number 4/9
     #[serde(rename = "02")]
     pub _02: String,

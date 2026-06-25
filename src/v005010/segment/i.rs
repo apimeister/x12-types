@@ -1,3 +1,4 @@
+use crate::v005010::element;
 use serde::{Deserialize, Serialize};
 use validator::Validate;
 use x12_types_macros::{DisplaySegment, ParseSegment};
@@ -17,13 +18,13 @@ use x12_types_macros::{DisplaySegment, ParseSegment};
 )]
 pub struct IMA {
     #[serde(rename = "01")]
-    pub _01: String,
+    pub _01: crate::v005010::element::E748,
     #[serde(rename = "02")]
     pub _02: Option<String>,
     #[serde(rename = "03")]
-    pub _03: Option<String>,
+    pub _03: Option<crate::v005010::element::E257>,
     #[serde(rename = "04")]
-    pub _04: Option<String>,
+    pub _04: Option<crate::v005010::element::E257>,
 }
 
 /// IND - Individual Demographic Characteristics
@@ -59,7 +60,7 @@ pub struct IND {
     #[serde(rename = "05")]
     pub _05: Option<String>,
     #[serde(rename = "06")]
-    pub _06: Option<String>,
+    pub _06: Option<crate::v005010::element::E1476>,
     #[serde(rename = "07")]
     pub _07: Option<String>,
     #[serde(rename = "08")]
@@ -145,7 +146,7 @@ pub struct IEA {
     /// - MIN=1
     /// - MAX=5
     #[serde(rename = "01")]
-    pub _01: String,
+    pub _01: element::I16,
     /// I12 - Interchange Control Number
     ///
     /// A control number assigned by the interchange sender
@@ -153,7 +154,7 @@ pub struct IEA {
     /// - MIN=9
     /// - MAX=9
     #[serde(rename = "02")]
-    pub _02: String,
+    pub _02: element::I12,
 }
 
 /// IMM - Immunization Status
@@ -199,7 +200,7 @@ pub struct IMP {
     #[serde(rename = "01")]
     pub _01: String,
     #[serde(rename = "02")]
-    pub _02: Option<String>,
+    pub _02: Option<crate::v005010::element::E954>,
 }
 
 /// IN1 - Individual Identification
@@ -222,7 +223,7 @@ pub struct IN1 {
     #[serde(rename = "01")]
     pub _01: String,
     #[serde(rename = "02")]
-    pub _02: String,
+    pub _02: crate::v005010::element::E1107,
     #[serde(rename = "03")]
     pub _03: Option<String>,
     #[serde(rename = "04")]
@@ -230,9 +231,9 @@ pub struct IN1 {
     #[serde(rename = "05")]
     pub _05: Option<String>,
     #[serde(rename = "06")]
-    pub _06: Option<String>,
+    pub _06: Option<crate::v005010::element::E1069>,
     #[serde(rename = "07")]
-    pub _07: Option<String>,
+    pub _07: Option<crate::v005010::element::E1131>,
 }
 
 /// IN2 - Individual Name Structure Components
@@ -249,7 +250,7 @@ pub struct IN1 {
 )]
 pub struct IN2 {
     #[serde(rename = "01")]
-    pub _01: String,
+    pub _01: crate::v005010::element::E1104,
     #[serde(rename = "02")]
     pub _02: String,
     #[serde(rename = "03")]
@@ -405,9 +406,8 @@ pub struct ISA {
     /// - TYPE=ID
     /// - MIN=2
     /// - MAX=2
-    #[validate(length(equal = 2))]
     #[serde(rename = "01")]
-    pub _01: String,
+    pub _01: element::I01,
     /// I02 - Authorization Information
     ///
     /// Information used for additional identification or authorization of the interchange sender or the data in the interchange; the type of information is set by the Authorization Information Qualifier (I01)
@@ -423,9 +423,8 @@ pub struct ISA {
     /// - TYPE=ID
     /// - MIN=2
     /// - MAX=2
-    #[validate(length(equal = 2))]
     #[serde(rename = "03")]
-    pub _03: String,
+    pub _03: element::I03,
     /// I04 - Security Information
     ///
     /// This is used for identifying the security information about the interchange sender or the data in the interchange; the type of information is set by the Security Information Qualifier (I03)
@@ -442,7 +441,7 @@ pub struct ISA {
     /// - MIN=2
     /// - MAX=2
     #[serde(rename = "05")]
-    pub _05: String,
+    pub _05: element::I05,
     /// I06 - Interchange Sender ID
     ///
     /// Identification code published by the sender for other parties to use as the receiver ID to route data to them; the sender always codes this value in the sender ID element
@@ -458,7 +457,7 @@ pub struct ISA {
     /// - MIN=2
     /// - MAX=2
     #[serde(rename = "07")]
-    pub _07: String,
+    pub _07: element::I05,
     /// I07 - Interchange Receiver ID
     ///
     /// Identification code published by the receiver of the data; When sending, it is used by the sender as their sending ID, thus other parties sending to them will use this as a receiving ID to route data to them
@@ -474,7 +473,7 @@ pub struct ISA {
     /// - MIN=6
     /// - MAX=6
     #[serde(rename = "09")]
-    pub _09: String,
+    pub _09: element::I08,
     /// I09 - Interchange Time
     ///
     /// Time of the interchange
@@ -482,7 +481,7 @@ pub struct ISA {
     /// - MIN=4
     /// - MAX=4
     #[serde(rename = "10")]
-    pub _10: String,
+    pub _10: element::I09,
     /// I10 - Interchange Control Standards Identifier
     ///
     /// Code to identify the agency responsible for the control standard used by the message that is enclosed by the interchange header and trailer
@@ -490,7 +489,7 @@ pub struct ISA {
     /// - MIN=1
     /// - MAX=1
     #[serde(rename = "11")]
-    pub _11: String,
+    pub _11: element::I10,
     /// I11 - Interchange Control Version Number
     ///
     /// This version number covers the interchange control segments
@@ -498,7 +497,7 @@ pub struct ISA {
     /// - MIN=5
     /// - MAX=5
     #[serde(rename = "12")]
-    pub _12: String,
+    pub _12: element::I11,
     /// I12 - Interchange Control Number
     ///
     /// A control number assigned by the interchange sender
@@ -506,7 +505,7 @@ pub struct ISA {
     /// - MIN=9
     /// - MAX=9
     #[serde(rename = "13")]
-    pub _13: String,
+    pub _13: element::I12,
     /// I13 - Acknowledgment Requested
     ///
     /// Code sent by the sender to request an interchange acknowledgment (TA1)
@@ -514,7 +513,7 @@ pub struct ISA {
     /// - MIN=1
     /// - MAX=1
     #[serde(rename = "14")]
-    pub _14: String,
+    pub _14: element::I13,
     /// I14 - Usage Indicator
     ///
     /// Code to indicate whether data enclosed by this interchange envelope is test, production or information
@@ -522,7 +521,7 @@ pub struct ISA {
     /// - MIN=1
     /// - MAX=1
     #[serde(rename = "15")]
-    pub _15: String,
+    pub _15: element::I14,
     /// I15 - Component Element Separator
     ///
     /// Type is not applicable; the component element separator is a delimiter and not a data element; this field provides the delimiter used to separate component data elements within a composite data structure; this value must be different than the data element separator and the segment terminator
@@ -618,11 +617,11 @@ pub struct IK5 {
 )]
 pub struct IT8 {
     #[serde(rename = "01")]
-    pub _01: Option<String>,
+    pub _01: Option<crate::v005010::element::E563>,
     #[serde(rename = "02")]
     pub _02: Option<String>,
     #[serde(rename = "03")]
-    pub _03: Option<String>,
+    pub _03: Option<crate::v005010::element::E610>,
     #[serde(rename = "04")]
     pub _04: Option<String>,
     #[serde(rename = "05")]
@@ -630,7 +629,7 @@ pub struct IT8 {
     #[serde(rename = "06")]
     pub _06: Option<String>,
     #[serde(rename = "07")]
-    pub _07: Option<String>,
+    pub _07: Option<crate::v005010::element::E566>,
     #[serde(rename = "08")]
     pub _08: Option<String>,
     #[serde(rename = "09")]
@@ -773,19 +772,19 @@ pub struct ITA {
     #[serde(rename = "02")]
     pub _02: Option<String>,
     #[serde(rename = "03")]
-    pub _03: Option<String>,
+    pub _03: Option<crate::v005010::element::E560>,
     #[serde(rename = "04")]
-    pub _04: String,
+    pub _04: crate::v005010::element::E331,
     #[serde(rename = "05")]
     pub _05: Option<String>,
     #[serde(rename = "06")]
-    pub _06: Option<String>,
+    pub _06: Option<crate::v005010::element::E359>,
     #[serde(rename = "07")]
-    pub _07: Option<String>,
+    pub _07: Option<crate::v005010::element::E360>,
     #[serde(rename = "08")]
-    pub _08: Option<String>,
+    pub _08: Option<crate::v005010::element::E378>,
     #[serde(rename = "09")]
-    pub _09: Option<String>,
+    pub _09: Option<crate::v005010::element::E332>,
     #[serde(rename = "10")]
     pub _10: Option<String>,
     #[serde(rename = "11")]
@@ -795,11 +794,11 @@ pub struct ITA {
     #[serde(rename = "13")]
     pub _13: Option<String>,
     #[serde(rename = "14")]
-    pub _14: Option<String>,
+    pub _14: Option<crate::v005010::element::E150>,
     #[serde(rename = "15")]
     pub _15: Option<String>,
     #[serde(rename = "16")]
-    pub _16: Option<String>,
+    pub _16: Option<crate::v005010::element::E662>,
     #[serde(rename = "17")]
     pub _17: Option<String>,
 }
@@ -865,11 +864,11 @@ pub struct ITD {
 )]
 pub struct ISR {
     #[serde(rename = "01")]
-    pub _01: String,
+    pub _01: crate::v005010::element::E368,
     #[serde(rename = "02")]
     pub _02: Option<String>,
     #[serde(rename = "03")]
-    pub _03: Option<String>,
+    pub _03: Option<crate::v005010::element::E641>,
 }
 
 /// ISS - Invoice Shipment Summary
