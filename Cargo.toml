@@ -14,7 +14,7 @@ rust-version = "1.82"
 [dependencies]
 log = { version = "0.4", features = ["release_max_level_warn"] }
 serde = { version = "1.0", features = ["derive"] }
-validator = { version = "0.20", features = ["derive"] }
+validator = { version = "0.21", features = ["derive"] }
 chrono = "0.4"
 nom = "8"
 x12-types-macros = { version = "0.2.3", path = "x12-types-macros" }
