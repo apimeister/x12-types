@@ -20,10 +20,10 @@ jobs:
           /usr/local/cargo
           target/
         key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-    - uses: actions-rust-lang/setup-rust-toolchain@v1
+    - uses: actions-rust-lang/setup-rust-toolchain@v2
     - name: Rustfmt Check
       uses: actions-rust-lang/rustfmt@v1
-    - uses: actions-rust-lang/setup-rust-toolchain@v1
+    - uses: actions-rust-lang/setup-rust-toolchain@v2
       with:
         components: rustfmt
     - name: Run clippy
